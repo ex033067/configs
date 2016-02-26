@@ -1,0 +1,75 @@
+[user]
+        name = viniciusban
+        email = viniciusban@gmail.com
+
+[github]
+        user = viniciusban
+
+[merge]
+        ; ff = false
+
+[color]
+        ui = 1
+
+[diff]
+        tool = vimdiff
+
+[difftool]
+        prompt = no
+
+[alias]
+        ; General aliases
+        ; ---------------
+
+        alias = !git config --list | grep ^alias
+        ci = commit
+        co = checkout
+
+        ll = log -5 --graph --date=iso --decorate
+        ls = log -5 --oneline
+
+        discard = checkout --
+        rollback = reset --soft HEAD^
+        rollback-to = reset --hard
+        subtract = reset HEAD
+        unstage = !git subtract
+
+        s = status -s
+        st = status
+
+        ; show current repo's path.
+        showrepo = rev-parse --show-toplevel
+
+
+        ; Act on 1st modified and unstaged file
+        ; -------------------------------------
+
+        fadd = !git status --short | grep '^.[M\\?]' | head -n 1 | cut -d ' ' -f 3 | xargs git add
+        fdiff = !git status --short | grep '^.M' | head -n 1 | cut -d ' ' -f 3 | xargs git diff
+        fdiscard = !git status --short | grep '^.M' | head -n 1 | cut -d ' ' -f 3 | xargs -p git discard
+        funstage = !git status --short | grep '^M' | head -n 1 | cut -d ' ' -f 3 | xargs git unstage
+
+
+        ; Pull and push current branch
+        ; ----------------------------
+
+        ; escaping backslash because git itself reads it
+        pullc = !git branch --no-color 2>/dev/null | grep --color=never '^\\* ' | cut -d ' ' -f 2 | xargs -p git pull origin
+        pushc = !git branch --no-color 2>/dev/null | grep --color=never '^\\* ' | cut -d ' ' -f 2 | xargs -p git push origin
+
+[core]
+        autocrlf = input
+        editor = vim
+[http]
+        sslVerify = false
+[push]
+        default = matching
+
+[commit]
+        template = ~/.git_commit_template.txt
+
+[include]
+        path = ~/.gitconfig_os_specific
+
+[rebase]
+        autosquash = true
