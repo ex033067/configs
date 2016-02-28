@@ -1,5 +1,3 @@
-viniciusban's gitconfigs
-========================
 
 My own git apparatus.
 
