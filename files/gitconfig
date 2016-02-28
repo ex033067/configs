@@ -2,9 +2,6 @@
         name = viniciusban
         email = viniciusban@gmail.com
 
-[github]
-        user = viniciusban
-
 [merge]
         ; ff = false
 
