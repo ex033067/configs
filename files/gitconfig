@@ -24,6 +24,7 @@
 
         ll = log -5 --graph --date=iso --decorate
         ls = log -5 --oneline
+        l = !git ls
 
         discard = checkout --
         rollback = reset --soft HEAD^
