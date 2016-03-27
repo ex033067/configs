@@ -19,6 +19,7 @@
         ; ---------------
 
         alias = !git config --list | grep ^alias
+        br = branch
         ci = commit
         co = checkout
 
