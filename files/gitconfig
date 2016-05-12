@@ -54,8 +54,8 @@
         ; ----------------------------
 
         ; escaping backslash because git itself reads it
-        pullc = !git branch --no-color 2>/dev/null | grep --color=never '^\\* ' | cut -d ' ' -f 2 | xargs -p git pull origin
-        pushc = !git branch --no-color 2>/dev/null | grep --color=never '^\\* ' | cut -d ' ' -f 2 | xargs -p git push origin
+        pullc = !git branch --no-color 2>/dev/null | grep --color=never '^\\* ' | cut -d ' ' -f 2 | xargs -p git pull --tags origin
+        pushc = !git branch --no-color 2>/dev/null | grep --color=never '^\\* ' | cut -d ' ' -f 2 | xargs -p git push --tags origin
 
 [core]
         autocrlf = input
