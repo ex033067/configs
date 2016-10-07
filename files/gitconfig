@@ -16,34 +16,32 @@
 
 [alias]
         ; General aliases
-        ; ---------------
-
         alias = !git config --list | grep ^alias
         br = branch
         ci = commit
         co = checkout
+        s = status -s
+        st = status
 
+        ; Custom log view
         l = !git ls
         la = log -5 --graph --date=iso --decorate
         ll = log -5 --abbrev-commit --date=format:'%m/%d %H:%M' --format='format:%C(auto)%h %ad %s'
         ls = log -5 --oneline
 
+        ; Unstaging
         discard = checkout --
-        rollback = reset --soft HEAD^
-        rollback-to = reset --hard
         subtract = reset HEAD
         unstage = !git subtract
 
-        s = status -s
-        st = status
+        ; Undo commits
+        rollback = reset --soft HEAD^
+        rollback-to = reset --hard
 
-        ; show current repo's path.
+        ; show repo's path.
         showrepo = rev-parse --show-toplevel
 
-
         ; Act on 1st modified and unstaged file
-        ; -------------------------------------
-
         fadd = !git status --short | grep '^.[M\\?]' | head -n 1 | cut -d ' ' -f 3 | xargs git add
         fdiff = !git status --short | grep '^.M' | head -n 1 | cut -d ' ' -f 3 | xargs git diff
         fdiscard = !git status --short | grep '^.M' | head -n 1 | cut -d ' ' -f 3 | xargs -p git discard
@@ -51,8 +49,6 @@
 
 
         ; Pull and push current branch
-        ; ----------------------------
-
         ; escaping backslash because git itself reads it
         pullc = !git branch --no-color 2>/dev/null | grep --color=never '^\\* ' | cut -d ' ' -f 2 | xargs -p git pull --tags origin
         pushc = !git branch --no-color 2>/dev/null | grep --color=never '^\\* ' | cut -d ' ' -f 2 | xargs -p git push --tags origin
