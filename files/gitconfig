@@ -35,7 +35,8 @@
         unstage = !git subtract
 
         ; Undo commits
-        rollback = reset --soft HEAD^
+        ; 3 k's at the end to avoid mistakes ;-)
+        rollbackkk = reset --soft HEAD^
         rollback-to = reset --hard
 
         ; show repo's path.
