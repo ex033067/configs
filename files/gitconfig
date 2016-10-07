@@ -39,7 +39,7 @@
         rollback-to = reset --hard
 
         ; show repo's path.
-        showrepo = rev-parse --show-toplevel
+        path = rev-parse --show-toplevel
 
         ; Act on 1st modified and unstaged file
         fadd = !git status --short | grep '^.[M\\?]' | head -n 1 | cut -d ' ' -f 3 | xargs git add
