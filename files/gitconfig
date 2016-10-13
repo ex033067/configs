@@ -25,8 +25,7 @@
         s = status -s
         st = status
 
-        ; Show log
-
+        ; Custom log view
         l = !git ls
         la = log -5 --graph --date=iso --decorate
         ll = log -5 --abbrev-commit --date=format:'%m/%d %H:%M' --format='format:%C(auto)%h %ad %s'
@@ -44,9 +43,6 @@
         ; 3 "k"s to avoid mistakes.
         rollbackkk = reset --soft HEAD^
         rollback-to = reset --hard
-
-        ; show current repo's path.
-
 
         ; Act on 1st modified and unstaged file
 
