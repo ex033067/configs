@@ -28,7 +28,7 @@
         ; Custom log view
         l = !git ls
         la = log -5 --graph --date=iso --decorate
-        ll = log -5 --abbrev-commit --date=format:'%m/%d %H:%M' --format='format:%C(auto)%h %ad %s'
+        ll = log -5 --abbrev-commit --date=format:'%m/%d %H:%M' --format='tformat:%C(auto)%h %ad %s'
         ls = log -5 --oneline
 
         ; Remove files from staging area
