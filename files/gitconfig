@@ -15,46 +15,31 @@
         prompt = no
 
 [alias]
-        ; General aliases
+        aliases = !git config --list | grep ^alias
+        branches = branch -a
+        commits = log -5
+        remotes = remote -v
+        stashes = stash list
+        tags = tag -l -n1
+        history = log -5 --graph --date=iso --decorate
 
-        alias = !git config --list | grep ^alias
-        ci = commit
-        co = checkout
         path = rev-parse --show-toplevel
         s = status -s
-        st = status
+        newbranch = checkout -b
+        lastbranch = checkout -
 
-        ; Custom log view
-        l = !git ls
-        la = log -5 --graph --date=iso --decorate
-        ll = log -5 --abbrev-commit --date=format:'%m/%d %H:%M' --format='tformat:%C(auto)%h %ad %s'
-        ls = log -5 --oneline
-
-        ; Remove files from staging area
-
+        amend = commit --amend
         discard = checkout --
-        subtract = reset HEAD
         unstage = !git subtract
 
-        ; ***************** Take care! *****************
-        ; Undo commits.
+        l = log -10 --abbrev-commit --date=format:'%m/%d %H:%M' --format='tformat:%C(auto)%h %ad %s'
+        lg = log --graph -10 --branches --remotes --tags --format=format:'%Cgreen%h %Creset%<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
 
-        ; 3 "k"s to avoid mistakes.
-        rollbackkk = reset --soft HEAD^
+        nevermind = !git reset --hard HEAD && git clean -d -f
+        rollbackkk = reset --mixed HEAD^
         rollback-to = reset --hard
 
-        ; Act on 1st modified and unstaged file
-
-        fadd = !git status --short | grep '^.[M\\?]' | head -n 1 | cut -d ' ' -f 3 | xargs git add
-        fdiff = !git status --short | grep '^.M' | head -n 1 | cut -d ' ' -f 3 | xargs git diff
-        fdiscard = !git status --short | grep '^.M' | head -n 1 | cut -d ' ' -f 3 | xargs -p git discard
-        funstage = !git status --short | grep '^M' | head -n 1 | cut -d ' ' -f 3 | xargs git unstage
-
-
-        ; Pull and push current branch
-
-        ; escaping backslash because git itself reads it
-        pullc = !git branch --no-color 2>/dev/null | grep --color=never '^\\* ' | cut -d ' ' -f 2 | xargs -p git pull --tags origin
+        pullc = !git rev-parse --abbrev-ref HEAD | xargs -p git pull --tags origin
         pushc = !git rev-parse --abbrev-ref HEAD | xargs -p git push --tags origin
 
 [core]
