@@ -47,7 +47,7 @@
         rollback-to = reset --hard
 
         pullc = !git rev-parse --abbrev-ref HEAD | xargs -p git pull --tags origin
-        pushc = !git rev-parse --abbrev-ref HEAD | xargs -p git push --tags origin
+        pushc = !for remote in $(git remote | grep -v 'deploy')";"do echo "-- $remote"";"git push --tags $remote $(git rev-parse --abbrev-ref HEAD)";"done
 
 [core]
         autocrlf = input
