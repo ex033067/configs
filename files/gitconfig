@@ -1,9 +1,15 @@
+#
+# Why the fuck git uses semicolon to start a comment?!
+#
+# To use a semicolon in aliases, enclose it in double quotes.
+#
+
 [user]
         name = viniciusban
         email = viniciusban@gmail.com
 
 [merge]
-        ; ff = false
+        # ff = false
 
 [color]
         ui = 1
