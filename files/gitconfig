@@ -37,7 +37,7 @@
 
         amend = commit --amend
         discard = checkout --
-        unstage = git reset HEAD
+        unstage = reset HEAD
 
         l = log -10 --abbrev-commit --date=format:'%m/%d %H:%M' --format='tformat:%C(auto)%h %ad %s'
         lg = log --graph -10 --branches --remotes --tags --format=format:'%Cgreen%h %Creset%<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
