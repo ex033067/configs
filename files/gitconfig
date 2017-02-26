@@ -26,7 +26,7 @@
         commits = log -5
         remotes = remote -v
         stashes = stash list
-        tags = tag -l -n1
+        tags = tag -l -n1 --sort="version:refname"
         history = log -5 --graph --date=iso --decorate
 
         path = rev-parse --show-toplevel
