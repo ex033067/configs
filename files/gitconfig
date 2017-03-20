@@ -43,6 +43,7 @@
         nevermind = !git reset --hard HEAD && git clean -d -f
         rollbackkk = reset --mixed HEAD^
         rollback-to = reset --hard
+        prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
 
         pullc = !git rev-parse --abbrev-ref HEAD | xargs -p git pull --tags origin
         pushc = !for remote in $(git remote | grep -v 'deploy')";"do echo '\n\n['"$remote"']'";"git push --tags $remote $(git rev-parse --abbrev-ref HEAD)";"done
