@@ -23,19 +23,15 @@
 [alias]
         aliases = !git config --list | grep ^alias
         branches = branch -a
-        commits = log -5
         remotes = remote -v
         stashes = stash list
         tags = tag -l -n1 --sort="version:refname"
-        history = log -5 --graph --date=iso --decorate
 
         initialcommit = commit --allow-empty -m 'Initial commit'
 
         path = rev-parse --show-toplevel
         s = status -s
         currentbranch = rev-parse --abbrev-ref HEAD
-        newbranch = checkout -b
-        lastbranch = checkout -
 
         amend = commit --amend
         discard = checkout --
