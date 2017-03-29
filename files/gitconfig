@@ -8,6 +8,12 @@
         name = viniciusban
         email = viniciusban@gmail.com
 
+[versionsort]
+    prereleaseSuffix = -alpha
+    prereleaseSuffix = -beta
+    prereleaseSuffix = -rc
+    prereleaseSuffix = -pre
+
 [merge]
         # ff = false
 
