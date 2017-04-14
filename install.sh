@@ -6,15 +6,15 @@
 ## Read README.md for details.
 ## ----------------------------------------------------------------------
 
-ln -sf ${PWD}/files/gitconfig ~/.gitconfig
+ln -sf ${PWD}/files/gitconfig_generic ~/.gitconfig_generic
 ln -sf ${PWD}/files/git-completion.bash ~/.git-completion.bash
 ln -sf ${PWD}/files/git_commit_template.txt ~/.git_commit_template.txt
 
 if test "$(uname)" = "Darwin"
 then
-    FILE=${PWD}/files/gitconfig_os_specific__Darwin
+    FILE=${PWD}/files/gitconfig__just_for_Darwin__
 else
-    FILE=${PWD}/files/gitconfig_os_specific__Linux
+    FILE=${PWD}/files/gitconfig__just_for_Linux__
 fi
 
-ln -sf $FILE ~/.gitconfig_os_specific
+ln -sf $FILE ~/.gitconfig
