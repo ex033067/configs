@@ -65,8 +65,5 @@
 [commit]
         template = ~/.git_commit_template.txt
 
-[include]
-        path = ~/.gitconfig_os_specific
-
 [rebase]
         autosquash = true
