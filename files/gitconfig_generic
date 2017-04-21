@@ -63,7 +63,7 @@
         default = matching
 
 [commit]
-        template = ~/.git_commit_template.txt
+        template = ~/projects/gitconfig/files/git_commit_template.txt
 
 [rebase]
         autosquash = true
