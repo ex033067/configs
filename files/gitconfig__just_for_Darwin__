@@ -1,4 +1,4 @@
 [merge]
         tool = opendiff
 [include]
-        path = ~/.gitconfig_generic
+        path = ~/projects/gitconfig/files/gitconfig_generic

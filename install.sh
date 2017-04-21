@@ -6,7 +6,6 @@
 ## Read README.md for details.
 ## ----------------------------------------------------------------------
 
-ln -sf ${PWD}/files/gitconfig_generic ~/.gitconfig_generic
 ln -sf ${PWD}/files/git-completion.bash ~/.git-completion.bash
 ln -sf ${PWD}/files/git_commit_template.txt ~/.git_commit_template.txt
 
