@@ -51,7 +51,8 @@
         rollback-to = reset --hard
         prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
 
-        pullc = !git rev-parse --abbrev-ref HEAD | xargs -p git pull --tags origin
+        pullc = !git fetch --tag --prune origin && git merge origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)
+
         pushc = !for remote in $(git remote | grep -v 'deploy')";"do echo '\n\n['"$remote"']'";"git push --tags $remote $(git rev-parse --abbrev-ref HEAD)";"done
 
 [core]
