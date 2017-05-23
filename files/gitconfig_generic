@@ -1,5 +1,5 @@
 #
-# Why the fuck git uses semicolon to start a comment?!
+# Due to property file syntax, a semicolon starts a comment.
 #
 # To use a semicolon in aliases, enclose it in double quotes.
 #
