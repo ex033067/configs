@@ -37,7 +37,7 @@
 
         path = rev-parse --show-toplevel
         s = status -s
-        currentbranch = rev-parse --abbrev-ref HEAD
+        pwb = symbolic-ref --short HEAD
 
         amend = commit --amend
         discard = checkout --
