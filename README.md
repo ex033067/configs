@@ -9,11 +9,11 @@ Installation
 
 On Linux:
 
-    $ ln -f -s ./files/tmux.conf.for_Linux ~/.tmux.conf
+    $ ln -f -s $PWD/files/tmux.conf.for_Linux ~/.tmux.conf
 
 On MacOS:
 
-    $ ln -f -s ./files/tmux.conf.for_Darwin ~/.tmux.conf
+    $ ln -f -s $PWD/files/tmux.conf.for_Darwin ~/.tmux.conf
 
 
 LICENSE
