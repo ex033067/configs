@@ -1,0 +1,15 @@
+# tmux configuration for MacOS
+#
+# Copyright (C) 2017 viniciusban.com
+# This file is distributed under GPL-V3.
+
+source ~/projects/tmuxconf/files/generic_tmux.conf
+
+# Allow vim to interact with system clipboard
+set-option -g default-command "reattach-to-user-namespace -l ${SHELL}"
+
+# copy selection also to system clipboard
+bind -t vi-copy y copy-pipe 'reattach-to-user-namespace pbcopy'
+
+# copy tmux paste buffer to system clipboard
+bind Y run-shell 'tmux show-buffer | reattach-to-user-namespace pbcopy'

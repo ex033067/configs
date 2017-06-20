@@ -1,0 +1,12 @@
+# tmux configuration for Linux.
+#
+# Copyright (C) 2017 viniciusban.com
+# This file is distributed under GPL-V3.
+
+source ~/projects/tmuxconf/files/generic_tmux.conf
+
+# copy selection also to system clipboard
+bind -t vi-copy y copy-pipe 'xsel -i -b'
+
+# copy tmux paste buffer to system clipboard
+bind Y run-shell 'tmux show-buffer | xsel -i -b'
