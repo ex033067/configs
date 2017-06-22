@@ -7,11 +7,16 @@ It may serve you. Or may not.
 Installation
 ------------
 
-Simply run:
+On Linux:
 
-    $ ./install.sh
+    $ ln -f -s $PWD/files/git-completion.bash ~/.git-completion.bash
+    $ ln -f -s $PWD/files/gitconfig.for_Linux ~/.gitconfig
 
-This script installs or updates symlinks.
+On MacOS:
+
+    $ ln -f -s $PWD/files/git-completion.bash ~/.git-completion.bash
+    $ ln -f -s $PWD/files/gitconfig.for_Darwin ~/.gitconfig
+
 
 **Important:** you should adjust `user.name` and `user.email` in `gitconfig` file.
 
