@@ -27,7 +27,7 @@
         prompt = no
 
 [alias]
-        aliases = !git config --list | grep ^alias | cut -d'=' -f 1 | cut -d'.' -f 2
+        aliases = !git config --list | grep ^alias | cut -d'=' -f 1 | cut -d'.' -f 2 | sort
         branches = branch -a
         remotes = remote -v
         stashes = stash list
