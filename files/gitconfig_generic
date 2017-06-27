@@ -44,7 +44,6 @@
 
         l = log -10 --oneline
         ll = log -10 --abbrev-commit --date=format:'%y-%m-%d %H:%M' --format='tformat:%C(auto)%h %ad %s'
-        lg = log --graph -10 --branches --remotes --tags --format=format:'%Cgreen%h %Creset%<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
 
         nevermind = !git reset --hard HEAD && git clean -d -f
         rollbackkk = reset --mixed HEAD^
