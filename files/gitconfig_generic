@@ -39,9 +39,6 @@
         s = status -s
         pwb = symbolic-ref --short HEAD
 
-        discard = checkout --
-        unstage = reset HEAD
-
         l = log -10 --oneline
         ll = log -10 --abbrev-commit --date=format:'%y-%m-%d %H:%M' --format='tformat:%C(auto)%h %ad %s'
 
