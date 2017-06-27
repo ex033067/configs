@@ -39,7 +39,6 @@
         s = status -s
         pwb = symbolic-ref --short HEAD
 
-        amend = commit --amend
         discard = checkout --
         unstage = reset HEAD
 
