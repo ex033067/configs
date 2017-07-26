@@ -1,3 +1,17 @@
 
 
-# Complete this sentence: "This change will..."
+# Follow this guideline:
+#
+# - Subject line: 50 chars; capitalized; imperative mood.
+# - Body: 72 chars; explain what/why, not how.
+#
+# "The seven rules of a great Git commit message"
+# (https://chris.beams.io/posts/git-commit/#seven-rules)
+#
+#
+# Examples:
+#
+# - (This commit will) Send email to registered user
+# - (This commit will) Apply new settings to user profile
+# - (Esse commit) Envia email para o usuario registrado
+# - (Esse commit) Aplica novas opcoes ao perfil do usuario
