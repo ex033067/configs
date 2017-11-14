@@ -47,6 +47,9 @@
         rollback-to = reset --hard
         prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
 
+        ongoing = !topic=$(git symbolic-ref --short HEAD) && disposable=ongoing-work/$(date -u '+%Y%m%d_%H%M')/${topic} && git checkout -b ${disposable} && git commit -am 'WIP' && git push origin ${disposable} && git checkout - && git push origin ${topic}
+
+
         pullc = !git fetch --tag --prune origin && git merge origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)
 
         pushc = !for remote in $(git remote | grep -v 'deploy')";"do echo '\n\n['"$remote"']'";"git push --tags $remote $(git rev-parse --abbrev-ref HEAD)";"done
