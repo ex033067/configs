@@ -47,50 +47,46 @@
         rollback-to = reset --hard
         prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
 
-        ongoing = "! \
-            _create() { \
+        rstash = "! \
+            _help () { \
+                echo 'Remote stash'; \
+                echo 'usage: git rstash list'; \
+                echo '   or: git rstash [save] [<message>] (Note: always save untracked files)'; \
+                echo '   or: git rstash apply <name>'; \
+                echo '   or: git rstash clear'; \
+            } ; \
+            _save() { \
                 [ $(git status -s | wc -l) = '0' ] && echo 'No local changes to save' && return; \
-                topic=$(git symbolic-ref --short HEAD); \
-                disposable=ongoing-work/$(date -u '+%Y%m%d_%H%M')/${topic}; \
-                git checkout -b ${disposable}; \
+                thisbranch=$(git symbolic-ref --short HEAD); \
+                rstash=rstash/$(date -u '+%Y%m%d_%H%M')/${thisbranch}; \
+                git checkout -b ${rstash}; \
                 git add . \
-                && git commit -m 'WIP' \
-                && git push origin ${disposable} \
+                && git commit -m ':rstash:'\"$1\" \
+                && git push origin ${rstash} \
                 && git checkout - \
-                && git push origin ${topic} ; \
+                && git push origin ${thisbranch} ; \
             } ; \
             _apply() { \
                 branch=; \
                 [ $1 ] && branch=$1; \
-                [ -z $branch ] && howmany=$(git branch --list ongoing* | wc -l); \
-                [ -z $branch ] && [ ! $howmany = 1 ] && echo 'Choose a branch' && return 1; \
-                [ -z $branch ] && branch=$(git branch --list ongoing* | head -n 1); \
+                [ -z $branch ] && echo 'Choose a branch' && return 1; \
                 git checkout $branch -- . && git reset HEAD . ; \
             } ; \
             _list() { \
-                git branch --list ongoing* ; \
-            } ; \
-            _help () { \
-                echo 'usage: git ongoing [create]'; \
-                echo '   or: git ongoing apply <name>'; \
-                echo '   or: git ongoing apply [<name>]'; \
-                echo '   or: git ongoing [apply] <name>'; \
-                echo '   or: git ongoing list'; \
-                echo '   or: git ongoing clear'; \
+                git branch --list rstash* ; \
             } ; \
             _clear () { \
-                for branch in $(git branch --list ongoing*); do \
+                for branch in $(git branch --list rstash*); do \
                     git branch -D $branch; \
                 done \
             } ; \
             _() { \
-                [ -z $1 ] && _create && return; \
+                [ -z $1 ] && _save && return; \
                 [ $1 = help ] && _help && return; \
                 [ $1 = list ] && _list && return; \
-                [ $1 = create ] && _create && return; \
+                [ $1 = save ] && _save \"$2\" && return; \
                 [ $1 = clear ] && _clear && return; \
                 [ $1 = apply ] && _apply $2 && return ; \
-                [ $1 ] && _apply $1 && return ; \
             } ; \
             _"
 
