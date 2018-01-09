@@ -9,7 +9,7 @@ source ~/projects/tmuxconf/files/generic_tmux.conf
 set-option -g default-command "reattach-to-user-namespace -l ${SHELL}"
 
 # copy selection also to system clipboard
-bind -t vi-copy y copy-pipe 'reattach-to-user-namespace pbcopy'
+bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'reattach-to-user-namespace pbcopy'
 
 # copy tmux paste buffer to system clipboard
 bind Y run-shell 'tmux show-buffer | reattach-to-user-namespace pbcopy'
