@@ -42,7 +42,10 @@
         l = log -10 --oneline
         ll = log -10 --abbrev-commit --date=format:'%y-%m-%d %H:%M' --format='tformat:%C(auto)%h %ad %s'
 
-        discard = !git reset --hard HEAD && git clean -f -n
+        discard = "!git reset --hard HEAD; \
+            git status -s; \
+            git status -s | grep --quiet '^?' && echo && echo 'There are untracked files in your project yet.';"
+
         rollbackkk = reset --mixed HEAD^
         rollback-to = reset --hard
         prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
