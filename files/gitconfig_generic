@@ -73,10 +73,10 @@
                 git checkout $branch -- . && git reset HEAD . ; \
             } ; \
             _list() { \
-                git branch --list rstash* ; \
+                git branch -a --list *rstash* ; \
             } ; \
             _clear () { \
-                for branch in $(git branch --list rstash*); do \
+                for branch in $(git branch -a --list *rstash*); do \
                     git branch -D $branch; \
                 done \
             } ; \
