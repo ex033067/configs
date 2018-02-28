@@ -62,9 +62,10 @@
                 [ $(git status -s | wc -l) = '0' ] && echo 'No local changes to save' && return; \
                 thisbranch=$(git symbolic-ref --short HEAD); \
                 rstash=rstash/$(date -u '+%Y%m%d_%H%M')/${thisbranch}; \
+                message=\"${1:-rstashed}\"; \
                 git checkout -b ${rstash}; \
                 git add . \
-                && git commit -m ':rstash:'\"$2\" \
+                && git commit -m \"${message}\" \
                 && git push origin ${rstash} \
                 && git checkout - \
                 && git push origin ${thisbranch} ; \
@@ -87,7 +88,7 @@
                 [ -z $1 ] && _save && return; \
                 [ $1 = help ] && _help && return; \
                 [ $1 = list ] && _list && return; \
-                [ $1 = save ] && _save \"$2\" && return; \
+                [ $1 = save ] && _save \"$3\" && return; \
                 [ $1 = clear ] && _clear && return; \
                 [ $1 = apply ] && _apply $2 && return ; \
             } ; \
