@@ -60,15 +60,15 @@
             } ; \
             _save() { \
                 [ $(git status -s | wc -l) = '0' ] && echo 'No local changes to save' && return; \
-                local thisbranch=$(git symbolic-ref --short HEAD); \
-                local rstash=rstash/$(date -u '+%Y%m%d_%H%M')/${thisbranch}; \
+                local wip=$(git symbolic-ref --short HEAD); \
+                local rstashbranch=rstash/$(date -u '+%Y%m%d_%H%M')/${wip}; \
                 local message=\"${1:-rstashed}\"; \
-                git checkout -b ${rstash}; \
+                git checkout -b ${rstashbranch}; \
                 git add . \
                 && git commit -m \"${message}\" \
-                && git push origin ${rstash} \
+                && git push origin ${rstashbranch} \
                 && git checkout - \
-                && git push origin ${thisbranch} ; \
+                && git push origin ${wip} ; \
             } ; \
             _apply() { \
                 local branch=; \
