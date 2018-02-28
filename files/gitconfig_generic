@@ -44,7 +44,7 @@
 
         discard = "!git reset --hard HEAD; \
             git status -s; \
-            git status -s | grep --quiet '^?' && echo && echo 'There are untracked files in your project yet.';"
+            git status -s | grep --quiet '^?' && echo && echo 'There are remaining untracked files in your project.';"
 
         rollbackkk = reset --mixed HEAD^
         rollback-to = reset --hard
