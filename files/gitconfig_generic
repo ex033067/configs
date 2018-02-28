@@ -60,9 +60,9 @@
             } ; \
             _save() { \
                 [ $(git status -s | wc -l) = '0' ] && echo 'No local changes to save' && return; \
-                thisbranch=$(git symbolic-ref --short HEAD); \
-                rstash=rstash/$(date -u '+%Y%m%d_%H%M')/${thisbranch}; \
-                message=\"${1:-rstashed}\"; \
+                local thisbranch=$(git symbolic-ref --short HEAD); \
+                local rstash=rstash/$(date -u '+%Y%m%d_%H%M')/${thisbranch}; \
+                local message=\"${1:-rstashed}\"; \
                 git checkout -b ${rstash}; \
                 git add . \
                 && git commit -m \"${message}\" \
@@ -71,7 +71,7 @@
                 && git push origin ${thisbranch} ; \
             } ; \
             _apply() { \
-                branch=; \
+                local branch=; \
                 [ $1 ] && branch=$1; \
                 [ -z $branch ] && echo 'Choose a branch' && return 1; \
                 git checkout $branch -- . && git reset HEAD . ; \
