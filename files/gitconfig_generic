@@ -51,7 +51,7 @@
             _help () { \
                 echo 'Remote stash'; \
                 echo 'usage: git rstash list'; \
-                echo '   or: git rstash [save] [<message>] (Note: always save untracked files)'; \
+                echo '   or: git rstash [save [-m <message>]] (Note: always save untracked files)'; \
                 echo '   or: git rstash apply <name>'; \
                 echo '   or: git rstash clear'; \
             } ; \
@@ -61,7 +61,7 @@
                 rstash=rstash/$(date -u '+%Y%m%d_%H%M')/${thisbranch}; \
                 git checkout -b ${rstash}; \
                 git add . \
-                && git commit -m ':rstash:'\"$1\" \
+                && git commit -m ':rstash:'\"$2\" \
                 && git push origin ${rstash} \
                 && git checkout - \
                 && git push origin ${thisbranch} ; \
