@@ -65,7 +65,7 @@
                 local message=\"${1:-rstashed}\"; \
                 git checkout -b ${rstashbranch}; \
                 git add . \
-                && git commit -m \"WIP ${message}\" -m '' -m \"branch: ${rstashbranch}\" \
+                && git commit -m \"WIP ${message}\" -m '' -m \"branch: ${rstashbranch}\" -e -v\
                 && git push origin ${rstashbranch} \
                 && git checkout - \
                 && git push origin ${wip} ; \
