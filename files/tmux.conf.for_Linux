@@ -10,3 +10,6 @@ bind -t vi-copy y copy-pipe 'xsel -i -b'
 
 # copy tmux paste buffer to system clipboard
 bind Y run-shell 'tmux show-buffer | xsel -i -b'
+
+# a colorful terminal is nicer.
+set-option -g default-terminal "xterm-256color"
