@@ -1,0 +1,67 @@
+[/]
+warn-vte-config-issue=false
+terminal-title-style='normal'
+window-style='normal'
+app-title='${sessionName}'
+prompt-on-delete-profile=true
+quake-hide-headerbar=false
+
+[profiles]
+list=['2b7c4080-0ddd-46c5-8f23-563fd3ba789d', '190505df-f512-4710-8750-e2bd77123d24']
+default='190505df-f512-4710-8750-e2bd77123d24'
+
+[profiles/190505df-f512-4710-8750-e2bd77123d24]
+cursor-shape='block'
+cursor-colors-set=false
+bold-color-set=false
+terminal-bell='sound'
+scroll-on-keystroke=true
+cjk-utf8-ambiguous-width='narrow'
+default-size-rows=24
+encoding='UTF-8'
+triggers=@as []
+automatic-switch=@as []
+custom-command=''
+visible-name='mytango dark'
+text-blink-mode='always'
+terminal-title='${id}: ${title}'
+use-theme-colors=false
+cell-height-scale=1.0
+badge-text=''
+exit-action='close'
+use-system-font=false
+backspace-binding='ascii-delete'
+rewrap-on-resize=true
+foreground-color='#F8F8F2'
+login-shell=false
+background-transparency-percent=0
+cursor-blink-mode='on'
+dim-transparency-percent=23
+bold-is-bright=true
+cell-width-scale=1.0
+default-size-columns=80
+background-color='#1D1D1D1D1D1D'
+cursor-foreground-color='#ffffff'
+allow-bold=true
+palette=['#000000', '#CC0000', '#4D9A05', '#F5F579790000', '#3464A3', '#754F7B', '#05979A', '#D3D6CF', '#545652', '#EF2828', '#89E234', '#EDEDD4D40000', '#729ECF', '#AC7EA8', '#34E2E2', '#EDEDEB']
+notify-silence-threshold=0
+badge-color='#ffffff'
+highlight-foreground-color='#ffffff'
+font='IBM Plex Mono Medium 14'
+delete-binding='delete-sequence'
+badge-position='northeast'
+custom-hyperlinks=@as []
+scrollback-unlimited=false
+cursor-background-color='#000000'
+highlight-background-color='#000000'
+scroll-on-output=false
+select-by-word-chars='-,./?%&#:_'
+use-custom-command=false
+badge-color-set=false
+bold-color='#ffffff'
+highlight-colors-set=false
+scrollback-lines=100000
+show-scrollbar=true
+
+[profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
+visible-name='Default'
