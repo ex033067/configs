@@ -1,14 +1,22 @@
-[/]
-warn-vte-config-issue=false
-terminal-title-style='normal'
-window-style='normal'
-app-title='${sessionName}'
-prompt-on-delete-profile=true
-quake-hide-headerbar=false
+[profiles/be7d58ce-4b59-4646-a9e6-bf2661af5adf]
+foreground-color='#829395'
+visible-name='solarized'
+palette=['#000000000000', '#DB312E', '#849900', '#B48800', '#258AD1', '#D23581', '#29A097', '#EDE7D4', '#002A35', '#CA4A15', '#57576D6D7474', '#646479798282', '#829395', '#6B70C3', '#92A0A0', '#FCF5E2']
+bold-is-bright=false
+badge-color-set=false
+use-system-font=false
+cursor-colors-set=false
+highlight-colors-set=false
+use-theme-colors=false
+bold-color-set=false
+font='IBM Plex Mono Medium 12'
+cursor-blink-mode='on'
+background-color='#002A35'
+scrollback-lines=100000
 
 [profiles]
-list=['2b7c4080-0ddd-46c5-8f23-563fd3ba789d', '190505df-f512-4710-8750-e2bd77123d24']
-default='190505df-f512-4710-8750-e2bd77123d24'
+list=['2b7c4080-0ddd-46c5-8f23-563fd3ba789d', '190505df-f512-4710-8750-e2bd77123d24', 'be7d58ce-4b59-4646-a9e6-bf2661af5adf']
+default='be7d58ce-4b59-4646-a9e6-bf2661af5adf'
 
 [profiles/190505df-f512-4710-8750-e2bd77123d24]
 cursor-shape='block'
@@ -65,3 +73,18 @@ show-scrollbar=true
 
 [profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
 visible-name='Default'
+
+[keybindings]
+session-add-right='<Primary>percent'
+session-add-down='<Primary>quotedbl'
+
+[/]
+terminal-title-style='normal'
+theme-variant='system'
+session-name='Default'
+quake-hide-headerbar=false
+app-title='Session ${sessionNumber} (of ${sessionCount}) - T ${activeTerminalTitle} (of ${terminalCount})'
+prompt-on-delete-profile=true
+warn-vte-config-issue=false
+control-click-titlebar=true
+window-style='disable-csd-hide-toolbar'
