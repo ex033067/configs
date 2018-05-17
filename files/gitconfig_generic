@@ -94,6 +94,51 @@
             } ; \
             _"
 
+
+        nrstash = "! \
+            _help () { \
+                echo 'New Remote stash'; \
+                echo 'usage: git nrstash list'; \
+                echo '   or: git nrstash [save [-m <message>]] (Note: always save untracked files)'; \
+                echo '   or: git nrstash apply <name>'; \
+            } ; \
+            _save() { \
+                [ $(git status -s | wc -l) = '0' ] && echo 'No local changes to save' && return; \
+                local wip=$(git symbolic-ref --short HEAD); \
+                local rstashbranch=rstash__$(date -u '+%Y%m%d-%H%M')__${wip}; \
+                local message=\"${1:-rstashed}\"; \
+                git add . \
+                && git stash push -m \"WIP ${message}\" \
+                && git push origin stash@{0}:refs/heads/${rstashbranch} \
+                && git stash drop \
+                && git push origin ${wip} ; \
+            } ; \
+            _apply() { \
+                local branch=; \
+                [ $1 ] && branch=$1; \
+                [ -z $branch ] && echo 'Choose a branch' && return 1; \
+                git checkout $branch \
+                && git reset HEAD^ \
+                && git add . \
+                && git stash push -m \"$(git log --format='%s' -1 HEAD@{1})\" \
+                && git checkout - \
+                && git stash pop \
+                && git reset HEAD . \
+                && echo '' \
+                && echo 'Remote stash applied.' ; \
+            } ; \
+            _list() { \
+                git branch -a --list *rstash* ; \
+            } ; \
+            _() { \
+                [ -z $1 ] && _save && return; \
+                [ $1 = help ] && _help && return; \
+                [ $1 = list ] && _list && return; \
+                [ $1 = save ] && _save \"$3\" && return; \
+                [ $1 = apply ] && _apply $2 && return ; \
+            } ; \
+            _"
+
         pullc = !git fetch --tag --prune origin && git merge origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)
 
         pushc = "! \
