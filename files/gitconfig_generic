@@ -50,12 +50,12 @@
         rollback-to = reset --hard
         prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
 
-        nrstash = "! \
+        rstash = "! \
             _help () { \
-                echo 'New Remote stash'; \
-                echo 'usage: git nrstash list'; \
-                echo '   or: git nrstash [save [-m <message>]] (Note: always save untracked files)'; \
-                echo '   or: git nrstash apply <name>'; \
+                echo 'Like git stash, but remote.'; \
+                echo 'usage: git rstash list'; \
+                echo '   or: git rstash save [-m <message>] (Note: always save untracked files)'; \
+                echo '   or: git rstash apply <name>'; \
             } ; \
             _save() { \
                 [ $(git status -s | wc -l) = '0' ] && echo 'No local changes to save' && return; \
@@ -86,8 +86,7 @@
                 git branch -a --list *rstash* ; \
             } ; \
             _() { \
-                [ -z $1 ] && _save && return; \
-                [ $1 = help ] && _help && return; \
+                [ -z $1 ] && _help && return; \
                 [ $1 = list ] && _list && return; \
                 [ $1 = save ] && _save \"$3\" && return; \
                 [ $1 = apply ] && _apply $2 && return ; \
