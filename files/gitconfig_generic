@@ -86,7 +86,7 @@
                 git branch -a --list *rstash* ; \
             } ; \
             _() { \
-                [ -z $1 ] && _help && return; \
+                [ -z $1 ] && _help && echo '' && _list && return; \
                 [ $1 = list ] && _list && return; \
                 [ $1 = push ] && _push \"$3\" && return; \
                 [ $1 = apply ] && _apply $2 && return ; \
