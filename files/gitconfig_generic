@@ -108,7 +108,7 @@
 [http]
         sslVerify = false
 [push]
-        default = matching
+        default = simple
 
 [commit]
         template = ~/projects/gitconfig/files/git_commit_template.txt
