@@ -54,11 +54,11 @@
             _help () { \
                 echo 'Like git stash, but remote.'; \
                 echo 'usage: git rstash list'; \
-                echo '   or: git rstash save [-m <message>] (Note: always save untracked files)'; \
+                echo '   or: git rstash push [-m <message>] (Note: always save unstaged files)'; \
                 echo '   or: git rstash apply <name>'; \
             } ; \
-            _save() { \
-                [ $(git status -s | wc -l) = '0' ] && echo 'No local changes to save' && return; \
+            _push() { \
+                [ $(git status -s | wc -l) = '0' ] && echo 'No local changes to push' && return; \
                 local wip=$(git symbolic-ref --short HEAD); \
                 local rstashbranch=rstash__$(date -u '+%Y%m%d-%H%M')__${wip}; \
                 local message=\"${1:-rstashed}\"; \
@@ -88,7 +88,7 @@
             _() { \
                 [ -z $1 ] && _help && return; \
                 [ $1 = list ] && _list && return; \
-                [ $1 = save ] && _save \"$3\" && return; \
+                [ $1 = push ] && _push \"$3\" && return; \
                 [ $1 = apply ] && _apply $2 && return ; \
             } ; \
             _"
