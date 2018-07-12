@@ -183,7 +183,9 @@ visible-name='Default'
 
 [keybindings]
 session-add-right='<Primary>percent'
+terminal-reset-and-clear='<Primary><Alt>k'
 session-add-down='<Primary>quotedbl'
+terminal-reset='disabled'
 
 [/]
 terminal-title-style='normal'
