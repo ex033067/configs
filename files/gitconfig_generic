@@ -111,7 +111,7 @@
         default = simple
 
 [commit]
-        template = ~/projects/gitconfig/files/git_commit_template.txt
+        template = ~/src/tools/gitconfig/files/git_commit_template.txt
 
 [rebase]
         autosquash = true
