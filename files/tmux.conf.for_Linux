@@ -3,7 +3,7 @@
 # Copyright (C) 2017 viniciusban.com
 # This file is distributed under GPL-V3.
 
-source ~/projects/tmuxconf/files/generic_tmux.conf
+source ~/src/tools/tmuxconf/files/generic_tmux.conf
 
 # copy selection also to system clipboard
 bind -T copy-mode-vi y send -X copy-pipe-and-cancel 'xsel -i -b'

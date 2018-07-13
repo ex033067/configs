@@ -3,7 +3,7 @@
 # Copyright (C) 2017 viniciusban.com
 # This file is distributed under GPL-V3.
 
-source ~/projects/tmuxconf/files/generic_tmux.conf
+source ~/src/tools/tmuxconf/files/generic_tmux.conf
 
 # Allow vim to interact with system clipboard
 set-option -g default-command "reattach-to-user-namespace -l ${SHELL}"
