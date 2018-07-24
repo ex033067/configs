@@ -96,9 +96,8 @@
         release = "! \
             _help () { \
                 echo 'Commit and tag a release.'; \
-                echo 'usage: git release {<version> | now} [-m <message>]'; \
+                echo 'usage: git release <version> [-m <message>]'; \
                 echo ''; \
-                echo '    If \"now\", version is `date -u +\"%Y%m%d-%H%M%S\"`.'; \
                 echo '    If <message> is empty, will show git editor.'; \
                 echo ''; \
                 echo '    Will perform:'; \
@@ -107,8 +106,7 @@
             } ; \
             _() { \
                 [ -z $1 ] && _help && echo '' && return; \
-                local version= ; \
-                [ \"$1\" = now ] && version=$(date -u +'%Y%m%d-%H%M%S') || version=\"$1\" ; \
+                local version=\"$1\" ; \
                 git commit -m \"Release ${version}\" ; \
                 [ $# -eq 1 ] && git tag -a \"${version}\" ; \
                 [ $# -eq 3 ] && git tag -a \"${version}\" -m \"$3\" ; \
