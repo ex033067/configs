@@ -13,6 +13,3 @@ bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'reattach-to-user-names
 
 # copy tmux paste buffer to system clipboard
 bind Y run-shell 'tmux show-buffer | reattach-to-user-namespace pbcopy'
-
-# 256 coloros with italics
-set-option -g default-terminal "xterm-256color"
