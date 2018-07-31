@@ -106,6 +106,7 @@
             } ; \
             _() { \
                 [ -z $1 ] && _help && echo '' && return; \
+                [ -z \"$(git diff --name-only --cached)\" ] && echo 'Stage files before making a release' && exit 1; \
                 local version=\"$1\" ; \
                 git commit -m \"Release ${version}\" ; \
                 [ $# -eq 1 ] && git tag -a \"${version}\" ; \
