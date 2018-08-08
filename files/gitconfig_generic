@@ -52,21 +52,23 @@
 
         rstash = "! \
             _help () { \
-                echo 'Like git stash, but remote.'; \
+                echo 'Like git stash, but saves on a remote called \"rstash\".'; \
                 echo 'usage: git rstash list'; \
                 echo '   or: git rstash push [-m <message>] (Note: always save unstaged files)'; \
                 echo '   or: git rstash apply <name>'; \
             } ; \
             _push() { \
                 [ $(git status -s | wc -l) = '0' ] && echo 'No local changes to push' && return; \
+                git remote get-url rstash >/dev/null 2>&1; \
+                [ $? -ne 0 ] && echo 'You don''t have a remote called \"rstash\"' && exit 1; \
                 local wip=$(git symbolic-ref --short HEAD); \
                 local rstashbranch=rstash__$(date -u '+%Y%m%d-%H%M')__${wip}; \
                 local message=\"${1:-rstashed}\"; \
                 git add . \
                 && git stash push -m \"WIP ${message}\" \
-                && git push origin stash@{0}:refs/heads/${rstashbranch} \
+                && git push rstash stash@{0}:refs/heads/${rstashbranch} \
                 && git stash drop \
-                && git push origin ${wip} ; \
+                && git push rstash ${wip} ; \
             } ; \
             _apply() { \
                 local branch=; \
