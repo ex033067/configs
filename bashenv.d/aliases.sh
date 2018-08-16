@@ -11,6 +11,7 @@ alias l1='ls -1'
 [ "$(uname)" = "Darwin" ] && alias ls='ls -Gp'
 [ "$(uname)" = "Linux" ] && alias ls='ls -p --group-directories-first --color=auto'
 
+alias ack='ack --sort-files'
 alias grep='grep --color=auto'
 
 alias django='python manage.py'
