@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+unset -f is_interactive
+function is_interactive() {
+    [[ "$-" =~ i ]]
+}
+
+unset -f __source
+function __source() {
+    local dir="$1"
+    for file in "$dir"/*.sh; do
+        [ -r "$file" ] || continue
+        source "$file"
+    done
+}
+
+unset -f __main
+function __main() {
+    if ! is_interactive; then
+        return
+    fi
+
+    __source ~/.config/configs/bashenv.d
+    __source ~/.config/configs/bashenv.d/functions
+    __source ~/.config/configs/bashenv.d/modules
+    __source ~/.config/configs/bashenv.d/completions
+}
+
+__main
