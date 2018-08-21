@@ -53,7 +53,7 @@ show-scrollbar=true
 
 [profiles/9c4a6d06-7aef-4efa-8973-09a5c7cc668f]
 cursor-shape='block'
-cursor-colors-set=false
+cursor-colors-set=true
 bold-color-set=false
 terminal-bell='sound'
 scroll-on-keystroke=true
@@ -76,7 +76,7 @@ rewrap-on-resize=true
 foreground-color='#647A82'
 login-shell=false
 background-transparency-percent=0
-cursor-blink-mode='system'
+cursor-blink-mode='on'
 dim-transparency-percent=0
 bold-is-bright=false
 cell-width-scale=1.0
@@ -93,7 +93,7 @@ delete-binding='delete-sequence'
 badge-position='northeast'
 custom-hyperlinks=@as []
 scrollback-unlimited=false
-cursor-background-color='#000000'
+cursor-background-color='#CCCC00000000'
 highlight-background-color='#000000'
 scroll-on-output=false
 select-by-word-chars='-,./?%&#:_'
