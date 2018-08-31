@@ -15,7 +15,7 @@ alias ack='ack --sort-files --color-filename="bold blue" --color-lineno="blue" -
 alias grep='grep --color=auto'
 
 alias django='python manage.py'
-alias nb='pyenv shell jupyter3;jupyter notebook'
+alias nb='pyenv shell jupyter;jupyter notebook'
 
 alias docstyle='pydocstyle -e --count --ignore=D103 '
 alias lint='pylint -rn --disable=missing-docstring '
