@@ -14,7 +14,6 @@ function p () {
         echo 'No project found'
         return 1
     elif [ "$possibilities" = '1' ]; then
-        echo "entering"
         cd "$(eval $find)"
         return
     else
