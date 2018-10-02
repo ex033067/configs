@@ -8,8 +8,8 @@ function p () {
         return
     fi
 
-    local find="find ${PROJECT_ROOT} -maxdepth 1 -name '$1*' -type d"
-    local possibilities=$(eval $find | wc -l)
+    local find="find ${PROJECT_ROOT}/ -maxdepth 1 -name '$1*' -type d"
+    local possibilities=$(echo $(eval $find | wc -l))
     if [ "$possibilities" = '0' ]; then
         echo 'No project found'
         return 1
