@@ -1,17 +1,8 @@
 
 
-# Follow this guideline:
-#   - Subject: 50; imperative. Body: 72; what/why, not how.
+# Guide:
+#   - Subject: imperative.
+#   - Body: explain what/why, not how.
 #   - Types: feat, fix, docs, style, refactor, test, chore.
-#
-# "The seven rules of a great Git commit message"
-# (https://chris.beams.io/posts/git-commit/#seven-rules)
-#
-#
-# Examples:
-#
-# - (This commit will) Send email to registered user
-# - (This commit will) Apply new settings to user profile
-#
-# - (Esse commit) Envia email para o usuario registrado
-# - (Esse commit) Aplica novas opcoes ao perfil do usuario
+#   - https://is.gd/gitcommit/#seven/rules
+# ---------------------------------------------------------------------
