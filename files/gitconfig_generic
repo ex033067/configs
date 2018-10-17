@@ -119,7 +119,7 @@
 
         pullc = !git fetch --tag --prune origin && git merge origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)
 
-        pushc = "! \
+        pushall = "! \
             for remote in $(git remote | grep -v -e 'readonly' -e 'deploy' -e 'upstream' -e '^dontpush' -e 'rstash'); do \
                 echo; echo; \
                 echo '['$remote']'; \
