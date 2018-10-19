@@ -39,8 +39,7 @@
         s = status -s
         pwb = symbolic-ref --short HEAD
 
-        l = log -10 --oneline
-        ll = log -10 --abbrev-commit --date=format:'%y-%m-%d %H:%M' --format='tformat:%C(auto)%h %ad %s'
+        l = log -10 --date=format:'%Y-%m-%d %H:%M' --format='tformat:%h %ad%d %s'
 
         discard = "!git reset --hard HEAD; \
             git status -s; \
