@@ -19,7 +19,7 @@ function __ps1_git () {
     echo "$ITEMS" | grep '^[RMDA]' >/dev/null && echo "+${BRANCH}" && return
 
     # Modified, but none staged yet.
-    echo "?${BRANCH}" && return
+    echo "!${BRANCH}" && return
 }
 
 # Set PS1
