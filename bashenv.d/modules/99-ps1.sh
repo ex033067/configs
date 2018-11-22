@@ -7,7 +7,16 @@ function __ps1_git () {
     #   - "+" means some (or all) modified objects were staged
 
     local BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null)
-    [ -z "$BRANCH" ] && return
+    if [ -z "$BRANCH" ];then
+        local BRANCH=$(git branch >/dev/null 2>&1 && git branch 2>/dev/null | grep '^*' | cut -d' ' -f2- | tr -d '()')
+        # Note about 2 "git branch"es above:
+        # When user is in a directory that isn't a git repo, "git branch" will
+        # return error 128 and we don't need to parse its output. Thus,
+        # performing an "and" (&&) with next command suffices to exist asap.
+        if [ -z "$BRANCH" ]; then
+            return
+        fi
+    fi
 
     # Items not committed
     local ITEMS=$(git status --porcelain 2>/dev/null)
