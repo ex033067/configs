@@ -40,4 +40,4 @@ function __ps1_git () {
 # tput colors from
 # http://unix.stackexchange.com/questions/269077/tput-setaf-color-table-how-to-determine-color-codes#269195
 
-PS1='$(RC=$?;GREEN="\[\033[0;32m\]";RED="\[\033[0;31m\]";[ $RC -eq 0 ] && echo "${GREEN}> " || echo "${RED}> ${RC} ")${debian_chroot:+($debian_chroot)}@\h:${VIRTUAL_ENV:+(}\W$(BRANCH=$(__ps1_git);echo "${BRANCH:+ $BRANCH}")${VIRTUAL_ENV:+)}\$ \[\033[00m\]'
+PS1='$(RC=$?;GREEN="\[\033[0;32m\]";RED="\[\033[0;31m\]";[ $RC -eq 0 ] && echo "${GREEN}$ " || echo "${RED}$ ${RC} ")${debian_chroot:+($debian_chroot)}@\h:${VIRTUAL_ENV:+(}\W$(BRANCH=$(__ps1_git);echo "${BRANCH:+ $BRANCH}")${VIRTUAL_ENV:+)}\$ \[\033[00m\]'
