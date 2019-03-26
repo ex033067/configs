@@ -20,10 +20,6 @@ alias nb='pyenv shell jupyter;jupyter notebook'
 alias docstyle='pydocstyle -e --count --ignore=D103 '
 alias lint='pylint -rn --disable=missing-docstring '
 
-alias pt='py.test'
-alias st='python setup.py test'
-alias ut='python -m unittest'
-
 alias clog='${PROJECT_ROOT}/clog/clog.sh'
 alias now='date -u +%y%m%d%H%M'
 
