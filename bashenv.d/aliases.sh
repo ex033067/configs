@@ -17,9 +17,6 @@ alias grep='grep --color=auto'
 alias django='python manage.py'
 alias nb='pyenv shell jupyter;jupyter notebook'
 
-alias docstyle='pydocstyle -e --count --ignore=D103 '
-alias lint='pylint -rn --disable=missing-docstring '
-
 alias clog='${PROJECT_ROOT}/clog/clog.sh'
 alias now='date -u +%y%m%d%H%M'
 
