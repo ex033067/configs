@@ -15,7 +15,7 @@ alias ack='ack --sort-files --color-filename="bold blue" --color-lineno="blue" -
 alias grep='grep --color=auto'
 
 alias django='python manage.py'
-alias nb='pyenv shell jupyter;jupyter notebook'
+alias nb='jupyter notebook --ip=localhost.test'
 
 alias clog='${PROJECT_ROOT}/clog/clog.sh'
 alias now='date -u +%y%m%d%H%M'
