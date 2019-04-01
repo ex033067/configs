@@ -3,10 +3,8 @@
 alias ..='cd ..'
 alias .2='cd ../..'
 alias .3='cd ../../..'
-alias e='vim'
 
 alias ll='ls -lh'
-alias l1='ls -1'
 
 [ "$(uname)" = "Darwin" ] && alias ls='ls -Gp'
 [ "$(uname)" = "Linux" ] && alias ls='ls -p --group-directories-first --color=auto'
