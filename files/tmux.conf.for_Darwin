@@ -5,6 +5,10 @@
 
 source ~/.config/configs/generic_tmux.conf
 
+# Truecolor terminal in Darwin
+set-option -g default-terminal "tmux-256color"
+set-option -ga terminal-overrides ",tmux-256color:Tc"
+
 # copy selection also to system clipboard
 bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'pbcopy'
 
