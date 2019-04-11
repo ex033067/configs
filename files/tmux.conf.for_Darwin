@@ -5,11 +5,8 @@
 
 source ~/.config/configs/generic_tmux.conf
 
-# Allow vim to interact with system clipboard
-set-option -g default-command "reattach-to-user-namespace -l ${SHELL}"
-
 # copy selection also to system clipboard
-bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'reattach-to-user-namespace pbcopy'
+bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'pbcopy'
 
 # copy tmux paste buffer to system clipboard
-bind Y run-shell 'tmux show-buffer | reattach-to-user-namespace pbcopy'
+bind Y run-shell 'tmux show-buffer | pbcopy'
