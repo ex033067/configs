@@ -9,7 +9,7 @@ alias ll='ls -lh'
 [ "$(uname)" = "Darwin" ] && alias ls='ls -Gp'
 [ "$(uname)" = "Linux" ] && alias ls='ls -p --group-directories-first --color=auto'
 
-alias ack='ack --sort-files --color-filename="bold blue" --color-lineno="blue" --color-match="bold white on_blue"'
+alias ack='ack --sort-files --color-filename="bold blue" --color-lineno="blue" --color-match="bold white on_blue" --ignore-dir=is:.venv'
 alias grep='grep --color=auto'
 
 alias django='python manage.py'
