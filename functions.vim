@@ -1,8 +1,3 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Functions for simplify running Python tests from inside vim.
-"
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 function! Ban_GetCurrentPythonClassName()
 	execute "normal ms$?^class \<Enter>0w"
 	nohls
@@ -39,19 +34,24 @@ function! Ban_MakeValidPythonTestName(type)
 endfunction
 
 function! Ban_Run(command)
-	" Run a command inside vim or through external terminal
+	" Run an external command using internal or external terminal
 
-	if exists("g:ban_run_internal") && g:ban_run_internal == 1
-		let prefix = 'terminal '. &shell .' -c "'
-		let suffix = '"'
-	else
+	if !exists("g:ban_run_internal")
 		if has("gui_running")
-			let prefix = 'terminal '. &shell .' -c "'
-			let suffix = '"'
+			let g:ban_run_internal = 1
+		elseif has("nvim")
+			let g:ban_run_internal = 1
 		else
-			let prefix = '!'
-			let suffix = ''
+			let g:ban_run_internal = 0
 		endif
+	endif
+
+	if g:ban_run_internal == 1
+		let prefix = "terminal ". &shell ." -c '"
+		let suffix = "'"
+	else
+		let prefix = '!'
+		let suffix = ''
 	endif
 
 	return prefix . a:command . suffix
