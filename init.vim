@@ -40,4 +40,5 @@ set grepprg=ack\ --nogroup\ $*
 " ------------
 
 autocmd TermOpen * startinsert
+autocmd TermOpen * map <buffer> <CR> <CR>
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
