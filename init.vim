@@ -1,4 +1,5 @@
 execute "source ". expand("<sfile>:h") ."/plugins.vim"
+execute "source ". expand("<sfile>:h") ."/functions.vim"
 
 
 " Mappings
@@ -31,8 +32,6 @@ set listchars=tab:»·,trail:~,nbsp:·,extends:→,precedes:←
 
 " Other
 " -----
-
-execute "source ". expand("<sfile>:h") ."/functions.vim"
 
 set grepprg=ack\ --nogroup\ $*
 
