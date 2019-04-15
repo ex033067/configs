@@ -1,17 +1,20 @@
 setlocal foldmethod=indent
-setlocal nofoldenable
 setlocal foldlevel=5
+setlocal nofoldenable
+
+setlocal tabstop=4
+setlocal expandtab " Spaces, not tabs
+
 setlocal equalprg=~/bin/python-style
 setlocal list
-
-"" Tabs and spaces
-setlocal expandtab       " Spaces instead of tabs
-setlocal tabstop=4       " how many spaces to show, instead of a <TAB>
 
 
 " Python tools and helpers
 " ------------------------
+
+" Indent
 map <silent> <buffer> == :write<CR>gg=G
+
 " Look for annotations (TODO/NOTE/FIXME) in project
 map <buffer> <localleader>TO :grep '(\#\\|//) *(TODO\\|NOTE\\|FIXME)'
 

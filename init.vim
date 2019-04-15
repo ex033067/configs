@@ -39,5 +39,4 @@ autocmd TermOpen * startinsert
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 set mouse=n " enable mouse in normal mode.
-set tabstop=4
 set shiftwidth=0 " indent with tabstop width
