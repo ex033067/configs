@@ -26,7 +26,8 @@ set background=light
 syntax reset
 colo vim-almostmonochrome
 
-set listchars=tab:>·,trail:·,nbsp:·,extends:>,precedes:<
+set listchars=tab:»·,trail:~,nbsp:·,extends:→,precedes:←
+
 
 " Other
 " -----
