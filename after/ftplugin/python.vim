@@ -47,8 +47,8 @@ nmap <CR> <localleader>tt
 map <localleader>tC :let g:test_command="<c-r>=g:test_command<cr>"
 
 " \tnf, \tnm Make a test name from current line contents
-map <silent> <buffer> <localleader>tnf :call Ban_MakeValidPythonTestName("function") <CR>
-map <silent> <buffer> <localleader>tnm :call Ban_MakeValidPythonTestName("method") <CR>
+map <silent> <buffer> <localleader>tnf :call ban#python#MakeValidPythonTestName("function") <CR>
+map <silent> <buffer> <localleader>tnm :call ban#python#MakeValidPythonTestName("method") <CR>
 
 " Mark the target of next test run
 " --------------------------------
@@ -69,8 +69,8 @@ map <silent> <buffer> <localleader>tM :let g:test_target = substitute(expand("%:
 map <silent> <buffer> <localleader>tF :let g:test_target = expand("%:.") \| echo "Test target: file ". g:test_target<CR>
 
 " \tc marks current Python TestCase class
-map <silent> <buffer> <localleader>tc :if g:test_command =~ "pytest" \| let b:sep="::" \| else \| let b:sep="." \| endif \| let g:test_target = substitute(expand("%:.:r") . b:sep . Ban_GetCurrentPythonClassName(), "/", ".", "g") \| echo "Test target: class ". g:test_target<CR>
+map <silent> <buffer> <localleader>tc :if g:test_command =~ "pytest" \| let b:sep="::" \| else \| let b:sep="." \| endif \| let g:test_target = substitute(expand("%:.:r") . b:sep . ban#python#GetCurrentPythonClassName(), "/", ".", "g") \| echo "Test target: class ". g:test_target<CR>
 
 " \tm, \tf mark current Python method or current function (for pytest)
-map <silent> <buffer> <localleader>tm :if g:test_command =~ "pytest" \| let b:sep="::" \| else \| let b:sep="." \| endif \| let g:test_target = substitute(expand("%:.:r") . b:sep . Ban_GetCurrentPythonClassName() . b:sep . Ban_GetCurrentPythonMethodName(), "/", ".", "g") \| echo "Test target: method ". g:test_target<CR>
+map <silent> <buffer> <localleader>tm :if g:test_command =~ "pytest" \| let b:sep="::" \| else \| let b:sep="." \| endif \| let g:test_target = substitute(expand("%:.:r") . b:sep . ban#python#GetCurrentPythonClassName() . b:sep . ban#python#GetCurrentPythonMethodName(), "/", ".", "g") \| echo "Test target: method ". g:test_target<CR>
 map <silent> <buffer> <localleader>tf :let g:test_target = expand("%:.") . "::" . expand("<cword>") \| echo "Test target: function ". g:test_target<CR>
