@@ -1,3 +1,8 @@
+if exists("g:did_ban_functions")
+	finish
+endif
+let g:did_ban_functions = 1
+
 function! Ban_GetCurrentPythonClassName()
 	execute "normal ms$?^class \<Enter>0w"
 	nohls
