@@ -21,6 +21,8 @@ setlocal foldlevel=3
 setlocal autoindent
 setlocal formatoptions+=n
 setlocal comments=fb:-[\ ],fb:-[*],fb:-[x],fb:-,fb:*
+setlocal tabstop=4
+setlocal expandtab
 
 " Mark items
 nmap <silent> <buffer> <localleader>* :call ban#todo#MarkTodoItemAsDoing()<CR>
