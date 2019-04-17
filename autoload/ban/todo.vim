@@ -231,7 +231,7 @@ function! ban#todo#MoveTodoItemBlockDown()
 endfunction
 
 function! ban#todo#AddNewTodoItem()
-	let l:mask = '-[ ] +project #noticket (added=yyyy-mm-dd) '
+	let l:mask = '-[ ] (+project #noticket added=yyyy-mm-dd) '
 	let l:today = strftime('%Y-%m-%d')
 	let l:x = substitute(l:mask, 'yyyy-mm-dd', strftime('%Y-%m-%d'), '')
 	call setline('.', getline('.') . l:x)
