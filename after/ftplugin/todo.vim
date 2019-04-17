@@ -24,6 +24,11 @@ setlocal comments=fb:-[\ ],fb:-[*],fb:-[x],fb:-,fb:*
 setlocal tabstop=4
 setlocal expandtab
 
+" Add items
+imap <silent> <buffer> -<Tab> -<Esc>:call ban#todo#AddNewTodoItem()<CR>^xA
+imap <silent> <buffer> --<Tab> -<Esc>:call ban#todo#AddNewTodoSubitem()<CR>^xA
+imap <silent> <buffer> -n<Tab> -<Esc>:call ban#todo#AddNewTodoNoteitem()<CR>^xA
+
 " Mark items
 nmap <silent> <buffer> <localleader>* :call ban#todo#MarkTodoItemAsDoing()<CR>
 nmap <silent> <buffer> <localleader>x :call ban#todo#MarkTodoItemAsDone()<CR>
