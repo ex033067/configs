@@ -111,6 +111,8 @@ function! ban#todo#MarkTodoItemAsDoing()
 	normal $
 	call search("^\\s*-[.\\] ", "bW")
 	let x=substitute(getline("."), "^\\(\\s*-[\\).\\] ", "\\1*] ", "")
+	let x=substitute(x, " done=\\d\\{4}\\(-\\d\\d\\)\\{2}", "" , "")
+	let x=substitute(x, " cancelled=\\d\\{4}\\(-\\d\\d\\)\\{2}", "" , "")
 	call setline(line("."), x)
 endfunction
 
