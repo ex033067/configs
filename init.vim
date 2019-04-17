@@ -21,12 +21,15 @@ map <leader>< :cprev<CR>
 map <leader>> :cnext<CR>
 
 " Toggle comment in line(s)
+nmap <leader>c :let g:nerd_comment_type='toggle'<CR>:set opfunc=Ban_ExecNERDCommenterWithMotion<CR>g@
 xmap <leader>c <Plug>NERDCommenterInvert
 
 " Force comment line(s) even if already commented
+nmap <leader>ca :let g:nerd_comment_type='comment'<CR>:set opfunc=Ban_ExecNERDCommenterWithMotion<CR>g@
 xmap <leader>ca <Plug>NERDCommenterComment
 
 " Force uncomment line(s) even if already uncommented
+nmap <leader>cr :let g:nerd_comment_type='uncomment'<CR>:set opfunc=Ban_ExecNERDCommenterWithMotion<CR>g@
 xmap <leader>cr <Plug>NERDCommenterUncomment
 
 

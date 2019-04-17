@@ -27,4 +27,14 @@ function! Ban_Run(command)
 	return prefix . a:command . suffix
 endfunction
 
-" vi: set nofoldenable:
+function! Ban_ExecNERDCommenterWithMotion(mode)
+	let l:command = '<start>,<end>call NERDComment("n", "<type>")'
+	let [l:start, l:end] = [line("'["), line("']")]
+	if l:start > l:end
+		let [l:start, l:end] = [l:end, l:start]
+	endif
+	let l:command = substitute(l:command, '<start>', l:start, '')
+	let l:command = substitute(l:command, '<end>', l:end, '')
+	let l:command = substitute(l:command, '<type>', g:nerd_comment_type, '')
+	exec l:command
+endfunction
