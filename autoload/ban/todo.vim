@@ -118,7 +118,7 @@ function! ban#todo#MarkTodoItemAsDone()
 	normal $
 	call search("^\\s*-[.\\] ", "bW")
 	let x=substitute(getline("."), "^\\(\\s*-[\\).\\] ", "\\1x] ", "")
-	let x=substitute(x, "\\((added=.\\{-}\\d\\d\\d\\d-\\d\\d-\\d\\d\\))", "\\1 done=".strftime("%Y-%m-%d").")", "")
+	let x=substitute(x, ')', ' done='.strftime('%Y-%m-%d') .')', '')
 	call setline(line("."), x)
 endfunction
 
@@ -126,7 +126,7 @@ function! ban#todo#MarkTodoItemAsCancelled()
 	normal $
 	call search("^\\s*-[.\\] ", "bW")
 	let x=substitute(getline("."), "^\\(\\s*-[\\).\\] ", "\\1-] ", "")
-	let x=substitute(x, "\\((added=.\\{-}\\d\\d\\d\\d-\\d\\d-\\d\\d\\))", "\\1 cancelled=".strftime("%Y-%m-%d").")", "")
+	let x=substitute(x, ')', ' cancelled='.strftime('%Y-%m-%d') .')', '')
 	call setline(line("."), x)
 endfunction
 
