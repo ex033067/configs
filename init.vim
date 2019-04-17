@@ -20,6 +20,15 @@ map <leader>2 :NERDTreeToggle<CR>
 map <leader>< :cprev<CR>
 map <leader>> :cnext<CR>
 
+" Toggle comment in line(s)
+xmap <leader>c <Plug>NERDCommenterInvert
+
+" Force comment line(s) even if already commented
+xmap <leader>ca <Plug>NERDCommenterComment
+
+" Force uncomment line(s) even if already uncommented
+xmap <leader>cr <Plug>NERDCommenterUncomment
+
 
 " Options
 " -------
