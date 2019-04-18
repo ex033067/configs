@@ -35,6 +35,8 @@ nmap <leader>cr :let g:nerd_comment_type='uncomment'<CR>:set opfunc=Ban_ExecNERD
 xmap <leader>cr <Plug>NERDCommenterUncomment
 nmap <leader>crr <Plug>NERDCommenterUncomment
 
+" Paste in terminal mode
+tnoremap <expr> <C-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
 
 " Options
 " -------
