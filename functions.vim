@@ -28,13 +28,13 @@ function! Ban_Run(command)
 endfunction
 
 function! Ban_ExecNERDCommenterWithMotion(mode)
-	let l:command = '<start>,<end>call NERDComment("n", "<type>")'
-	let [l:start, l:end] = [line("'["), line("']")]
-	if l:start > l:end
-		let [l:start, l:end] = [l:end, l:start]
+	let command = '<first>,<last>call NERDComment("n", "<type>")'
+	let [firstline, lastline] = [line("'["), line("']")]
+	if firstline > lastline
+		let [firstline, lastline] = [lastline, firstline]
 	endif
-	let l:command = substitute(l:command, '<start>', l:start, '')
-	let l:command = substitute(l:command, '<end>', l:end, '')
-	let l:command = substitute(l:command, '<type>', g:nerd_comment_type, '')
-	exec l:command
+	let command = substitute(command, '<first>', firstline, '')
+	let command = substitute(command, '<last>', lastline, '')
+	let command = substitute(command, '<type>', g:nerd_comment_type, '')
+	exec command
 endfunction
