@@ -56,7 +56,5 @@ set grepprg=ack\ --nogroup\ $*
 " Autocommands
 " ------------
 
-autocmd TermOpen * startinsert
-autocmd TermOpen * map <buffer> <CR> <CR>
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 autocmd BufReadPost *.todo setlocal filetype=todo
