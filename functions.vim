@@ -17,7 +17,7 @@ function! Ban_Run(command)
 	endif
 
 	if g:ban_run_internal == 1
-		let prefix = "terminal ". &shell ." -c '"
+		let prefix = "split | terminal ". &shell ." -c '"
 		let suffix = "'"
 	else
 		let prefix = '!'
