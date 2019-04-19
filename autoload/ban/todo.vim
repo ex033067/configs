@@ -219,16 +219,23 @@ function! ban#todo#AppendEmptyLine()
 endfunction
 
 function! ban#todo#MoveTodoItemBlockToDone()
-	" Write item block in done.todo file and remove it from todo.todo.
-	let lines = ban#todo#GetTodoItemBoundaries()
-	let first = lines[0]
-	let last = lines[1]
-	if last < first
-		let last = ban#todo#AppendEmptyLine()
+	" Write item block in "done.todo" file and remove it from "todo.todo".
+	let [_, linenum, colnum, _, _] = getcurpos()
+	let [item_firstline, item_lastline] = ban#todo#NewGetTodoItemBoundaries(linenum)
+
+	if item_lastline < line('$')
+		if len(getline(item_lastline + 1))
+			let del_lastline = item_lastline
+		else
+			let del_lastline = item_lastline + 1
+		endif
+	else
+		let del_lastline = item_lastline
 	endif
-	call execute(first.",".last."w >> done.todo")
-	call execute(first.",".last."del")
-	return [first, last]
+
+	call execute(item_firstline.",".del_lastline."w >> done.todo")
+	call execute(item_firstline.",".del_lastline."delete _")
+	return [item_firstline, item_lastline]
 endfunction
 
 function! ban#todo#AddNewTodoItem()
