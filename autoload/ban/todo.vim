@@ -136,26 +136,21 @@ function! ban#todo#GoToPrevSiblingTodoItem()
 	" Position cursor at the beginning of previous sibling item.
 	" It's "fenced" inside a foldlevel. I.e., don't extrapolate to next upper
 	" level.
-	let start_line = line('.')
-	let next_empty = search('^$', 'bW')
-	if next_empty == 0
-		return
+	let [_, linenum, colnum, _, _] = getcurpos()
+	let [item_firstline, item_lastline] = ban#todo#NewGetTodoItemBoundaries(linenum)
+	if item_firstline == 0
+		call cursor(linenum, colnum)
+		return 0
 	endif
 
-	let next_line = next_empty - 1
-	while foldlevel(next_line) >= foldlevel(start_line)
-		if foldlevel(next_line) == foldlevel(start_line) && getline(next_line) != ''
-			call cursor(next_line, 0)
-			let next_line = line("'{")
-			if getline(next_line) == ''
-				let next_line = next_line + 1
-			endif
-			call cursor(next_line, 0)
-			return
-		endif
-		let next_line = next_line - 1
-	endwhile
-	call cursor(start_line, 0)
+	let prev_sibling_firstline = ban#todo#NewGetPrevSiblingFirstLine(item_firstline)
+	if prev_sibling_firstline == 0
+		call cursor(linenum, colnum)
+		return 0
+	endif
+
+	call cursor(prev_sibling_firstline, 1)
+	return 0
 endfunction
 
 function! ban#todo#GoToParentTodoItem()
