@@ -115,23 +115,21 @@ function! ban#todo#GoToNextSiblingTodoItem()
 	" level.
 	" Don't move cursor and return -1 when there's no next sibling. I.e.,
 	" when item is the last one in file or when file is empty.
-	let start_line = line('.')
-	let last_line = line('$')
-	let next_empty = line("'}")
-	if next_empty == last_line
-		return -1
+	let [_, linenum, colnum, _, _] = getcurpos()
+	let [item_firstline, item_lastline] = ban#todo#NewGetTodoItemBoundaries(linenum)
+	if item_firstline == 0
+		call cursor(linenum, colnum)
+		return 0
 	endif
 
-	let next_line = next_empty + 1
-	while next_line <= last_line && foldlevel(next_line) >= foldlevel(start_line)
-		if foldlevel(next_line) == foldlevel(start_line) && getline(next_line) != ''
-			call cursor(next_line, 0)
-			return next_line
-		endif
-		let next_line = next_line + 1
-	endwhile
-	call cursor(start_line, 0)
-	return -1
+	let next_sibling_firstline = ban#todo#NewGetNextSiblingFirstLine(item_lastline, foldlevel(item_firstline))
+	if next_sibling_firstline == 0
+		call cursor(linenum, colnum)
+		return 0
+	endif
+
+	call cursor(next_sibling_firstline, 1)
+	return 0
 endfunction
 
 function! ban#todo#GoToPrevSiblingTodoItem()
