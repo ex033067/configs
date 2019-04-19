@@ -72,27 +72,41 @@ function! ban#todo#NewGetPreviousLineWithSameLevel(thelastline, level)
 endfunction
 
 function! ban#todo#MoveTodoItemDown()
-	let l:saved = @s
-	normal! $
-	call search("^\\s*- [.\\] ", "b")
-	normal! "sdip"_dd
-	let l:next = search("^\\s*- [.\\] ", "W")
-	if l:next > 0
-		put! s
-		normal! o
-		call search("^\\s*- [.\\] ", "b")
-	else
-		normal! }
-		if getline(".") == ""
-			normal! o
-			normal! k
-			put s
-		else
-			normal! o
-			put s
-		endif
+	let [_, linenum, colnum, _, _] = getcurpos()
+	let [item_firstline, item_lastline] = ban#todo#NewGetTodoItemBoundaries(linenum)
+	if item_firstline == 0
+		call cursor(linenum, colnum)
+		return 0
 	endif
-	let @s = l:saved
+
+	let next_sibling_firstline = ban#todo#NewGetNextSiblingFirstLine(item_lastline, foldlevel(item_firstline))
+	if next_sibling_firstline == 0
+		call cursor(linenum, colnum)
+		return 0
+	endif
+
+	call cursor(next_sibling_firstline, 1)
+	call ban#todo#MoveTodoItemUp()
+	call ban#todo#GoToNextSiblingTodoItem()
+endfunction
+
+function! ban#todo#NewGetNextSiblingFirstLine(item_lastline, item_level)
+	let next_sibling_firstline = ban#todo#NewGetNextLineWithSameLevel(a:item_lastline + 1, a:item_level)
+	return next_sibling_firstline
+endfunction
+
+function! ban#todo#NewGetNextLineWithSameLevel(thelastline, level)
+	for linenum in range(a:thelastline, line('$'))
+		if !len(getline(linenum))
+			continue
+		endif
+		if foldlevel(linenum) == a:level
+			return linenum
+		elseif foldlevel(linenum) < a:level
+			return 0
+		endif
+	endfor
+	return 0
 endfunction
 
 function! ban#todo#GoToNextSiblingTodoItem()
