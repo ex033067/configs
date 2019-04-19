@@ -200,24 +200,6 @@ function! ban#todo#MarkTodoItemAsCancelled()
 	call setline(line("."), x)
 endfunction
 
-function! ban#todo#GetTodoItemBoundaries()
-	" Return first and last line numbers of an item including its children.
-	"
-	" If a group is the last one in file, the last line will be computed
-	" to -2.
-	let first = line(".")
-	let last = ban#todo#GoToNextSiblingTodoItem() - 1
-	return [first, last]
-endfunction
-
-function! ban#todo#AppendEmptyLine()
-	" Append empty line if the last one is not already empty.
-	if getline('$') != ''
-		call append('$', '')
-	endif
-	return line('$')
-endfunction
-
 function! ban#todo#MoveTodoItemBlockToDone()
 	" Write item block in "done.todo" file and remove it from "todo.todo".
 	let [_, linenum, colnum, _, _] = getcurpos()
