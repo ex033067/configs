@@ -1,6 +1,10 @@
 function! ban#todo#MoveTodoItemUp()
 	let [_, linenum, colnum, _, _] = getcurpos()
 	let [item_firstline, item_lastline] = ban#todo#NewGetTodoItemBoundaries(linenum)
+	if item_firstline == 0
+		call cursor(linenum, colnum)
+		return 0
+	endif
 
 	let prev_sibling_firstline = ban#todo#NewGetPrevSiblingFirstLine(item_firstline)
 	if prev_sibling_firstline == 0
