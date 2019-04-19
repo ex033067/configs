@@ -1,13 +1,70 @@
 function! ban#todo#MoveTodoItemUp()
-	let l:saved = @s
-	normal! $
-	call search("^\\s*- [.\\] ", "b")
-	normal! "sdip"_dd0
-	call search("^\\s*- [.\\] ", "bW")
-	put! s
-	normal! o
-	call search("^\\s*- [.\\] ", "b")
-	let @s = l:saved
+	let [_, linenum, colnum, _, _] = getcurpos()
+	let [item_firstline, item_lastline] = ban#todo#NewGetTodoItemBoundaries(linenum)
+
+	let prev_sibling_firstline = ban#todo#NewGetPrevSiblingFirstLine(item_firstline)
+	if prev_sibling_firstline == 0
+		call cursor(linenum, colnum)
+		return 0
+	endif
+
+	call setpos("'c", [0, item_firstline, 1])
+	call setpos("'p", [0, prev_sibling_firstline, 1])
+	call setpos("'n", [0, item_lastline + 1, 1])
+	let target = prev_sibling_firstline - 1
+	execute item_firstline .','. item_lastline .'move '. target
+	call append(line("'p")-1, '')
+	if !len(getline(line("'n")))
+		execute line("'n") .'delete _'
+	endif
+	call cursor(line("'c"), 1)
+	execute 'delmark c n p'
+endfunction
+
+function! ban#todo#NewGetTodoItemBoundaries(original_linenum)
+	let item_firstline = ban#todo#NewGetTodoItemFirstLine(a:original_linenum)
+	let item_lastline = ban#todo#NewGetTodoItemLastLine(item_firstline)
+	return [item_firstline, item_lastline]
+endfunction
+
+function! ban#todo#NewGetTodoItemFirstLine(original_linenum)
+	call cursor(a:original_linenum, 99999)
+	return search('^\s*-[.\] ', 'bcnW')
+endfunction
+
+function! ban#todo#NewGetTodoItemLastLine(item_firstline)
+	let item_foldlevel = foldlevel(a:item_firstline)
+	let lastline = a:item_firstline
+	for lineno in range(a:item_firstline + 1, line('$'))
+		if !len(getline(lineno))
+			continue
+		endif
+		if foldlevel(lineno) <= item_foldlevel
+			return lastline
+		endif
+		let lastline = lineno
+	endfor
+	return line('$')
+endfunction
+
+function! ban#todo#NewGetPrevSiblingFirstLine(item_firstline)
+	let item_level = foldlevel(a:item_firstline)
+	let prev_sibling_firstline = ban#todo#NewGetPreviousLineWithSameLevel(a:item_firstline - 1, item_level)
+	return prev_sibling_firstline
+endfunction
+
+function! ban#todo#NewGetPreviousLineWithSameLevel(thelastline, level)
+	for linenum in range(a:thelastline, 1, -1)
+		if !len(getline(linenum))
+			continue
+		endif
+		if foldlevel(linenum) == a:level
+			return linenum
+		elseif foldlevel(linenum) < a:level
+			return 0
+		endif
+	endfor
+	return 0
 endfunction
 
 function! ban#todo#MoveTodoItemDown()
