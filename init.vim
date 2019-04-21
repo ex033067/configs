@@ -44,7 +44,7 @@ tnoremap <expr> <C-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
 set termguicolors
 set background=light
 syntax reset
-colo vim-almostmonochrome
+colo almostmonochrome
 set listchars=tab:»·,trail:~,nbsp:·,extends:→,precedes:←
 
 set shiftwidth=0 " indent with tabstop length
