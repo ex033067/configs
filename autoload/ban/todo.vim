@@ -155,24 +155,17 @@ endfunction
 
 function! ban#todo#GoToParentTodoItem()
 	" Position cursor at the beginning of parent item.
-	let start_line = line('.')
-	if foldlevel(start_line) < 1
+	let firstline = line('.')
+	if foldlevel(firstline) < 1
 		return
 	endif
 
-	let prev_empty = start_line
-
-	while prev_empty > 1 && foldlevel(prev_empty) >= foldlevel(start_line)
-		let prev_empty = line("'{")
-		call cursor(prev_empty, 0)
-	endwhile
-
-	let prev_empty = line("'{")
-	if prev_empty == 1
-		call cursor(prev_empty, 0)
-	else
-		call cursor(prev_empty + 1, 0)
-	endif
+	for linenum in range(firstline, 1, -1)
+		if foldlevel(linenum) < foldlevel(firstline) && len(getline(linenum))
+			call cursor(linenum, 1)
+			return
+		endif
+	endfor
 endfunction
 
 function! ban#todo#MarkTodoItemAsDoing()
