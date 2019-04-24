@@ -17,8 +17,8 @@ function! ban#todo#MoveTodoItemUp()
 	call setpos("'n", [0, item_lastline + 1, 1])
 	let target = prev_sibling_firstline - 1
 	execute item_firstline .','. item_lastline .'move '. target
-	call append(line("'p")-1, '')
 	if !len(getline(line("'n")))
+		call append(line("'p")-1, '')
 		execute line("'n") .'delete _'
 	endif
 	call cursor(line("'c"), 1)
