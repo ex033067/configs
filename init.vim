@@ -17,6 +17,9 @@ map <leader>0 :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> t
 map <Space> :noh<CR>
 map <leader>2 :NERDTreeToggle<CR>
 
+map <leader>g :Gstatus<CR>
+map <leader>l :Git l<CR>
+
 map <leader>< :cprev<CR>
 map <leader>> :cnext<CR>
 
