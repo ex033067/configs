@@ -22,18 +22,12 @@ map <leader>> :cnext<CR>
 
 " Toggle comment in line(s)
 nmap <leader>c :let g:nerd_comment_type='toggle'<CR>:set opfunc=Ban_ExecNERDCommenterWithMotion<CR>g@
-xmap <leader>c <Plug>NERDCommenterToggle
+xmap <leader>cc <Plug>NERDCommenterToggle
 nmap <leader>cc <Plug>NERDCommenterToggle
 
 " Force comment line(s) even if already commented
-nmap <leader>ca :let g:nerd_comment_type='comment'<CR>:set opfunc=Ban_ExecNERDCommenterWithMotion<CR>g@
 xmap <leader>ca <Plug>NERDCommenterComment
-nmap <leader>caa <Plug>NERDCommenterComment
-
-" Force uncomment line(s) even if already uncommented
-nmap <leader>cr :let g:nerd_comment_type='uncomment'<CR>:set opfunc=Ban_ExecNERDCommenterWithMotion<CR>g@
-xmap <leader>cr <Plug>NERDCommenterUncomment
-nmap <leader>crr <Plug>NERDCommenterUncomment
+nmap <leader>ca <Plug>NERDCommenterComment
 
 " Paste in terminal mode
 tnoremap <expr> <C-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
