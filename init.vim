@@ -64,3 +64,9 @@ set grepprg=ack\ --nogroup\ $*
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 autocmd BufReadPost *.todo setlocal filetype=todo
 autocmd TermOpen * startinsert
+
+
+" Language providers
+" ------------------
+
+let g:python_host_prog  = '~/.local/bin/pyenv/shims/python2'
