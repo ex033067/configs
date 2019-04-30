@@ -38,6 +38,11 @@ tnoremap <expr> <C-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
 " Add delimiters to selected text
 xmap <leader>d :call Ban_AddDelimiterToSelectedText()<CR>
 
+" Expand snippets
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
 " Options
 " -------
 
