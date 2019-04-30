@@ -6,7 +6,7 @@ let NERDSpaceDelims = 1
 let NERDTrimTrailingWhitespace = 1
 
 if dein#load_state('~/.cache/dein')
-	call dein#begin('~/.cache/dein')
+	call dein#begin('~/.cache/dein', [expand('$MYVIMRC'), expand('<sfile>')])
 	call dein#add('Shougo/dein.vim')
 	call dein#add('tpope/vim-fugitive')
 	call dein#add('scrooloose/nerdtree')
