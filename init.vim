@@ -69,4 +69,4 @@ autocmd TermOpen * startinsert
 " Language providers
 " ------------------
 
-let g:python_host_prog  = '~/.local/bin/pyenv/shims/python2'
+let g:python_host_prog  = $PYENV_ROOT .'/shims/python2'
