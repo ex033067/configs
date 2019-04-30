@@ -14,6 +14,7 @@ if dein#load_state('~/.cache/dein')
 	call dein#add('viniciusban/vim-polyglot')
 	call dein#add('viniciusban/vim-ft-markdown')
 	call dein#add('viniciusban/vim-almostmonochrome')
+	call dein#add('python-rope/ropevim')
 	call dein#end()
 	call dein#save_state()
 endif
