@@ -18,9 +18,10 @@ alias nb='jupyter notebook --ip=localhost.test'
 alias clog='${PROJECT_ROOT}/clog/clog.sh'
 alias now='date -u +%y%m%d%H%M'
 
-alias todo='cd ~/Dropbox/todo && vim todo.todo'
+alias todo='cd ~/Dropbox/todo && $EDITOR todo.todo'
 
 # one-letters
+alias e='$EDITOR'
 alias l='ls -lhgo'
 alias r='runserver'
 alias t='make test'
