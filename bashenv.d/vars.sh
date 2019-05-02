@@ -6,9 +6,5 @@ export PROJECT_ROOT=~/projects
 
 export HISTCONTROL=ignoreboth
 export HISTTIMEFORMAT="%F %T "
-if [[ "$(uname)" = "Darwin" ]]; then
-	export EDITOR='nvim'
-else
-	export EDITOR='nvim.appimage'
-fi
+export EDITOR='nvim'
 export VISUAL=$EDITOR
