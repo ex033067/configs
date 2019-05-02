@@ -5,6 +5,7 @@ export PROJECT_ROOT=~/projects
 [ -z "$TMPDIR" ] && export TMPDIR=/tmp
 
 export HISTCONTROL=ignoreboth
+export HISTTIMEFORMAT="%F %T "
 if [[ "$(uname)" = "Darwin" ]]; then
 	export EDITOR='nvim'
 else
