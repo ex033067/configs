@@ -29,7 +29,7 @@ map <buffer> <localleader>TO :grep '(\#\\|//) *(TODO\\|NOTE\\|FIXME)'
 " Read documentation for running Python from inside vim in python_test.vim.
 
 if !exists("g:test_command")
-	let g:test_command = $DO_TEST_COMMAND
+	let g:test_command = $DEV_TEST_COMMAND
 endif
 if !exists("g:test_target")
 	let g:test_target = ""
