@@ -37,7 +37,6 @@ endif
 
 " \tt runs tests.
 map <localleader>tt :wall <CR>:execute Ban_Run('run-test '. g:test_command .' '. g:test_target)<CR>
-nmap <CR> <localleader>tt
 
 " \tC configure the test command (along with its arguments).
 " Examples:
