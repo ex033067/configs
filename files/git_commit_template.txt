@@ -1,8 +1,5 @@
 
 
-# Guide:
-#   - Subject: imperative.
-#   - Body: explain what/why, not how.
-#   - Types: feat, fix, docs, style, refactor, test, chore.
-#   - https://is.gd/gitcommit/#seven/rules
-# ---------------------------------------------------------------------
+# Explain what/why, not how.
+# [Type]s: feat, fix, docs, style, refactor, test, chore.
+# https://is.gd/gitcommit/#seven/rules
