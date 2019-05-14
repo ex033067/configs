@@ -1,1 +1,2 @@
 setlocal list
+setlocal cul
