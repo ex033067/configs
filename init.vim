@@ -20,6 +20,7 @@ map <leader>2 :NERDTreeToggle<CR>
 
 map <leader>g :Gstatus<CR>
 map <leader>l :Git l<CR>
+map :: :update <CR>
 
 map <leader>< :cprev<CR>
 map <leader>> :cnext<CR>
