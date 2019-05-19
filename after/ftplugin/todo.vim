@@ -23,6 +23,7 @@ setlocal formatoptions+=n
 setlocal comments=fb:-[\ ],fb:-[*],fb:-[x],fb:-,fb:*
 setlocal tabstop=4
 setlocal expandtab
+setlocal cursorline
 
 " Add items
 imap <silent> <buffer> -<Tab> -<Esc>:call ban#todo#AddNewTodoItem()<CR>^xA
