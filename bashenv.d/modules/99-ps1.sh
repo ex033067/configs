@@ -19,14 +19,14 @@ function __ps1_git () {
     fi
 
     # Items not committed
-    local ITEMS=$(git status --porcelain 2>/dev/null)
+    local PENDING=$(git status --porcelain 2>/dev/null)
 
     # No pending commit
-    [ -z "$ITEMS" ] && echo "$BRANCH" && return
+    [ -z "$PENDING" ] && echo "$BRANCH" && return
 
     # Staged and/or unstaged files
-    local staged=$(echo "$ITEMS" | grep '^[ACDMR]' >/dev/null && echo '+')
-    local unstaged=$(echo "$ITEMS" | grep '^[ ?][ACDMR?]' >/dev/null && echo '!')
+    local staged=$(echo "$PENDING" | grep '^[ACDMR]' >/dev/null && echo '+')
+    local unstaged=$(echo "$PENDING" | grep '^[ ?][ACDMR?]' >/dev/null && echo '!')
     echo "${staged}${unstaged}${BRANCH}" && return
 }
 
