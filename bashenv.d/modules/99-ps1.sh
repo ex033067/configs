@@ -24,11 +24,10 @@ function __ps1_git () {
     # No pending commit
     [ -z "$ITEMS" ] && echo "$BRANCH" && return
 
-    # Staged objects (some or all of them).
-    echo "$ITEMS" | grep '^[RMDA]' >/dev/null && echo "+${BRANCH}" && return
-
-    # Modified, but none staged yet.
-    echo "!${BRANCH}" && return
+    # Staged and/or unstaged files
+    local staged=$(echo "$ITEMS" | grep '^[ACDMR]' >/dev/null && echo '+')
+    local unstaged=$(echo "$ITEMS" | grep '^[ ?][ACDMR?]' >/dev/null && echo '!')
+    echo "${staged}${unstaged}${BRANCH}" && return
 }
 
 # Set PS1
