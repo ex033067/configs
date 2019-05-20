@@ -3,8 +3,8 @@
 unset -f __ps1_git
 function __ps1_git () {
     # Show git branch and indicator about status:
-    #   - "!" means no modified objects were staged
-    #   - "+" means some (or all) modified objects were staged
+    #   - "!" means there are unstaged changes
+    #   - "+" means some or all changes are staged
 
     local BRANCHES=$(git branch 2>/dev/null)
     if [[ $? -ne 0 ]]; then
