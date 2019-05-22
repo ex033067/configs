@@ -1,5 +1,7 @@
 
 
-# Explain what/why, not how.
-# [Type]s: feat, fix, docs, style, refactor, test, chore.
-# https://is.gd/gitcommit/#seven/rules
+# 1) Explain what/why, not how.
+# 2) :tag: style, docs, clean, test, bug, refactor, security, build, deps
+#
+# https://is.gd/commit_messages
+
