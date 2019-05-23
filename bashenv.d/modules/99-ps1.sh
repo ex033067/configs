@@ -39,34 +39,4 @@ function __ps1_git () {
 # tput colors from
 # http://unix.stackexchange.com/questions/269077/tput-setaf-color-table-how-to-determine-color-codes#269195
 
-_prompt_command () {
-	LAST_EXIT_CODE=$?
-	if [[ ${LAST_EXIT_CODE} -eq 0 ]]; then
-		local ps1_status="\[\e[0;32m\]\$" # green
-	else
-		local ps1_status="\[\e[0;31m\]\$ ${LAST_EXIT_CODE}" # red
-	fi
-
-	if [[ "${PWD}" = "${PS1_PREVIOUS_PWD}" ]]; then
-		# Shortcut to improve performance because user didn't cd into other dir.
-		local project="${PS1_PREVIOUS_PROJECT}"
-	else
-		# Remove $PROJECT_ROOT from $PWD
-		local project="${PWD#${PROJECT_ROOT}/}"
-		if [[ "${PWD}" = "${project}" ]]; then
-			# Not inside any project. Abbreviate $HOME with "~".
-			# Ex.: Transform "/Users/viniciusban/Library" into "~/Library".
-			project="${PWD/${HOME}/~}"
-		else
-			# Inside a project. Abbreviate intermediary dirs with "...".
-			# Ex.: Tranform "myproj/usr/somedir/otherdir" into "myproj/...otherdir".
-			project="${project//\/*\///...}"
-		fi
-	fi
-	PS1="${ps1_status} @\h:${project}${VIRTUAL_ENV:+()}\$ \[\e[0m\]"
-
-	PS1_PREVIOUS_PWD="${PWD}"
-	PS1_PREVIOUS_PROJECT="${project}"
-}
-
-PROMPT_COMMAND=_prompt_command
+PS1='$(RC=$?;GREEN="\[\033[0;32m\]";RED="\[\033[0;31m\]";[ $RC -eq 0 ] && echo "${GREEN}$ " || echo "${RED}$ ${RC} ")${debian_chroot:+($debian_chroot)}@\h:${VIRTUAL_ENV:+(}\W$(BRANCH=$(__ps1_git);echo "${BRANCH:+ $BRANCH}")${VIRTUAL_ENV:+)}\$ \[\033[00m\]'
