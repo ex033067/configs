@@ -21,7 +21,6 @@ function __main() {
     fi
 
     __source ~/.local/bin/bashenv.d
-    __source ~/.local/bin/bashenv.d/functions
     __source ~/.local/bin/bashenv.d/modules
     __source ~/.local/bin/bashenv.d/completions
 }
