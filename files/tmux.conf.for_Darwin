@@ -3,7 +3,7 @@
 # Copyright (C) 2017 viniciusban.com
 # This file is distributed under GPL-V3.
 
-source ~/.config/configs/generic_tmux.conf
+source ~/.tmux.conf_generic
 
 # Truecolor terminal in Darwin
 set-option -g default-terminal "tmux-256color"
