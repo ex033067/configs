@@ -134,7 +134,7 @@
         default = simple
 
 [commit]
-        template = ~/.config/configs/git_commit_template.txt
+        template = ~/.git_commit_template.txt
 
 [rebase]
         autosquash = true

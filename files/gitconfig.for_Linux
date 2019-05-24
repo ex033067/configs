@@ -1,4 +1,4 @@
 [merge]
         tool = meld
 [include]
-        path = ~/.config/configs/gitconfig_generic
+        path = ~/.gitconfig_generic
