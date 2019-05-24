@@ -1,7 +1,7 @@
 #  vim: filetype=sh
 
-if [ -d /hd2/.vagrant.d ]; then
-    export VAGRANT_HOME=/hd2/.vagrant.d
+if [[ -d /Volumes/hd2/${USER}/.vagrant.d ]]; then
+    export VAGRANT_HOME=/Volumes/hd2/${USER}/.vagrant.d
 fi
 
 export VAGRANT_BOX_UPDATE_CHECK_DISABLE=1
