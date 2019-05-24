@@ -1,3 +1,3 @@
 #  vim: filetype=sh
 
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin/binscripts:$HOME/.local/bin:$PATH"
