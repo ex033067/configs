@@ -100,7 +100,11 @@ __prompt_command () {
 		if [[ "${PWD}" = "${project}" ]]; then
 			# Not inside any project. Abbreviate $HOME with "~".
 			# Ex.: Transform "/Users/viniciusban/Library" into "~/Library".
-			project="${PWD/${HOME}/\~}"
+			if [[ "${HOME}" =~ ^/home/ ]]; then
+				project="${PWD/${HOME}/\~}" # Linux
+			else
+				project="${PWD/${HOME}/~}" # MacOS
+			fi
 		else
 			# Inside a project. Abbreviate intermediary dirs with "...".
 			# Ex.: Tranform "myproj/usr/somedir/otherdir" into "myproj/...otherdir".
