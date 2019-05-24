@@ -20,10 +20,10 @@ function __main() {
         return
     fi
 
-    __source ~/.config/configs/bashenv.d
-    __source ~/.config/configs/bashenv.d/functions
-    __source ~/.config/configs/bashenv.d/modules
-    __source ~/.config/configs/bashenv.d/completions
+    __source ~/.local/bin/bashenv.d
+    __source ~/.local/bin/bashenv.d/functions
+    __source ~/.local/bin/bashenv.d/modules
+    __source ~/.local/bin/bashenv.d/completions
 }
 
 __main
