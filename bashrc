@@ -83,7 +83,7 @@ __variables () {
 
 	# partialcd
 	export PARTIALCD_ROOT=~/projects
-	source ~/.local/bin/partialcd/partialcd
+	source ~/.local/bin/partialcd
 
 	# autoenvrc
 	if which autoenvrc > /dev/null
