@@ -84,6 +84,14 @@ __variables () {
 	# partialcd
 	export PARTIALCD_ROOT=~/projects
 	source ~/.local/bin/partialcd/partialcd
+
+	# autoenvrc
+	if which autoenvrc > /dev/null
+	then
+		eval "$(autoenvrc init)"
+	fi
+
+
 }
 
 
@@ -204,6 +212,7 @@ __define_functions () {
 }
 
 __export_functions () {
+	export -f cd
 	export -f _partialcd
 	export -f pyenv
 	export -f __prompt_command
