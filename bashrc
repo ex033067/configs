@@ -25,16 +25,9 @@ __aliases () {
 }
 
 
-
-
 __shell_options () {
 	set -o vi
 }
-
-
-
-
-
 
 
 __variables () {
@@ -72,8 +65,6 @@ __variables () {
 	    export VIRTUAL_ENV_ROOT=~/virtualenvs
 	fi
 
-	# [[ -n "$VIRTUAL_ENV" ]] && export PATH="$VIRTUAL_ENV/bin:$PATH"
-
 	# vagrant
 	[[ -d /Volumes/hd2/${USER}/.vagrant.d ]] && export VAGRANT_HOME=/Volumes/hd2/${USER}/.vagrant.d
 	export VAGRANT_BOX_UPDATE_CHECK_DISABLE=1
@@ -90,8 +81,6 @@ __variables () {
 	then
 		eval "$(autoenvrc init)"
 	fi
-
-
 }
 
 
