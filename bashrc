@@ -228,8 +228,14 @@ __main () {
 	__aliases
 	__shell_options
 
-	if [[ $SHLVL -gt 1 ]]; then
-		return
+	if [[ -z "${TMUX}" ]]; then
+		if [[ $SHLVL -gt 1 ]]; then
+			return
+		fi
+	else
+		if [[ $SHLVL -gt 2 ]]; then
+			return
+		fi
 	fi
 
 	__variables
