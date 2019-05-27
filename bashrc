@@ -228,14 +228,16 @@ __main () {
 	__aliases
 	__shell_options
 
-	if [[ -z "${TMUX}" ]]; then
-		if [[ $SHLVL -gt 1 ]]; then
+	if [[ -n "${TMUX}" ]]; then
+		if [[ -n "${LOADED_TMUX_ENV}" ]]; then
 			return
 		fi
+		export LOADED_TMUX_ENV=1
 	else
-		if [[ $SHLVL -gt 2 ]]; then
+		if [[ -n "${LOADED_ENV}" ]]; then
 			return
 		fi
+		export LOADED_ENV=1
 	fi
 
 	__variables
