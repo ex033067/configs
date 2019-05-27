@@ -16,7 +16,7 @@ __aliases () {
 
 	alias django='python manage.py'
 	alias now='date -u +%y%m%d%H%M'
-	alias pcd='_partialcd'
+	alias p='_partialcd'
 	alias todo='cd ~/Dropbox/todo && $EDITOR todo.todo'
 
 	# one-letters
