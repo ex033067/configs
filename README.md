@@ -3,6 +3,14 @@ bashenv
 
 Initialize and configure bash environment.
 
+
 ## Installation ##
 
-    $ ln -s ${PWD}/bashenv.d ~/.local/bin/bashenv.d
+For Linux:
+
+    $ ln -s ${PWD}/bashrc ~/.bash_aliases
+
+For MacOS:
+
+    $ echo 'source ~/.bashrc' > ~/.bash_profile
+    $ ln -s ${PWD}/bashrc ~/.bashrc
