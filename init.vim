@@ -1,4 +1,3 @@
-set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 execute "source ". expand("<sfile>:h") ."/plugins.vim"
 execute "source ". expand("<sfile>:h") ."/functions.vim"
 
