@@ -4,6 +4,7 @@ let NERDCommentEmptyLines = 1
 let NERDDefaultAlign='left'
 let NERDSpaceDelims = 1
 let NERDTrimTrailingWhitespace = 1
+let NERDTreeHijackNetrw = 0
 
 let g:neosnippet#snippets_directory = '~/projects/vim-config.tool/local-snippets'
 
