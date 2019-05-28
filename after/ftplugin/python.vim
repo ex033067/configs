@@ -5,7 +5,7 @@ setlocal nofoldenable
 setlocal tabstop=4
 setlocal expandtab " Spaces, not tabs
 
-setlocal equalprg=~/bin/python-style
+setlocal equalprg=~/.local/bin/binscripts/python-style
 setlocal list
 
 
@@ -14,6 +14,9 @@ setlocal list
 
 " Indent
 map <silent> <buffer> == :write<CR>gg=G
+
+" Linter
+map <buffer> <localleader>m :update<CR>:make %<CR>
 
 " Look for annotations (TODO/NOTE/FIXME) in project
 map <buffer> <localleader>TO :grep '(\#\\|//) *(TODO\\|NOTE\\|FIXME)'
