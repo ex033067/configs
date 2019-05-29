@@ -22,6 +22,7 @@ map <leader>< :cprev<CR>
 map <leader>> :cnext<CR>
 
 " Git
+noremap GG G
 map GA :!git add % <CR>
 map GC :Git commit -v <CR>
 map Gd :Gdiff <CR>
