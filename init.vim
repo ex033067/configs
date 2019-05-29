@@ -19,8 +19,8 @@ map <leader>2 :NERDTreeToggle<CR>
 
 map <leader>g :Gstatus<CR>
 map <leader>l :Git l<CR>
-map <leader>w :set wrap!<CR>
-map <leader>L :set cul!<CR>
+map <leader>W :set wrap!<CR>
+map <leader>C :set cul!<CR>
 map :: :update <CR>
 
 map <leader>< :cprev<CR>
