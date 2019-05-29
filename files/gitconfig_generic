@@ -128,6 +128,7 @@
 [core]
         autocrlf = input
         editor = vim
+        excludesfile=~/.gitignore_global
 [http]
         sslVerify = false
 [push]
