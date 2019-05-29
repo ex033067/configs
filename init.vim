@@ -14,13 +14,13 @@ map <leader>0 :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> t
 	\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 map <Space> :noh<CR>
-map <C-Space> :set nu!<CR>
 map <leader>2 :NERDTreeToggle<CR>
 
 map <leader>g :Gstatus<CR>
 map <leader>l :Git l<CR>
 map <leader>W :set wrap!<CR>
 map <leader>C :set cul!<CR>
+map <leader>N :set nu!<CR>
 map :: :update <CR>
 
 map <leader>< :cprev<CR>
