@@ -6,8 +6,6 @@ let NERDSpaceDelims = 1
 let NERDTrimTrailingWhitespace = 1
 let NERDTreeHijackNetrw = 0
 
-let g:neosnippet#snippets_directory = '~/projects/vim-config.tool/local-snippets'
-
 call plug#begin('~/.cache/vim-plug')
 Plug 'junegunn/vim-plug'
 Plug 'tpope/vim-fugitive'
