@@ -16,8 +16,13 @@ map <leader>0 :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> t
 map <Space> :noh<CR>
 map <leader>2 :NERDTreeToggle<CR>
 
-map <leader>g :Gstatus<CR>
-map <leader>l :Git l<CR>
+" Git
+map GA :!git add % <CR>
+map GC :Git commit -v <CR>
+map Gd :Gdiff <CR>
+map GD :Git diff % <CR>
+map GL :Git l <CR>
+map GP :Git add --patch % <CR>
 
 map <leader>C :set cul!<CR>
 map <leader>N :set nu!<CR>
