@@ -8,13 +8,18 @@ execute "source ". expand("<sfile>:h") ."/functions.vim"
 let mapleader=","
 let maplocalleader="\\"
 
-" Show highlight group of word under cursor
-map <leader>0 :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-	\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-	\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-map <Space> :noh<CR>
+map :: :update <CR>
 map <leader>2 :NERDTreeToggle<CR>
+
+" Toggle settings
+map <Space> :noh<CR>
+map <leader>C :set cul!<CR>
+map <leader>N :set nu!<CR>
+map <leader>W :set wrap!<CR>
+
+" Navigate the quick fix list
+map <leader>< :cprev<CR>
+map <leader>> :cnext<CR>
 
 " Git
 map GA :!git add % <CR>
@@ -24,15 +29,7 @@ map GD :Git diff % <CR>
 map GL :Git l <CR>
 map GP :Git add --patch % <CR>
 
-map <leader>C :set cul!<CR>
-map <leader>N :set nu!<CR>
-map <leader>W :set wrap!<CR>
-map :: :update <CR>
-
-map <leader>< :cprev<CR>
-map <leader>> :cnext<CR>
-
-" Toggle comment in line(s)
+" Toggle comment
 nmap <leader>c :let g:nerd_comment_type='toggle'<CR>:set opfunc=Ban_ExecNERDCommenterWithMotion<CR>g@
 xmap <leader>cc <Plug>NERDCommenterToggle
 nmap <leader>cc <Plug>NERDCommenterToggle
@@ -41,11 +38,16 @@ nmap <leader>cc <Plug>NERDCommenterToggle
 xmap <leader>ca <Plug>NERDCommenterComment
 nmap <leader>ca <Plug>NERDCommenterComment
 
+" Add delimiters to selected text
+xmap <leader>d :call Ban_AddDelimiterToSelectedText()<CR>
+
 " Paste in terminal mode
 tnoremap <expr> <C-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
 
-" Add delimiters to selected text
-xmap <leader>d :call Ban_AddDelimiterToSelectedText()<CR>
+" Show highlight group of word under cursor
+map <leader>0 :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+	\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+	\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 
 " Options
