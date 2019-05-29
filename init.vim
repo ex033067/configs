@@ -74,3 +74,14 @@ autocmd TermOpen * startinsert
 
 let g:python_host_prog  = $PYENV_ROOT .'/shims/python2'
 let g:loaded_python3_provider = 1
+
+
+" Fix inconsistencies
+" -------------------
+
+if has('nvim')
+	" I don't know why neovim sets $LANG to 'en_BR', even if started with no
+	" 'vimrc' ('nvim -u NONE'). This makes 'ack' show a warning message every
+	" time it runs under neovim.
+	let $LANG=''
+endif
