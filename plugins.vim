@@ -9,12 +9,15 @@ let NERDTreeHijackNetrw = 0
 call plug#begin('~/.cache/vim-plug')
 Plug 'junegunn/vim-plug'
 Plug 'tpope/vim-fugitive'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'viniciusban/vim-polyglot'
 Plug 'viniciusban/vim-ft-markdown'
 Plug 'viniciusban/vim-almostmonochrome'
+
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+
 call plug#end()
 
 filetype plugin indent on
