@@ -15,7 +15,7 @@ Plug 'viniciusban/vim-polyglot'
 Plug 'viniciusban/vim-ft-markdown'
 Plug 'viniciusban/vim-almostmonochrome'
 
-Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf', { 'dir': '~/.cache/vim-plug/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 call plug#end()
