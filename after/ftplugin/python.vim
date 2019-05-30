@@ -49,31 +49,14 @@ map t<CR> <localleader>tt
 "   - python -m unittest
 map <localleader>tC :let g:test_command="<c-r>=g:test_command<cr>"
 
-" \tnf, \tnm Make a test name from current line contents
-map <silent> <buffer> <localleader>tnf :call ban#python#MakeValidPythonTestName("function") <CR>
-map <silent> <buffer> <localleader>tnm :call ban#python#MakeValidPythonTestName("method") <CR>
+" \tn Make a test name from current line contents
+map <buffer> <localleader>tn :call ban#python#MakeValidPythonTestName() <CR>
 
-" Mark the target of next test run
-" --------------------------------
-"
-" You can set g:test_target by yourself with anything you want.
-"
-" These are just helpers.
+" Mark the target and run tests
+" -----------------------------
 
-" \ta marks all the project.
-map <silent> <buffer> <localleader>ta :let g:test_target = "" \| execute Ban_Run('run-test '. g:test_command .' '. g:test_target)<CR>
-
-" \tp, \tD mark Python package or directory of current file.
-map <silent> <buffer> <localleader>tp :let g:test_target = substitute(expand("%:.:h"), "/", ".", "g") \| execute Ban_Run('run-test '. g:test_command .' '. g:test_target)<CR>
-map <silent> <buffer> <localleader>tD :let g:test_target = expand("%:.:h") . "/" \| execute Ban_Run('run-test '. g:test_command .' '. g:test_target)<CR>
-
-" \tM, \tF mark current Python module or current file.
-map <silent> <buffer> <localleader>tM :let g:test_target = substitute(expand("%:.:r"), "/", ".", "g") \| execute Ban_Run('run-test '. g:test_command .' '. g:test_target)<CR>
-map <silent> <buffer> <localleader>tF :let g:test_target = expand("%:.") \| execute Ban_Run('run-test '. g:test_command .' '. g:test_target)<CR>
-
-" \tc marks current Python TestCase class
-map <silent> <buffer> <localleader>tc :if g:test_command =~ "pytest" \| let b:sep="::" \| else \| let b:sep="." \| endif \| let g:test_target = substitute(expand("%:.:r") . b:sep . ban#python#GetCurrentPythonClassName(), "/", ".", "g") \| execute Ban_Run('run-test '. g:test_command .' '. g:test_target)<CR>
-
-" \tm, \tf mark current Python method or current function (for pytest)
-map <silent> <buffer> <localleader>tm :if g:test_command =~ "pytest" \| let b:sep="::" \| else \| let b:sep="." \| endif \| let g:test_target = substitute(expand("%:.:r") . b:sep . ban#python#GetCurrentPythonClassName() . b:sep . ban#python#GetCurrentPythonMethodName(), "/", ".", "g") \| execute Ban_Run('run-test '. g:test_command .' '. g:test_target)<CR>
-map <silent> <buffer> <localleader>tf :let g:test_target = expand("%:.") . "::" . expand("<cword>") \| execute Ban_Run('run-test '. g:test_command .' '. g:test_target)<CR>
+map <buffer> <localleader>ta :call ban#python#RunAllTestSuite() <CR>
+map <buffer> <localleader>tp :call ban#python#RunCurrentTestPackage() <CR>
+map <buffer> <localleader>tf :call ban#python#RunCurrentTestModule() <CR>
+map <buffer> <localleader>tc :call ban#python#RunCurrentTestCase() <CR>
+map <buffer> <localleader>tm :call ban#python#RunCurrentTestMethod() <CR>
