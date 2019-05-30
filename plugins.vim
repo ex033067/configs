@@ -9,6 +9,7 @@ let NERDTreeHijackNetrw = 0
 call plug#begin('~/.cache/vim-plug')
 Plug 'junegunn/vim-plug'
 Plug 'tpope/vim-fugitive'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'viniciusban/vim-polyglot'
