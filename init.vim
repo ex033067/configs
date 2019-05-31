@@ -63,6 +63,8 @@ set listchars=tab:»·,trail:~,nbsp:·,extends:→,precedes:←
 set shiftwidth=0 " indent with tabstop length
 set mouse=n " enable mouse in normal mode
 
+set hidden
+
 set grepprg=ack\ --nogroup\ $*
 
 
