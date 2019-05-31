@@ -83,6 +83,13 @@ __variables () {
 	then
 		eval "$(autoenvrc init)"
 	fi
+
+	# ssh-agent
+	if [[ "${OSNAME}" = "Linux" ]]; then
+		if ! pgrep ssh-agent; then
+			eval $(ssh-agent -t 900) # cache key for 900 secs.
+		fi
+	fi
 }
 
 
