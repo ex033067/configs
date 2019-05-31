@@ -80,7 +80,7 @@ autocmd TermOpen * startinsert
 " ------------------
 
 let g:python_host_prog  = $PYENV_ROOT .'/shims/python2'
-let g:loaded_python3_provider = 1
+let g:python3_host_prog  = $PYENV_ROOT .'/shims/python3'
 
 
 " Fix inconsistencies
