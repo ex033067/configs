@@ -21,7 +21,7 @@ __aliases () {
 
 	# one-letters
 	alias e='$EDITOR'
-	alias j='jupyter notebook --ip=localhost.test'
+	alias j='jupyter notebook --no-browser --ip=localhost.test --NotebookApp.allow_remote_access=True'
 }
 
 
