@@ -32,7 +32,9 @@ __shell_options () {
 
 __variables () {
 	export PATH="/usr/local/bin:$PATH"
-	eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+	if [[ "${OSNAME}" = "Linux" ]]; then
+		eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+	fi
 
 	export PROJECT_ROOT=~/projects
 	[[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
