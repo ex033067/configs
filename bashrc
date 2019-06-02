@@ -32,6 +32,8 @@ __shell_options () {
 
 __variables () {
 	export PATH="/usr/local/bin:$PATH"
+	eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
 	export PROJECT_ROOT=~/projects
 	[[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
 
@@ -80,6 +82,16 @@ __variables () {
 	if which autoenvrc > /dev/null
 	then
 		eval "$(autoenvrc init)"
+	fi
+
+	# ssh-agent
+	if [[ "${OSNAME}" = "Linux" ]]; then
+		if pgrep ssh-agent >/dev/null 2>&1 ; then
+			export SSH_AGENT_PID=$(pgrep ssh-agent | head -n 1)
+			export SSH_AUTH_SOCK=$(find /tmp/ssh* -name 'agent.'"$(( SSH_AGENT_PID - 1 ))")
+		else
+			eval $(ssh-agent -t 900) # cache key for 900 secs.
+		fi
 	fi
 }
 
