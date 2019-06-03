@@ -87,14 +87,14 @@ __variables () {
 	fi
 
 	# ssh-agent
-	if [[ "${OSNAME}" = "Linux" ]]; then
-		if pgrep ssh-agent >/dev/null 2>&1 ; then
-			export SSH_AGENT_PID=$(pgrep ssh-agent | head -n 1)
-			export SSH_AUTH_SOCK=$(find /tmp/ssh* -name 'agent.'"$(( SSH_AGENT_PID - 1 ))")
-		else
-			eval $(ssh-agent -t 3600) # cache key for 3600 secs (1 hour).
-		fi
-	fi
+	# if [[ "${OSNAME}" = "Linux" ]]; then
+	#     if pgrep ssh-agent >/dev/null 2>&1 ; then
+	#         export SSH_AGENT_PID=$(pgrep ssh-agent | head -n 1)
+	#         export SSH_AUTH_SOCK=$(find /tmp/ssh* -name 'agent.'"$(( SSH_AGENT_PID - 1 ))")
+	#     else
+	#         eval $(ssh-agent -t 3600) # cache key for 3600 secs (1 hour).
+	#     fi
+	# fi
 }
 
 
