@@ -55,8 +55,8 @@ map <buffer> <localleader>tn :call ban#python#MakeValidPythonTestName() <CR>
 " Mark the target and run tests
 " -----------------------------
 
-map <buffer> <localleader>ta :call ban#python#RunAllTestSuite() <CR>
-map <buffer> <localleader>tp :call ban#python#RunCurrentTestPackage() <CR>
-map <buffer> <localleader>tf :call ban#python#RunCurrentTestModule() <CR>
-map <buffer> <localleader>tc :call ban#python#RunCurrentTestCase() <CR>
-map <buffer> <localleader>tm :call ban#python#RunCurrentTestMethod() <CR>
+map <buffer> <localleader>ta :wall <CR>:call ban#python#RunAllTestSuite() <CR>
+map <buffer> <localleader>tp :wall <CR>:call ban#python#RunCurrentTestPackage() <CR>
+map <buffer> <localleader>tf :wall <CR>:call ban#python#RunCurrentTestModule() <CR>
+map <buffer> <localleader>tc :wall <CR>:call ban#python#RunCurrentTestCase() <CR>
+map <buffer> <localleader>tm :wall <CR>:call ban#python#RunCurrentTestMethod() <CR>
