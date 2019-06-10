@@ -6,6 +6,8 @@ let NERDSpaceDelims = 1
 let NERDTrimTrailingWhitespace = 1
 let NERDTreeHijackNetrw = 0
 
+let g:UltiSnipsSnippetDirectories=[$HOME.'/projects/vim-snippets']
+
 call plug#begin('~/.cache/vim-plug')
 Plug 'junegunn/vim-plug'
 Plug 'tpope/vim-fugitive'
@@ -17,6 +19,8 @@ Plug 'viniciusban/vim-almostmonochrome'
 
 Plug 'junegunn/fzf', { 'dir': '~/.cache/vim-plug/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
+Plug 'SirVer/ultisnips'
 
 call plug#end()
 
