@@ -22,6 +22,7 @@ __aliases () {
 	# one-letters
 	alias e='$EDITOR'
 	alias j='jupyter notebook --no-browser --ip=localhost.test --NotebookApp.allow_remote_access=True'
+	alias r='runserver'
 }
 
 
@@ -249,3 +250,5 @@ __main () {
 }
 
 __main
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
