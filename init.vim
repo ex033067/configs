@@ -92,3 +92,24 @@ if has('nvim')
 	" time it runs under neovim.
 	let $LANG=''
 endif
+
+
+" Adjust terminal colors
+" ----------------------
+
+let g:terminal_color_0  = '#000000'
+let g:terminal_color_1  = '#A10605'
+let g:terminal_color_2  = '#206B00'
+let g:terminal_color_3  = '#D48E15'
+let g:terminal_color_4  = '#0D52BF'
+let g:terminal_color_5  = '#7239B3'
+let g:terminal_color_6  = '#05979A'
+let g:terminal_color_7  = '#888A85'
+let g:terminal_color_8  = '#555753'
+let g:terminal_color_9  = '#ED5252'
+let g:terminal_color_10 = '#68B723'
+let g:terminal_color_11 = '#F9C440'
+let g:terminal_color_12 = '#3589E6'
+let g:terminal_color_13 = '#A56DE2'
+let g:terminal_color_14 = '#36C0C0'
+let g:terminal_color_15 = '#ffffff'
