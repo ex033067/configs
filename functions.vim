@@ -18,8 +18,13 @@ function! Ban_Run(command)
 
 	let quote = '"'
 	if g:ban_run_internal == 1
-		let prefix = 'tabnew | terminal '. &shell .' -c ' . quote
-		let suffix = quote
+		if has('nvim')
+			let prefix = 'tabnew | terminal '. &shell .' -c ' . quote
+			let suffix = quote
+		else
+			let prefix = 'tabnew | terminal ++curwin '. &shell .' -c ' . quote
+			let suffix = quote
+		endif
 	else
 		let prefix = '!'
 		let suffix = ''
