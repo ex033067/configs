@@ -16,9 +16,10 @@ function! Ban_Run(command)
 		endif
 	endif
 
+	let quote = '"'
 	if g:ban_run_internal == 1
-		let prefix = "tabnew | terminal ". &shell ." -c '"
-		let suffix = "'"
+		let prefix = 'tabnew | terminal '. &shell .' -c ' . quote
+		let suffix = quote
 	else
 		let prefix = '!'
 		let suffix = ''
