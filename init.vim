@@ -73,7 +73,9 @@ set grepprg=ack\ --nogroup\ $*
 
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 autocmd BufReadPost *.todo setlocal filetype=todo
-autocmd TermOpen * startinsert
+if has('nvim')
+	autocmd TermOpen * startinsert
+endif
 
 
 " Language providers
