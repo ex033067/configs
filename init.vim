@@ -56,6 +56,7 @@ map <leader>0 :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> t
 
 set termguicolors
 set background=light
+set guicursor=a:blinkon100
 syntax reset
 colo almostmonochrome
 set listchars=tab:»·,trail:~,nbsp:·,extends:→,precedes:←
