@@ -81,12 +81,6 @@ __variables () {
 	export PARTIALCD_ROOT=~/projects
 	source ~/.local/bin/partialcd
 
-	# autoenvrc
-	if which autoenvrc > /dev/null
-	then
-		eval "$(autoenvrc init)"
-	fi
-
 	# ssh-agent
 	# if [[ "${OSNAME}" = "Linux" ]]; then
 	#     if pgrep ssh-agent >/dev/null 2>&1 ; then
@@ -216,7 +210,6 @@ __define_functions () {
 }
 
 __export_functions () {
-	export -f cd
 	export -f _partialcd
 	export -f pyenv
 	export -f __prompt_command
