@@ -1,8 +1,6 @@
 set runtimepath+=~/.local/share/nvim/site
-set hls
-set incsearch
-set ruler
-set showcmd
-set laststatus=2
+set incsearch hls
+set laststatus=2 ruler showcmd
 set backspace=indent,eol,start
+
 execute "source ". expand("<sfile>:h") ."/init.vim"
