@@ -201,7 +201,7 @@ __define_functions () {
 		fi
 
 		__ps1_git
-		export PS1="${ps1_status} @\h:${project}${PS1_GIT}${VIRTUAL_ENV:+()}\$ \[\e[0m\]"
+		export PS1="${ps1_status}@\h:${project}${PS1_GIT}${VIRTUAL_ENV:+()}\$ \[\e[0m\]"
 		PS1_PREVIOUS_PWD="${PWD}"
 		PS1_PREVIOUS_PROJECT="${project}"
 	}
