@@ -174,9 +174,9 @@ __define_functions () {
 		# section "256 (8-bit) Colors"
 		LAST_EXIT_CODE=$?
 		if [[ ${LAST_EXIT_CODE} -eq 0 ]]; then
-			local ps1_status="\[\e[0;32m\]\$" # green
+			local ps1_status="\[\e[0;32m\]" # green
 		else
-			local ps1_status="\[\e[0;31m\]\$ ${LAST_EXIT_CODE}" # red
+			local ps1_status="\[\e[0;31m\]${LAST_EXIT_CODE} " # red
 		fi
 
 		if [[ "${PWD}" = "${PS1_PREVIOUS_PWD}" ]]; then
