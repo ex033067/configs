@@ -167,8 +167,10 @@ visible-name='Default'
 
 [keybindings]
 session-add-right='<Primary>percent'
-terminal-reset-and-clear='<Primary><Alt>k'
+terminal-copy='<Primary>c'
+terminal-paste='<Primary>v'
 session-add-down='<Primary>quotedbl'
+terminal-reset-and-clear='<Primary><Alt>k'
 terminal-reset='disabled'
 
 [/]
