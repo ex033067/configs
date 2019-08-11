@@ -172,11 +172,11 @@ __define_functions () {
 		# Colorcodes from
 		# http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
 		# section "256 (8-bit) Colors"
-		LAST_EXIT_CODE=$?
-		if [[ ${LAST_EXIT_CODE} -eq 0 ]]; then
-			local ps1_status="\[\e[0;32m\]\$" # green
+		local last_exit_code=$?
+		if [[ ${last_exit_code} -eq 0 ]]; then
+			local ps1_status="\[\e[0;32m\]" # green
 		else
-			local ps1_status="\[\e[0;31m\]\$ ${LAST_EXIT_CODE}" # red
+			local ps1_status="\[\e[0;31m\]${last_exit_code} " # red
 		fi
 
 		if [[ "${PWD}" = "${PS1_PREVIOUS_PWD}" ]]; then
@@ -204,7 +204,7 @@ __define_functions () {
 		if [ -z "$LAST_VIRTUAL_ENV_BASENAME" ]; then
 			LAST_VIRTUAL_ENV_BASENAME=${VIRTUAL_ENV:+($(basename ${VIRTUAL_ENV}))}
 		fi
-		export PS1="${ps1_status} @\h:${project}${PS1_GIT}${LAST_VIRTUAL_ENV_BASENAME}\$ \[\e[0m\]"
+		export PS1="${ps1_status}@\h:${project}${PS1_GIT}${LAST_VIRTUAL_ENV_BASENAME}\$ \[\e[0m\]"
 		PS1_PREVIOUS_PWD="${PWD}"
 		PS1_PREVIOUS_PROJECT="${project}"
 	}
