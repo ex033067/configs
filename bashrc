@@ -201,7 +201,10 @@ __define_functions () {
 		fi
 
 		__ps1_git
-		export PS1="${ps1_status} @\h:${project}${PS1_GIT}${VIRTUAL_ENV:+()}\$ \[\e[0m\]"
+		if [ -z "$LAST_VIRTUAL_ENV_BASENAME" ]; then
+			LAST_VIRTUAL_ENV_BASENAME=${VIRTUAL_ENV:+($(basename ${VIRTUAL_ENV}))}
+		fi
+		export PS1="${ps1_status} @\h:${project}${PS1_GIT}${LAST_VIRTUAL_ENV_BASENAME}\$ \[\e[0m\]"
 		PS1_PREVIOUS_PWD="${PWD}"
 		PS1_PREVIOUS_PROJECT="${project}"
 	}
