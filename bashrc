@@ -174,9 +174,9 @@ __define_functions () {
 		# section "256 (8-bit) Colors"
 		local last_exit_code=$?
 		if [[ ${last_exit_code} -eq 0 ]]; then
-			local ps1_status="\[\e[0;32m\]" # green
+			local ps1_status="\[\e[0m\] "
 		else
-			local ps1_status="\[\e[0;31m\]${last_exit_code} " # red
+			local ps1_status="\[\e[0;31m\]${last_exit_code}\[\e[0m\] " # red
 		fi
 
 		if [[ "${PWD}" = "${PS1_PREVIOUS_PWD}" ]]; then
@@ -201,7 +201,8 @@ __define_functions () {
 		fi
 
 		__ps1_git
-		export PS1="${ps1_status}@\h:${project}${PS1_GIT}${VIRTUAL_ENV:+()}\$ \[\e[0m\]"
+		local ps1_symbol="\[\e[38;2;40;177;247m\]->\[\e[0m\]" # blue
+		export PS1="${ps1_status}${ps1_symbol} @\h:${project}${PS1_GIT}${VIRTUAL_ENV:+()}\$\[\e[0m\] "
 		PS1_PREVIOUS_PWD="${PWD}"
 		PS1_PREVIOUS_PROJECT="${project}"
 	}
