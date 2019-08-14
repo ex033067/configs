@@ -77,6 +77,12 @@ __variables () {
 	# final PATH
 	export PATH="$HOME/.local/bin/binscripts:$HOME/.local/bin:$PATH"
 
+	# asdf-vm
+	if [[ -d ~/.asdf ]]; then
+		source $HOME/.asdf/asdf.sh
+		source $HOME/.asdf/completions/asdf.bash
+	fi
+
 	# partialcd
 	export PARTIALCD_ROOT=~/projects
 	source ~/.local/bin/partialcd
