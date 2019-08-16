@@ -179,10 +179,13 @@ __define_functions () {
 		# http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
 		# section "256 (8-bit) Colors"
 		local last_exit_code=$?
+		local ps1_reset="\[\e[0m\]"
+		local ps1_blue="\[\e[38;5;15;48;5;24m\]"
+		local ps1_red="\[\e[38;5;15;48;5;1m\]"
 		if [[ ${last_exit_code} -eq 0 ]]; then
-			local ps1_status="\[\e[0m\] "
+			local ps1_status=
 		else
-			local ps1_status="\[\e[0;31m\]${last_exit_code}\[\e[0m\] " # red
+			local ps1_status="${last_exit_code}"
 		fi
 
 		if [[ "${PWD}" = "${PS1_PREVIOUS_PWD}" ]]; then
@@ -207,11 +210,10 @@ __define_functions () {
 		fi
 
 		__ps1_git
-		local ps1_symbol="\[\e[38;2;40;177;247m\]->\[\e[0m\]" # blue
 		if [ -z "$LAST_VIRTUAL_ENV_BASENAME" ]; then
 			LAST_VIRTUAL_ENV_BASENAME=${VIRTUAL_ENV:+($(basename ${VIRTUAL_ENV}))}
 		fi
-		export PS1="${ps1_status}${ps1_symbol} @\h:${project}${PS1_GIT}${LAST_VIRTUAL_ENV_BASENAME}\$\[\e[0m\] "
+		export PS1="${ps1_reset}${ps1_status:+${ps1_red} ${ps1_status} ${ps1_reset}}${ps1_blue} \u@\h ${ps1_reset} ${project}${PS1_GIT:+ ${PS1_GIT}}${LAST_VIRTUAL_ENV_BASENAME}\$ "
 		PS1_PREVIOUS_PWD="${PWD}"
 		PS1_PREVIOUS_PROJECT="${project}"
 	}
