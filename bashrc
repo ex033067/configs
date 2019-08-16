@@ -213,7 +213,7 @@ __define_functions () {
 		if [ -z "$LAST_VIRTUAL_ENV_BASENAME" ]; then
 			LAST_VIRTUAL_ENV_BASENAME=${VIRTUAL_ENV:+($(basename ${VIRTUAL_ENV}))}
 		fi
-		export PS1="${ps1_reset}${ps1_status:+${ps1_red} ${ps1_status} ${ps1_reset}}${ps1_blue} \u@\h ${ps1_reset} ${project}${PS1_GIT:+ ${PS1_GIT}}${LAST_VIRTUAL_ENV_BASENAME}\$ "
+		export PS1="${ps1_reset}${ps1_status:+${ps1_red} ${ps1_status} ${ps1_reset}}${LAST_VIRTUAL_ENV_BASENAME:+${LAST_VIRTUAL_ENV_BASENAME} }${ps1_blue} \u@\h ${ps1_reset} ${project}${PS1_GIT:+ ${PS1_GIT}}\$ "
 		PS1_PREVIOUS_PWD="${PWD}"
 		PS1_PREVIOUS_PROJECT="${project}"
 	}
