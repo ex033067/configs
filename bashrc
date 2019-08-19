@@ -188,34 +188,11 @@ __define_functions () {
 			local ps1_status="${last_exit_code}"
 		fi
 
-		if [[ "${PWD}" = "${PS1_PREVIOUS_PWD}" ]]; then
-			# Shortcut to improve performance because user didn't cd into other dir.
-			local project="${PS1_PREVIOUS_PROJECT}"
-		else
-			# Remove $PROJECT_ROOT from $PWD
-			local project="${PWD#${PROJECT_ROOT}/}"
-			if [[ "${PWD}" = "${project}" ]]; then
-				# Not inside any project. Abbreviate $HOME with "~".
-				# Ex.: Transform "/Users/viniciusban/Library" into "~/Library".
-				if [[ "${HOME}" =~ ^/home/ ]]; then
-					project="${PWD/${HOME}/\~}" # Linux
-				else
-					project="${PWD/${HOME}/~}" # MacOS
-				fi
-			else
-				# Inside a project. Abbreviate intermediary dirs with "...".
-				# Ex.: Tranform "myproj/usr/somedir/otherdir" into "myproj/...otherdir".
-				project="${project//\/*\///...}"
-			fi
-		fi
-
 		__ps1_git
 		if [ -z "$LAST_VIRTUAL_ENV_BASENAME" ]; then
 			LAST_VIRTUAL_ENV_BASENAME=${VIRTUAL_ENV:+($(basename ${VIRTUAL_ENV}))}
 		fi
-		export PS1="${ps1_reset}${ps1_status:+${ps1_red} ${ps1_status} ${ps1_reset}}${LAST_VIRTUAL_ENV_BASENAME:+${LAST_VIRTUAL_ENV_BASENAME} }${ps1_blue} \u@\h ${ps1_reset} ${project}${PS1_GIT:+ ${PS1_GIT}}\$ "
-		PS1_PREVIOUS_PWD="${PWD}"
-		PS1_PREVIOUS_PROJECT="${project}"
+		export PS1="${ps1_reset}${ps1_status:+${ps1_red} ${ps1_status} ${ps1_reset}}${LAST_VIRTUAL_ENV_BASENAME:+${LAST_VIRTUAL_ENV_BASENAME} }${ps1_blue} \u@\h ${ps1_reset} \W${PS1_GIT:+ ${PS1_GIT}}\$ "
 	}
 
 	export PROMPT_COMMAND=__prompt_command
