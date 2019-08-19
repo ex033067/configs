@@ -189,10 +189,17 @@ __define_functions () {
 		fi
 
 		__ps1_git
-		if [ -z "$LAST_VIRTUAL_ENV_BASENAME" ]; then
-			LAST_VIRTUAL_ENV_BASENAME=${VIRTUAL_ENV:+($(basename ${VIRTUAL_ENV}))}
+
+		if [[ -n "${VIRTUAL_ENV}" ]]; then
+			local ps1_virtual_env=$(basename ${VIRTUAL_ENV})
+			if [[ "${ps1_virtual_env}" = ".venv" ]]; then
+				local ps1_virtual_env=$(basename $(dirname ${VIRTUAL_ENV}))
+			fi
+		else
+			local ps1_virtual_env=
 		fi
-		export PS1="${ps1_reset}${ps1_status:+${ps1_red} ${ps1_status} ${ps1_reset}}${LAST_VIRTUAL_ENV_BASENAME:+${LAST_VIRTUAL_ENV_BASENAME} }${ps1_blue} \u@\h ${ps1_reset} \W${PS1_GIT:+ ${PS1_GIT}}\$ "
+
+		export PS1="${ps1_reset}${ps1_status:+${ps1_red} ${ps1_status} ${ps1_reset}}${ps1_virtual_env:+(${ps1_virtual_env}) }${ps1_blue} \u@\h ${ps1_reset} \W${PS1_GIT:+ ${PS1_GIT}}\$ "
 	}
 
 	export PROMPT_COMMAND=__prompt_command
