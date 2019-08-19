@@ -180,13 +180,19 @@ __define_functions () {
 		__ps1_git
 
 		if [[ -n "${VIRTUAL_ENV}" ]]; then
-			local ps1_virtual_env=$(basename ${VIRTUAL_ENV})
-			if [[ "${ps1_virtual_env}" = ".venv" ]]; then
-				local ps1_virtual_env=$(basename $(dirname ${VIRTUAL_ENV}))
+			if [[ "${VIRTUAL_ENV}" = "${PREVIOUS_VIRTUAL_ENV}" ]]; then
+				local ps1_virtual_env="${PREVIOUS_PS1_VIRTUAL_ENV}"
+			else
+				local ps1_virtual_env=$(basename ${VIRTUAL_ENV})
+				if [[ "${ps1_virtual_env}" = ".venv" ]]; then
+					local ps1_virtual_env=$(basename $(dirname ${VIRTUAL_ENV}))
+				fi
 			fi
 		else
 			local ps1_virtual_env=
 		fi
+		PREVIOUS_PS1_VIRTUAL_ENV="${ps1_virtual_env}"
+		PREVIOUS_VIRTUAL_ENV="${VIRTUAL_ENV}"
 
 		export PS1="${ps1_reset}${ps1_status:+${ps1_red} ${ps1_status} ${ps1_reset}}${ps1_virtual_env:+(${ps1_virtual_env}) }${ps1_blue} \u@\h ${ps1_reset} \W${PS1_GIT:+ :${PS1_GIT}}\$ "
 	}
