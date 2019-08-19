@@ -102,40 +102,29 @@ __variables () {
 __define_functions () {
 	unset -f __ps1_git 
 	__ps1_git () {
-
 		# Show git branch and indicators about status:
 		#   - "+" means there are staged changes
 		#   - "!" means there are unstaged changes
 
-		#
-		# The main concern here is performance. So, I return as soon as possible,
-		# use the result and cache set on last execution, avoid to call external
-		# processes like grep, sed, etc. and abuse of bash expressions and logic.
-		#
-		# Renew cache (a.k.a call git) after 1 second, instead of in every <enter>
-		# to avoid prompt flicking.
-		#
-		# Note: when not inside a git repository, "git status" will fail and show
-		# empty result. On next <enter>, it would try to "git status" again because
-		# $PS1_GIT_STATUS_CACHE is empty. That's what "echo fail" addresses. ;-)
+		# The main concern here is performance. So, I return as soon as
+		# possible, cache last execution, avoid calling external processes like
+		# grep, sed, etc. and abuse of bash expressions and logic.
 
-		if [[ -z "${PS1_GIT_STATUS_CACHE}" ]]; then
-			PS1_GIT_STATUS_CACHE=$(git status -b --porcelain=2 2>/dev/null || (echo 'fail'; false))
-			PS1_GIT_STATUS_EXIT_CODE=$?
-		elif [[ $(( SECONDS - PS1_SECONDS )) -gt 1 ]]; then
-			PS1_GIT_STATUS_CACHE=$(git status -b --porcelain=2 2>/dev/null || (echo 'fail'; false))
-			PS1_GIT_STATUS_EXIT_CODE=$?
-		else
-			PS1_SECONDS=$SECONDS
-			return
-		fi
-		PS1_SECONDS=$SECONDS
+		PS1_GIT_STATUS_OUTPUT=$(git status -b --porcelain=2 2>/dev/null)
+		PS1_GIT_STATUS_EXIT_CODE=$?
 
 		if [[ ${PS1_GIT_STATUS_EXIT_CODE} -ne 0 ]]; then
 			# Not a git repo
 			PS1_GIT=
 			return
 		fi
+
+		if [[ "${PS1_GIT_STATUS_OUTPUT}" = "${PREVIOUS_PS1_GIT_STATUS_OUTPUT}" ]]; then
+			# Nothing changed since previous prompt. Reuse current $PS1_GIT.
+			return
+		fi
+
+		PREVIOUS_PS1_GIT_STATUS_OUTPUT="${PS1_GIT_STATUS_OUTPUT}"
 
 		local branch staged_indicator unstaged_indicator
 		local rectype field1 field2 other_fields
@@ -168,9 +157,9 @@ __define_functions () {
 				fi
 				continue
 			fi
-		done <<< "${PS1_GIT_STATUS_CACHE}"
+		done <<< "${PS1_GIT_STATUS_OUTPUT}"
 
-		PS1_GIT=":${staged_indicator}${unstaged_indicator}${branch}"
+		PS1_GIT="${staged_indicator}${unstaged_indicator}${branch}"
 	}
 
 	unset -f __prompt_command
@@ -199,7 +188,7 @@ __define_functions () {
 			local ps1_virtual_env=
 		fi
 
-		export PS1="${ps1_reset}${ps1_status:+${ps1_red} ${ps1_status} ${ps1_reset}}${ps1_virtual_env:+(${ps1_virtual_env}) }${ps1_blue} \u@\h ${ps1_reset} \W${PS1_GIT:+ ${PS1_GIT}}\$ "
+		export PS1="${ps1_reset}${ps1_status:+${ps1_red} ${ps1_status} ${ps1_reset}}${ps1_virtual_env:+(${ps1_virtual_env}) }${ps1_blue} \u@\h ${ps1_reset} \W${PS1_GIT:+ :${PS1_GIT}}\$ "
 	}
 
 	export PROMPT_COMMAND=__prompt_command
