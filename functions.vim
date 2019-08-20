@@ -18,13 +18,16 @@ function! Ban_Run(command)
 
 	if g:ban_run_internal == 1
 		let prefix = "tabnew | terminal ". &shell ." -c '"
+		let command = substitute(a:command, "'", "'\"\\'\"'", 'g')
+		let command = substitute(command, '#', '\\#', 'g')
 		let suffix = "'"
 	else
 		let prefix = '!'
+		let command = a:command
 		let suffix = ''
 	endif
 
-	return prefix . a:command . suffix
+	return prefix . command . suffix
 endfunction
 
 function! Ban_ExecNERDCommenterWithMotion(mode)
