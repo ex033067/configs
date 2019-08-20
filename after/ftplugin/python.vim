@@ -60,3 +60,4 @@ map <buffer> <localleader>tp :wall <CR>:call ban#python#RunCurrentTestPackage() 
 map <buffer> <localleader>tf :wall <CR>:call ban#python#RunCurrentTestModule() <CR>
 map <buffer> <localleader>tc :wall <CR>:call ban#python#RunCurrentTestCase() <CR>
 map <buffer> <localleader>tm :wall <CR>:call ban#python#RunCurrentTestMethod() <CR>
+map <buffer> <localleader>tu :wall <CR>:call ban#python#RunCurrentTestFunction() <CR>
