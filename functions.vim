@@ -16,11 +16,17 @@ function! Ban_Run(command)
 		endif
 	endif
 
+	let quote = "'"
 	if g:ban_run_internal == 1
-		let prefix = "tabnew | terminal ". &shell ." -c '"
-		let command = substitute(a:command, "'", "'\"\\'\"'", 'g')
+		if has('nvim')
+			let prefix = 'tabnew | terminal '. &shell .' -c ' . quote
+			let suffix = quote
+		else
+			let prefix = 'tabnew | terminal ++curwin '. &shell .' -c '. quote
+			let suffix = quote
+		endif
+		let command = substitute(a:command, quote, "'\"\\'\"'", 'g')
 		let command = substitute(command, '#', '\\#', 'g')
-		let suffix = "'"
 	else
 		let prefix = '!'
 		let command = a:command

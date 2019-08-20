@@ -56,6 +56,7 @@ map <leader>0 :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> t
 
 set termguicolors
 set background=light
+set guicursor=a:blinkon100
 syntax reset
 colo almostmonochrome
 set listchars=tab:»·,trail:~,nbsp:·,extends:→,precedes:←
@@ -73,7 +74,9 @@ set grepprg=ack\ --nogroup\ $*
 
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 autocmd BufReadPost *.todo setlocal filetype=todo
-autocmd TermOpen * startinsert
+if has('nvim')
+	autocmd TermOpen * startinsert
+endif
 
 
 " Language providers
