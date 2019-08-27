@@ -194,7 +194,7 @@ __define_functions () {
 		PREVIOUS_PS1_VIRTUAL_ENV="${ps1_virtual_env}"
 		PREVIOUS_VIRTUAL_ENV="${VIRTUAL_ENV}"
 
-		export PS1="${ps1_reset}${ps1_status:+${ps1_red} ${ps1_status} ${ps1_reset}}${ps1_virtual_env:+(${ps1_virtual_env}) }${ps1_blue} \u@\h ${ps1_reset} \W${PS1_GIT:+ :${PS1_GIT}}\$ "
+		export PS1="${ps1_reset}${ps1_status:+${ps1_red} ${ps1_status} ${ps1_reset}}${ps1_virtual_env:+(${ps1_virtual_env}) }${ps1_blue} \u@${NICKNAME:-${HOSTNAME}} ${ps1_reset} \W${PS1_GIT:+ :${PS1_GIT}}\$ "
 	}
 
 	export PROMPT_COMMAND=__prompt_command
