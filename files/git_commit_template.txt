@@ -1,7 +1,7 @@
 
 
 # 1) Explain what/why, not how.
-# 2) :tag: style, docs, clean, test, bug, refactor, security, build, deps
+# 2) :tag: style, docs, clean, tests, bug, refactor, security, build, deps
 #
 # https://is.gd/commit_messages
 
