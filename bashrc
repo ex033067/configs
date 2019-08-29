@@ -32,6 +32,10 @@ __shell_options () {
 
 
 __variables () {
+	if [[ -f ~/.nicknamerc ]]; then
+		source ~/.nicknamerc
+	fi
+
 	export PATH="/usr/local/bin:$PATH"
 	if [[ "${OSNAME}" = "Linux" ]]; then
 		eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
