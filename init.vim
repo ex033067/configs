@@ -55,7 +55,11 @@ map <leader>0 :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> t
 " -------
 
 set termguicolors
-set background=light
+if exists('$VIM_BACKGROUND')
+	let &background=$VIM_BACKGROUND
+else
+	set background=light
+endif
 set guicursor=a:blinkon100
 syntax reset
 colo almostmonochrome
