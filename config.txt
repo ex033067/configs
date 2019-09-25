@@ -10,7 +10,7 @@ encoding='UTF-8'
 triggers=@as []
 automatic-switch=@as []
 custom-command=''
-visible-name='Dark but not black'
+visible-name='Dark'
 text-blink-mode='always'
 terminal-title='${id}: ${title}'
 use-theme-colors=false
@@ -23,7 +23,7 @@ rewrap-on-resize=true
 foreground-color='#BABABDBDB6B6'
 login-shell=false
 background-transparency-percent=0
-cursor-blink-mode='system'
+cursor-blink-mode='on'
 dim-transparency-percent=0
 bold-is-bright=false
 cell-width-scale=1.0
@@ -105,7 +105,7 @@ scrollback-lines=8192
 show-scrollbar=true
 
 [profiles]
-list=['2b7c4080-0ddd-46c5-8f23-563fd3ba789d', '9c4a6d06-7aef-4efa-8973-09a5c7cc668f', 'f96bfcac-ca39-43cf-a72b-847bb6062c73', '778431df-749e-4f68-b077-e94fc8d12425', '66e6653d-bc6d-425e-b1d2-566bab7dc5b3']
+list=['2b7c4080-0ddd-46c5-8f23-563fd3ba789d', '9c4a6d06-7aef-4efa-8973-09a5c7cc668f', '778431df-749e-4f68-b077-e94fc8d12425', '66e6653d-bc6d-425e-b1d2-566bab7dc5b3']
 default='66e6653d-bc6d-425e-b1d2-566bab7dc5b3'
 
 [profiles/778431df-749e-4f68-b077-e94fc8d12425]
@@ -145,7 +145,7 @@ palette=['#000000', '#CC0000', '#4D9A05', '#C3A000', '#3464A3', '#754F7B', '#059
 notify-silence-threshold=0
 badge-color='#ffffff'
 highlight-foreground-color='#ffffff'
-font='Fira Code 11'
+font='Monospace 11'
 delete-binding='delete-sequence'
 badge-position='northeast'
 custom-hyperlinks=@as []
@@ -161,72 +161,12 @@ highlight-colors-set=false
 scrollback-lines=8192
 show-scrollbar=true
 
-[profiles/f96bfcac-ca39-43cf-a72b-847bb6062c73]
-cursor-shape='block'
-cursor-colors-set=true
-bold-color-set=false
-terminal-bell='sound'
-scroll-on-keystroke=true
-cjk-utf8-ambiguous-width='narrow'
-default-size-rows=24
-encoding='UTF-8'
-triggers=@as []
-automatic-switch=@as []
-custom-command=''
-visible-name='Dark'
-text-blink-mode='always'
-terminal-title='${id}: ${title}'
-use-theme-colors=false
-cell-height-scale=1.0
-badge-text=''
-exit-action='close'
-use-system-font=false
-backspace-binding='ascii-delete'
-rewrap-on-resize=true
-foreground-color='#A7A7A7'
-login-shell=false
-background-transparency-percent=0
-cursor-blink-mode='system'
-dim-transparency-percent=0
-bold-is-bright=false
-cell-width-scale=1.0
-default-size-columns=80
-background-color='#303037373838'
-cursor-foreground-color='#ffffff'
-allow-bold=true
-palette=['#000000000000', '#CC0000', '#4D9A05', '#C3A000', '#3464A3', '#754F7B', '#05979A', '#D3D6CF', '#545652', '#EF2828', '#89E234', '#FBE84F', '#729ECF', '#AC7EA8', '#34E2E2', '#EDEDEB']
-notify-silence-threshold=0
-badge-color='#ffffff'
-highlight-foreground-color='#ffffff'
-font='IBM Plex Mono 14'
-delete-binding='delete-sequence'
-badge-position='northeast'
-custom-hyperlinks=@as []
-scrollback-unlimited=false
-cursor-background-color='#8A8AE2E23434'
-highlight-background-color='#000000'
-scroll-on-output=false
-select-by-word-chars='-,./?%&#:_'
-use-custom-command=false
-badge-color-set=false
-bold-color='#ffffff'
-highlight-colors-set=false
-scrollback-lines=8192
-show-scrollbar=true
-
 [profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
 use-theme-colors=true
 visible-name='Default'
 
-[keybindings]
-session-add-right='<Primary>percent'
-terminal-copy='<Primary><Shift>c'
-terminal-paste='<Primary><Shift>v'
-session-add-down='<Primary>quotedbl'
-terminal-reset-and-clear='<Primary><Alt>k'
-terminal-reset='disabled'
-
 [/]
+prompt-on-close=true
 terminal-title-style='normal'
 theme-variant='system'
 session-name='Default'
@@ -236,3 +176,11 @@ prompt-on-delete-profile=true
 warn-vte-config-issue=false
 control-click-titlebar=true
 window-style='disable-csd-hide-toolbar'
+
+[keybindings]
+session-add-right='<Primary>percent'
+terminal-copy='<Primary><Shift>c'
+terminal-paste='<Primary><Shift>v'
+session-add-down='<Primary>quotedbl'
+terminal-reset-and-clear='<Primary><Alt>k'
+terminal-reset='disabled'
