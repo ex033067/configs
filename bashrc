@@ -78,14 +78,14 @@ __variables () {
 	[[ -d /Volumes/hd2/${USER}/.vagrant.d ]] && export VAGRANT_HOME=/Volumes/hd2/${USER}/.vagrant.d
 	export VAGRANT_BOX_UPDATE_CHECK_DISABLE=1
 
-	# final PATH
-	export PATH="$HOME/.local/bin/binscripts:$HOME/.local/bin:$PATH"
-
 	# asdf-vm
 	if [[ -d ~/.asdf ]]; then
 		source $HOME/.asdf/asdf.sh
 		source $HOME/.asdf/completions/asdf.bash
 	fi
+
+	# final PATH
+	export PATH="$HOME/.local/bin/binscripts:$HOME/.local/bin:$PATH"
 
 	# partialcd
 	export PARTIALCD_ROOT=~/projects
