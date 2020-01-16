@@ -88,8 +88,11 @@ __variables () {
 	export PATH="$HOME/.local/bin/binscripts:$HOME/.local/bin:$PATH"
 
 	# partialcd
-	export PARTIALCD_ROOT=~/projects
-	source ~/.local/bin/partialcd
+	if [[ -r ~/.local/bin/partialcd ]]; then
+		export PATH="$HOME/.local/bin/binscripts:$HOME/.local/bin:$PATH"
+		export PARTIALCD_ROOT=~/projects
+		source ~/.local/bin/partialcd
+	fi
 
 	# ssh-agent
 	# if [[ "${OSNAME}" = "Linux" ]]; then
@@ -205,7 +208,9 @@ __define_functions () {
 }
 
 __export_functions () {
-	export -f _partialcd
+	if [[ -r ~/.local/bin/partialcd ]]; then
+		export -f _partialcd
+	fi
 	export -f pyenv
 	export -f __prompt_command
 	export -f __ps1_git
