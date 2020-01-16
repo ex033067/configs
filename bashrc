@@ -176,7 +176,7 @@ __define_functions () {
 		# section "256 (8-bit) Colors"
 		local last_exit_code=$?
 		local ps1_reset="\[\e[0m\]"
-		local ps1_blue="\[\e[38;5;15;48;5;24m\]"
+		local ps1_blue="\[\e[38;5;15;48;5;32m\]"
 		local ps1_red="\[\e[38;5;15;48;5;1m\]"
 		if [[ ${last_exit_code} -eq 0 ]]; then
 			local ps1_status=
