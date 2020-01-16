@@ -35,7 +35,7 @@ palette=['#000000000000', '#BFBF40404040', '#5959A9A90B0B', '#C3A000', '#22227F7
 notify-silence-threshold=0
 badge-color='#ffffff'
 highlight-foreground-color='#ffffff'
-font='Source Code Pro 15'
+font='IBM Plex Mono 14'
 delete-binding='delete-sequence'
 badge-position='northeast'
 custom-hyperlinks=@as []
@@ -88,7 +88,7 @@ palette=['#2E2E34343636', '#A1A106060505', '#20206B6B0000', '#C4C4A0A00000', '#3
 notify-silence-threshold=0
 badge-color='#ffffff'
 highlight-foreground-color='#ffffff'
-font='Source Code Pro 15'
+font='IBM Plex Mono 14'
 delete-binding='delete-sequence'
 badge-position='northeast'
 custom-hyperlinks=@as []
@@ -106,7 +106,7 @@ show-scrollbar=true
 
 [profiles]
 list=['2b7c4080-0ddd-46c5-8f23-563fd3ba789d', '9c4a6d06-7aef-4efa-8973-09a5c7cc668f', '778431df-749e-4f68-b077-e94fc8d12425', '66e6653d-bc6d-425e-b1d2-566bab7dc5b3']
-default='66e6653d-bc6d-425e-b1d2-566bab7dc5b3'
+default='9c4a6d06-7aef-4efa-8973-09a5c7cc668f'
 
 [profiles/778431df-749e-4f68-b077-e94fc8d12425]
 cursor-shape='block'
