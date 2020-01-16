@@ -64,7 +64,7 @@ __variables () {
 	if which pyenv > /dev/null
 	then
 	    eval "$(pyenv init -)"
-	    pyenv global 3.7.2 2.7.14 tools jupyter
+	    pyenv global 3.7.6 tools jupyter
 	fi
 
 	# virtualenv
