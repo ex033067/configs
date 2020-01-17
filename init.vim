@@ -8,7 +8,7 @@ execute "source ". expand("<sfile>:h") ."/functions.vim"
 let mapleader=","
 let maplocalleader="\\"
 
-map :: :update <CR>
+map <leader><leader> :update<CR>
 map <leader>2 :NERDTreeToggle<CR>
 
 " Toggle settings
