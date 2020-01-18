@@ -36,7 +36,7 @@ xmap <leader>ca <Plug>NERDCommenterComment
 nmap <leader>ca <Plug>NERDCommenterComment
 
 " Add delimiters to selected text
-xmap <leader>d :call Ban_AddDelimiterToSelectedText()<CR>
+xmap <leader>D :call Ban_AddDelimiterToSelectedText()<CR>
 
 " Paste in terminal mode
 tnoremap <expr> <C-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
