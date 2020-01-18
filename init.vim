@@ -22,12 +22,9 @@ map <leader>< :cprev<CR>
 map <leader>> :cnext<CR>
 
 " Git
-map <leader>GA :!git add % <CR>
-map <leader>GC :Git commit -v <CR>
-map <leader>Gd :Gdiff <CR>
-map <leader>GD :Git diff % <CR>
-map <leader>GL :Git l <CR>
-map <leader>GP :Git add --patch % <CR>
+map <leader>ga :!git add % <CR>
+map <leader>gd :Git diff % <CR>
+map <leader>gc :Git commit -v <CR>
 
 " Toggle comment
 nmap <leader>c :let g:nerd_comment_type='toggle'<CR>:set opfunc=Ban_ExecNERDCommenterWithMotion<CR>g@
