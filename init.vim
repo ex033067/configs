@@ -10,6 +10,7 @@ let maplocalleader="\\"
 
 map <leader><leader> :update<CR>
 map <leader>2 :NERDTreeToggle<CR>
+map <leader>c :clo <CR>
 
 " Toggle settings
 map <Space> :noh<CR>
