@@ -11,9 +11,6 @@ let maplocalleader="\\"
 map <leader><leader> :update<CR>
 map <leader>2 :NERDTreeToggle<CR>
 
-" CTRL-6 doesn't work in pt-br keyboards
-nmap <leader>6 <c-^>
-
 " Toggle settings
 map <Space> :noh<CR>
 map <leader>L :set cul!<CR>
