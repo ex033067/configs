@@ -1,3 +1,4 @@
+let NERDTreeIgnore=['__pycache__[[dir]]']
 let NERDCreateDefaultMappings = 0
 let NERDMenuMode = 0
 let NERDCommentEmptyLines = 1
