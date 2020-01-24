@@ -7,16 +7,10 @@ It may serve you. Or may not.
 Installation
 ------------
 
-On Linux and MacOS:
+1. Edit file `files/gitconfig_generic` and set `user.name` and `user.email` to your personal data.
 
-    $ ln -f -s $PWD/files/git-completion.bash ~/.git-completion.bash
-    $ ln -f -s $PWD/files/gitconfig.for_$(uname) ~/.gitconfig
-    $ ln -f -s $PWD/files/gitconfig_generic ~/.gitconfig_generic
-    $ ln -f -s $PWD/files/gitignore_global ~/.gitignore_global
-    $ ln -f -s $PWD/files/git_commit_template.txt ~/.git_commit_template.txt
+2. Run `./install.sh` in your terminal.
 
-
-**Important:** you should adjust `user.name` and `user.email` in `gitconfig` file.
 
 
 LICENSE
