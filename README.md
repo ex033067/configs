@@ -7,15 +7,8 @@ My tmux configs.
 Installation
 ------------
 
-On Linux:
+Run `./install.sh` in your terminal.
 
-    $ ln -f -s $PWD/files/tmux.conf.for_Linux ~/.tmux.conf
-    $ ln -f -s $PWD/files/tmux.conf_generic ~/.tmux.conf_generic
-
-On MacOS:
-
-    $ ln -f -s $PWD/files/tmux.conf.for_Darwin ~/.tmux.conf
-    $ ln -f -s $PWD/files/tmux.conf_generic ~/.tmux.conf_generic
 
 
 LICENSE
