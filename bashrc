@@ -67,13 +67,6 @@ __variables () {
 	    pyenv global 3.7.6 tools jupyter
 	fi
 
-	# virtualenv
-	if [[ -d ~/.local/bin/virtualenvs ]]; then
-	    export VIRTUAL_ENV_ROOT=~/.local/bin/virtualenvs
-	else
-	    export VIRTUAL_ENV_ROOT=~/virtualenvs
-	fi
-
 	# vagrant
 	[[ -d /Volumes/hd2/${USER}/.vagrant.d ]] && export VAGRANT_HOME=/Volumes/hd2/${USER}/.vagrant.d
 	export VAGRANT_BOX_UPDATE_CHECK_DISABLE=1
