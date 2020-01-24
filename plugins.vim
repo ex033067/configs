@@ -9,7 +9,7 @@ let NERDTreeHijackNetrw = 0
 
 let g:UltiSnipsSnippetDirectories=[$HOME.'/projects/vim-snippets']
 
-call plug#begin('~/.cache/vim-plug')
+call plug#begin('~/.local/share/nvim/vim-plug')
 Plug 'junegunn/vim-plug'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
@@ -18,7 +18,7 @@ Plug 'viniciusban/vim-polyglot'
 Plug 'viniciusban/vim-ft-markdown'
 Plug 'viniciusban/vim-almostmonochrome'
 
-Plug 'junegunn/fzf', { 'dir': '~/.cache/vim-plug/fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.local/share/nvim/vim-plug/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 Plug 'SirVer/ultisnips'
