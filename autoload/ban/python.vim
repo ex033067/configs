@@ -111,3 +111,12 @@ function! ban#python#BuildTestCommand(command, target)
 	endif
 	return a:command .' '. a:target
 endfunction
+
+function! ban#python#TransformSelectedTextIntoFilename()
+	let unnamed_register = @"
+	execute "normal gvy"
+	let selected_text = @"
+	let @" = unnamed_register
+	let filename = substitute(selected_text, '\.', '/', 'ge') .'.py'
+	return filename
+endfunction

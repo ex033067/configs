@@ -21,6 +21,10 @@ map <buffer> <localleader>m :update<CR>:make %<CR>
 " Look for annotations (TODO/NOTE/FIXME) in project
 map <buffer> <localleader>TO :grep '(\#\\|//) *(TODO\\|NOTE\\|FIXME)'
 
+" Edit selected module name
+xmap <localleader>e :<C-U>execute('edit ' . ban#python#TransformSelectedTextIntoFilename())<CR>
+
+
 
 " Mappings to help with tests
 " ===========================
