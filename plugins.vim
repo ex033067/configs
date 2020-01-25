@@ -17,6 +17,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'viniciusban/vim-polyglot'
 Plug 'viniciusban/vim-ft-markdown'
 Plug 'viniciusban/vim-almostmonochrome'
+Plug 'machakann/vim-sandwich'
 
 Plug 'junegunn/fzf', { 'dir': '~/.local/share/nvim/vim-plug/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
