@@ -22,7 +22,7 @@ map <buffer> <localleader>m :update<CR>:make %<CR>
 map <buffer> <localleader>TO :grep '(\#\\|//) *(TODO\\|NOTE\\|FIXME)'
 
 " Edit selected module name
-xmap <localleader>e :<C-U>execute('edit ' . ban#python#TransformSelectedTextIntoFilename())<CR>
+xmap <localleader>f :<C-U>let @g = ban#python#TransformSelectedTextIntoFilename() <CR>
 
 
 
