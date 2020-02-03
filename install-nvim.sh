@@ -13,6 +13,7 @@ NEOVIM_PLUGINS_DIR=${NEOVIM_DATA_DIR}/vim-plug
 
 rm -f ${NEOVIM_CONFIG_DIR}
 ln -sf $PWD ${NEOVIM_CONFIG_DIR}
+ln -sf $PWD ~/.vimrc
 mkdir --parent ${NEOVIM_PLUGINS_DIR}
 
 
