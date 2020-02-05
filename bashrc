@@ -32,6 +32,10 @@ __shell_options () {
 
 
 __variables () {
+	if [[ -f ~/.nicknamerc ]]; then
+		source ~/.nicknamerc
+	fi
+
 	export PATH="/usr/local/bin:$PATH"
 	if [[ "${OSNAME}" = "Linux" ]]; then
 		eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
@@ -160,14 +164,13 @@ __define_functions () {
 
 	unset -f __prompt_command
 	__prompt_command () {
-		local last_exit_code=$?  # it must be the first statement!
-
-		local ps1_color_reset="\[\e[0m\]"
-		if [[ -z "$PS1_OK_COLOR" ]]; then
-			if [[ -r ~/.ps1colorrc ]]; then
-				source ~/.ps1colorrc  # define $PS1_OK_COLOR and $PS1_ERROR_COLOR
-			fi
-		fi
+		# Colorcodes from
+		# http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
+		# section "256 (8-bit) Colors"
+		local last_exit_code=$?
+		local ps1_reset="\[\e[0m\]"
+		local ps1_blue="\[\e[38;5;15;48;5;32m\]"
+		local ps1_red="\[\e[38;5;15;48;5;1m\]"
 		if [[ ${last_exit_code} -eq 0 ]]; then
 			local ps1_status=
 		else
@@ -195,7 +198,7 @@ __define_functions () {
 		PREVIOUS_PS1_PYTHON_VERSION="${ps1_python_version}"
 		PREVIOUS_VIRTUAL_ENV="${VIRTUAL_ENV}"
 
-		export PS1="${ps1_color_reset}${ps1_status:+${PS1_ERROR_COLOR} ${ps1_status} ${ps1_color_reset}}${PS1_OK_COLOR}${ps1_virtual_env:+(${ps1_virtual_env})} \W${PS1_GIT:+ :${PS1_GIT}}\$ ${ps1_color_reset} "
+		export PS1="${ps1_reset}${ps1_status:+${ps1_red} ${ps1_status} ${ps1_reset}}${ps1_blue}${ps1_virtual_env:+(${ps1_virtual_env})} \W${PS1_GIT:+ :${PS1_GIT}}\$ ${ps1_reset} "
 	}
 
 	export PROMPT_COMMAND=__prompt_command

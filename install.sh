@@ -5,4 +5,3 @@ if [[ -r ~/.bash_aliases ]]; then
 fi
 
 ln -s ${PWD}/bashrc ~/.bash_aliases
-ln -s ${PWD}/ps1colorrc.example ~/.ps1colorrc
