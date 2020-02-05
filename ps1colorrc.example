@@ -1,0 +1,6 @@
+# Colorcodes from
+# http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
+# section "256 (8-bit) Colors"
+
+export PS1_OK_COLOR="\[\e[38;5;15;48;5;32m\]"  # blue
+export PS1_ERROR_COLOR="\[\e[38;5;15;48;5;1m\]"  # red
