@@ -24,4 +24,4 @@ set-option -g default-terminal "xterm-256color"
 set-option -ga terminal-overrides ",xterm-256color:Tc"
 
 # Status bar
-set -g status-style bg=green,fg=colour15
+set -g status-style bg=white,fg=green
