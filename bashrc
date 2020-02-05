@@ -187,7 +187,7 @@ __define_functions () {
 				if [[ "${ps1_virtual_env}" = ".venv" ]]; then
 					local ps1_virtual_env=$(basename $(dirname ${VIRTUAL_ENV}))
 				fi
-				local ps1_python_version=$(python --version | while IFS=' ' read _dummy version; do echo $version; break; done)
+				local ps1_python_version=$(python --version 2>&1 | while IFS=' ' read _dummy version; do echo $version; break; done)
 				ps1_virtual_env="${ps1_virtual_env} ${ps1_python_version}"
 			fi
 		else
