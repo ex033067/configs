@@ -36,7 +36,7 @@ __variables () {
 		export DISPLAY=:0
 	fi
 
-	if [[ "${OSNAME}" = "Linux" ]]; then
+	if [[ -r /home/linuxbrew/.linuxbrew/bin/brew ]]; then
 		eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 	fi
 
