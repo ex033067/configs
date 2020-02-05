@@ -81,7 +81,6 @@ __variables () {
 
 	# partialcd
 	if [[ -r ~/.local/bin/partialcd ]]; then
-		export PATH="$HOME/.local/bin/binscripts:$HOME/.local/bin:$PATH"
 		export PARTIALCD_ROOT=~/projects
 		source ~/.local/bin/partialcd
 	fi
