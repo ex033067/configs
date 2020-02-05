@@ -222,17 +222,10 @@ __main () {
 	__aliases
 	__shell_options
 
-	if [[ -n "${TMUX}" ]]; then
-		if [[ -n "${LOADED_TMUX_ENV}" ]]; then
-			return
-		fi
-		export LOADED_TMUX_ENV=1
-	else
-		if [[ -n "${LOADED_ENV}" ]]; then
-			return
-		fi
-		export LOADED_ENV=1
+	if [[ -n "${LOADED_ENV}" ]]; then
+		return
 	fi
+	export LOADED_ENV=1
 
 	__variables
 	__define_functions
