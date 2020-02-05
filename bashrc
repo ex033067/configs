@@ -32,7 +32,6 @@ __shell_options () {
 
 
 __variables () {
-	export PATH="/usr/local/bin:$PATH"
 	if [[ "${OSNAME}" = "Linux" ]]; then
 		eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 	fi
@@ -74,7 +73,7 @@ __variables () {
 	fi
 
 	# final PATH
-	export PATH="$HOME/.local/bin/binscripts:$HOME/.local/bin:$PATH"
+	export PATH="$HOME/.local/bin/binscripts:$PATH"
 
 	# partialcd
 	if [[ -r ~/.local/bin/partialcd ]]; then
