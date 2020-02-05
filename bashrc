@@ -32,6 +32,10 @@ __shell_options () {
 
 
 __variables () {
+	if [[ -n "$WSL_DISTRO_NAME" ]]; then
+		export DISPLAY=:0
+	fi
+
 	if [[ "${OSNAME}" = "Linux" ]]; then
 		eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 	fi
