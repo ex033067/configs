@@ -63,7 +63,7 @@ __variables () {
 	if which pyenv > /dev/null
 	then
 	    eval "$(pyenv init -)"
-	    pyenv global 3.7.6 docker_compose tools jupyter 2.7.17
+		pyenv global neovim_py3 docker_compose tools jupyter 3.7.6 neovim_py2 2.7.17
 	fi
 
 	# vagrant
