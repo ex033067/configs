@@ -6,7 +6,7 @@ setlocal tabstop=4
 setlocal expandtab " Spaces, not tabs
 
 setlocal equalprg=~/.local/bin/binscripts/python-style
-setlocal list
+setlocal list number cursorline
 
 
 " Python tools and helpers
