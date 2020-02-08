@@ -14,6 +14,7 @@ map <leader>6 :b # <CR>
 map <leader>o :only <CR>
 map <leader>q :clo <CR>
 map <leader>w <C-W>W
+map <leader>_ <C-W>_
 
 " Toggle settings
 map <Space> :noh<CR>
