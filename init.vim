@@ -25,7 +25,7 @@ map <leader>> :cnext<CR>
 
 " Git
 map <leader>ga :!git add % <CR>
-map <leader>gd :Git diff % <CR>
+map <leader>gd :Git diff % <CR><C-W>_
 map <leader>gc :Git commit -v <CR>
 
 " Toggle comment
