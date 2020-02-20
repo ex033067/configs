@@ -10,7 +10,11 @@ let NERDTreeHijackNetrw = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/projects/vim-snippets']
 
 let g:rainbow_active = 1
-let g:rainbow_conf = {'operators': ''}
+let g:rainbow_conf = {
+	\ 'operators': '',
+	\ 'guis': ['bold'],
+	\ 'guifgs': ['seagreen3', 'magenta', 'royalblue3', 'orange', 'firebrick'],
+\}
 
 call plug#begin('~/.local/share/nvim/vim-plug')
 Plug 'junegunn/vim-plug'
