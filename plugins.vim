@@ -9,6 +9,9 @@ let NERDTreeHijackNetrw = 0
 
 let g:UltiSnipsSnippetDirectories=[$HOME.'/projects/vim-snippets']
 
+let g:rainbow_active = 1
+let g:rainbow_conf = {'operators': ''}
+
 call plug#begin('~/.local/share/nvim/vim-plug')
 Plug 'junegunn/vim-plug'
 Plug 'tpope/vim-fugitive'
@@ -18,6 +21,7 @@ Plug 'viniciusban/vim-polyglot'
 Plug 'viniciusban/vim-ft-markdown'
 Plug 'viniciusban/vim-almostmonochrome'
 Plug 'machakann/vim-sandwich'
+Plug 'luochen1990/rainbow'
 
 Plug 'junegunn/fzf', { 'dir': '~/.local/share/nvim/vim-plug/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
