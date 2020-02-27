@@ -36,6 +36,10 @@ __variables () {
 		export DISPLAY=:0
 	fi
 
+	if [[ -r ~/.hostname_alias ]]; then
+		source ~/.hostname_alias
+	fi
+
 	if [[ -r /home/linuxbrew/.linuxbrew/bin/brew ]]; then
 		eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 	fi
