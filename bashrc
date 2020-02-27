@@ -201,7 +201,7 @@ __define_functions () {
 		PREVIOUS_PS1_PYTHON_VERSION="${ps1_python_version}"
 		PREVIOUS_VIRTUAL_ENV="${VIRTUAL_ENV}"
 
-		export PS1="${ps1_color_reset}${ps1_status:+${PS1_ERROR_COLOR} ${ps1_status} ${ps1_color_reset}}${PS1_OK_COLOR}${ps1_virtual_env:+(${ps1_virtual_env})} \W${PS1_GIT:+ :${PS1_GIT}}\$ ${ps1_color_reset} "
+		export PS1="${ps1_color_reset}${ps1_status:+${PS1_ERROR_COLOR} ${ps1_status} ${ps1_color_reset}}${PS1_OK_COLOR}\u@${HOSTNAME_ALIAS:-${HOSTNAME}}${ps1_virtual_env:+(${ps1_virtual_env})} \W${PS1_GIT:+:${PS1_GIT}}\$ ${ps1_color_reset} "
 	}
 
 	export PROMPT_COMMAND=__prompt_command
