@@ -10,6 +10,7 @@ let maplocalleader="\\"
 
 map <leader><leader> :update<CR>
 map <leader>2 :NERDTreeToggle<CR>
+map <leader>3 :FZF<CR>
 map <leader>6 :b # <CR>
 
 vmap Y "+y
