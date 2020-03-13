@@ -16,6 +16,8 @@ let g:rainbow_conf = {
 	\ 'guifgs': ['seagreen3', 'magenta', 'royalblue3', 'orange', 'firebrick'],
 \}
 
+let g:jedi#popup_on_dot=0
+
 call plug#begin('~/.local/share/nvim/vim-plug')
 Plug 'junegunn/vim-plug'
 Plug 'tpope/vim-fugitive'
@@ -31,6 +33,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.local/share/nvim/vim-plug/fzf', 'do': './insta
 Plug 'junegunn/fzf.vim'
 
 Plug 'SirVer/ultisnips'
+
+Plug 'davidhalter/jedi-vim'
 
 call plug#end()
 
