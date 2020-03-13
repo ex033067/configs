@@ -20,21 +20,24 @@ let g:jedi#popup_on_dot=0
 
 call plug#begin('~/.local/share/nvim/vim-plug')
 Plug 'junegunn/vim-plug'
-Plug 'tpope/vim-fugitive'
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
+
+# Syntax and highlighting
 Plug 'viniciusban/vim-polyglot'
-Plug 'viniciusban/vim-ft-markdown'
 Plug 'viniciusban/vim-almostmonochrome'
-Plug 'machakann/vim-sandwich'
 Plug 'luochen1990/rainbow'
 
-Plug 'junegunn/fzf', { 'dir': '~/.local/share/nvim/vim-plug/fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
-Plug 'SirVer/ultisnips'
-
+# Features and shortcuts for improve editing
+Plug 'scrooloose/nerdcommenter'
+Plug 'machakann/vim-sandwich'
 Plug 'davidhalter/jedi-vim'
+Plug 'SirVer/ultisnips'
+Plug 'viniciusban/vim-ft-markdown'
+
+# File searching and handling
+Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/nerdtree'
+Plug 'junegunn/fzf', {'dir': '~/.local/share/nvim/vim-plug/fzf', 'do': './install --all'}
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
