@@ -26,7 +26,7 @@ Plug 'machakann/vim-sandwich'
 let g:jedi#popup_on_dot=0
 Plug 'davidhalter/jedi-vim'
 
-let g:UltiSnipsSnippetDirectories=[$HOME.'/projects/vim-snippets']
+let g:UltiSnipsSnippetDirectories=[$HOME.'/src/vim-snippets']
 Plug 'SirVer/ultisnips'
 Plug 'viniciusban/vim-ft-markdown'
 Plug 'mattn/emmet-vim'
