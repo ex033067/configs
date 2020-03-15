@@ -5,8 +5,13 @@ setlocal nofoldenable
 setlocal tabstop=4
 setlocal expandtab " Spaces, not tabs
 
-setlocal equalprg=~/.local/bin/binscripts/python-style
 setlocal list number cursorline
+
+if filereadable('Makefile')
+	setlocal equalprg=make\ --no-print-directory\ --silent\ pep8
+else
+	setlocal equalprg=~/.local/bin/binscripts/python-style
+endif
 
 
 " Python tools and helpers
