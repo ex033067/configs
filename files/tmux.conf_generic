@@ -15,6 +15,7 @@ set-option -g history-limit 100000
 
 # how about resizing panes with mouse?
 set-option -g mouse on
+unbind -T root MouseDrag1Pane
 
 # don't wait for <esc> key
 set -s escape-time 0
