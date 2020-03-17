@@ -166,8 +166,8 @@ __define_functions () {
 
 __main () {
 	set -o vi
-	__aliases
 	__variables
+	__aliases
 	__define_functions
 }
 
