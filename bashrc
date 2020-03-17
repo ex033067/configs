@@ -179,17 +179,6 @@ __define_functions () {
 	export PROMPT_COMMAND=__prompt_command
 }
 
-__export_functions () {
-	if [[ -r ~/.local/bin/partialcd ]]; then
-		export -f _partialcd
-	fi
-	if which pyenv > /dev/null; then
-		export -f pyenv
-	fi
-	export -f __prompt_command
-	export -f __ps1_git
-}
-
 
 __main () {
 	if [[ -z "${OSNAME}" ]]; then
@@ -206,7 +195,6 @@ __main () {
 
 	__variables
 	__define_functions
-	__export_functions
 }
 
 __main
