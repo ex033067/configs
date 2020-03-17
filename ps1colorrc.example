@@ -1,7 +1,11 @@
+# Define colors for PS1 prompt.
+#
+# Save this file as ~/.ps1colorrc
+#
 # Colorcodes from
 # http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
 # section "256 (8-bit) Colors"
 
-export PS1_OK_COLOR="\[\e[38;5;15;48;5;32m\]"  # blue
-export PS1_ERROR_COLOR="\[\e[38;5;15;48;5;1m\]"  # red
-export PS1_VIRTUALENV_COLOR="\[\e[38;5;15;48;5;24m\]"  # dark blue
+export PS1_COLOR_DEFAULT="\[\e[38;5;15;48;5;32m\]"  # blue
+export PS1_COLOR_ERROR="\[\e[38;5;15;48;5;1m\]"  # red
+export PS1_COLOR_VIRTUALENV="\[\e[38;5;15;48;5;24m\]"  # dark blue

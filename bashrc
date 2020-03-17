@@ -168,10 +168,10 @@ __define_functions () {
 	__prompt_command () {
 		local last_exit_code=$?  # it must be the first statement!
 
-		local ps1_color_reset="\[\e[0m\]"
-		if [[ -z "$PS1_OK_COLOR" ]]; then
+		local PS1_COLOR_RESET="\[\e[0m\]"
+		if [[ -z "$PS1_COLOR_DEFAULT" ]]; then
 			if [[ -r ~/.ps1colorrc ]]; then
-				source ~/.ps1colorrc  # define $PS1_OK_COLOR and $PS1_ERROR_COLOR
+				source ~/.ps1colorrc  # define $PS1_COLOR_* variables
 			fi
 		fi
 		if [[ ${last_exit_code} -eq 0 ]]; then
@@ -182,7 +182,7 @@ __define_functions () {
 
 		__ps1_git
 
-		export PS1="${ps1_color_reset}${ps1_status:+${PS1_ERROR_COLOR} ${ps1_status} ${ps1_color_reset}}${PS1_OK_COLOR}@${HOSTNAME_ALIAS:-${HOSTNAME}} ${VIRTUAL_ENV:+${PS1_VIRTUALENV_COLOR}(}\W ${PS1_GIT:+on ${PS1_GIT}}${VIRTUAL_ENV:+)} \$${ps1_color_reset} "
+		export PS1="${PS1_COLOR_RESET}${ps1_status:+${PS1_COLOR_ERROR} ${ps1_status} ${PS1_COLOR_RESET}}${PS1_COLOR_DEFAULT}@${HOSTNAME_ALIAS:-${HOSTNAME}} ${VIRTUAL_ENV:+${PS1_COLOR_VIRTUALENV}(}\W ${PS1_GIT:+on ${PS1_GIT}}${VIRTUAL_ENV:+)} \$${PS1_COLOR_RESET} "
 	}
 
 	export PROMPT_COMMAND=__prompt_command
