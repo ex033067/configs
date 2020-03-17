@@ -7,3 +7,4 @@ fi
 ln -s ${PWD}/bashrc ~/.bash_aliases
 ln -s ${PWD}/ps1_colors.example ~/.ps1_colors
 ln -s ${PWD}/ps1_hostname_alias.example ~/.ps1_hostname_alias
+ln -s ${PWD}/pyenv_global_command.example ~/.pyenv_global_command 

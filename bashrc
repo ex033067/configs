@@ -4,6 +4,8 @@
 #
 # Open "ps1_hostname_alias.example" and "ps1_colors.example" for examples of
 # prompt customization.
+#
+# Open "pyenv_global_command.example" file for example of pyenv global command.
 
 
 __aliases () {
@@ -50,7 +52,8 @@ __variables () {
 		if which pyenv > /dev/null
 		then
 			eval "$(pyenv init -)"
-			pyenv global neovim_py3 docker_compose tools jupyter 3.7.6 neovim_py2 2.7.17
+			# Custom python versions. See "pyenv_global_command.example" file.
+			[[ -r ~/.pyenv_global_command ]] && source ~/.pyenv_global_command
 		fi
 	fi
 
