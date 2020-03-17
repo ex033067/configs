@@ -27,4 +27,4 @@ set-option -ga terminal-overrides ",xterm-256color:Tc"
 # Status bar
 set-option -g status-style bg=white,fg=black
 set-option -g window-status-current-style fg=colour15,bg=black
-set-option -g status-right "@#(source ~/.tmux_hostname || hostname) %a %d %b %R"
+set-option -g status-right "@#(. ~/.tmux_hostname || hostname) %a %d %b %R"
