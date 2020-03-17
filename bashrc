@@ -70,15 +70,13 @@ __variables () {
 
 	# pyenv
 	if [[ -d ~/.local/bin/pyenv ]]; then
-	    export PYENV_ROOT=~/.local/bin/pyenv
-	else
-	    export PYENV_ROOT=~/.pyenv
+		export PYENV_ROOT=~/.local/bin/pyenv
+		export PATH="$PYENV_ROOT/bin:$PATH"
 	fi
-	export PATH="$PYENV_ROOT/bin:$PATH"
 
 	if which pyenv > /dev/null
 	then
-	    eval "$(pyenv init -)"
+		eval "$(pyenv init -)"
 		pyenv global neovim_py3 docker_compose tools jupyter 3.7.6 neovim_py2 2.7.17
 	fi
 
@@ -198,7 +196,9 @@ __export_functions () {
 	if [[ -r ~/.local/bin/partialcd ]]; then
 		export -f _partialcd
 	fi
-	export -f pyenv
+	if which pyenv > /dev/null; then
+		export -f pyenv
+	fi
 	export -f __prompt_command
 	export -f __ps1_git
 }
