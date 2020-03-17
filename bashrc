@@ -56,7 +56,6 @@ __variables () {
 		eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 	fi
 
-	export PROJECT_ROOT=~/projects
 	[[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
 
 	export HISTCONTROL=ignoreboth
