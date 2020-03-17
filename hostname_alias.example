@@ -1,0 +1,10 @@
+# vim: filetype=sh
+#
+# Show an alias of HOSTNAME in PS1 to avoid changing the computer name.
+#
+# Beyond it, WSL (Windows Subsystem for Linux) always bring the original
+# hostname back.
+#
+# Save this file as "~/.hostname_alias" to take effect.
+
+export HOSTNAME_ALIAS=hostname_alias

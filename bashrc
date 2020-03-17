@@ -1,4 +1,9 @@
-#  vim: filetype=sh
+# vim: filetype=sh
+#
+# Set environment for bash.
+#
+# Open "hostname_alias.example" and "ps1colorrc.example" for examples of
+# prompt customization.
 
 
 __aliases () {
@@ -37,6 +42,7 @@ __variables () {
 	fi
 
 	if [[ -r ~/.hostname_alias ]]; then
+		# See "hostname_alias.example" in this repo for an example.
 		source ~/.hostname_alias
 	fi
 
@@ -171,6 +177,7 @@ __define_functions () {
 		local PS1_COLOR_RESET="\[\e[0m\]"
 		if [[ -z "$PS1_COLOR_DEFAULT" ]]; then
 			if [[ -r ~/.ps1colorrc ]]; then
+				# See "ps1colorrc.example" in this repo for an example.
 				source ~/.ps1colorrc  # define $PS1_COLOR_* variables
 			fi
 		fi
