@@ -182,26 +182,7 @@ __define_functions () {
 
 		__ps1_git
 
-		if [[ -n "${VIRTUAL_ENV}" ]]; then
-			if [[ "${VIRTUAL_ENV}" = "${PREVIOUS_VIRTUAL_ENV}" ]]; then
-				local ps1_virtual_env="${PREVIOUS_PS1_VIRTUAL_ENV}"
-				local ps1_python_version="${PREVIOUS_PS1_PYTHON_VERSION}"
-			else
-				local ps1_virtual_env=$(basename ${VIRTUAL_ENV})
-				if [[ "${ps1_virtual_env}" = ".venv" ]]; then
-					local ps1_virtual_env=$(basename $(dirname ${VIRTUAL_ENV}))
-				fi
-				local ps1_python_version=$(python --version 2>&1 | while IFS=' ' read _dummy version; do echo $version; break; done)
-				ps1_virtual_env="${ps1_virtual_env} ${ps1_python_version}"
-			fi
-		else
-			local ps1_virtual_env=
-		fi
-		PREVIOUS_PS1_VIRTUAL_ENV="${ps1_virtual_env}"
-		PREVIOUS_PS1_PYTHON_VERSION="${ps1_python_version}"
-		PREVIOUS_VIRTUAL_ENV="${VIRTUAL_ENV}"
-
-		export PS1="${ps1_color_reset}${ps1_status:+${PS1_ERROR_COLOR} ${ps1_status} ${ps1_color_reset}}${PS1_OK_COLOR}\u@${HOSTNAME_ALIAS:-${HOSTNAME}}${ps1_virtual_env:+(${ps1_virtual_env})} \W${PS1_GIT:+:${PS1_GIT}}\$ ${ps1_color_reset} "
+		export PS1="${ps1_color_reset}${ps1_status:+${PS1_ERROR_COLOR} ${ps1_status} ${ps1_color_reset}}${PS1_OK_COLOR}@${HOSTNAME_ALIAS:-${HOSTNAME}} ${VIRTUAL_ENV:+${PS1_VIRTUALENV_COLOR}(}\W ${PS1_GIT:+on ${PS1_GIT}}${VIRTUAL_ENV:+)} \$${ps1_color_reset} "
 	}
 
 	export PROMPT_COMMAND=__prompt_command
