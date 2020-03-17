@@ -161,7 +161,7 @@ __define_functions () {
 			fi
 		done <<< "${PS1_GIT_STATUS_OUTPUT}"
 
-		PS1_GIT="${staged_indicator}${unstaged_indicator}${branch}"
+		PS1_GIT="${branch}${staged_indicator}${unstaged_indicator}"
 	}
 
 	unset -f __prompt_command
