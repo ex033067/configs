@@ -69,10 +69,6 @@ __variables () {
 		pyenv global neovim_py3 docker_compose tools jupyter 3.7.6 neovim_py2 2.7.17
 	fi
 
-	# vagrant
-	[[ -d /Volumes/hd2/${USER}/.vagrant.d ]] && export VAGRANT_HOME=/Volumes/hd2/${USER}/.vagrant.d
-	export VAGRANT_BOX_UPDATE_CHECK_DISABLE=1
-
 	# asdf-vm
 	if [[ -d ~/.asdf ]]; then
 		source $HOME/.asdf/asdf.sh
