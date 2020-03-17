@@ -46,6 +46,12 @@ __variables () {
 		source ~/.ps1_hostname_alias
 	fi
 
+	export PS1_COLOR_RESET="\[\e[0m\]"
+	if [[ -r ~/.ps1_colors ]]; then
+		# See "ps1_colors.example" in this repo for an example.
+		source ~/.ps1_colors  # define PS1_COLOR_* variables
+	fi
+
 	if [[ -r /home/linuxbrew/.linuxbrew/bin/brew ]]; then
 		eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 	fi
@@ -174,13 +180,6 @@ __define_functions () {
 	__prompt_command () {
 		local last_exit_code=$?  # it must be the first statement!
 
-		local PS1_COLOR_RESET="\[\e[0m\]"
-		if [[ -z "$PS1_COLOR_DEFAULT" ]]; then
-			if [[ -r ~/.ps1_colors ]]; then
-				# See "ps1_colors.example" in this repo for an example.
-				source ~/.ps1_colors  # define PS1_COLOR_* variables
-			fi
-		fi
 		if [[ ${last_exit_code} -eq 0 ]]; then
 			local ps1_status=
 		else
