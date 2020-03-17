@@ -19,14 +19,10 @@ __aliases () {
 	alias ack='ack --sort-files --color-filename="bold blue" --color-lineno="blue" --color-match="bold white on_blue" --ignore-dir=is:.venv --ignore-dir=is:.vagrant --ignore-file=ext:sqlite3'
 	alias grep='grep --color=auto'
 
-	alias django='python manage.py'
 	alias now='date -u +%y%m%d%H%M'
-	alias todo='cd ~/Dropbox/todo && $EDITOR todo.todo'
 
 	# one-letters
-	alias e='$EDITOR'
 	alias j='jupyter notebook --no-browser --ip=localhost.test --NotebookApp.allow_remote_access=True'
-	alias r='runserver'
 }
 
 
