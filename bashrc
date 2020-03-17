@@ -40,6 +40,7 @@ __variables () {
 	[[ "${OSNAME}" = "Darwin" ]] && export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
 
 
+	# linuxbrew
 	if [[ -r /home/linuxbrew/.linuxbrew/bin/brew ]]; then
 		eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 	fi
