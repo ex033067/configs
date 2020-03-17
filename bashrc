@@ -31,11 +31,6 @@ __aliases () {
 }
 
 
-__shell_options () {
-	set -o vi
-}
-
-
 __variables () {
 	if [[ -n "$WSL_DISTRO_NAME" ]]; then
 		export DISPLAY=:0
@@ -208,8 +203,8 @@ __main () {
 		export OSNAME="$(uname)"
 	fi
 
+	set -o vi
 	__aliases
-	__shell_options
 
 	if [[ -n "${LOADED_ENV}" ]]; then
 		return
