@@ -27,35 +27,20 @@ __aliases () {
 
 
 __variables () {
-	if [[ -n "$WSL_DISTRO_NAME" ]]; then
-		export DISPLAY=:0
-	fi
+	[[ -z "${OSNAME}" ]] && export OSNAME="$(uname)"
+	[[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
+	export HISTCONTROL=ignoreboth
+	export HISTTIMEFORMAT="%F %T "
+	export EDITOR=$(which nvim)
+	export VISUAL=$EDITOR
 
-	if [[ -r ~/.ps1_hostname_alias ]]; then
-		# See "ps1_hostname_alias.example" in this repo for an example.
-		source ~/.ps1_hostname_alias
-	fi
+	[[ -n "$WSL_DISTRO_NAME" ]] && export DISPLAY=:0
+	[[ "${OSNAME}" = "Darwin" ]] && export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
 
-	export PS1_COLOR_RESET="\[\e[0m\]"
-	if [[ -r ~/.ps1_colors ]]; then
-		# See "ps1_colors.example" in this repo for an example.
-		source ~/.ps1_colors  # define PS1_COLOR_* variables
-	fi
 
 	if [[ -r /home/linuxbrew/.linuxbrew/bin/brew ]]; then
 		eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 	fi
-
-	[[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
-
-	export HISTCONTROL=ignoreboth
-	export HISTTIMEFORMAT="%F %T "
-
-	export EDITOR='nvim'
-	export VISUAL=$EDITOR
-
-	# Default "UTF-8" in MacOS makes python crash.
-	[[ "${OSNAME}" = "Darwin" ]] && export LC_CTYPE="en_US.UTF-8"
 
 	# pyenv
 	if [[ -d ~/.local/bin/pyenv ]]; then
@@ -74,6 +59,13 @@ __variables () {
 		source $HOME/.asdf/asdf.sh
 		source $HOME/.asdf/completions/asdf.bash
 	fi
+
+	# Custom hostname in prompt. See "ps1_hostname_alias.example" file.
+	[[ -r ~/.ps1_hostname_alias ]] && source ~/.ps1_hostname_alias
+
+	# Custom color prompt. See "ps1_colors.example" file.
+	export PS1_COLOR_RESET="\[\e[0m\]"
+	[[ -r ~/.ps1_colors ]] && source ~/.ps1_colors
 
 	# final PATH
 	export PATH="$HOME/.local/bin/binscripts:$PATH"
@@ -173,10 +165,6 @@ __define_functions () {
 
 
 __main () {
-	if [[ -z "${OSNAME}" ]]; then
-		export OSNAME="$(uname)"
-	fi
-
 	set -o vi
 	__aliases
 	__variables
