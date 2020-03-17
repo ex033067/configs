@@ -21,7 +21,6 @@ __aliases () {
 
 	alias django='python manage.py'
 	alias now='date -u +%y%m%d%H%M'
-	alias p='_partialcd'
 	alias todo='cd ~/Dropbox/todo && $EDITOR todo.todo'
 
 	# one-letters
@@ -86,12 +85,6 @@ __variables () {
 
 	# final PATH
 	export PATH="$HOME/.local/bin/binscripts:$PATH"
-
-	# partialcd
-	if [[ -r ~/.local/bin/partialcd ]]; then
-		export PARTIALCD_ROOT=~/projects
-		source ~/.local/bin/partialcd
-	fi
 
 	# ssh-agent
 	# if [[ "${OSNAME}" = "Linux" ]]; then
