@@ -187,12 +187,6 @@ __main () {
 
 	set -o vi
 	__aliases
-
-	if [[ -n "${LOADED_ENV}" ]]; then
-		return
-	fi
-	export LOADED_ENV=1
-
 	__variables
 	__define_functions
 }
