@@ -5,6 +5,6 @@
 # Beyond it, WSL (Windows Subsystem for Linux) always bring the original
 # hostname back.
 #
-# Save this file as "~/.hostname_alias" to take effect.
+# Save this file as "~/.ps1_hostname_alias" to take effect.
 
 export HOSTNAME_ALIAS=hostname_alias

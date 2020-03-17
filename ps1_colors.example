@@ -2,7 +2,7 @@
 #
 # Customize colors for PS1.
 #
-# Save this file as "~/.ps1colorrc" to take effect.
+# Save this file as "~/.ps1_colors" to take effect.
 
 export PS1_COLOR_DEFAULT="\[\e[38;5;15;48;5;32m\]"  # blue
 export PS1_COLOR_ERROR="\[\e[38;5;15;48;5;1m\]"  # red

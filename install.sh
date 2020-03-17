@@ -5,5 +5,5 @@ if [[ -r ~/.bash_aliases ]]; then
 fi
 
 ln -s ${PWD}/bashrc ~/.bash_aliases
-ln -s ${PWD}/ps1colorrc.example ~/.ps1colorrc
-ln -s ${PWD}/hostname_alias.example ~/.hostname_alias
+ln -s ${PWD}/ps1_colors.example ~/.ps1_colors
+ln -s ${PWD}/ps1_hostname_alias.example ~/.ps1_hostname_alias
