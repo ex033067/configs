@@ -46,12 +46,12 @@ __variables () {
 	if [[ -d ~/.local/bin/pyenv ]]; then
 		export PYENV_ROOT=~/.local/bin/pyenv
 		export PATH="$PYENV_ROOT/bin:$PATH"
-	fi
 
-	if which pyenv > /dev/null
-	then
-		eval "$(pyenv init -)"
-		pyenv global neovim_py3 docker_compose tools jupyter 3.7.6 neovim_py2 2.7.17
+		if which pyenv > /dev/null
+		then
+			eval "$(pyenv init -)"
+			pyenv global neovim_py3 docker_compose tools jupyter 3.7.6 neovim_py2 2.7.17
+		fi
 	fi
 
 	# asdf-vm
