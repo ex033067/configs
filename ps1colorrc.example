@@ -4,3 +4,4 @@
 
 export PS1_OK_COLOR="\[\e[38;5;15;48;5;32m\]"  # blue
 export PS1_ERROR_COLOR="\[\e[38;5;15;48;5;1m\]"  # red
+export PS1_VIRTUALENV_COLOR="\[\e[38;5;15;48;5;24m\]"  # dark blue
