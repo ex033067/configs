@@ -84,9 +84,7 @@ __ps1_git () {
 	# grep, sed, etc. and abuse of bash expressions and logic.
 
 	PS1_GIT_STATUS_OUTPUT=$(git status -b --porcelain=2 2>/dev/null)
-	PS1_GIT_STATUS_EXIT_CODE=$?
-
-	if [[ ${PS1_GIT_STATUS_EXIT_CODE} -ne 0 ]]; then
+	if [[ $? -ne 0 ]]; then
 		# Not a git repo
 		PS1_GIT=
 		return
