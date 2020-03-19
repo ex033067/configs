@@ -71,9 +71,6 @@ __variables () {
 	# Custom color prompt. See "ps1_colors.example" file.
 	export PS1_COLOR_RESET="\[\e[0m\]"
 	[[ -r ~/.ps1_colors ]] && source ~/.ps1_colors
-
-	# final PATH
-	export PATH="$HOME/.local/bin/binscripts:$PATH"
 }
 
 
