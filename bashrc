@@ -90,12 +90,12 @@ __ps1_git () {
 		return
 	fi
 
-	if [[ "${PS1_GIT_STATUS_OUTPUT}" = "${PREVIOUS_PS1_GIT_STATUS_OUTPUT}" ]]; then
+	if [[ "${PS1_GIT_STATUS_OUTPUT}" = "${CACHED_PS1_GIT_STATUS_OUTPUT}" ]]; then
 		# Nothing changed since previous prompt. Reuse current $PS1_GIT.
 		return
 	fi
 
-	PREVIOUS_PS1_GIT_STATUS_OUTPUT="${PS1_GIT_STATUS_OUTPUT}"
+	CACHED_PS1_GIT_STATUS_OUTPUT="${PS1_GIT_STATUS_OUTPUT}"
 
 	local branch staged_indicator unstaged_indicator
 	local rectype field1 field2 other_fields
