@@ -28,6 +28,33 @@ __aliases () {
 }
 
 
+__start_wsl_services () {
+	__start_ssh_agent
+}
+
+
+__start_ssh_agent () {
+	if [[ -n "$SSH_AGENT_PID" ]]; then
+		current_agent=$(pgrep -f ssh-agent)
+		if [[ "$current_agent" = "$SSH_AGENT_PID" ]]; then
+			return
+		fi
+	fi
+
+	source_file=/tmp/ssh-agent-source-file
+	if [[ -f "$source_file" ]]; then
+		source $source_file >/dev/null 2>&1
+		current_agent=$(pgrep -f ssh-agent)
+		if [[ "$current_agent" = "$SSH_AGENT_PID" ]]; then
+			return
+		fi
+	fi
+
+	ssh-agent -s >$source_file
+	source $source_file >/dev/null 2>&1
+}
+
+
 __variables () {
 	[[ -z "${OSNAME}" ]] && export OSNAME="$(uname)"
 	[[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
@@ -152,6 +179,7 @@ __main () {
 	set -o vi
 	__variables
 	__aliases
+	[[ -n "$WSL_DISTRO_NAME" ]] && __start_wsl_services
 }
 
 __main
