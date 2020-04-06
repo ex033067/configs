@@ -33,15 +33,6 @@ map <leader>ga :!git add % <CR>
 map <leader>gd :Git diff % <CR><C-W>_
 map <leader>gc :Git commit -v <CR>
 
-" Toggle comment
-nmap <leader>c :let g:nerd_comment_type='toggle'<CR>:set opfunc=Ban_ExecNERDCommenterWithMotion<CR>g@
-xmap <leader>cc <Plug>NERDCommenterToggle
-nmap <leader>cc <Plug>NERDCommenterToggle
-
-" Force comment line(s) even if already commented
-xmap <leader>ca <Plug>NERDCommenterComment
-nmap <leader>ca <Plug>NERDCommenterComment
-
 " Add delimiters to selected text
 xmap <leader>D :call Ban_AddDelimiterToSelectedText()<CR>
 

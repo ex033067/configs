@@ -36,18 +36,6 @@ function! Ban_Run(command)
 	return prefix . command . suffix
 endfunction
 
-function! Ban_ExecNERDCommenterWithMotion(mode)
-	let command = '<first>,<last>call NERDComment("n", "<type>")'
-	let [firstline, lastline] = [line("'["), line("']")]
-	if firstline > lastline
-		let [firstline, lastline] = [lastline, firstline]
-	endif
-	let command = substitute(command, '<first>', firstline, '')
-	let command = substitute(command, '<last>', lastline, '')
-	let command = substitute(command, '<type>', g:nerd_comment_type, '')
-	exec command
-endfunction
-
 function! Ban_AddDelimiterToSelectedText() range
 	" It works only in one line by now.
 	let counterchars = {'(': '()', ')': '()', '[': '[]', ']': '[]', '{': '{}', '}': '{}', '<': '<>', '>': '<>'}

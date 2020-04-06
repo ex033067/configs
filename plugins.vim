@@ -20,7 +20,7 @@ Plug 'luochen1990/rainbow'
 " Features and shortcuts for improve editing
 " ------------------------------------------
 
-Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-commentary'  " gcc, gc<motion>, {Visual}gc
 Plug 'machakann/vim-sandwich'
 
 let g:jedi#popup_on_dot=0
