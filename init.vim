@@ -22,9 +22,9 @@ endif
 map <Space> :noh<CR>
 
 " Git
-map <leader>ga :!git add % <CR>
-map <leader>gd :Git diff % <CR><C-W>_
-map <leader>gc :Git commit -v <CR>
+map <leader>ga :terminal ++shell ++hidden ++close git add % 
+map <leader>gd :terminal ++shell git diff % <CR><C-W>_
+map <leader>gc :terminal ++shell ++close git commit -v 
 
 " Add delimiters to selected text
 xmap <leader>D :call Ban_AddDelimiterToSelectedText()<CR>
