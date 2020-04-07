@@ -24,10 +24,6 @@ map <leader>L :set cul!<CR>
 map <leader>N :set nu!<CR>
 map <leader>W :set wrap!<CR>
 
-" Navigate the quick fix list
-map <leader>< :cprev<CR>
-map <leader>> :cnext<CR>
-
 " Git
 map <leader>ga :!git add % <CR>
 map <leader>gd :Git diff % <CR><C-W>_
