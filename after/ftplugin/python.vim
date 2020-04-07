@@ -29,6 +29,17 @@ map <buffer> <localleader>TO :grep '(\#\\|//) *(TODO\\|NOTE\\|FIXME)'
 " Edit selected module name
 xmap <localleader>f :<C-U>let @g = ban#python#TransformSelectedTextIntoFilename() <CR>
 
+" Mappings for classes, functions and docstrings text-objects
+xmap <buffer> ic <Plug>(textobj-python-class-i)
+omap <buffer> ic <Plug>(textobj-python-class-i)
+xmap <buffer> ac <Plug>(textobj-python-class-a)
+omap <buffer> ac <Plug>(textobj-python-class-a)
+xmap <buffer> if <Plug>(textobj-python-function-i)
+omap <buffer> if <Plug>(textobj-python-function-i)
+xmap <buffer> af <Plug>(textobj-python-function-a)
+omap <buffer> af <Plug>(textobj-python-function-a)
+map  <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
+map  <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
 
 
 " Mappings to help with tests

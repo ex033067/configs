@@ -26,7 +26,22 @@ Plug 'machakann/vim-sandwich'
 " New text-objects
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent' " ai, ii
-Plug 'glts/vim-textobj-comment' " ac, ic
+Plug 'glts/vim-textobj-comment' " ac, ic (remapped below to...)
+map aC <Plug>(textobj-comment-a) " aC, ...
+map iC <Plug>(textobj-comment-i) " and iC
+
+" class, function, and docstring text-objects 
+" 
+" Both plugins below implement class and function text-objects, but only
+" vim-textobj-python handles multiline decorators correctly.
+" Thus, I use vim-pythonsense to handle only docstring text-objects.
+" Their actual mappings are in `after/ftplugin/python.vim`
+"
+" NOTE: Maybe I should develop one plugin to handle docstrings and get rid
+" of vim-pythonsense.
+Plug 'bps/vim-textobj-python' " ac, ic, af, if.
+let g:is_pythonsense_suppress_object_keymaps = 1
+Plug 'jeetsukumaran/vim-pythonsense' " ad, id (docstring objects).
 
 let g:jedi#popup_on_dot=0
 Plug 'davidhalter/jedi-vim'
