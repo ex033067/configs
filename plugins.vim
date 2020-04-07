@@ -44,6 +44,8 @@ let g:is_pythonsense_suppress_object_keymaps = 1
 Plug 'jeetsukumaran/vim-pythonsense' " ad, id (docstring objects).
 
 Plug 'vim-scripts/ReplaceWithRegister'  " <register>gr{motion}, {Visual}<register>gr
+Plug 'tpope/vim-unimpaired'  " [q, ]q, [e, ]e, etc.
+
 let g:jedi#popup_on_dot=0
 Plug 'davidhalter/jedi-vim'
 
