@@ -21,7 +21,7 @@ Plug 'luochen1990/rainbow'
 " ------------------------------------------
 
 Plug 'tpope/vim-commentary'  " gcc, gc<motion>, {Visual}gc
-Plug 'machakann/vim-sandwich'
+Plug 'machakann/vim-sandwich'  " sa, sd, sr
 
 " New text-objects
 Plug 'kana/vim-textobj-user'
