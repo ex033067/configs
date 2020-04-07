@@ -13,9 +13,9 @@ map <leader>2 :NERDTreeToggle<CR>
 map <leader>3 :FZF<CR>
 map <leader>6 :b # <CR>
 
-vmap Y "+y
+vmap <leader>y "+y
 if !has('clipboard') && executable('clip.exe')
-	vmap Y "gy:call system('clip.exe', @g)<CR>
+	vmap <leader>y "gy:call system('clip.exe', @g)<CR>
 endif
 
 " Toggle settings
