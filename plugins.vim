@@ -43,6 +43,7 @@ Plug 'bps/vim-textobj-python' " ac, ic, af, if.
 let g:is_pythonsense_suppress_object_keymaps = 1
 Plug 'jeetsukumaran/vim-pythonsense' " ad, id (docstring objects).
 
+Plug 'vim-scripts/ReplaceWithRegister'  " <register>gr{motion}, {Visual}<register>gr
 let g:jedi#popup_on_dot=0
 Plug 'davidhalter/jedi-vim'
 
