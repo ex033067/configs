@@ -20,9 +20,6 @@ endif
 
 " Toggle settings
 map <Space> :noh<CR>
-map <leader>L :set cul!<CR>
-map <leader>N :set nu!<CR>
-map <leader>W :set wrap!<CR>
 
 " Git
 map <leader>ga :!git add % <CR>
