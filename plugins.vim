@@ -26,6 +26,7 @@ Plug 'machakann/vim-sandwich'
 " New text-objects
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent' " ai, ii
+Plug 'glts/vim-textobj-comment' " ac, ic
 
 let g:jedi#popup_on_dot=0
 Plug 'davidhalter/jedi-vim'
