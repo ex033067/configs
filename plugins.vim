@@ -23,6 +23,10 @@ Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-commentary'  " gcc, gc<motion>, {Visual}gc
 Plug 'machakann/vim-sandwich'
 
+" New text-objects
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-indent' " ai, ii
+
 let g:jedi#popup_on_dot=0
 Plug 'davidhalter/jedi-vim'
 
