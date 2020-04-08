@@ -22,8 +22,8 @@ function! Ban_Run(command)
 			let prefix = 'tabnew | terminal '. &shell .' -c ' . quote
 			let suffix = quote
 		else
-			let prefix = 'tabnew | terminal ++curwin '. &shell .' -c '. quote
-			let suffix = quote
+			let prefix = 'tabnew | terminal ++curwin ++shell '
+			let suffix = ''
 		endif
 		let command = substitute(a:command, quote, "'\"\\'\"'", 'g')
 		let command = substitute(command, '#', '\\#', 'g')
