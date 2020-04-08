@@ -25,6 +25,7 @@ map <Space> :noh<CR>
 map <leader>ga :terminal ++shell ++hidden ++close git add % 
 map <leader>gd :terminal ++shell git diff % <CR><C-W>_
 map <leader>gc :terminal ++shell ++close git commit -v 
+map <leader>gl :terminal ++shell ++noclose git l 
 
 " Add delimiters to selected text
 xmap <leader>D :call Ban_AddDelimiterToSelectedText()<CR>
