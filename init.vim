@@ -9,6 +9,7 @@ let mapleader=","
 let maplocalleader="\\"
 
 nmap <CR> :update<CR>
+nmap <BS> :noh<CR>
 map <leader>2 :NERDTreeToggle<CR>
 map <leader>3 :FZF<CR>
 map <leader>6 :b # <CR>
@@ -17,9 +18,6 @@ vmap <leader>y "+y
 if !has('clipboard') && executable('clip.exe')
 	vmap <leader>y "gy:call system('clip.exe', @g)<CR>
 endif
-
-" Toggle settings
-map <Space> :noh<CR>
 
 " Git
 map <leader>ga :terminal ++shell ++close git add % 
