@@ -55,6 +55,7 @@ Plug 'davidhalter/jedi-vim'
 let g:UltiSnipsSnippetDirectories=[$HOME.'/src/vim-snippets']
 Plug 'SirVer/ultisnips'
 Plug 'viniciusban/vim-ft-markdown'
+let g:user_emmet_leader_key = '<C-\>'
 Plug 'mattn/emmet-vim'
 
 
