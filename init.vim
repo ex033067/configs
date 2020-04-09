@@ -60,6 +60,8 @@ set hidden
 
 set grepprg=ack\ --nogroup\ $*
 
+set ignorecase smartcase
+
 
 " Autocommands
 " ------------
