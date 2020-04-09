@@ -48,20 +48,15 @@ if exists('$VIM_BACKGROUND')
 else
 	set background=light
 endif
-set guicursor=a:blinkon100
 syntax reset
 colo almostmonochrome
+set guicursor=a:blinkon100
 set listchars=tab:»·,trail:~,nbsp:·,extends:→,precedes:←
-
 set shiftwidth=0 " indent with tabstop length
 set mouse=n " enable mouse in normal mode
-
 set hidden
-
 set grepprg=ack\ --nogroup\ $*
-
 set ignorecase smartcase
-
 set number relativenumber
 
 
