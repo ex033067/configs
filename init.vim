@@ -62,6 +62,8 @@ set grepprg=ack\ --nogroup\ $*
 
 set ignorecase smartcase
 
+set number relativenumber
+
 
 " Autocommands
 " ------------
