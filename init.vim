@@ -50,7 +50,7 @@ else
 endif
 set guicursor=a:blinkon100
 syntax reset
-colo almostmonochrome
+colo monochromegreen
 set listchars=tab:»·,trail:~,nbsp:·,extends:→,precedes:←
 
 set shiftwidth=0 " indent with tabstop length

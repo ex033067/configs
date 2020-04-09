@@ -7,6 +7,7 @@ Plug 'junegunn/vim-plug'
 
 Plug 'viniciusban/vim-polyglot'
 Plug 'viniciusban/vim-almostmonochrome'
+Plug 'viniciusban/vim-monochromegreen'
 
 let g:rainbow_active = 1
 let g:rainbow_conf = {
