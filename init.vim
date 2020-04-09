@@ -22,7 +22,7 @@ endif
 map <Space> :noh<CR>
 
 " Git
-map <leader>ga :terminal ++shell ++hidden ++close git add % 
+map <leader>ga :terminal ++shell ++close git add % 
 map <leader>gd :terminal ++shell git diff % <CR><C-W>_
 map <leader>gc :terminal ++shell ++close git commit -v 
 map <leader>gl :terminal ++shell ++noclose git l 
