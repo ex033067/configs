@@ -58,6 +58,7 @@ set hidden
 set grepprg=ack\ --nogroup\ $*
 set ignorecase smartcase
 set number relativenumber
+set wildmode=list:longest,full
 
 
 " Autocommands
