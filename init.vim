@@ -8,7 +8,7 @@ execute "source ". expand("<sfile>:h") ."/functions.vim"
 let mapleader=","
 let maplocalleader="\\"
 
-map <leader><leader> :update<CR>
+nmap <CR> :update<CR>
 map <leader>2 :NERDTreeToggle<CR>
 map <leader>3 :FZF<CR>
 map <leader>6 :b # <CR>
