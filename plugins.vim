@@ -28,8 +28,10 @@ Plug 'machakann/vim-sandwich'  " sa, sd, sr
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent' " ai, ii
 Plug 'glts/vim-textobj-comment' " ac, ic (remapped below to...)
-map aC <Plug>(textobj-comment-a) " aC, ...
-map iC <Plug>(textobj-comment-i) " and iC
+omap aC <Plug>(textobj-comment-a) 
+xmap aC <Plug>(textobj-comment-a)
+omap iC <Plug>(textobj-comment-i)
+xmap iC <Plug>(textobj-comment-i)
 
 " class, function, and docstring text-objects 
 " 

@@ -38,8 +38,10 @@ xmap <buffer> if <Plug>(textobj-python-function-i)
 omap <buffer> if <Plug>(textobj-python-function-i)
 xmap <buffer> af <Plug>(textobj-python-function-a)
 omap <buffer> af <Plug>(textobj-python-function-a)
-map  <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
-map  <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
+xmap  <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
+omap  <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
+xmap  <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
+omap  <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
 
 
 " Mappings to help with tests
