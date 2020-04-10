@@ -1,5 +1,5 @@
-setlocal nofoldenable
-setlocal foldmethod=indent
+setlocal foldmethod=syntax
+setlocal foldlevel=4
 
 setlocal tabstop=2
 setlocal expandtab

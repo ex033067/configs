@@ -1,6 +1,5 @@
 setlocal foldmethod=indent
 setlocal foldlevel=5
-setlocal nofoldenable
 
 setlocal tabstop=4
 setlocal expandtab " Spaces, not tabs
