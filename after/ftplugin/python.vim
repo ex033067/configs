@@ -4,7 +4,7 @@ setlocal foldlevel=5
 setlocal tabstop=4
 setlocal expandtab " Spaces, not tabs
 
-setlocal list number cursorline
+setlocal list number relativenumber
 
 if filereadable('Makefile')
 	setlocal equalprg=make\ --no-print-directory\ --silent\ pep8
