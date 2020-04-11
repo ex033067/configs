@@ -52,6 +52,7 @@ syntax reset
 colo almostmonochrome
 set guicursor=a:blinkon100
 set list listchars=tab:--»,trail:·,nbsp:·,extends:→,precedes:←
+set cpoptions+=n showbreak=→\ 
 set shiftwidth=0 " indent with tabstop length
 set mouse=n " enable mouse in normal mode
 set hidden
