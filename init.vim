@@ -92,19 +92,19 @@ endif
 " Adjust terminal colors
 " ----------------------
 
-let g:terminal_color_0  = '#000000'
-let g:terminal_color_1  = '#A10605'
-let g:terminal_color_2  = '#206B00'
-let g:terminal_color_3  = '#D48E15'
-let g:terminal_color_4  = '#0D52BF'
-let g:terminal_color_5  = '#7239B3'
-let g:terminal_color_6  = '#05979A'
-let g:terminal_color_7  = '#888A85'
-let g:terminal_color_8  = '#555753'
-let g:terminal_color_9  = '#ED5252'
-let g:terminal_color_10 = '#68B723'
-let g:terminal_color_11 = '#F9C440'
-let g:terminal_color_12 = '#3589E6'
-let g:terminal_color_13 = '#A56DE2'
-let g:terminal_color_14 = '#36C0C0'
-let g:terminal_color_15 = '#ffffff'
+let g:terminal_color_0  = '#000000' " black
+let g:terminal_color_1  = '#A10605' " dark red
+let g:terminal_color_2  = '#206B00' " dark green
+let g:terminal_color_3  = '#D48E15' " orange (dark yellow)
+let g:terminal_color_4  = '#0D52BF' " dark blue
+let g:terminal_color_5  = '#7239B3' " violet (dark magenta)
+let g:terminal_color_6  = '#05979A' " dark cyan
+let g:terminal_color_7  = '#888A85' " dark gray
+let g:terminal_color_8  = '#555753' " darker gray
+let g:terminal_color_9  = '#ED5252' " red
+let g:terminal_color_10 = '#68B723' " green
+let g:terminal_color_11 = '#F9C440' " yellow
+let g:terminal_color_12 = '#3589E6' " blue
+let g:terminal_color_13 = '#A56DE2' " purple
+let g:terminal_color_14 = '#36C0C0' " light cyan
+let g:terminal_color_15 = '#ffffff' " white
