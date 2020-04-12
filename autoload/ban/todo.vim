@@ -170,27 +170,27 @@ endfunction
 
 function! ban#todo#MarkTodoItemAsDoing()
 	normal $
-	call search("^\\s*-[.\\] ", "bW")
-	let x=substitute(getline("."), "^\\(\\s*-[\\).\\] ", "\\1*] ", "")
-	let x=substitute(x, " done=\\d\\{4}\\(-\\d\\d\\)\\{2}", "" , "")
-	let x=substitute(x, " cancelled=\\d\\{4}\\(-\\d\\d\\)\\{2}", "" , "")
-	call setline(line("."), x)
+	call search('^\s*-[.\] ', 'bW')
+	let x=substitute(getline('.'), '^\(\s*-[\).\] ', '\1*] ', '')
+	let x=substitute(x, ' done=\d\{4}\(-\d\d\)\{2}', '' , '')
+	let x=substitute(x, ' cancelled=\d\{4}\(-\d\d\)\{2}', '' , '')
+	call setline(line('.'), x)
 endfunction
 
 function! ban#todo#MarkTodoItemAsDone()
 	normal $
-	call search("^\\s*-[.\\] ", "bW")
-	let x=substitute(getline("."), "^\\(\\s*-[\\).\\] ", "\\1x] ", "")
+	call search('^\s*-[.\] ', 'bW')
+	let x=substitute(getline('.'), '^\(\s*-[\).\] ', '\1x] ', '')
 	let x=substitute(x, ')', ' done='.strftime('%Y-%m-%d') .')', '')
-	call setline(line("."), x)
+	call setline(line('.'), x)
 endfunction
 
 function! ban#todo#MarkTodoItemAsCancelled()
 	normal $
-	call search("^\\s*-[.\\] ", "bW")
-	let x=substitute(getline("."), "^\\(\\s*-[\\).\\] ", "\\1-] ", "")
+	call search('^\s*-[.\] ', 'bW')
+	let x=substitute(getline('.'), '^\(\s*-[\).\] ', '\1-] ', '')
 	let x=substitute(x, ')', ' cancelled='.strftime('%Y-%m-%d') .')', '')
-	call setline(line("."), x)
+	call setline(line('.'), x)
 endfunction
 
 function! ban#todo#MoveTodoItemBlockToDone()
@@ -208,8 +208,8 @@ function! ban#todo#MoveTodoItemBlockToDone()
 		let del_lastline = item_lastline
 	endif
 
-	call execute(item_firstline.",".del_lastline."w >> done.todo")
-	call execute(item_firstline.",".del_lastline."delete _")
+	call execute(item_firstline.','.del_lastline.'w >> done.todo')
+	call execute(item_firstline.','.del_lastline.'delete _')
 	return [item_firstline, item_lastline]
 endfunction
 

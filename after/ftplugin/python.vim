@@ -2,7 +2,7 @@ setlocal foldmethod=indent
 setlocal foldlevel=5
 
 setlocal tabstop=4
-setlocal expandtab " Spaces, not tabs
+setlocal expandtab | " Spaces, not tabs
 
 setlocal list number relativenumber
 
@@ -52,11 +52,11 @@ omap  <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
 "
 " Read documentation for running Python from inside vim in python_test.vim.
 
-if !exists("g:test_command")
+if !exists('g:test_command')
 	let g:test_command = $DEV_TEST_COMMAND
 endif
-if !exists("g:test_target")
-	let g:test_target = ""
+if !exists('g:test_target')
+	let g:test_target = ''
 endif
 
 " \tt runs tests.
@@ -68,7 +68,7 @@ map t<CR> <localleader>tt
 "   - pytest --pyargs
 "   - python manage.py test -v 2
 "   - python -m unittest
-map <localleader>tC :let g:test_command="<c-r>=g:test_command<cr>"
+map <localleader>tC :let g:test_command='<c-r>=g:test_command<cr>'
 
 " \tn Make a test name from current line contents
 map <buffer> <localleader>tn :call ban#python#MakeValidPythonTestName() <CR>

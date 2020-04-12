@@ -1,4 +1,4 @@
-if exists("g:did_ban_functions")
+if exists('g:did_ban_functions')
 	finish
 endif
 let g:did_ban_functions = 1
@@ -6,10 +6,10 @@ let g:did_ban_functions = 1
 function! Ban_Run(command)
 	" Run an external command using internal or external terminal
 
-	if !exists("g:ban_run_internal")
-		if has("gui_running")
+	if !exists('g:ban_run_internal')
+		if has('gui_running')
 			let g:ban_run_internal = 1
-		elseif has("nvim")
+		elseif has('nvim')
 			let g:ban_run_internal = 1
 		else
 			let g:ban_run_internal = 0

@@ -21,13 +21,13 @@ Plug 'luochen1990/rainbow'
 " Features and shortcuts for improve editing
 " ------------------------------------------
 
-Plug 'tpope/vim-commentary'  " gcc, gc<motion>, {Visual}gc
-Plug 'machakann/vim-sandwich'  " sa, sd, sr
+Plug 'tpope/vim-commentary'  | " gcc, gc<motion>, {Visual}gc
+Plug 'machakann/vim-sandwich'  | " sa, sd, sr
 
 " New text-objects
 Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-indent' " ai, ii
-Plug 'glts/vim-textobj-comment' " ac, ic (remapped below to...)
+Plug 'kana/vim-textobj-indent' | " ai, ii
+Plug 'glts/vim-textobj-comment' | " ac, ic (remapped below to...)
 omap aC <Plug>(textobj-comment-a) 
 xmap aC <Plug>(textobj-comment-a)
 omap iC <Plug>(textobj-comment-i)
@@ -42,12 +42,12 @@ xmap iC <Plug>(textobj-comment-i)
 "
 " NOTE: Maybe I should develop one plugin to handle docstrings and get rid
 " of vim-pythonsense.
-Plug 'bps/vim-textobj-python' " ac, ic, af, if.
+Plug 'bps/vim-textobj-python' | " ac, ic, af, if.
 let g:is_pythonsense_suppress_object_keymaps = 1
-Plug 'jeetsukumaran/vim-pythonsense' " ad, id (docstring objects).
+Plug 'jeetsukumaran/vim-pythonsense' | " ad, id (docstring objects).
 
-Plug 'vim-scripts/ReplaceWithRegister'  " <register>gr{motion}, {Visual}<register>gr
-Plug 'tpope/vim-unimpaired'  " [q, ]q, [e, ]e, etc.
+Plug 'vim-scripts/ReplaceWithRegister'  | " <register>gr{motion}, {Visual}<register>gr
+Plug 'tpope/vim-unimpaired'  | " [q, ]q, [e, ]e, etc.
 
 let g:jedi#popup_on_dot=0
 Plug 'davidhalter/jedi-vim'

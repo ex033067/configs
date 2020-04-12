@@ -1,24 +1,24 @@
 function! ban#python#GetCurrentPythonClassName()
 	execute "normal ms$?^class \<Enter>0w"
 	nohls
-	let class_name = expand("<cword>")
-	execute "normal g`s"
+	let class_name = expand('<cword>')
+	execute 'normal g`s'
 	return l:class_name
 endfunction
 
 function! ban#python#GetCurrentPythonMethodName()
-	execute "normal ms$?^ \\+def \\+test\\w\\+(\\_s\\{-}self?\<Enter>02w"
+	execute 'normal ms$?^ \+def \+test\w\+(\_s\{-}self?' . "\<Enter>" . '02w'
 	nohls
-	let method_name = expand("<cword>")
-	execute "normal g`s"
+	let method_name = expand('<cword>')
+	execute 'normal g`s'
 	return l:method_name
 endfunction
 
 function! ban#python#GetCurrentPythonFunctionName()
-	execute "normal ms$?^def \\+test\\w\\+(\\_s\\{-}?\<Enter>0w"
+	execute 'normal ms$?^def \+test\w\+(\_s\{-}?' . "\<Enter>" . '0w'
 	nohls
-	let function_name = expand("<cword>")
-	execute "normal g`s"
+	let function_name = expand('<cword>')
+	execute 'normal g`s'
 	return l:function_name
 endfunction
 
@@ -30,55 +30,55 @@ function! ban#python#MakeValidPythonTestName()
 	" Into this:
 	"   def test_show_user_name(self):
 	"
-	let x=getline(".")
-	let x=substitute(x, "\\(\\w\\) ", "\\1_", "ge")
-	let x=substitute(x, "-", "_", "ge")
-	let x=substitute(x, "\\(\\S\\+\\)", "def test_\\1(self):", "")
-	call setline(".", x)
+	let x=getline('.')
+	let x=substitute(x, '\(\w\) ', '\1_', 'ge')
+	let x=substitute(x, '-', '_', 'ge')
+	let x=substitute(x, '\(\S\+\)', 'def test_\1(self):', '')
+	call setline('.', x)
 endfunction
 
 function! ban#python#GetTestSeparator()
-	if g:test_command =~ "pytest"
-		return "::"
+	if g:test_command =~ 'pytest'
+		return '::'
 	else
-		return "."
+		return '.'
 	endif
 endfunction
 
 function! ban#python#RunCurrentTestMethod()
 	let sep = ban#python#GetTestSeparator()
-	let g:test_target = expand("%:.:r") . sep . ban#python#GetCurrentPythonClassName() . sep . ban#python#GetCurrentPythonMethodName()
-	let g:test_target = substitute(g:test_target, "/", ".", "g")
+	let g:test_target = expand('%:.:r') . sep . ban#python#GetCurrentPythonClassName() . sep . ban#python#GetCurrentPythonMethodName()
+	let g:test_target = substitute(g:test_target, '/', '.', 'g')
 	let test_command = ban#python#BuildTestCommand(g:test_command, g:test_target)
 	execute Ban_Run('run-test '. test_command)
 endfunction
 
 function! ban#python#RunCurrentTestFunction()
 	let sep = ban#python#GetTestSeparator()
-	let g:test_target = expand("%:.:r") . sep . ban#python#GetCurrentPythonFunctionName()
-	let g:test_target = substitute(g:test_target, "/", ".", "g")
+	let g:test_target = expand('%:.:r') . sep . ban#python#GetCurrentPythonFunctionName()
+	let g:test_target = substitute(g:test_target, '/', '.', 'g')
 	let test_command = ban#python#BuildTestCommand(g:test_command, g:test_target)
 	execute Ban_Run('run-test '. test_command)
 endfunction
 
 function! ban#python#RunCurrentTestCase()
 	let sep = ban#python#GetTestSeparator()
-	let g:test_target = expand("%:.:r") . sep . ban#python#GetCurrentPythonClassName()
-	let g:test_target = substitute(g:test_target, "/", ".", "g")
+	let g:test_target = expand('%:.:r') . sep . ban#python#GetCurrentPythonClassName()
+	let g:test_target = substitute(g:test_target, '/', '.', 'g')
 	let test_command = ban#python#BuildTestCommand(g:test_command, g:test_target)
 	execute Ban_Run('run-test '. test_command)
 endfunction
 
 function! ban#python#RunCurrentTestModule()
-	let g:test_target = expand("%:.:r")
-	let g:test_target = substitute(g:test_target, "/", ".", "g")
+	let g:test_target = expand('%:.:r')
+	let g:test_target = substitute(g:test_target, '/', '.', 'g')
 	let test_command = ban#python#BuildTestCommand(g:test_command, g:test_target)
 	execute Ban_Run('run-test '. test_command)
 endfunction
 
 function! ban#python#RunCurrentTestPackage()
-	let g:test_target = expand("%:.:h")
-	let g:test_target = substitute(g:test_target, "/", ".", "g")
+	let g:test_target = expand('%:.:h')
+	let g:test_target = substitute(g:test_target, '/', '.', 'g')
 	let test_command = ban#python#BuildTestCommand(g:test_command, g:test_target)
 	execute Ban_Run('run-test '. test_command)
 endfunction
@@ -114,7 +114,7 @@ endfunction
 
 function! ban#python#TransformSelectedTextIntoFilename()
 	let unnamed_register = @"
-	execute "normal gvy"
+	execute 'normal gvy'
 	let selected_text = @"
 	let @" = unnamed_register
 	let filename = substitute(selected_text, '\.', '/', 'ge') .'.py'
