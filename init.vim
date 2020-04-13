@@ -58,7 +58,7 @@ set mouse=n | " enable mouse in normal mode
 set hidden
 set grepprg=ack\ --nogroup\ $*
 set ignorecase smartcase
-set number relativenumber
+set number
 set wildmode=list:longest,full
 
 
