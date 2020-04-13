@@ -53,7 +53,7 @@ colo almostmonochrome
 set guicursor=a:blinkon100
 set list listchars=tab:--»,trail:·,nbsp:·,extends:→,precedes:←
 set cpoptions+=n showbreak=→\ 
-set shiftwidth=0 | " indent with tabstop length
+set expandtab tabstop=4 shiftwidth=0 softtabstop=4 | " <TAB> is 4 spaces, once for all!
 set mouse=n | " enable mouse in normal mode
 set hidden
 set grepprg=ack\ --nogroup\ $*

@@ -1,6 +1,2 @@
-setlocal foldmarker={,}
-setlocal foldmethod=marker
-setlocal foldlevel=3
-
+setlocal foldmethod=marker foldmarker={,} foldlevel=3
 setlocal tabstop=2
-setlocal expandtab

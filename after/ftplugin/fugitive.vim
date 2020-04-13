@@ -1,2 +1,1 @@
-setlocal list
-setlocal cul
+setlocal cursorline
