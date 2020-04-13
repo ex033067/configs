@@ -11,9 +11,9 @@ Plug 'viniciusban/vim-monochromegreen'
 
 let g:rainbow_active = 0
 let g:rainbow_conf = {
-	\ 'operators': '',
-	\ 'guis': ['bold'],
-	\ 'guifgs': ['seagreen3', 'magenta', 'royalblue3', 'orange', 'firebrick'],
+    \ 'operators': '',
+    \ 'guis': ['bold'],
+    \ 'guifgs': ['seagreen3', 'magenta', 'royalblue3', 'orange', 'firebrick'],
 \}
 Plug 'luochen1990/rainbow'
 

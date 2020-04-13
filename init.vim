@@ -18,7 +18,7 @@ map <leader>6 :b # <CR>
 
 vmap <leader>y "+y
 if !has('clipboard') && executable('clip.exe')
-	vmap <leader>y "gy:call system('clip.exe', @g)<CR>
+    vmap <leader>y "gy:call system('clip.exe', @g)<CR>
 endif
 
 " Git
@@ -35,8 +35,8 @@ tnoremap <expr> <C-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
 
 " Show highlight group of word under cursor
 map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
-	\ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
-	\ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
+    \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
+    \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
 
 
 " Options
@@ -44,9 +44,9 @@ map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> t
 
 set termguicolors
 if exists('$VIM_BACKGROUND')
-	let &background=$VIM_BACKGROUND
+    let &background=$VIM_BACKGROUND
 else
-	set background=light
+    set background=light
 endif
 syntax reset
 colo almostmonochrome
@@ -68,7 +68,7 @@ set wildmode=list:longest,full
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | exe 'normal! g`"' | endif
 autocmd BufReadPost *.todo setlocal filetype=todo
 if has('nvim')
-	autocmd TermOpen * startinsert
+    autocmd TermOpen * startinsert
 endif
 
 
@@ -83,10 +83,10 @@ let g:python3_host_prog  = $PYENV_ROOT .'/shims/python3'
 " -------------------
 
 if has('nvim')
-	" I don't know why neovim sets $LANG to 'en_BR', even if started with no
-	" 'vimrc' ('nvim -u NONE'). This makes 'ack' show a warning message every
-	" time it runs under neovim.
-	let $LANG=''
+    " I don't know why neovim sets $LANG to 'en_BR', even if started with no
+    " 'vimrc' ('nvim -u NONE'). This makes 'ack' show a warning message every
+    " time it runs under neovim.
+    let $LANG=''
 endif
 
 

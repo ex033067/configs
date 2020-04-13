@@ -2,9 +2,9 @@ setlocal foldmethod=indent
 setlocal foldlevel=5
 
 if filereadable('Makefile')
-	setlocal equalprg=make\ --no-print-directory\ --silent\ pep8
+    setlocal equalprg=make\ --no-print-directory\ --silent\ pep8
 else
-	setlocal equalprg=~/.local/bin/binscripts/python-style
+    setlocal equalprg=~/.local/bin/binscripts/python-style
 endif
 
 
@@ -48,10 +48,10 @@ omap  <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
 " Read documentation for running Python from inside vim in python_test.vim.
 
 if !exists('g:test_command')
-	let g:test_command = $DEV_TEST_COMMAND
+    let g:test_command = $DEV_TEST_COMMAND
 endif
 if !exists('g:test_target')
-	let g:test_target = ''
+    let g:test_target = ''
 endif
 
 " \tt runs tests.
