@@ -25,6 +25,5 @@ set-option -g default-terminal "xterm-256color"
 set-option -ga terminal-overrides ",xterm-256color:Tc"
 
 # Status bar
-set-option -g status-style bg=colour15
 set-option -g status-right "@#(. ~/.tmux_hostname || hostname) %a %d %b %R"
 bind C-l set-option status
