@@ -1,3 +1,7 @@
+" ==================================
+" Common settings for vim and neovim
+" ==================================
+
 let g:my_additional_installs_dir = '~/.local/share/vim'
 execute('set runtimepath+=' .. g:my_additional_installs_dir)
 execute 'source '. expand('<sfile>:h') .'/plugins.vim'
@@ -32,9 +36,6 @@ map <leader>gl :terminal ++shell ++noclose git l
 " Add delimiters to selected text
 xmap <leader>D :call Ban_AddDelimiterToSelectedText()<CR>
 
-" Paste in terminal mode
-tnoremap <expr> <C-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
-
 " Show highlight group of word under cursor
 map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
     \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
@@ -45,11 +46,6 @@ map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> t
 " -------
 
 set termguicolors
-if exists('$VIM_BACKGROUND')
-    let &background=$VIM_BACKGROUND
-else
-    set background=light
-endif
 syntax reset
 silent! colorscheme oldschoolcolors
 set guicursor=a:blinkon100
@@ -69,45 +65,3 @@ set wildmode=list:longest,full
 
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | exe 'normal! g`"' | endif
 autocmd BufReadPost *.todo setlocal filetype=todo
-if has('nvim')
-    autocmd TermOpen * startinsert
-endif
-
-
-" Language providers
-" ------------------
-
-let g:python_host_prog  = $PYENV_ROOT .'/shims/python2'
-let g:python3_host_prog  = $PYENV_ROOT .'/shims/python3'
-
-
-" Fix inconsistencies
-" -------------------
-
-if has('nvim')
-    " I don't know why neovim sets $LANG to 'en_BR', even if started with no
-    " 'vimrc' ('nvim -u NONE'). This makes 'ack' show a warning message every
-    " time it runs under neovim.
-    let $LANG=''
-endif
-
-
-" Adjust terminal colors
-" ----------------------
-
-let g:terminal_color_0  = '#000000' | " black
-let g:terminal_color_1  = '#A10605' | " dark red
-let g:terminal_color_2  = '#206B00' | " dark green
-let g:terminal_color_3  = '#D48E15' | " orange (dark yellow)
-let g:terminal_color_4  = '#0D52BF' | " dark blue
-let g:terminal_color_5  = '#7239B3' | " violet (dark magenta)
-let g:terminal_color_6  = '#05979A' | " dark cyan
-let g:terminal_color_7  = '#888A85' | " dark gray
-let g:terminal_color_8  = '#555753' | " darker gray
-let g:terminal_color_9  = '#ED5252' | " red
-let g:terminal_color_10 = '#68B723' | " green
-let g:terminal_color_11 = '#F9C440' | " yellow
-let g:terminal_color_12 = '#3589E6' | " blue
-let g:terminal_color_13 = '#A56DE2' | " purple
-let g:terminal_color_14 = '#36C0C0' | " light cyan
-let g:terminal_color_15 = '#ffffff' | " white
