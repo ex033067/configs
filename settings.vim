@@ -27,12 +27,6 @@ if !has('clipboard') && executable('clip.exe')
     vmap <leader>y "gy:call system('clip.exe', @g)<CR>
 endif
 
-" Git
-map <leader>ga :terminal ++shell ++close git add % 
-map <leader>gd :terminal ++shell git diff % <CR><C-W>_
-map <leader>gc :terminal ++shell ++close git commit -v 
-map <leader>gl :terminal ++shell ++noclose git l 
-
 " Add delimiters to selected text
 xmap <leader>D :call Ban_AddDelimiterToSelectedText()<CR>
 
