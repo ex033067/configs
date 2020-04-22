@@ -1,3 +1,7 @@
+" ========================
+" Vim specific settings
+" ========================
+
 unlet! skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
 
@@ -6,9 +10,16 @@ packadd cfilter
 
 execute 'source '. expand('<sfile>:h') .'/settings.vim'
 
+" Simple settings
+" ---------------
+
 set hls
 set ttymouse=xterm2  | " enable resizing windows with the mouse
 set scrolloff=0
+
+
+" Terminal mode
+" -------------
 
 autocmd TerminalWinOpen * setlocal nonumber norelativenumber
 
