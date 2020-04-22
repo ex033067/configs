@@ -2,7 +2,7 @@
 " Neovim specific settings
 " ========================
 
-execute 'source '. expand('<sfile>:h') .'/settings.vim'
+execute 'source '. expand('<sfile>:h') .'/common_settings.vim'
 
 " Terminal
 " --------

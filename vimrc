@@ -5,7 +5,7 @@
 unlet! skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
 
-execute 'source '. expand('<sfile>:h') .'/settings.vim'
+execute 'source '. expand('<sfile>:h') .'/common_settings.vim'
 
 " Simple settings
 " ---------------
