@@ -1,4 +1,4 @@
-call plug#begin('~/.local/share/nvim/vim-plug')
+call plug#begin(g:my_additional_installs_dir .. '/bundle')
 Plug 'junegunn/vim-plug'
 
 
@@ -63,7 +63,7 @@ Plug 'mattn/emmet-vim'
 " ------------------------------------------
 
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf', {'dir': '~/.local/share/nvim/vim-plug/fzf', 'do': './install --all'}
+Plug 'junegunn/fzf', {'dir': g:my_additional_installs_dir .. '/bundle/fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 
 let NERDTreeIgnore=['__pycache__[[dir]]']

@@ -1,7 +1,6 @@
 unlet! skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
 
-set runtimepath+=~/.local/share/nvim/site
 execute 'source '. expand('<sfile>:h') .'/init.vim'
 
 set hls
