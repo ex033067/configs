@@ -51,7 +51,7 @@ else
     set background=light
 endif
 syntax reset
-colorscheme oldschoolcolors
+silent! colorscheme oldschoolcolors
 set guicursor=a:blinkon100
 set list listchars=tab:--»,trail:·,nbsp:·,extends:→,precedes:←
 set cpoptions+=n showbreak=→\ 
