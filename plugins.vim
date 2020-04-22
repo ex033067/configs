@@ -1,5 +1,13 @@
+" Install vim-plug and plugins if it is not installed yet
+if empty(glob(g:my_additional_installs_dir .. '/autoload/plug.vim'))
+    let command = '!curl -fLo ' .. g:my_additional_installs_dir .. '/autoload/plug.vim' ..
+        \ ' --create-dirs ' ..
+        \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    execute(command)
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin(g:my_additional_installs_dir .. '/bundle')
-Plug 'junegunn/vim-plug'
 
 
 " Syntax and highlighting
