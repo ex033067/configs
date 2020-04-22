@@ -5,9 +5,6 @@
 unlet! skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
 
-" Enable filering the quickfix list. See details with `:h cfilter-plugin`
-packadd cfilter
-
 execute 'source '. expand('<sfile>:h') .'/settings.vim'
 
 " Simple settings

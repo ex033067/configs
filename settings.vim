@@ -8,6 +8,10 @@ execute 'source '. expand('<sfile>:h') .'/plugins.vim'
 execute 'source '. expand('<sfile>:h') .'/functions.vim'
 
 
+" Enable filtering the quickfix list. See `:h cfilter-plugin`
+packadd cfilter
+
+
 " Mappings
 " --------
 
