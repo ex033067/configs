@@ -14,7 +14,6 @@ call plug#begin(g:my_additional_installs_dir .. '/bundle')
 " -----------------------
 
 Plug 'viniciusban/vim-polyglot'
-Plug 'viniciusban/vim-almostmonochrome'
 Plug 'viniciusban/vim-oldschoolcolors'
 
 let g:rainbow_active = 0
