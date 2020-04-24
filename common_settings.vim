@@ -45,7 +45,7 @@ map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> t
 
 set termguicolors
 syntax reset
-silent! colorscheme oldschoolcolors
+silent! colorscheme almostmonochrome
 let &t_SI = "\<Esc>]12;green\x7" | " solid non-blinking cursor
 let &t_SR = &t_SI
 let &t_EI = &t_SI
