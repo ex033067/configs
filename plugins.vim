@@ -58,6 +58,7 @@ Plug 'inkarkat/vim-ReplaceWithRegister'  | " <register>gr{motion}, {Visual}<regi
 Plug 'tpope/vim-unimpaired'  | " [q, ]q, [e, ]e, etc.
 
 let g:jedi#popup_on_dot=0
+let g:jedi#show_call_signatures_delay=100
 Plug 'davidhalter/jedi-vim'
 
 let g:UltiSnipsSnippetDirectories=[$HOME.'/src/vim-snippets']
