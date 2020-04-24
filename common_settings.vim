@@ -46,7 +46,9 @@ map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> t
 set termguicolors
 syntax reset
 silent! colorscheme oldschoolcolors
-set guicursor=a:blinkon100
+let &t_SI = "\<Esc>]12;green\x7" | " solid non-blinking cursor
+let &t_SR = &t_SI
+let &t_EI = &t_SI
 set list listchars=tab:››,trail:·,nbsp:·,extends:→,precedes:←
 set cpoptions+=n showbreak=→\ 
 set expandtab tabstop=4 shiftwidth=0 softtabstop=4 | " <TAB> is 4 spaces, once for all!
