@@ -63,3 +63,13 @@ function! Ban_AddDelimiterToSelectedText() range
 
     call setline(linenum, before .opening_delimiter. inside .closing_delimiter. after)
 endfunction
+
+function! Ban_ToggleColorscheme()
+    if g:colors_name == 'yellowonblack'
+        colo whiteonblack
+    elseif g:colors_name == 'whiteonblack'
+        colo almostmonochrome
+    else
+        colo yellowonblack
+    endif
+endfunction

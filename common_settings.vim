@@ -24,6 +24,7 @@ nmap <Space> <C-F>
 nmap <S-Space> <C-B>
 map <leader>2 :NERDTreeToggle<CR>
 map <leader>3 :FZF<CR>
+map <leader>4 :call Ban_ToggleColorscheme()<CR>
 map <leader>6 :b # <CR>
 
 vmap <leader>y "+y
