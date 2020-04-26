@@ -1,8 +1,3 @@
-if exists('g:did_ban_functions')
-    finish
-endif
-let g:did_ban_functions = 1
-
 function! Ban_Run(command)
     " Run an external command using internal or external terminal
 
