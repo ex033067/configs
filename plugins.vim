@@ -1,13 +1,13 @@
 " Install vim-plug and plugins if they are not installed yet
-if empty(glob(g:my_additional_installs_dir .. '/autoload/plug.vim'))
-    let command = '!curl -fLo ' .. g:my_additional_installs_dir .. '/autoload/plug.vim' ..
-        \ ' --create-dirs ' ..
+if empty(glob(g:my_additional_installs_dir . '/autoload/plug.vim'))
+    let command = '!curl -fLo ' . g:my_additional_installs_dir . '/autoload/plug.vim' .
+        \ ' --create-dirs ' .
         \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     execute(command)
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin(g:my_additional_installs_dir .. '/bundle')
+call plug#begin(g:my_additional_installs_dir . '/bundle')
 
 
 " Syntax and highlighting
@@ -74,7 +74,7 @@ Plug 'mattn/emmet-vim'
 " ------------------------------------------
 
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf', {'dir': g:my_additional_installs_dir .. '/bundle/fzf', 'do': './install --all'}
+Plug 'junegunn/fzf', {'dir': g:my_additional_installs_dir . '/bundle/fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 
 let NERDTreeIgnore=['__pycache__[[dir]]']

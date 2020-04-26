@@ -18,7 +18,8 @@ set scrolloff=0
 " Terminal mode
 " -------------
 
-autocmd TerminalWinOpen * setlocal nonumber norelativenumber
+silent! autocmd TerminalWinOpen * setlocal nonumber norelativenumber
+silent! autocmd TerminalOpen * setlocal nonumber norelativenumber
 
 
 " Git

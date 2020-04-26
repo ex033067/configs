@@ -3,7 +3,7 @@
 " ==================================
 
 let g:my_additional_installs_dir = '~/.local/share/vim'
-execute('set runtimepath+=' .. g:my_additional_installs_dir)
+execute('set runtimepath+=' . g:my_additional_installs_dir)
 execute 'source '. expand('<sfile>:h') .'/plugins.vim'
 execute 'source '. expand('<sfile>:h') .'/functions.vim'
 
