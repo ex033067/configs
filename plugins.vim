@@ -1,4 +1,4 @@
-" Install vim-plug and plugins if it is not installed yet
+" Install vim-plug and plugins if they are not installed yet
 if empty(glob(g:my_additional_installs_dir .. '/autoload/plug.vim'))
     let command = '!curl -fLo ' .. g:my_additional_installs_dir .. '/autoload/plug.vim' ..
         \ ' --create-dirs ' ..
