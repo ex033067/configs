@@ -64,7 +64,7 @@ __variables () {
 	export VISUAL=$EDITOR
 	export PROMPT_COMMAND=__prompt_command
 
-	[[ -n "$WSL_DISTRO_NAME" ]] && export DISPLAY=:0
+    [[ -n "$WSL_DISTRO_NAME" ]] && export DISPLAY=$(grep '^nameserver' /etc/resolv.conf | cut -d ' ' -f2):0.0
 	[[ "${OSNAME}" = "Darwin" ]] && export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
 
 
