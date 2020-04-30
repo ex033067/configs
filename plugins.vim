@@ -26,6 +26,8 @@ let g:rainbow_conf = {
 \}
 Plug 'luochen1990/rainbow'
 
+Plug 'ap/vim-css-color'  | " Show the color in CSS
+
 
 " Features and shortcuts for improve editing
 " ------------------------------------------
