@@ -62,6 +62,14 @@ __variables () {
     export HISTTIMEFORMAT="%F %T "
     export EDITOR=$(which nvim || which vim)
     export VISUAL=$EDITOR
+
+    # Custom hostname in prompt. See "ps1_hostname_alias.example" file.
+    [[ -r ~/.ps1_hostname_alias ]] && source ~/.ps1_hostname_alias
+
+    # Custom color prompt. See "ps1_colors.example" file.
+    export PS1_COLOR_RESET="\[\033[m\]"
+    [[ -r ~/.ps1_colors ]] && source ~/.ps1_colors
+
     export PS1="${PS1_COLOR_RESET}${PS1_COLOR_ERROR}\$(VALU=\$? ; [ \$VALU -ne 0 ] && echo ' '\${VALU}' ')${PS1_COLOR_DEFAULT}@\${HOSTNAME_ALIAS:-\${HOSTNAME}} \${VIRTUAL_ENV:+${PS1_COLOR_VIRTUALENV}(}\W \$(__ps1_git ; echo \${PS1_GIT:+on \${PS1_GIT}}\${VIRTUAL_ENV:+)}) \$${PS1_COLOR_RESET} "
 
     [[ -n "$WSL_DISTRO_NAME" ]] && export DISPLAY=$(grep '^nameserver' /etc/resolv.conf | cut -d ' ' -f2):0.0
@@ -91,13 +99,6 @@ __variables () {
         source $HOME/.asdf/asdf.sh
         source $HOME/.asdf/completions/asdf.bash
     fi
-
-    # Custom hostname in prompt. See "ps1_hostname_alias.example" file.
-    [[ -r ~/.ps1_hostname_alias ]] && source ~/.ps1_hostname_alias
-
-    # Custom color prompt. See "ps1_colors.example" file.
-    export PS1_COLOR_RESET="\[\033[m\]"
-    [[ -r ~/.ps1_colors ]] && source ~/.ps1_colors
 }
 
 
