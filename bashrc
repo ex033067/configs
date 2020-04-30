@@ -60,9 +60,9 @@ __variables () {
     [[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
     export HISTCONTROL=ignoreboth
     export HISTTIMEFORMAT="%F %T "
-    export EDITOR=$(which nvim)
+    export EDITOR=$(which nvim || which vim)
     export VISUAL=$EDITOR
-    export PROMPT_COMMAND=__prompt_command
+    export PS1="${PS1_COLOR_RESET}${PS1_COLOR_ERROR}\$(VALU=\$? ; [ \$VALU -ne 0 ] && echo ' '\${VALU}' ')${PS1_COLOR_DEFAULT}@\${HOSTNAME_ALIAS:-\${HOSTNAME}} \${VIRTUAL_ENV:+${PS1_COLOR_VIRTUALENV}(}\W \$(__ps1_git ; echo \${PS1_GIT:+on \${PS1_GIT}}\${VIRTUAL_ENV:+)}) \$${PS1_COLOR_RESET} "
 
     [[ -n "$WSL_DISTRO_NAME" ]] && export DISPLAY=$(grep '^nameserver' /etc/resolv.conf | cut -d ' ' -f2):0.0
     [[ "${OSNAME}" = "Darwin" ]] && export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
@@ -96,7 +96,7 @@ __variables () {
     [[ -r ~/.ps1_hostname_alias ]] && source ~/.ps1_hostname_alias
 
     # Custom color prompt. See "ps1_colors.example" file.
-    export PS1_COLOR_RESET="\[\e[0m\]"
+    export PS1_COLOR_RESET="\[\033[m\]"
     [[ -r ~/.ps1_colors ]] && source ~/.ps1_colors
 }
 
@@ -158,20 +158,6 @@ __ps1_git () {
     done <<< "${PS1_GIT_STATUS_OUTPUT}"
 
     PS1_GIT="${branch}${staged_indicator}${unstaged_indicator}"
-}
-
-__prompt_command () {
-    local last_exit_code=$?  # it must be the first statement!
-
-    if [[ ${last_exit_code} -eq 0 ]]; then
-        local ps1_status=
-    else
-        local ps1_status="${last_exit_code}"
-    fi
-
-    __ps1_git
-
-    export PS1="${PS1_COLOR_RESET}${ps1_status:+${PS1_COLOR_ERROR} ${ps1_status} ${PS1_COLOR_RESET}}${PS1_COLOR_DEFAULT}@${HOSTNAME_ALIAS:-${HOSTNAME}} ${VIRTUAL_ENV:+${PS1_COLOR_VIRTUALENV}(}\W ${PS1_GIT:+on ${PS1_GIT}}${VIRTUAL_ENV:+)} \$${PS1_COLOR_RESET} "
 }
 
 
