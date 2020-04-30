@@ -75,12 +75,6 @@ __variables () {
     [[ -n "$WSL_DISTRO_NAME" ]] && export DISPLAY=$(grep '^nameserver' /etc/resolv.conf | cut -d ' ' -f2):0.0
     [[ "${OSNAME}" = "Darwin" ]] && export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
 
-
-    # # linuxbrew
-    # if [[ -r /home/linuxbrew/.linuxbrew/bin/brew ]]; then
-    #   eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-    # fi
-
     # pyenv
     if [[ -d ~/.local/bin/pyenv ]]; then
         export PYENV_ROOT=~/.local/bin/pyenv
