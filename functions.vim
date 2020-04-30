@@ -63,7 +63,7 @@ function! Ban_ToggleColorscheme()
     if g:colors_name == 'yellowonblack'
         colo whiteonblack
     elseif g:colors_name == 'whiteonblack'
-        colo almostmonochrome
+        colo blackonwhite
     else
         colo yellowonblack
     endif
