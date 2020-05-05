@@ -7,3 +7,5 @@ if [[ -n "$WSL_DISTRO_NAME" ]]; then
 else
     ln -f -s $PWD/files/tmux.conf.for_$(uname) ~/.tmux.conf
 fi
+
+cp -n ${PWD}/files/tmux_hostname_alias.example ~/.tmux_hostname_alias
