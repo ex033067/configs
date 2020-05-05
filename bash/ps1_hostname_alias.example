@@ -7,4 +7,5 @@
 #
 # Save this file as "~/.ps1_hostname_alias" to take effect.
 
-export HOSTNAME_ALIAS=hostname_alias
+# export HOSTNAME_ALIAS=office
+export HOSTNAME_ALIAS=$HOSTNAME
