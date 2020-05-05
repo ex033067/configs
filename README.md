@@ -13,11 +13,13 @@ $ make install
 
 Customizations:
 
-- Your git credentials: `~/.gitconfig_credentials`
-- Bash prompt colors: `~/.ps1_colors`
-- Alias to your hostname in bash prompt: `~/.ps1_hostname_alias`
-- Alias to your hostname in tmux status bar: `~/.tmux_hostname`
-- Pyenv global config: `~/.pyenv_global_command`
+| File                        | What                    |
+|-----------------------------|-------------------------|
+| `~/.gitconfig_credentials`  | Your git credentials |
+| `~/.ps1_colors`             | Bash prompt colors |
+| `~/.ps1_hostname_alias`     | Alias to your hostname in bash prompt |
+| `~/.tmux_hostname`          | Alias to your hostname in tmux status bar |
+| `~/.pyenv_global_command`   | Pyenv global config |
 
 
 Neovim directories:
