@@ -14,9 +14,7 @@ call plug#begin(g:my_additional_installs_dir . '/bundle')
 " -----------------------
 
 Plug 'viniciusban/vim-polyglot'
-Plug 'viniciusban/vim-yellowonblack-colorscheme'
-Plug 'viniciusban/vim-whiteonblack-colorscheme'
-Plug 'viniciusban/vim-blackonwhite-colorscheme'
+Plug 'viniciusban/vim-distractionfree-colorschemes'
 
 let g:rainbow_active = 0
 let g:rainbow_conf = {
