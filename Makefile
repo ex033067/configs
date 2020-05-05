@@ -12,3 +12,5 @@ install :
 		&& ./install
 	@cd tmux \
 		&& ./install
+	@cd vim \
+		&& ./install

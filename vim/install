@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Reference for XDG directories:
+# https://specifications.freedesktop.org/basedir-spec/0.6/ar01s03.html
+
+
+# vim
+if [[ -r ~/.vim ]]; then
+    mv ~/.vim ~/.vim.$(date +%Y-%m-%d.%H-%M)
+fi
+ln -sf $PWD ~/.vim
+
+
+# neovim
+NEOVIM_CONFIG_DIR=${XDG_CONFIG_HOME:-~/.config}/nvim
+
+if which nvim; then
+    rm -f ${NEOVIM_CONFIG_DIR}/*
+    ln -sf $PWD ${NEOVIM_CONFIG_DIR}
+fi
+
