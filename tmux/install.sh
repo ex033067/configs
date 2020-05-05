@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+ln -f -s $PWD/files/tmux.conf_generic ~/.tmux.conf_generic
+
+if [[ -n "$WSL_DISTRO_NAME" ]]; then
+	ln -f -s $PWD/files/tmux.conf.for_WSL ~/.tmux.conf
+else
+	ln -f -s $PWD/files/tmux.conf.for_$(uname) ~/.tmux.conf
+fi

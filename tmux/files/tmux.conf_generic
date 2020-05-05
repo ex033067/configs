@@ -1,0 +1,29 @@
+# Common tmux configuration for Linux and MacOS.
+#
+# Copyright (C) 2017 viniciusban.com
+# This file is distributed under GPL-V3.
+
+# <C-a> is the prefix key.
+set-option -g prefix C-a
+bind C-a send-prefix
+
+# use vi keys to navigate through buffer.
+set-option -g mode-keys vi
+
+# bigger history for each window
+set-option -g history-limit 100000
+
+# how about resizing panes with mouse?
+set-option -g mouse on
+unbind -T root MouseDrag1Pane
+
+# don't wait for <esc> key
+set -s escape-time 0
+
+# Truecolor terminal
+set-option -g default-terminal "xterm-256color"
+set-option -ga terminal-overrides ",xterm-256color:Tc"
+
+# Status bar
+set-option -g status-right "@#(. ~/.tmux_hostname || hostname) %a %d %b %R"
+bind C-l set-option status

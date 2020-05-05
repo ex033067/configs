@@ -1,0 +1,16 @@
+# tmux configuration for MacOS
+#
+# Copyright (C) 2017 viniciusban.com
+# This file is distributed under GPL-V3.
+
+source ~/.tmux.conf_generic
+
+# Truecolor terminal in Darwin
+set-option -g default-terminal "tmux-256color"
+set-option -ga terminal-overrides ",tmux-256color:Tc"
+
+# copy selection also to system clipboard
+bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'pbcopy'
+
+# copy tmux paste buffer to system clipboard
+bind Y run-shell 'tmux show-buffer | pbcopy'
