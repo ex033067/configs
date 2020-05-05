@@ -9,8 +9,8 @@ fi
 if [[ -r ${filename} ]]; then
     mv ${filename} ${filename}.$(date +%Y-%m-%d.%H-%M)
 fi
-ln -s ${PWD}/bashrc ${filename}
+ln -sf ${PWD}/bashrc ${filename}
 
-ln -s ${PWD}/ps1_colors.example ~/.ps1_colors
-ln -s ${PWD}/ps1_hostname_alias.example ~/.ps1_hostname_alias
-ln -s ${PWD}/pyenv_global_command.example ~/.pyenv_global_command
+cp -n ${PWD}/ps1_colors.example ~/.ps1_colors
+cp -n ${PWD}/ps1_hostname_alias.example ~/.ps1_hostname_alias
+cp -n ${PWD}/pyenv_global_command.example ~/.pyenv_global_command
