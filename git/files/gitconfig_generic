@@ -1,0 +1,141 @@
+#
+# Due to property file syntax, a semicolon starts a comment.
+#
+# To use a semicolon in aliases, enclose it in double quotes.
+#
+
+[user]
+        name = viniciusban
+        email = viniciusban@gmail.com
+
+[versionsort]
+    prereleaseSuffix = -alpha
+    prereleaseSuffix = -beta
+    prereleaseSuffix = -rc
+    prereleaseSuffix = -pre
+
+[merge]
+        # ff = false
+
+[color]
+        ui = 1
+
+[diff]
+        tool = vimdiff
+
+[difftool]
+        prompt = no
+
+[alias]
+        aliases = !git config --name-only --list | grep ^alias | cut -d'.' -f 2 | sort
+        branches = branch -a
+        remotes = remote -v
+        stashes = stash list
+        tags = tag -l -n1 --sort="version:refname"
+
+        initialcommit = commit --allow-empty -m 'Initial commit'
+
+        path = rev-parse --show-toplevel
+        s = status -s
+        pwb = symbolic-ref --short HEAD
+
+        l = log -5 --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(auto)%h %ad%C(auto)%d %s'
+
+        discard = "!git reset --hard HEAD; \
+            git status -s; \
+            git status -s | grep --quiet '^?' && echo && echo 'There are remaining untracked files in your project.';"
+
+        rollbackkk = reset --mixed HEAD^
+        rollback-to = reset --hard
+        prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
+
+        rstash = "! \
+            _help () { \
+                echo 'Like git stash, but saves on a remote called \"rstash\".'; \
+                echo 'usage: git rstash list'; \
+                echo '   or: git rstash push [-m <message>] (Note: always save unstaged files)'; \
+                echo '   or: git rstash apply <name>'; \
+            } ; \
+            _push() { \
+                [ $(git status -s | wc -l) = '0' ] && echo 'No local changes to push' && return; \
+                git remote get-url rstash >/dev/null 2>&1; \
+                [ $? -ne 0 ] && echo 'You don''t have a remote called \"rstash\"' && exit 1; \
+                local wip=$(git symbolic-ref --short HEAD); \
+                local rstashbranch=rstash__$(date -u '+%Y%m%d-%H%M')__${wip}; \
+                local message=\"${1:-rstashed}\"; \
+                git add . \
+                && git stash push -m \"WIP ${message}\" \
+                && git push rstash stash@{0}:refs/heads/${rstashbranch} \
+                && git stash drop \
+                && git push rstash ${wip} ; \
+            } ; \
+            _apply() { \
+                local branch=; \
+                [ $1 ] && branch=$1; \
+                [ -z $branch ] && echo 'Choose a branch' && return 1; \
+                git checkout $branch \
+                && git reset HEAD^ \
+                && git add . \
+                && git stash push -m \"$(git log --format='%s' -1 HEAD@{1})\" \
+                && git checkout - \
+                && git stash pop \
+                && git reset HEAD . \
+                && echo '' \
+                && echo 'Remote stash applied.' ; \
+            } ; \
+            _list() { \
+                git branch -a --list *rstash* ; \
+            } ; \
+            _() { \
+                [ -z $1 ] && _help && echo '' && _list && return; \
+                [ $1 = list ] && _list && return; \
+                [ $1 = push ] && _push \"$3\" && return; \
+                [ $1 = apply ] && _apply $2 && return ; \
+            } ; \
+            _"
+
+        release = "! \
+            _help () { \
+                echo 'Commit and tag a release.'; \
+                echo 'usage: git release <version> [-m <message>]'; \
+                echo ''; \
+                echo '    If <message> is empty, will show git editor.'; \
+                echo ''; \
+                echo '    Will perform:'; \
+                echo '        $ git commit -m \"Release <version>\"'; \
+                echo '        $ git tag -a <version> [-m <message>]'; \
+            } ; \
+            _() { \
+                [ -z $1 ] && _help && echo '' && return; \
+                [ -z \"$(git diff --name-only --cached)\" ] && echo 'Stage files before making a release' && exit 1; \
+                local version=\"$1\" ; \
+                git commit -m \"Release ${version}\" ; \
+                [ $# -eq 1 ] && git tag -a \"${version}\" ; \
+                [ $# -eq 3 ] && git tag -a \"${version}\" -m \"$3\" ; \
+                echo \"Release ${version} created in HEAD.\" ; \
+            } ; \
+            _"
+
+        receive = !git fetch --tag --prune origin && git merge origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)
+
+        send = "! \
+            for remote in $(git remote | grep -v -e 'readonly' -e 'deploy' -e 'upstream' -e '^dontpush' -e 'rstash'); do \
+                echo; echo; \
+                echo '['$remote']'; \
+                git push --tags $remote $(git rev-parse --abbrev-ref HEAD); \
+            done"
+
+[core]
+        autocrlf = input
+        editor = vim
+        excludesfile=~/.gitignore_global
+[http]
+        sslVerify = false
+[push]
+        default = simple
+
+[commit]
+        template = ~/.git_commit_template.txt
+
+[rebase]
+        autosquash = true
