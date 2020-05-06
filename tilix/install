@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+if which tilix; then
+    dconf load /com/gexperts/Tilix/ < config.txt
+fi

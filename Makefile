@@ -14,3 +14,6 @@ install :
 		&& ./install
 	@cd vim \
 		&& ./install
+	@cd tilix \
+		&& ./install
+
