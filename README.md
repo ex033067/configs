@@ -2,6 +2,12 @@
 
 This is a mono-repo.
 
+Join another existing repo with:
+
+```
+$ git pull <the-other-repo-url> master --allow-unrelated-histories
+```
+
 
 ## Installation ##
 
