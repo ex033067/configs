@@ -1,4 +1,7 @@
-# Vinicius' dotfiles #
+# All my configs #
+
+This is a mono-repo.
+
 
 ## Installation ##
 
