@@ -21,9 +21,7 @@ let maplocalleader='\'
 nmap <CR> :update<CR>
 nmap <BS> :noh<CR>
 nmap <Space> <C-F>
-nmap <S-Space> <C-B>
 map <leader>2 :NERDTreeToggle<CR>
-map <leader>3 :FZF<CR>
 map <leader>4 :execute 'colorscheme ' . g:next_colorscheme <CR>
 map <leader>6 :b # <CR>
 
