@@ -27,9 +27,10 @@ map <leader>3 :FZF<CR>
 map <leader>4 :execute 'colorscheme ' . g:next_colorscheme <CR>
 map <leader>6 :b # <CR>
 
-vmap <leader>y "+y
 if !has('clipboard') && executable('clip.exe')
-    vmap <leader>y "gy:call system('clip.exe', @g)<CR>
+    vmap <leader>y "sy:call system('clip.exe', @s)<CR>
+else
+    vmap <leader>y "+y
 endif
 
 " Show highlight group of word under cursor
