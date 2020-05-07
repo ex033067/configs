@@ -87,6 +87,8 @@ let NERDTrimTrailingWhitespace = 1
 let NERDTreeHijackNetrw = 0
 Plug 'scrooloose/nerdtree'
 
+Plug 'majutsushi/tagbar'
+
 call plug#end()
 
 filetype plugin indent on
