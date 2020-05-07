@@ -6,9 +6,10 @@ else
     filename=~/.bash_aliases
 fi
 
-if [[ -r ${filename} ]]; then
+if [ ! -L ${filename} -a -f ${filename} ]; then
     mv ${filename} ${filename}.$(date +%Y-%m-%d.%H-%M)
 fi
+
 ln -sf ${PWD}/bashrc ${filename}
 
 cp -n ${PWD}/ps1_colors.example ~/.ps1_colors
