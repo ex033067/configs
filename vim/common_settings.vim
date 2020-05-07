@@ -32,9 +32,6 @@ if !has('clipboard') && executable('clip.exe')
     vmap <leader>y "gy:call system('clip.exe', @g)<CR>
 endif
 
-" Add delimiters to selected text
-xmap <leader>D :call Ban_AddDelimiterToSelectedText()<CR>
-
 " Show highlight group of word under cursor
 map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
     \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
