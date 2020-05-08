@@ -4,7 +4,96 @@
 
 let g:my_additional_installs_dir = '~/.local/share/vim'
 execute('set runtimepath+=' . g:my_additional_installs_dir)
-execute 'source '. expand('<sfile>:h') .'/plugins.vim'
+
+" plugins
+let must_install_plugins = 0
+if empty(glob(g:my_additional_installs_dir . '/autoload/plug.vim'))
+    let command = '!curl -fLo ' . g:my_additional_installs_dir . '/autoload/plug.vim' .
+        \ ' --create-dirs ' .
+        \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    execute(command)
+    let must_install_plugins = 1
+endif
+if empty(glob(g:my_additional_installs_dir .  '/bundle/plugins_installed.txt'))
+    let must_install_plugins = 1
+endif
+
+call plug#begin(g:my_additional_installs_dir . '/bundle')
+Plug 'viniciusban/vim-polyglot'  | " up to date syntax files
+Plug 'viniciusban/vim-distractionfree-colorschemes'
+Plug 'luochen1990/rainbow' | " colorize parentheses
+Plug 'ap/vim-css-color'  | " show the color in CSS
+Plug 'tpope/vim-commentary'  | " gcc, gc<motion>, {Visual}gc
+Plug 'machakann/vim-sandwich'  | " sa, sd, sr
+Plug 'andymass/vim-matchup'  | " %, g%, a%, i%, and more
+Plug 'kana/vim-textobj-user' | " required by other text object plugins
+Plug 'kana/vim-textobj-indent' | " ai, ii
+Plug 'glts/vim-textobj-comment' | " ac, ic (remapped below to...)
+Plug 'bps/vim-textobj-python' | " ac, ic, af, if.
+Plug 'jeetsukumaran/vim-pythonsense' | " ad, id (docstring objects). See https://github.com/viniciusban/myconfigs/issues/1
+Plug 'inkarkat/vim-ReplaceWithRegister'  | " <register>gr{motion}, {Visual}<register>gr
+Plug 'tpope/vim-unimpaired'  | " [q, ]q, [e, ]e, etc.
+Plug 'davidhalter/jedi-vim'
+Plug 'SirVer/ultisnips'
+Plug 'viniciusban/vim-ft-markdown'
+Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/fzf', {'dir': g:my_additional_installs_dir . '/bundle/fzf', 'do': './install --all'}
+Plug 'junegunn/fzf.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/tagbar'
+call plug#end()
+
+filetype plugin indent on
+syntax enable
+
+if must_install_plugins == 1
+    echo 'Installing plugins...'
+    silent! PlugInstall
+    call writefile([''], expand(g:my_additional_installs_dir . '/bundle/plugins_installed.txt'), 'a')
+    quitall
+endif
+
+" rainbow
+let g:rainbow_active = 0
+let g:rainbow_conf = {
+    \ 'operators': '',
+    \ 'guis': ['bold'],
+    \ 'guifgs': ['seagreen3', 'magenta', 'royalblue3', 'orange', 'firebrick'],
+\}
+
+" vim-text-object-comment
+omap aC <Plug>(textobj-comment-a)
+xmap aC <Plug>(textobj-comment-a)
+omap iC <Plug>(textobj-comment-i)
+xmap iC <Plug>(textobj-comment-i)
+
+" vim-textobj-python
+let g:is_pythonsense_suppress_object_keymaps = 1
+
+" jedi-vim
+let g:jedi#popup_on_dot=0
+let g:jedi#show_call_signatures_delay=100
+
+" ultisnips
+let g:UltiSnipsSnippetDirectories=[$HOME.'/src/vim-snippets']
+
+" emmet
+let g:user_emmet_leader_key = '<C-\>'
+
+" NERDTree
+let NERDTreeIgnore=['__pycache__[[dir]]']
+let NERDCreateDefaultMappings = 0
+let NERDMenuMode = 0
+let NERDCommentEmptyLines = 1
+let NERDDefaultAlign='left'
+let NERDSpaceDelims = 1
+let NERDTrimTrailingWhitespace = 1
+let NERDTreeHijackNetrw = 0
+
+
+
+"functions
 execute 'source '. expand('<sfile>:h') .'/functions.vim'
 
 
