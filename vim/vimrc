@@ -302,3 +302,9 @@ augroup ftMake
     au!
     autocmd FileType make setlocal noexpandtab
 augroup END
+
+" fugitive buffers
+augroup ftFugitive
+    au!
+    augroup FileType fugitive setlocal cursorline
+augroup END
