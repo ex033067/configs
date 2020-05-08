@@ -215,3 +215,9 @@ augroup ftHTML
         \ ',{% block:{% endblock,{% if:{% endif,{% for:{% endfor,{% macro:{% endmacro' .
         \ ',{% call:{% endcall,{% filter:{% endfilter,{% set:{% endset'
 augroup END
+
+" json files
+augroup ftJson
+    au!
+    autocmd FileType json setlocal tabstop=2
+augroup END
