@@ -37,8 +37,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
 call plug#end()
 
-filetype plugin indent on
-syntax enable
 
 " rainbow
 let g:rainbow_active = 0
