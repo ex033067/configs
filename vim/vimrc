@@ -1,6 +1,7 @@
-" ========================
-" Vim specific settings
-" ========================
+" leader keys
+let mapleader=','
+let maplocalleader='\'
+
 
 unlet! skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
@@ -83,6 +84,10 @@ let g:user_emmet_leader_key = '<C-\>'
 " NERDTree
 let NERDTreeIgnore=['__pycache__[[dir]]']
 let NERDTreeHijackNetrw = 0
+map <leader>2 :NERDTreeToggle<CR>
+
+" Enable filtering the quickfix list. See `:h cfilter-plugin`
+packadd cfilter
 
 " my own functions
 function! Ban_Run(command)
@@ -118,104 +123,79 @@ function! Ban_Run(command)
     return prefix . command . suffix
 endfunction
 
-" Enable filtering the quickfix list. See `:h cfilter-plugin`
-packadd cfilter
+" ==================================================
 
-
-" Mappings
-" --------
-
-let mapleader=','
-let maplocalleader='\'
-
-nmap <CR> :update<CR>
+" elements of interface
+set number
+set scrolloff=0
+set hls
 nmap <BS> :noh<CR>
-nmap <Space> <C-F>
-map <leader>2 :NERDTreeToggle<CR>
+
+set list listchars=tab:››,trail:·,nbsp:·,extends:→,precedes:←
+set cpoptions+=n showbreak=→\ 
+
+set wildmode=list:longest,full
+
+let &t_SI = "\<Esc>]12;green\x7" | " solid non-blinking cursor
+let &t_SR = &t_SI
+let &t_EI = &t_SI
+
+" mouse
+set ttymouse=xterm2  | " enable resizing windows with the mouse
+
+" syntax and colors
+syntax reset
+silent! colorscheme whiteonblack
+if exists('+termguicolors')
+  " truecolor under tmux
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+set termguicolors
+
 map <leader>4 :execute 'colorscheme ' . g:next_colorscheme <CR>
+" Show highlight group of word under cursor
+map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
+    \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
+    \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
+
+" sane editing
+set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
+set ignorecase smartcase
+set foldenable foldmethod=indent foldlevel=2
+nmap <Space> <C-F>
+
+" buffers
+set hidden
+nmap <CR> :update<CR>
 map <leader>6 :b # <CR>
 
+" utilities
+set grepprg=ack\ --nogroup\ $*
+
+" clipboard
 if !has('clipboard') && executable('clip.exe')
     vmap <leader>y "sy:call system('clip.exe', @s)<CR>
 else
     vmap <leader>y "+y
 endif
 
-" Show highlight group of word under cursor
-map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
-    \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
-    \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
-
-
-" Options
-" -------
-
-set termguicolors
-syntax reset
-silent! colorscheme whiteonblack
-let &t_SI = "\<Esc>]12;green\x7" | " solid non-blinking cursor
-let &t_SR = &t_SI
-let &t_EI = &t_SI
-set list listchars=tab:››,trail:·,nbsp:·,extends:→,precedes:←
-set cpoptions+=n showbreak=→\ 
-set expandtab tabstop=4 shiftwidth=0 softtabstop=4 | " <TAB> is 4 spaces, once for all!
-set mouse=n | " enable mouse in normal mode
-set hidden
-set grepprg=ack\ --nogroup\ $*
-set ignorecase smartcase
-set number
-set wildmode=list:longest,full
-
-
-" Autocommands
-" ------------
-
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | exe 'normal! g`"' | endif
-autocmd BufReadPost *.todo setlocal filetype=todo
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-" Simple settings
-" ---------------
-
-set hls
-set ttymouse=xterm2  | " enable resizing windows with the mouse
-set scrolloff=0
-
-
-" Terminal mode
-" -------------
-
-silent! autocmd TerminalWinOpen * setlocal nonumber norelativenumber
-silent! autocmd TerminalOpen * setlocal nonumber norelativenumber
-
-
-" Git
-" ---
-
+" git
 map <leader>ga :terminal ++shell ++close git add % 
 map <leader>gd :terminal ++shell git diff % <CR><C-W>_
 map <leader>gc :terminal ++shell ++close git commit -v 
 map <leader>gl :terminal ++shell ++noclose git l 
 
 
-" Truecolor under tmux
-" --------------------
+" todo file
+augroup ftTodo
+    au!
+    autocmd BufReadPost *.todo setlocal filetype=todo
+augroup END
 
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
+" terminal mode
+augroup ftTerminal
+    au!
+    silent! autocmd TerminalWinOpen * setlocal nonumber norelativenumber
+    silent! autocmd TerminalOpen * setlocal nonumber norelativenumber
+augroup END
