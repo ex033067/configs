@@ -187,13 +187,6 @@ map <leader>gd :terminal ++shell git diff % <CR><C-W>_
 map <leader>gc :terminal ++shell ++close git commit -v 
 map <leader>gl :terminal ++shell ++noclose git l 
 
-
-" todo file
-augroup ftTodo
-    au!
-    autocmd BufReadPost *.todo setlocal filetype=todo
-augroup END
-
 " terminal mode
 augroup ftTerminal
     au!
