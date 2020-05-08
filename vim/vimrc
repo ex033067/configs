@@ -308,3 +308,9 @@ augroup ftFugitive
     au!
     augroup FileType fugitive setlocal cursorline
 augroup END
+
+" gitcommit buffers
+augroup ftGitCommit
+    au!
+    augroup FileType gitcommit setlocal nofoldenable
+augroup END
