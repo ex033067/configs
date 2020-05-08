@@ -221,3 +221,9 @@ augroup ftJson
     au!
     autocmd FileType json setlocal tabstop=2
 augroup END
+
+" php files
+augroup ftPHP
+    au!
+    autocmd FileType php setlocal foldmethod=marker foldmarker={,}
+augroup END
