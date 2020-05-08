@@ -232,8 +232,13 @@ function! FtPython()
     setlocal foldmethod=indent foldlevel=3
     if filereadable('Makefile')
         setlocal equalprg=make\ --no-print-directory\ --silent\ pep8
-    else
+        setlocal makeprg=TARGET=%\ make\ --no-print-directory\ --silent
+    elseif executable('pylint')
         setlocal equalprg=~/.local/bin/binscripts/python-style
+        setlocal makeprg=pylint\ %
+    elseif executable('flake8')
+        setlocal equalprg=~/.local/bin/binscripts/python-style
+        setlocal makeprg=flake8\ %
     endif
     map <buffer> <localleader>m :update<CR>:make %<CR>
 
