@@ -7,6 +7,10 @@ unlet! skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
 
 " plugins
+" install vim-plug:
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+"    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
 call plug#begin('~/.vim/bundle')
 Plug 'viniciusban/vim-polyglot'  | " up to date syntax files
 Plug 'viniciusban/vim-distractionfree-colorschemes'
