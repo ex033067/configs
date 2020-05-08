@@ -293,6 +293,9 @@ function! FtPython()
     " copy current filename and function/method to register z in pytest format (JOE specific)
     nmap <silent> <localleader>tr :let cursorpos = getcurpos() <CR>:call search('def test', 'besc') <CR>:execute 'normal bye' <CR>:let @z = substitute(expand('%'), '.*joe/tests/', '', '').'::'.getreg('"') <CR>:call setpos('.', cursorpos) <CR>:let test_cmd = "t " .trim(getreg('z'))<CR>:execute '!tmux send-keys -t JOE:src.1 -l "' .test_cmd. '"'<CR>:execute '!tmux send-keys -t JOE:src.1 Enter'<CR><CR>
 
+    syn keyword pythonTodo          TODO FIXME NOTE contained
+    hi! link pythonBuiltin Statement
+    hi! link pythonDocTest2 Comment
 endfunction
 
 " makefiles
