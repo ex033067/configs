@@ -6,24 +6,20 @@ let maplocalleader='\'
 unlet! skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
 
-" runtime path
-let g:my_additional_installs_dir = '~/.local/share/vim'
-execute('set runtimepath+=' . g:my_additional_installs_dir)
-
 " plugins
 let must_install_plugins = 0
-if empty(glob(g:my_additional_installs_dir . '/autoload/plug.vim'))
-    let command = '!curl -fLo ' . g:my_additional_installs_dir . '/autoload/plug.vim' .
+if empty(glob('~/.vim/autoload/plug.vim'))
+    let command = '!curl -fLo ' . '~/.vim/autoload/plug.vim' .
         \ ' --create-dirs ' .
         \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     execute(command)
     let must_install_plugins = 1
 endif
-if empty(glob(g:my_additional_installs_dir .  '/bundle/plugins_installed.txt'))
+if empty(glob('~/.vim/bundle/plugins_installed.txt'))
     let must_install_plugins = 1
 endif
 
-call plug#begin(g:my_additional_installs_dir . '/bundle')
+call plug#begin('~/.vim/bundle')
 Plug 'viniciusban/vim-polyglot'  | " up to date syntax files
 Plug 'viniciusban/vim-distractionfree-colorschemes'
 Plug 'luochen1990/rainbow' | " colorize parentheses
@@ -43,7 +39,7 @@ Plug 'SirVer/ultisnips'
 Plug 'viniciusban/vim-ft-markdown'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf', {'dir': g:my_additional_installs_dir . '/bundle/fzf', 'do': './install --all'}
+Plug 'junegunn/fzf', {'dir': '~/.vim/bundle/fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
@@ -55,7 +51,7 @@ syntax enable
 if must_install_plugins == 1
     echo 'Installing plugins...'
     silent! PlugInstall
-    call writefile([''], expand(g:my_additional_installs_dir . '/bundle/plugins_installed.txt'), 'a')
+    call writefile([''], expand('~/.vim/bundle/plugins_installed.txt'), 'a')
     quitall
 endif
 
