@@ -199,3 +199,9 @@ augroup ftTerminal
     silent! autocmd TerminalWinOpen * setlocal nonumber norelativenumber
     silent! autocmd TerminalOpen * setlocal nonumber norelativenumber
 augroup END
+
+" css files
+augroup ftCSS
+    au!
+    autocmd FileType css setlocal tabstop=2
+augroup END
