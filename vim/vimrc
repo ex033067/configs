@@ -305,8 +305,8 @@ augroup END
 " html files
 augroup ftHTML
     au!
-    autocmd FileType html, htmldjango setlocal foldlevel=4 setlocal tabstop=2
-    autocmd FileType html, htmldjango let b:match_words = '<:>,{{:}},{%:%},{:},[:],(:),<!--:-->' .
+    autocmd FileType html,htmldjango setlocal foldlevel=4 tabstop=2
+    autocmd FileType html,htmldjango let b:match_words = '<:>,{{:}},{%:%},{:},[:],(:),<!--:-->' .
         \ ',<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>' .
         \ ',{% block:{% endblock,{% if:{% endif,{% for:{% endfor,{% macro:{% endmacro' .
         \ ',{% call:{% endcall,{% filter:{% endfilter,{% set:{% endset'
