@@ -1,0 +1,24 @@
+# To use common configuration in %APPDATA%\mintty, simply remove this file
+Font=IBM Plex Mono
+FontHeight=15
+CursorType=block
+CtrlShiftShortcuts=yes
+BoldAsFont=no
+BoldAsColour=yes
+ScrollbackLines=50000
+Term=xterm-256color
+ThemeFile=viniciusban-flatui
+FontWeight=400
+FontSmoothing=full
+CursorColour=255,128,0
+CursorBlinks=yes
+Transparency=off
+OpaqueWhenFocused=no
+FontIsBold=no
+BellPopup=no
+Columns=93
+CopyOnSelect=no
+BellType=0
+ClipShortcuts=no
+RowSpacing=1
+Scrollbar=none
