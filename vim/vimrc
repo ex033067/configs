@@ -450,7 +450,6 @@ augroup aug_list_items
     autocmd FileType markdown,text nmap <silent> <buffer> [( :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?\%<' .col('.'). 'c\S'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
 augroup END
 
-" Run Python test in another tmux pane
 augroup ftPython2
     au!
     " makes pytest the default test runner if it is present
