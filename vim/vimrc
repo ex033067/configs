@@ -49,6 +49,7 @@ xmap iC <Plug>(textobj-comment-i)
 
 " vim-textobj-python
 let g:is_pythonsense_suppress_object_keymaps = 1
+let g:is_pythonsense_suppress_motion_keymaps = 1
 
 " jedi-vim
 let g:jedi#popup_on_dot=0
