@@ -290,21 +290,18 @@ map <leader>gd :terminal ++shell git diff % <CR><C-W>_
 map <leader>gc :terminal ++shell ++close git commit -v 
 map <leader>gl :terminal ++shell ++noclose git l 
 
-" terminal mode
-augroup ftTerminal
+augroup aug_terminal_mode
     au!
     silent! autocmd TerminalWinOpen * setlocal nonumber norelativenumber
     silent! autocmd TerminalOpen * setlocal nonumber norelativenumber
 augroup END
 
-" css files
-augroup ftCSS
+augroup aug_ft_css
     au!
     autocmd FileType css setlocal tabstop=2
 augroup END
 
-" html files
-augroup ftHTML
+augroup aug_ft_html
     au!
     autocmd FileType html,htmldjango setlocal foldlevel=4 tabstop=2
     autocmd FileType html,htmldjango let b:match_words = '<:>,{{:}},{%:%},{:},[:],(:),<!--:-->' .
@@ -313,20 +310,17 @@ augroup ftHTML
         \ ',{% call:{% endcall,{% filter:{% endfilter,{% set:{% endset'
 augroup END
 
-" json files
-augroup ftJson
+augroup aug_ft_json
     au!
     autocmd FileType json setlocal tabstop=2
 augroup END
 
-" php files
-augroup ftPHP
+augroup aug_ft_php
     au!
     autocmd FileType php setlocal foldmethod=marker foldmarker={,}
 augroup END
 
-" python files
-augroup ftPython
+augroup aug_ft_python
     au!
     autocmd FileType python call FtPython()
 augroup END
@@ -401,20 +395,17 @@ function! FtPython()
     hi! link pythonDocTest2 Comment
 endfunction
 
-" makefiles
-augroup ftMake
+augroup aug_ft_make
     au!
     autocmd FileType make setlocal noexpandtab
 augroup END
 
-" fugitive buffers
-augroup ftFugitive
+augroup aug_ft_fugitive
     au!
     augroup FileType fugitive setlocal cursorline
 augroup END
 
-" gitcommit buffers
-augroup ftGitCommit
+augroup aug_ft_gitcommit
     au!
     augroup FileType gitcommit setlocal nofoldenable
 augroup END
@@ -450,7 +441,7 @@ augroup aug_list_items
     autocmd FileType markdown,text nmap <silent> <buffer> [( :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?\%<' .col('.'). 'c\S'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
 augroup END
 
-augroup ftPython2
+augroup aug_ft_python2
     au!
     " makes pytest the default test runner if it is present
     autocmd FileType python if executable('pytest') | let g:test_command='pytest' | endif
