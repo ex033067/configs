@@ -419,6 +419,9 @@ augroup ftGitCommit
     augroup FileType gitcommit setlocal nofoldenable
 augroup END
 
+" markdown files
+let g:markdown_folding = 1 | " enable folded headings
+
 
 " --------------------------------------------------
 "  Personal mappings and workflow
