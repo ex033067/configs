@@ -427,3 +427,17 @@ augroup END
 " duplicate current file
 nmap <leader>fd :!cp '%:p' '%:p:h/%:t:r-copy.%:e'
 
+" lists
+" add item
+nmap <localleader>ia o- [ ] 
+" mark item as doing
+nmap <silent> <localleader>i* :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>:s/^\(\s*- \[\).]/\1*]/<CR>:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+" mark item as done
+nmap <silent> <localleader>ix :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>:s/^\(\s*- \[\).]/\1x]/<CR>:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+
+augroup ftMarkdown
+    au!
+    " navigate list items without flickering
+    autocmd FileType markdown map <buffer> ]m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>/^\s*- /<CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+    autocmd FileType markdown map <buffer> [m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>0?^\s*- ?<CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+augroup END
