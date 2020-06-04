@@ -440,6 +440,14 @@ augroup ftMarkdown
     " navigate list items without flickering
     autocmd FileType markdown map <buffer> ]m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>/^\s*- /<CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
     autocmd FileType markdown map <buffer> [m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>0?^\s*- ?<CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+
+    " go to parent
+    autocmd FileType markdown map <buffer> [( :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?\%<' .col('.'). 'c\S'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+    " go to previous sibling
+    autocmd FileType markdown map <buffer> [{ :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?^' .strpart(getline('.'), 0, col('.')). '?'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+    " go to next sibling
+    autocmd FileType markdown map <buffer> ]} :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '/^' .strpart(getline('.'), 0, col('.')). '/'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+
 augroup END
 
 " Run Python test in another tmux pane
