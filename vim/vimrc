@@ -266,6 +266,7 @@ map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> t
 set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
 set ignorecase smartcase
 set foldenable foldmethod=indent foldlevel=2
+let g:markdown_folding = 1 | " enable folded headings in markdown files
 nmap <Space> <C-F>
 
 " buffers
@@ -409,9 +410,6 @@ augroup aug_ft_gitcommit
     au!
     augroup FileType gitcommit setlocal nofoldenable
 augroup END
-
-" markdown files
-let g:markdown_folding = 1 | " enable folded headings
 
 
 " --------------------------------------------------
