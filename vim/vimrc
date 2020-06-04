@@ -427,27 +427,24 @@ augroup END
 " duplicate current file
 nmap <leader>fd :!cp '%:p' '%:p:h/%:t:r-copy.%:e'
 
-" lists
-" add item
-nmap <localleader>ia o- [ ] 
-" mark item as doing
-nmap <silent> <localleader>i* :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>:s/^\(\s*- \[\).]/\1*]/<CR>:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
-" mark item as done
-nmap <silent> <localleader>ix :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>:s/^\(\s*- \[\).]/\1x]/<CR>:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
-
-augroup ftMarkdown
+augroup aug_list_items
     au!
-    " navigate list items without flickering
-    autocmd FileType markdown map <buffer> ]m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>/^\s*- /<CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
-    autocmd FileType markdown map <buffer> [m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>0?^\s*- ?<CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+    " add item
+    autocmd FileType markdown,text nmap <buffer> <localleader>ia o- [ ] 
+    autocmd FileType markdown,text imap <buffer> <localleader>ia - [ ] 
+    " mark item as doing
+    autocmd FileType markdown,text nmap <silent> <buffer> <localleader>i* :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>:s/^\(\s*- \[\).]/\1*]/<CR>:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+    " mark item as done
+    autocmd FileType markdown,text nmap <silent> <buffer> <localleader>ix :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>:s/^\(\s*- \[\).]/\1x]/<CR>:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
 
+    " go to next/previous list item (any level)
+    autocmd FileType markdown,text nmap <silent> <buffer> ]m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>/^\s*- /<CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+    autocmd FileType markdown,text nmap <silent> <buffer> [m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>0?^\s*- ?<CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+    " go to next/previous sibling (same level)
+    autocmd FileType markdown,text nmap <silent> <buffer> ]} :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '/^' .strpart(getline('.'), 0, col('.')). '/'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+    autocmd FileType markdown,text nmap <silent> <buffer> [{ :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?^' .strpart(getline('.'), 0, col('.')). '?'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
     " go to parent
-    autocmd FileType markdown map <buffer> [( :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?\%<' .col('.'). 'c\S'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
-    " go to previous sibling
-    autocmd FileType markdown map <buffer> [{ :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?^' .strpart(getline('.'), 0, col('.')). '?'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
-    " go to next sibling
-    autocmd FileType markdown map <buffer> ]} :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '/^' .strpart(getline('.'), 0, col('.')). '/'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
-
+    autocmd FileType markdown,text nmap <silent> <buffer> [( :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?\%<' .col('.'). 'c\S'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
 augroup END
 
 " Run Python test in another tmux pane
