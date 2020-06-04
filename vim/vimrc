@@ -418,3 +418,12 @@ augroup ftGitCommit
     au!
     augroup FileType gitcommit setlocal nofoldenable
 augroup END
+
+
+" --------------------------------------------------
+"  Personal mappings and workflow
+" --------------------------------------------------
+
+" duplicate current file
+nmap <leader>fd :!cp '%:p' '%:p:h/%:t:r-copy.%:e'
+
