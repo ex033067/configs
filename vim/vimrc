@@ -441,3 +441,14 @@ augroup ftMarkdown
     autocmd FileType markdown map <buffer> ]m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>/^\s*- /<CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
     autocmd FileType markdown map <buffer> [m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>0?^\s*- ?<CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
 augroup END
+
+" Run Python test in another tmux pane
+augroup ftPython2
+    au!
+    " makes pytest the default test runner if it is present
+    autocmd FileType python if executable('pytest') | let g:test_command='pytest' | endif
+    " set current file as the test target
+    autocmd FileType python map <silent> <localleader>tF :let file_to_test=substitute(expand("%:p"), $PWD."/", "", "g")<CR>:echo file_to_test. ' set as test target.'<CR>
+    " run the test in the other tmux panel
+    autocmd FileType python map <silent> <localleader>tt :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .file_to_test. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>
+augroup END
