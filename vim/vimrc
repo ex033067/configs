@@ -261,7 +261,7 @@ endfunction
 set number
 set scrolloff=0
 set hls
-nmap <BS> :noh<CR>
+nmap <leader><leader> :noh<CR>
 
 set list listchars=tab:››,trail:·,nbsp:·,extends:→,precedes:←
 set cpoptions+=n showbreak=→\ 
