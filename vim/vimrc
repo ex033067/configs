@@ -299,6 +299,9 @@ nmap <CR> :update<CR>
 map <leader>6 :b # <CR>
 nmap <silent> <buffer> == :update<CR>gg=G
 
+" duplicate current file
+nmap <leader>fd :!cp '%:p' '%:p:h/%:t:r-copy.%:e'
+
 " utilities
 set grepprg=ack\ --nogroup\ $*
 
@@ -452,14 +455,6 @@ augroup aug_ft_gitcommit
     au!
     augroup FileType gitcommit setlocal nofoldenable
 augroup END
-
-
-" --------------------------------------------------
-"  Personal mappings and workflow
-" --------------------------------------------------
-
-" duplicate current file
-nmap <leader>fd :!cp '%:p' '%:p:h/%:t:r-copy.%:e'
 
 augroup aug_list_items
     au!
