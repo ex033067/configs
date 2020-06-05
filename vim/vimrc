@@ -295,7 +295,6 @@ nmap <Space> <C-F>
 
 " buffers
 set hidden
-nmap <CR> :update<CR>
 map <leader>6 :b # <CR>
 nmap <silent> <buffer> == :update<CR>gg=G
 
