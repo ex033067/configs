@@ -298,7 +298,7 @@ nnoremap <leader><Space><Space> m`o<Esc>kO<Esc>``| " isolate current line
 " buffers
 set hidden
 nmap <leader><leader> :update<CR>
-nmap <leader>fd :!cp '%:p' '%:p:h/%:t:r-copy.%:e'<CR> | " duplicate current file
+nmap <leader>fd :!cp '%:p' '%:p:h/%:t:r.copy'<CR>| " duplicate current file
 nmap <silent> <buffer> == :update<CR>gg=G
 
 " utilities
