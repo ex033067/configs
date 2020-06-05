@@ -292,6 +292,8 @@ set ignorecase smartcase
 set foldenable foldmethod=indent foldlevel=2
 let g:markdown_folding = 1 | " enable folded headings in markdown files
 nmap <Space> <C-F>
+nnoremap <leader>d YPj| " duplicate line
+nnoremap <leader><Space><Space> m`o<Esc>kO<Esc>``| " isolate current line
 
 " buffers
 set hidden
