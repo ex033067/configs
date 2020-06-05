@@ -324,6 +324,10 @@ augroup END
 augroup aug_ft_python
     au!
     autocmd FileType python call FtPython()
+    " set current file as the test target
+    autocmd FileType python map <silent> <buffer> <localleader>tF :let g:test_target=substitute(expand('%:.:r'), "/", ".", "g")<CR>:echo g:test_target. ' set as test target2.'<CR>
+    " run the test in the other tmux panel
+    autocmd FileType python map <silent> <localleader>tt :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .g:test_target. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>
 augroup END
 
 function! FtPython()
@@ -360,7 +364,15 @@ function! FtPython()
     " Mappings to help with tests (this is a big section).
     " All mappings are prefixed with \t.
     if !exists('g:test_command')
-        let g:test_command = $DEV_TEST_COMMAND
+        let g:test_command=''
+        if $DEV_TEST_COMMAND != ''
+            let g:test_command = $DEV_TEST_COMMAND
+        else
+            if executable('pytest')
+                " makes pytest the default test runner if it is present
+                let g:test_command = 'pytest --pyargs'
+            endif
+        endif
     endif
     if !exists('g:test_target')
         let g:test_target = ''
@@ -437,14 +449,4 @@ augroup aug_list_items
     autocmd FileType markdown,text nmap <silent> <buffer> [{ :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?^' .strpart(getline('.'), 0, col('.')). '?'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
     " go to parent
     autocmd FileType markdown,text nmap <silent> <buffer> [( :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?\%<' .col('.'). 'c\S'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
-augroup END
-
-augroup aug_ft_python2
-    au!
-    " makes pytest the default test runner if it is present
-    autocmd FileType python if executable('pytest') | let g:test_command='pytest' | endif
-    " set current file as the test target
-    autocmd FileType python map <silent> <localleader>tF :let file_to_test=substitute(expand("%:p"), $PWD."/", "", "g")<CR>:echo file_to_test. ' set as test target.'<CR>
-    " run the test in the other tmux panel
-    autocmd FileType python map <silent> <localleader>tt :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .file_to_test. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>
 augroup END
