@@ -112,7 +112,7 @@ function! BanPython_GetCurrentPythonClassName()
 endfunction
 
 function! BanPython_GetCurrentPythonMethodName()
-    execute 'normal ms$?^ \+def \+test\w\+(\_s\{-}self?' . "\<Enter>" . '02w'
+    execute 'normal ms$?^ \+\(def\|async def\) \+test\w\+(\_s\{-}self?e' . "\<Enter>" . '3b'
     nohls
     let method_name = expand('<cword>')
     execute 'normal g`s'
@@ -120,7 +120,7 @@ function! BanPython_GetCurrentPythonMethodName()
 endfunction
 
 function! BanPython_GetCurrentPythonFunctionName()
-    execute 'normal ms$?^def \+test\w\+(\_s\{-}?' . "\<Enter>" . '0w'
+    execute 'normal ms$?^\(def\|async def\) \+test\w\+(?e' . "\<Enter>" . 'b'
     nohls
     let function_name = expand('<cword>')
     execute 'normal g`s'
