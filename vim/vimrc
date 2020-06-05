@@ -150,6 +150,11 @@ function! BanPython_GetTestSeparator()
     endif
 endfunction
 
+function! BanPython_SetCurrentModuleAsTestTarget()
+    let g:test_target = expand('%:.:r')
+    let g:test_target = substitute(g:test_target, '/', '.', 'g')
+endfunction
+
 function! BanPython_RunCurrentTestMethod()
     let sep = BanPython_GetTestSeparator()
     let g:test_target = expand('%:.:r') . sep . BanPython_GetCurrentPythonClassName() . sep . BanPython_GetCurrentPythonMethodName()
@@ -175,8 +180,7 @@ function! BanPython_RunCurrentTestCase()
 endfunction
 
 function! BanPython_RunCurrentTestModule()
-    let g:test_target = expand('%:.:r')
-    let g:test_target = substitute(g:test_target, '/', '.', 'g')
+    call BanPython_SetCurrentModuleAsTestTarget()
     let test_command = BanPython_BuildTestCommand(g:test_command, g:test_target)
     execute Ban_Run('run-test '. test_command)
 endfunction
@@ -325,7 +329,7 @@ augroup aug_ft_python
     au!
     autocmd FileType python call FtPython()
     " set current file as the test target
-    autocmd FileType python map <silent> <buffer> <localleader>tF :let g:test_target=substitute(expand('%:.:r'), "/", ".", "g")<CR>:echo g:test_target. ' set as test target2.'<CR>
+    autocmd FileType python map <silent> <buffer> <localleader>tF :call BanPython_SetCurrentModuleAsTestTarget()<CR>:echo g:test_target. ' set as test target.'<CR>
     " run the test in the other tmux panel
     autocmd FileType python map <silent> <localleader>tt :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .g:test_target. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>
 augroup END
