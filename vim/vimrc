@@ -373,10 +373,10 @@ function! FtPython()
     omap <buffer> if <Plug>(textobj-python-function-i)
     xmap <buffer> af <Plug>(textobj-python-function-a)
     omap <buffer> af <Plug>(textobj-python-function-a)
-    xmap  <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
-    omap  <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
-    xmap  <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
-    omap  <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
+    xmap <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
+    omap <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
+    xmap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
+    omap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
 
     " edit selected module name
     xmap <localleader>f :<C-U>let @g = BanPython_TransformSelectedTextIntoFilename() <CR>
