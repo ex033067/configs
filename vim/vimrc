@@ -404,6 +404,7 @@ function! FtPython()
 
     " \tt runs tests.
     map <localleader>tt :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>
+    map <silent> <localleader>TT :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .g:test_target. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>
     map t<CR> <localleader>tt
 
     " \tC configure the test command (along with its arguments).
