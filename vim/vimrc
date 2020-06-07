@@ -458,6 +458,15 @@ augroup END
 augroup aug_ft_gitcommit
     au!
     autocmd FileType gitcommit setlocal nofoldenable
+    autocmd BufRead COMMIT_EDITMSG setlocal nocursorline
+    " commit window in split view
+    autocmd BufRead COMMIT_EDITMSG call execute(['normal gg','4split','wincmd b','/Changes to be committed:/','normal zt'])
+    " save/discard and exit working with split view
+    autocmd FileType gitcommit nmap <silent> <buffer> ZZ :w<CR>:bd<CR>
+    autocmd FileType gitcommit nmap <silent> <buffer> ZQ ggdG:w<CR>:bd<CR>|" real discard the commit
+    " go to next/prev file in commit
+    autocmd FileType gitcommit nmap <silent> <buffer> ]] :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>$/Changes to be committed:\\|^diff/<CR>zt:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+    autocmd FileType gitcommit nmap <silent> <buffer> [[ :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>?Changes to be committed:\\|^diff?<CR>zt:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
 augroup END
 
 augroup aug_list_items
