@@ -315,7 +315,7 @@ map <leader><leader> :noh<CR>
 
 " editing
 noremap <leader>d :let _r=@"<CR>yyp:let @"=_r<CR>| " duplicate line
-noremap <leader><Space><Space> m`o<Esc>kO<Esc>``| " isolate current line
+noremap <leader><Space><Space> m`O<Esc>0"_d$``o<Esc>0"_d$``| " isolate current line
 
 " file and buffer
 map <leader>w :update<CR>
