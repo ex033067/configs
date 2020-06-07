@@ -314,9 +314,46 @@ map <leader>4 :execute 'colorscheme ' . g:next_colorscheme <CR>
 map <leader><leader> :noh<CR>
 
 " editing
-noremap <leader>dl :let _r=@"<CR>yyp:let @"=_r<CR>| " duplicate line
-noremap <leader>dc :let _r=@"<CR>yy:.Commentary<CR>p:let @"=_r<CR>| " duplicate and comment line using vim-commentary
-noremap <leader>sl m`O<Esc>0"_d$``o<Esc>0"_d$``| " isolate current line
+nmap <leader>d :call DuplicateLine("normal")<CR>
+vmap <leader>d :<C-U>call DuplicateLine("visual")<CR>
+function! DuplicateLine(mode)
+    if a:mode == "normal"
+        copy .
+    elseif a:mode == "visual"
+        '<,'>copy '>
+        normal '>j
+    endif
+endfunction
+
+nmap <leader>c :call DuplicateAndCommentLine("normal")<CR>
+vmap <leader>c :<C-U>call DuplicateAndCommentLine("visual")<CR>
+function! DuplicateAndCommentLine(mode)
+    if a:mode == "normal"
+        copy .
+        normal k
+        .Commentary
+        normal j
+    elseif a:mode == "visual"
+        '<,'>copy '>
+        normal gv
+        '<,'>Commentary
+        execute "normal \<Esc>"
+        normal '>j
+    endif
+endfunction
+
+nmap <leader>s :call IsolateLineWithSpacesAround("normal")<CR>
+vmap <leader>s :<C-U>call IsolateLineWithSpacesAround("visual")<CR>
+function! IsolateLineWithSpacesAround(mode)
+    if a:mode == "normal"
+        call append(line(".")-1, ["",""])
+        call append(".", ["",""])
+    elseif a:mode == "visual"
+        call append(line("'<")-1, ["",""])
+        call append("'>", ["",""])
+        normal gv
+    endif
+endfunction
 
 " file and buffer
 map <leader>w :update<CR>
