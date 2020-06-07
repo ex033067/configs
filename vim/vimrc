@@ -36,7 +36,7 @@ Plug 'tpope/vim-fugitive'
 " Plug 'junegunn/fzf', {'dir': '~/.vim/bundle/fzf', 'do': './install --all'}
 " Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 call plug#end()
 
 " rainbow
