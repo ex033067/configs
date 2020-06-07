@@ -2,11 +2,14 @@
 let mapleader=','
 let maplocalleader='\'
 
-
+" Start with vim defaults
 unlet! skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
 
-" plugins
+
+" ==================================================
+" Plugins
+" ==================================================
 " install vim-plug:
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 "    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -36,7 +39,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
 call plug#end()
-
 
 " rainbow
 let g:rainbow_active = 0
@@ -69,12 +71,12 @@ let g:user_emmet_leader_key = '<C-\>'
 " NERDTree
 let NERDTreeIgnore=['__pycache__[[dir]]']
 let NERDTreeHijackNetrw = 0
-map <leader>2 :NERDTreeToggle<CR>
 
-" Enable filtering the quickfix list. See `:h cfilter-plugin`
-packadd cfilter
 
+" ==================================================
 " my own functions
+" ==================================================
+
 function! Ban_Run(command)
     " Run an external command using internal or external terminal
 
@@ -255,13 +257,15 @@ function! BanPython_TransformSelectedTextIntoFilename()
     return filename
 endfunction
 
+
+" ==================================================
+" Options
 " ==================================================
 
 " elements of interface
 set number
 set scrolloff=0
 set hls
-nmap <leader><leader> :noh<CR>
 
 set list listchars=tab:››,trail:·,nbsp:·,extends:→,precedes:←
 set cpoptions+=n showbreak=→\ 
@@ -272,7 +276,6 @@ let &t_SI = "\<Esc>]12;green\x7" | " solid non-blinking cursor
 let &t_SR = &t_SI
 let &t_EI = &t_SI
 
-" mouse
 set ttymouse=xterm2  | " enable resizing windows with the mouse
 
 " syntax and colors
@@ -285,35 +288,43 @@ if exists('+termguicolors')
 endif
 set termguicolors
 
-map <leader>4 :execute 'colorscheme ' . g:next_colorscheme <CR>
-" Show highlight group of word under cursor
-map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
-    \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
-    \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
-
 " sane editing
 set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
 set ignorecase smartcase
 set foldenable foldmethod=indent foldlevel=2
 let g:markdown_folding = 1 | " enable folded headings in markdown files
-nmap <Space> <C-F>
-nnoremap <leader>d YPj| " duplicate line
-nnoremap <leader><Space><Space> m`o<Esc>kO<Esc>``| " isolate current line
 
-" buffers
+" other options
 set hidden
-nmap <leader>w :update<CR>
-nmap <leader>fd :saveas! %:p.copy<CR>| " duplicate current file
-nmap <silent> <buffer> == :update<CR>gg=G
+set grepprg=ack\ --nogroup\ $* | " ack is better than grep
 
-" utilities
-set grepprg=ack\ --nogroup\ $*
+
+" ==================================================
+" Mappings
+" ==================================================
+
+" Show highlight group of word under cursor
+map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
+    \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
+    \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
+map <leader>2 :NERDTreeToggle<CR>
+map <leader>4 :execute 'colorscheme ' . g:next_colorscheme <CR>
+
+map <leader><leader> :noh<CR>
+noremap <leader>d YPj| " duplicate line
+noremap <leader><Space><Space> m`o<Esc>kO<Esc>``| " isolate current line
+
+map <leader>w :update<CR>
+map <leader>fd :saveas! %:p.copy<CR>| " duplicate current file
+noremap <silent> <buffer> == :update<CR>gg=G
+noremap <Space> <C-F>
 
 " clipboard
 if !has('clipboard') && executable('clip.exe')
-    vmap <leader>y "sy:call system('clip.exe', @s)<CR>
+    " Use Windows clipboard under WSL
+    vnoremap <leader>y "sy:call system('clip.exe', @s)<CR>
 else
-    vmap <leader>y "+y
+    vnoremap <leader>y "+y
 endif
 
 " git
@@ -321,6 +332,11 @@ map <leader>ga :terminal ++shell ++close git add %
 map <leader>gd :terminal ++shell git diff % <CR><C-W>_
 map <leader>gc :terminal ++shell ++close git commit -v 
 map <leader>gl :terminal ++shell ++noclose git l 
+
+
+" ==================================================
+" Autocommands
+" ==================================================
 
 augroup aug_terminal_mode
     au!
