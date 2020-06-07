@@ -452,12 +452,12 @@ augroup END
 
 augroup aug_ft_fugitive
     au!
-    augroup FileType fugitive setlocal cursorline
+    autocmd FileType fugitive setlocal cursorline
 augroup END
 
 augroup aug_ft_gitcommit
     au!
-    augroup FileType gitcommit setlocal nofoldenable
+    autocmd FileType gitcommit setlocal nofoldenable
 augroup END
 
 augroup aug_list_items
