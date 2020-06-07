@@ -315,7 +315,7 @@ map <leader><leader> :noh<CR>
 
 " editing
 noremap <leader>dl :let _r=@"<CR>yyp:let @"=_r<CR>| " duplicate line
-map <leader>dc :let _r=@"<CR>yygccp:let @"=_r<CR>| " duplicate and comment line using vim-commentary
+noremap <leader>dc :let _r=@"<CR>yy:.Commentary<CR>p:let @"=_r<CR>| " duplicate and comment line using vim-commentary
 noremap <leader><Space><Space> m`O<Esc>0"_d$``o<Esc>0"_d$``| " isolate current line
 
 " file and buffer
