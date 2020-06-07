@@ -355,6 +355,21 @@ function! IsolateLineWithSpacesAround(mode)
     endif
 endfunction
 
+nmap ]v :call MoveLine("normal", "down")<CR>
+vmap ]v :<C-U>call MoveLine("visual", "down")<CR>
+nmap [v :call MoveLine("normal", "up")<CR>
+vmap [v :<C-U>call MoveLine("visual", "up")<CR>
+function! MoveLine(mode, direction)
+    let offset = #{down:"+1", up:"-2"}
+    if a:mode == "normal"
+        execute 'move .' .offset[a:direction]
+    elseif a:mode == "visual"
+        let target = #{down:"'>", up:"'<"}
+        execute "'<,'>move " .target[a:direction] .offset[a:direction]
+        normal gv
+    endif
+endfunction
+
 " file and buffer
 map <leader>w :update<CR>
 map <leader>fd :saveas! %:p.copy<CR>| " duplicate current file
