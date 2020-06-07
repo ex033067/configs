@@ -1,7 +1,5 @@
 
 
-# 1) Explain what/why, not how.
-# 2) :tag: style, docs, clean, tests, bug, refactor, security, build, deps, ui
-#
+# Explain what/why, not how. Use message body for details.
 # https://is.gd/commit_messages
 
