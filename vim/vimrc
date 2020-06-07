@@ -300,7 +300,7 @@ set grepprg=ack\ --nogroup\ $* | " ack is better than grep
 
 
 " ==================================================
-" Mappings
+" Global mappings
 " ==================================================
 
 " Show highlight group of word under cursor
@@ -310,13 +310,19 @@ map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> t
 map <leader>2 :NERDTreeToggle<CR>
 map <leader>4 :execute 'colorscheme ' . g:next_colorscheme <CR>
 
+" visual elements
 map <leader><leader> :noh<CR>
+
+" editing
 noremap <leader>d YPj| " duplicate line
 noremap <leader><Space><Space> m`o<Esc>kO<Esc>``| " isolate current line
 
+" file and buffer
 map <leader>w :update<CR>
 map <leader>fd :saveas! %:p.copy<CR>| " duplicate current file
 noremap <silent> <buffer> == :update<CR>gg=G
+
+" navigation
 noremap <Space> <C-F>
 
 " clipboard
