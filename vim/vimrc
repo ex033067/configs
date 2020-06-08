@@ -323,7 +323,9 @@ nmap <leader>d :call DuplicateLine("normal")<CR>
 vmap <leader>d :<C-U>call DuplicateLine("visual")<CR>
 function! DuplicateLine(mode)
     if a:mode == "normal"
+        let _pos = col('.')
         copy .
+        execute 'normal ' ._pos. '|'
     elseif a:mode == "visual"
         '<,'>copy '>
         normal '>j
@@ -334,10 +336,12 @@ nmap <leader>c :call DuplicateAndCommentLine("normal")<CR>
 vmap <leader>c :<C-U>call DuplicateAndCommentLine("visual")<CR>
 function! DuplicateAndCommentLine(mode)
     if a:mode == "normal"
+        let _pos = col('.')
         copy .
         normal k
         .Commentary
         normal j
+        execute 'normal ' ._pos. '|'
     elseif a:mode == "visual"
         '<,'>copy '>
         normal gv
