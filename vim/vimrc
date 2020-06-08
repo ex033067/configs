@@ -557,7 +557,7 @@ augroup aug_ft_gitcommit
     autocmd FileType gitcommit setlocal foldenable foldmethod=syntax foldlevel=1
     autocmd BufRead COMMIT_EDITMSG setlocal nocursorline
     " commit window in split view
-    autocmd BufRead COMMIT_EDITMSG call execute(['normal gg','4split','wincmd b','/Changes to be committed:/','normal zt'])
+    autocmd BufRead COMMIT_EDITMSG call execute(['normal gg','4split','wincmd b', 'global /^diff/ normal zc','/On branch/','normal zt'])
     " save/discard and exit working with split view
     autocmd FileType gitcommit nmap <silent> <buffer> ZZ :w<CR>:bd<CR>
     autocmd FileType gitcommit nmap <silent> <buffer> ZQ ggdG:w<CR>:bd<CR>|" real discard the commit
