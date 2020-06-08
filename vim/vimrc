@@ -267,6 +267,7 @@ endfunction
 set number
 set scrolloff=0
 set hls
+set lazyredraw
 
 set list listchars=tab:››,trail:·,nbsp:·,extends:→,precedes:←
 set cpoptions+=n showbreak=→\ 
