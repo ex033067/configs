@@ -565,8 +565,8 @@ augroup aug_ft_gitcommit
     autocmd FileType gitcommit nmap <silent> <buffer> ]] :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:let _ws=&wrapscan<CR>:set nohlsearch lazyredraw wrapscan<CR>/^diff\\|^# On branch/<CR>ztzv:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:let &wrapscan=_ws<CR>:unlet _lz _hls _pat _ws<CR>
     autocmd FileType gitcommit nmap <silent> <buffer> [[ :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:let _ws=&wrapscan<CR>:set nohlsearch lazyredraw wrapscan<CR>?^diff\\|^# On branch?<CR>ztzv:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:let &wrapscan=_ws<CR>:unlet _lz _hls _pat _ws<CR>
     " go to next/prev change
-    autocmd FileType gitcommit nmap <silent> <buffer> ]m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:let _ws=&wrapscan<CR>:set nohlsearch lazyredraw nowrapscan<CR>/^@@/<CR>zt:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:let &wrapscan=_ws<CR>:unlet _lz _hls _pat _ws<CR>
-    autocmd FileType gitcommit nmap <silent> <buffer> [m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:let _ws=&wrapscan<CR>:set nohlsearch lazyredraw nowrapscan<CR>?^@@?<CR>zt:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:let &wrapscan=_ws<CR>:unlet _lz _hls _pat _ws<CR>
+    autocmd FileType gitcommit nmap <silent> <buffer> ]m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:let _ws=&wrapscan<CR>:set nohlsearch lazyredraw wrapscan<CR>/^@@/<CR>zt:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:let &wrapscan=_ws<CR>:unlet _lz _hls _pat _ws<CR>
+    autocmd FileType gitcommit nmap <silent> <buffer> [m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:let _ws=&wrapscan<CR>:set nohlsearch lazyredraw wrapscan<CR>?^@@?<CR>zt:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:let &wrapscan=_ws<CR>:unlet _lz _hls _pat _ws<CR>
 augroup END
 
 augroup aug_list_items
