@@ -549,7 +549,6 @@ augroup END
 augroup aug_ft_fugitive
     au!
     autocmd FileType fugitive setlocal cursorline
-    autocmd FileType fugitive nmap <buffer> g2 :close<CR>
 augroup END
 
 augroup aug_ft_gitcommit
