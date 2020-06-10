@@ -388,6 +388,8 @@ noremap <silent> <buffer> == :update<CR>gg=G
 noremap <Space> <C-F>
 noremap ]q :cnext<CR>
 noremap [q :cprevious<CR>
+noremap ]a :next<CR>
+noremap [a :previous<CR>
 
 " clipboard
 if !has('clipboard') && executable('clip.exe')
