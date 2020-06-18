@@ -17,6 +17,7 @@ endif
 "    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 call plug#begin('~/.vim/bundle')
+Plug 'unblevable/quick-scope'
 Plug 'viniciusban/vim-polyglot'  | " up to date syntax files
 Plug 'viniciusban/vim-distractionfree-colorschemes'
 Plug 'luochen1990/rainbow' | " colorize parentheses
@@ -40,6 +41,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 " Plug 'majutsushi/tagbar'
 call plug#end()
+
+" quick-scope
+let g:qs_enable=0  |" start plugin with highlight disabled
 
 " rainbow
 let g:rainbow_active = 0
@@ -311,6 +315,8 @@ map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> t
     \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
 map <leader>2 :NERDTreeToggle<CR>
 map <leader>4 :execute 'colorscheme ' . g:next_colorscheme <CR>
+nmap <leader>< <plug>(QuickScopeToggle)
+xmap <leader>< <plug>(QuickScopeToggle)
 
 " visual elements
 map <leader><leader> :noh<CR>
@@ -588,4 +594,10 @@ augroup aug_list_items
     autocmd FileType markdown,text nmap <silent> <buffer> [{ :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?^' .strpart(getline('.'), 0, col('.')). '?'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
     " go to parent
     autocmd FileType markdown,text nmap <silent> <buffer> [( :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?\%<' .col('.'). 'c\S'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+augroup END
+
+augroup aug_quickscope_colors
+    autocmd!
+    autocmd ColorScheme * highlight QuickScopePrimary guifg=Cyan gui=underline,bold ctermfg=Cyan cterm=underline
+    autocmd ColorScheme * highlight QuickScopeSecondary guifg=Magenta gui=underline,bold ctermfg=Magenta cterm=underline
 augroup END
