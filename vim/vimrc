@@ -370,10 +370,10 @@ function! IsolateLineWithSpacesAround(mode)
     endif
 endfunction
 
-nmap ]v :call MoveLine("normal", "down")<CR>
-vmap ]v :<C-U>call MoveLine("visual", "down")<CR>
-nmap [v :call MoveLine("normal", "up")<CR>
-vmap [v :<C-U>call MoveLine("visual", "up")<CR>
+nmap <C-j> :call MoveLine("normal", "down")<CR>
+vmap <C-j> :<C-U>call MoveLine("visual", "down")<CR>
+nmap <C-k> :call MoveLine("normal", "up")<CR>
+vmap <C-k> :<C-U>call MoveLine("visual", "up")<CR>
 function! MoveLine(mode, direction)
     let offset = #{down:"+1", up:"-2"}
     if a:mode == "normal"
