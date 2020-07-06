@@ -36,8 +36,8 @@ Plug 'davidhalter/jedi-vim'
 Plug 'viniciusban/vim-ft-markdown'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-fugitive'
-" Plug 'junegunn/fzf', {'dir': '~/.vim/bundle/fzf', 'do': './install --all'}
-" Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', {'dir': '~/.vim/bundle/fzf', 'do': './install --all'}
+Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 " Plug 'majutsushi/tagbar'
 call plug#end()
@@ -314,6 +314,7 @@ map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> t
     \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
     \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
 map <leader>2 :NERDTreeToggle<CR>
+map <leader>3 :FZF<CR>
 map <leader>4 :execute 'colorscheme ' . g:next_colorscheme <CR>
 nmap <leader>< <plug>(QuickScopeToggle)
 xmap <leader>< <plug>(QuickScopeToggle)
