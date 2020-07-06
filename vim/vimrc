@@ -322,9 +322,6 @@ xmap <leader>< <plug>(QuickScopeToggle)
 " visual elements
 map <leader><leader> :noh<CR>
 
-" windows
-map <leader>q :close<CR>
-
 " editing
 nmap <leader>d :call DuplicateLine("normal")<CR>
 vmap <leader>d :<C-U>call DuplicateLine("visual")<CR>
