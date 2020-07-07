@@ -594,6 +594,12 @@ augroup aug_list_items
     autocmd FileType markdown,text nmap <silent> <buffer> [( :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?\%<' .col('.'). 'c\S'<CR><CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
 augroup END
 
+augroup aug_ft_markdown
+    au!
+    " add a codeblock paragraph
+    autocmd FileType markdown nmap <buffer> <localleader>` :call append(".", ["```", "", "```"])<CR>:normal 2j<CR>
+augroup END
+
 augroup aug_quickscope_colors
     autocmd!
     autocmd ColorScheme * highlight QuickScopePrimary guifg=Cyan gui=underline,bold ctermfg=Cyan cterm=underline
