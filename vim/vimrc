@@ -576,6 +576,7 @@ augroup END
 
 augroup aug_list_items
     au!
+
     " add item
     autocmd FileType markdown,text nmap <buffer> <localleader>i o- [ ] 
     autocmd FileType markdown,text imap <buffer> <localleader>i - [ ] 
@@ -594,6 +595,12 @@ augroup aug_list_items
 
     " go to parent
     autocmd FileType markdown,text nmap <silent> <buffer> <localleader>P :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?\%<' .col('.'). 'c\S'<CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+augroup END
+
+augroup aug_viniciusban_notes
+    au!
+    " go to task details (a task follows the heading symbol)
+    autocmd FileType markdown nmap <buffer> gd :let _w=expand('<cword>')<CR>$:call search('^#\+ .*' ._w, 'e')<CR>:normal zvb<CR>
 augroup END
 
 augroup aug_ft_markdown
