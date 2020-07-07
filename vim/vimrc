@@ -577,12 +577,12 @@ augroup END
 augroup aug_list_items
     au!
     " add item
-    autocmd FileType markdown,text nmap <buffer> <localleader>a o- [ ] 
-    autocmd FileType markdown,text imap <buffer> <localleader>a - [ ] 
-    " mark item as doing
-    autocmd FileType markdown,text nmap <silent> <buffer> <localleader>i* :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>:s/^\(\s*- \[\).]/\1*]/<CR>:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
-    " mark item as done
-    autocmd FileType markdown,text nmap <silent> <buffer> <localleader>ix :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>:s/^\(\s*- \[\).]/\1x]/<CR>:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+    autocmd FileType markdown,text nmap <buffer> <localleader>i o- [ ] 
+    autocmd FileType markdown,text imap <buffer> <localleader>i - [ ] 
+
+    " mark item as doing/done
+    autocmd FileType markdown,text nmap <silent> <buffer> <localleader>* :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>:s/^\(\s*- \[\).]/\1*]/<CR>:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
+    autocmd FileType markdown,text nmap <silent> <buffer> <localleader>x :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>:s/^\(\s*- \[\).]/\1x]/<CR>:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
 
     " go to next/previous list item (any level)
     autocmd FileType markdown,text nmap <silent> <buffer> ]m :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>/^\s*- /<CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
