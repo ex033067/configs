@@ -577,8 +577,8 @@ augroup END
 augroup aug_list_items
     au!
     " add item
-    autocmd FileType markdown,text nmap <buffer> <localleader>ia o- [ ] 
-    autocmd FileType markdown,text imap <buffer> <localleader>ia - [ ] 
+    autocmd FileType markdown,text nmap <buffer> <localleader>a o- [ ] 
+    autocmd FileType markdown,text imap <buffer> <localleader>a - [ ] 
     " mark item as doing
     autocmd FileType markdown,text nmap <silent> <buffer> <localleader>i* :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>:s/^\(\s*- \[\).]/\1*]/<CR>:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
     " mark item as done
