@@ -359,11 +359,11 @@ nmap <leader>s :call IsolateLineWithSpacesAround("normal")<CR>
 vmap <leader>s :<C-U>call IsolateLineWithSpacesAround("visual")<CR>
 function! IsolateLineWithSpacesAround(mode)
     if a:mode == "normal"
-        call append(line(".")-1, ["",""])
-        call append(".", ["",""])
+        call append(line(".")-1, [""])
+        call append(".", [""])
     elseif a:mode == "visual"
-        call append(line("'<")-1, ["",""])
-        call append("'>", ["",""])
+        call append(line("'<")-1, [""])
+        call append("'>", [""])
         normal gv
     endif
 endfunction
