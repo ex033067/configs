@@ -406,9 +406,6 @@ augroup aug_ft_gitcommit
     autocmd BufRead COMMIT_EDITMSG setlocal nocursorline
     " commit window in split view
     autocmd BufRead COMMIT_EDITMSG call execute(['normal gg','4split','wincmd b'])
-    " save/discard and exit working with split view
-    autocmd FileType gitcommit nmap <silent> <buffer> ZZ :w<CR>:bwipeout<CR>
-    autocmd FileType gitcommit nmap <silent> <buffer> ZQ ggdG:w<CR>:bwipeout<CR>|" real discard the commit
     " go to next/prev file in commit
     autocmd FileType gitcommit nmap <silent> <buffer> ]] :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:let _ws=&wrapscan<CR>:set nohlsearch lazyredraw wrapscan<CR>/^diff\\|^# On branch/<CR>ztzv:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:let &wrapscan=_ws<CR>:unlet _lz _hls _pat _ws<CR>
     autocmd FileType gitcommit nmap <silent> <buffer> [[ :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:let _ws=&wrapscan<CR>:set nohlsearch lazyredraw wrapscan<CR>?^diff\\|^# On branch?<CR>ztzv:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:let &wrapscan=_ws<CR>:unlet _lz _hls _pat _ws<CR>
