@@ -297,7 +297,7 @@ set termguicolors
 " sane editing
 set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
 set ignorecase smartcase
-set foldenable foldmethod=indent foldlevel=2
+set foldenable foldmethod=indent foldlevel=1
 let g:markdown_folding = 1 | " enable folded headings in markdown files
 
 " other options
@@ -437,7 +437,7 @@ augroup END
 
 augroup aug_ft_html
     au!
-    autocmd FileType html,htmldjango setlocal foldlevel=4 tabstop=2
+    autocmd FileType html,htmldjango setlocal tabstop=2
     autocmd FileType html,htmldjango let b:match_words = '<:>,{{:}},{%:%},{:},[:],(:),<!--:-->' .
         \ ',<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>' .
         \ ',{% block:{% endblock,{% if:{% endif,{% for:{% endfor,{% macro:{% endmacro' .
@@ -460,7 +460,7 @@ augroup aug_ft_python
 augroup END
 
 function! FtPython()
-    setlocal foldmethod=indent foldlevel=3
+    setlocal foldmethod=indent
     if filereadable('Makefile')
         setlocal equalprg=make\ --no-print-directory\ --silent\ pep8
         setlocal makeprg=TARGET=%\ make\ --no-print-directory\ --silent
@@ -559,7 +559,7 @@ augroup END
 
 augroup aug_ft_gitcommit
     au!
-    autocmd FileType gitcommit setlocal foldenable foldmethod=syntax foldlevel=1
+    autocmd FileType gitcommit setlocal foldenable foldmethod=syntax
     autocmd BufRead COMMIT_EDITMSG setlocal nocursorline
     " commit window in split view
     autocmd BufRead COMMIT_EDITMSG call execute(['normal gg','4split','wincmd b', 'global /^diff/ normal zc','/On branch/','normal zt'])
