@@ -264,163 +264,6 @@ endfunction
 
 
 " ==================================================
-" Options
-" ==================================================
-
-" elements of interface
-set number
-set scrolloff=0
-" set hls
-set lazyredraw
-
-set list listchars=tab:››,trail:·,nbsp:·,extends:→,precedes:←
-set cpoptions+=n showbreak=→\ 
-
-set wildmode=list:longest,full
-
-let &t_SI = "\<Esc>]12;green\x7" | " solid non-blinking cursor
-let &t_SR = &t_SI
-let &t_EI = &t_SI
-
-set ttymouse=xterm2  | " enable resizing windows with the mouse
-
-" syntax and colors
-syntax reset
-silent! colorscheme whiteonblack
-if exists('+termguicolors')
-  " truecolor under tmux
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-set termguicolors
-
-" sane editing
-set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
-set ignorecase smartcase
-set foldenable foldmethod=indent foldlevel=1
-let g:markdown_folding = 1 | " enable folded headings in markdown files
-
-" other options
-set hidden
-set grepprg=ack\ --nogroup\ $* | " ack is better than grep
-
-
-" ==================================================
-" Global mappings
-" ==================================================
-
-" Show highlight group of word under cursor
-map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
-    \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
-    \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
-map <leader>2 :NERDTreeToggle<CR>
-map <leader>3 :FZF<CR>
-map <leader>4 :execute 'colorscheme ' . g:next_colorscheme <CR>
-nmap <leader>< <plug>(QuickScopeToggle)
-xmap <leader>< <plug>(QuickScopeToggle)
-
-" visual elements
-map <leader><leader> :noh<CR>
-
-" editing
-nmap <leader>d :call DuplicateLine("normal")<CR>
-vmap <leader>d :<C-U>call DuplicateLine("visual")<CR>
-function! DuplicateLine(mode)
-    if a:mode == "normal"
-        let _pos = col('.')
-        copy .
-        execute 'normal ' ._pos. '|'
-    elseif a:mode == "visual"
-        '<,'>copy '>
-        normal '>j
-    endif
-endfunction
-
-nmap <leader>c :call DuplicateAndCommentLine("normal")<CR>
-vmap <leader>c :<C-U>call DuplicateAndCommentLine("visual")<CR>
-function! DuplicateAndCommentLine(mode)
-    if a:mode == "normal"
-        let _pos = col('.')
-        copy .
-        normal k
-        .Commentary
-        normal j
-        execute 'normal ' ._pos. '|'
-    elseif a:mode == "visual"
-        '<,'>copy '>
-        normal gv
-        '<,'>Commentary
-        execute "normal \<Esc>"
-        normal '>j
-    endif
-endfunction
-
-nmap <leader>s :call IsolateLineWithSpacesAround("normal")<CR>
-vmap <leader>s :<C-U>call IsolateLineWithSpacesAround("visual")<CR>
-function! IsolateLineWithSpacesAround(mode)
-    if a:mode == "normal"
-        call append(line(".")-1, [""])
-        call append(".", [""])
-    elseif a:mode == "visual"
-        call append(line("'<")-1, [""])
-        call append("'>", [""])
-        normal gv
-    endif
-endfunction
-
-nmap <C-j> :call MoveLine("normal", "down")<CR>
-vmap <C-j> :<C-U>call MoveLine("visual", "down")<CR>
-nmap <C-k> :call MoveLine("normal", "up")<CR>
-vmap <C-k> :<C-U>call MoveLine("visual", "up")<CR>
-function! MoveLine(mode, direction)
-    let offset = #{down:"+1", up:"-2"}
-    if a:mode == "normal"
-        execute 'move .' .offset[a:direction]
-    elseif a:mode == "visual"
-        let target = #{down:"'>", up:"'<"}
-        execute "'<,'>move " .target[a:direction] .offset[a:direction]
-        normal gv
-    endif
-endfunction
-
-" file and buffer
-map <leader>w :update<CR>
-map <leader>fd :saveas! %:p.copy<CR>| " duplicate current file
-noremap <silent> <buffer> == :update<CR>gg=G
-
-" navigation
-noremap <Space> <C-F>
-noremap ]q :cnext<CR>
-noremap [q :cprevious<CR>
-noremap ]a :next<CR>
-noremap [a :previous<CR>
-
-" clipboard
-if !has('clipboard') && executable('clip.exe')
-    " Use Windows clipboard under WSL
-    vnoremap <leader>y "sy:call system('clip.exe', @s)<CR>
-else
-    vnoremap <leader>y "+y
-endif
-
-" git
-map g2 :Git<CR>
-map g1 :Gwrite<CR>:echo 'File staged'<CR>|" git add
-map gC :Git<CR>cvc|" git commit -v
-map gA :Git<CR>cva|" git commit -v --amend
-map g= :Git diff % <CR><C-W>_
-map gl :Git --paginate l -50<CR><C-W>_
-
-" toggle options
-map <leader>oh :set hlsearch!<CR>:set hlsearch?<CR>
-map <leader>ol :setlocal cursorline!<CR>
-map <leader>o+ :setlocal cursorline! cursorcolumn!<CR>
-map <leader>on :setlocal number!<CR>
-map <leader>op :set paste!<CR>:set paste?<CR>
-map <leader>or :setlocal relativenumber!<CR>
-map <leader>ow :setlocal wrap!<CR>:set wrap?<CR>
-
-" ==================================================
 " Autocommands
 " ==================================================
 
@@ -614,3 +457,161 @@ augroup aug_quickscope_colors
     autocmd ColorScheme * highlight QuickScopePrimary guifg=Cyan gui=underline,bold ctermfg=Cyan cterm=underline
     autocmd ColorScheme * highlight QuickScopeSecondary guifg=Magenta gui=underline,bold ctermfg=Magenta cterm=underline
 augroup END
+
+
+" ==================================================
+" Options
+" ==================================================
+
+" elements of interface
+set number
+set scrolloff=0
+" set hls
+set lazyredraw
+
+set list listchars=tab:››,trail:·,nbsp:·,extends:→,precedes:←
+set cpoptions+=n showbreak=→\ 
+
+set wildmode=list:longest,full
+
+let &t_SI = "\<Esc>]12;green\x7" | " solid non-blinking cursor
+let &t_SR = &t_SI
+let &t_EI = &t_SI
+
+set ttymouse=xterm2  | " enable resizing windows with the mouse
+
+" syntax and colors
+syntax reset
+silent! colorscheme whiteonblack
+if exists('+termguicolors')
+  " truecolor under tmux
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+set termguicolors
+
+" sane editing
+set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
+set ignorecase smartcase
+set foldenable foldmethod=indent foldlevel=1
+let g:markdown_folding = 1 | " enable folded headings in markdown files
+
+" other options
+set hidden
+set grepprg=ack\ --nogroup\ $* | " ack is better than grep
+
+
+" ==================================================
+" Global mappings
+" ==================================================
+
+" Show highlight group of word under cursor
+map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
+    \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
+    \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
+map <leader>2 :NERDTreeToggle<CR>
+map <leader>3 :FZF<CR>
+map <leader>4 :execute 'colorscheme ' . g:next_colorscheme <CR>
+nmap <leader>< <plug>(QuickScopeToggle)
+xmap <leader>< <plug>(QuickScopeToggle)
+
+" visual elements
+map <leader><leader> :noh<CR>
+
+" editing
+nmap <leader>d :call DuplicateLine("normal")<CR>
+vmap <leader>d :<C-U>call DuplicateLine("visual")<CR>
+function! DuplicateLine(mode)
+    if a:mode == "normal"
+        let _pos = col('.')
+        copy .
+        execute 'normal ' ._pos. '|'
+    elseif a:mode == "visual"
+        '<,'>copy '>
+        normal '>j
+    endif
+endfunction
+
+nmap <leader>c :call DuplicateAndCommentLine("normal")<CR>
+vmap <leader>c :<C-U>call DuplicateAndCommentLine("visual")<CR>
+function! DuplicateAndCommentLine(mode)
+    if a:mode == "normal"
+        let _pos = col('.')
+        copy .
+        normal k
+        .Commentary
+        normal j
+        execute 'normal ' ._pos. '|'
+    elseif a:mode == "visual"
+        '<,'>copy '>
+        normal gv
+        '<,'>Commentary
+        execute "normal \<Esc>"
+        normal '>j
+    endif
+endfunction
+
+nmap <leader>s :call IsolateLineWithSpacesAround("normal")<CR>
+vmap <leader>s :<C-U>call IsolateLineWithSpacesAround("visual")<CR>
+function! IsolateLineWithSpacesAround(mode)
+    if a:mode == "normal"
+        call append(line(".")-1, [""])
+        call append(".", [""])
+    elseif a:mode == "visual"
+        call append(line("'<")-1, [""])
+        call append("'>", [""])
+        normal gv
+    endif
+endfunction
+
+nmap <C-j> :call MoveLine("normal", "down")<CR>
+vmap <C-j> :<C-U>call MoveLine("visual", "down")<CR>
+nmap <C-k> :call MoveLine("normal", "up")<CR>
+vmap <C-k> :<C-U>call MoveLine("visual", "up")<CR>
+function! MoveLine(mode, direction)
+    let offset = #{down:"+1", up:"-2"}
+    if a:mode == "normal"
+        execute 'move .' .offset[a:direction]
+    elseif a:mode == "visual"
+        let target = #{down:"'>", up:"'<"}
+        execute "'<,'>move " .target[a:direction] .offset[a:direction]
+        normal gv
+    endif
+endfunction
+
+" file and buffer
+map <leader>w :update<CR>
+map <leader>fd :saveas! %:p.copy<CR>| " duplicate current file
+noremap <silent> <buffer> == :update<CR>gg=G
+
+" navigation
+noremap <Space> <C-F>
+noremap ]q :cnext<CR>
+noremap [q :cprevious<CR>
+noremap ]a :next<CR>
+noremap [a :previous<CR>
+
+" clipboard
+if !has('clipboard') && executable('clip.exe')
+    " Use Windows clipboard under WSL
+    vnoremap <leader>y "sy:call system('clip.exe', @s)<CR>
+else
+    vnoremap <leader>y "+y
+endif
+
+" git
+map g2 :Git<CR>
+map g1 :Gwrite<CR>:echo 'File staged'<CR>|" git add
+map gC :Git<CR>cvc|" git commit -v
+map gA :Git<CR>cva|" git commit -v --amend
+map g= :Git diff % <CR><C-W>_
+map gl :Git --paginate l -50<CR><C-W>_
+
+" toggle options
+map <leader>oh :set hlsearch!<CR>:set hlsearch?<CR>
+map <leader>ol :setlocal cursorline!<CR>
+map <leader>o+ :setlocal cursorline! cursorcolumn!<CR>
+map <leader>on :setlocal number!<CR>
+map <leader>op :set paste!<CR>:set paste?<CR>
+map <leader>or :setlocal relativenumber!<CR>
+map <leader>ow :setlocal wrap!<CR>:set wrap?<CR>
