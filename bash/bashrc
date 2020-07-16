@@ -22,6 +22,7 @@ __aliases () {
     alias grep='grep --color=auto'
 
     alias now='date -u +%y%m%d%H%M'
+    alias when='cal -3; date +%H:%M'
 
     # one-letters
     alias j='jupyter notebook --no-browser --ip=localhost.test --NotebookApp.allow_remote_access=True'
