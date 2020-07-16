@@ -154,11 +154,11 @@ function! BanPython_MakeValidPythonTestName()
     call setline('.', x)
 endfunction
 
-function! BanPython_GetTestSeparators()
-    if g:test_command =~ 'unittest'
+function! BanPython_GetTestSeparators(command)
+    if a:command =~ 'unittest'
         let path_separator = '.'
         let expand_string = '%:.:r'
-    elseif g:test_command =~ '--pyargs'
+    elseif a:command =~ '--pyargs'
         let path_separator = '.'
         let expand_string = '%:.:r'
     else
@@ -166,7 +166,7 @@ function! BanPython_GetTestSeparators()
         let expand_string = '%:.'
     endif
 
-    if g:test_command =~ 'pytest'
+    if a:command =~ 'pytest'
         let class_separator = '::'
     else
         let class_separator = '.'
@@ -179,67 +179,67 @@ function! BanPython_SetAllSuiteAsTestTarget()
     let g:test_target = ''
 endfunction
 
-function! BanPython_SetCurrentPackageAsTestTarget()
-    let [path_sep, _, _] = BanPython_GetTestSeparators()
+function! BanPython_SetCurrentPackageAsTestTarget(command)
+    let [path_sep, _, _] = BanPython_GetTestSeparators(a:command)
     let g:test_target = substitute(expand('%:.:h'), '/', path_sep, 'g')
 endfunction
 
-function! BanPython_SetCurrentModuleAsTestTarget()
-    let [path_sep, _, expand_arg] = BanPython_GetTestSeparators()
+function! BanPython_SetCurrentModuleAsTestTarget(command)
+    let [path_sep, _, expand_arg] = BanPython_GetTestSeparators(a:command)
     let g:test_target = substitute(expand(expand_arg), '/', path_sep, 'g')
 endfunction
 
-function! BanPython_SetCurrentClassAsTestTarget()
-    let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators()
+function! BanPython_SetCurrentClassAsTestTarget(command)
+    let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
     let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonClassName()
     let g:test_target = substitute(target, '/', path_sep, 'g')
 endfunction
 
-function! BanPython_SetCurrentMethodAsTestTarget()
-    let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators()
+function! BanPython_SetCurrentMethodAsTestTarget(command)
+    let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
     let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonClassName() . class_sep . BanPython_GetCurrentPythonMethodName()
     let g:test_target = substitute(target, '/', path_sep, 'g')
 endfunction
 
-function! BanPython_SetCurrentFunctionAsTestTarget()
-    let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators()
+function! BanPython_SetCurrentFunctionAsTestTarget(command)
+    let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
     let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonFunctionName()
     let g:test_target = substitute(target, '/', path_sep, 'g')
 endfunction
 
-function! BanPython_RunCurrentTestMethod()
-    call BanPython_SetCurrentMethodAsTestTarget()
-    let test_command = BanPython_BuildTestCommand(g:test_command, g:test_target)
+function! BanPython_RunCurrentTestMethod(command)
+    call BanPython_SetCurrentMethodAsTestTarget(a:command)
+    let test_command = BanPython_BuildTestCommand(a:command, g:test_target)
     execute Ban_Run('run-test '. test_command)
 endfunction
 
-function! BanPython_RunCurrentTestFunction()
-    call BanPython_SetCurrentFunctionAsTestTarget()
-    let test_command = BanPython_BuildTestCommand(g:test_command, g:test_target)
+function! BanPython_RunCurrentTestFunction(command)
+    call BanPython_SetCurrentFunctionAsTestTarget(a:command)
+    let test_command = BanPython_BuildTestCommand(a:command, g:test_target)
     execute Ban_Run('run-test '. test_command)
 endfunction
 
-function! BanPython_RunCurrentTestCase()
-    call BanPython_SetCurrentClassAsTestTarget()
-    let test_command = BanPython_BuildTestCommand(g:test_command, g:test_target)
+function! BanPython_RunCurrentTestCase(command)
+    call BanPython_SetCurrentClassAsTestTarget(a:command)
+    let test_command = BanPython_BuildTestCommand(a:command, g:test_target)
     execute Ban_Run('run-test '. test_command)
 endfunction
 
-function! BanPython_RunCurrentTestModule()
-    call BanPython_SetCurrentModuleAsTestTarget()
-    let test_command = BanPython_BuildTestCommand(g:test_command, g:test_target)
+function! BanPython_RunCurrentTestModule(command)
+    call BanPython_SetCurrentModuleAsTestTarget(a:command)
+    let test_command = BanPython_BuildTestCommand(a:command, g:test_target)
     execute Ban_Run('run-test '. test_command)
 endfunction
 
-function! BanPython_RunCurrentTestPackage()
-    call BanPython_SetCurrentPackageAsTestTarget()
-    let test_command = BanPython_BuildTestCommand(g:test_command, g:test_target)
+function! BanPython_RunCurrentTestPackage(command)
+    call BanPython_SetCurrentPackageAsTestTarget(a:command)
+    let test_command = BanPython_BuildTestCommand(a:command, g:test_target)
     execute Ban_Run('run-test '. test_command)
 endfunction
 
-function! BanPython_RunAllTestSuite()
+function! BanPython_RunAllTestSuite(command)
     call BanPython_SetAllSuiteAsTestTarget()
-    let test_command = BanPython_BuildTestCommand(g:test_command, '')
+    let test_command = BanPython_BuildTestCommand(a:command, '')
     execute Ban_Run('run-test '. test_command)
 endfunction
 
@@ -380,20 +380,20 @@ function! FtPython()
     map <buffer> <localleader>tn :call BanPython_MakeValidPythonTestName() <CR>
 
     " Mark the target and run tests
-    map <buffer> <localleader>ta :wall <CR>:call BanPython_RunAllTestSuite() <CR>
-    map <buffer> <localleader>tp :wall <CR>:call BanPython_RunCurrentTestPackage() <CR>
-    map <buffer> <localleader>t% :wall <CR>:call BanPython_RunCurrentTestModule() <CR>
-    map <buffer> <localleader>tc :wall <CR>:call BanPython_RunCurrentTestCase() <CR>
-    map <buffer> <localleader>tm :wall <CR>:call BanPython_RunCurrentTestMethod() <CR>
-    map <buffer> <localleader>tf :wall <CR>:call BanPython_RunCurrentTestFunction() <CR>
+    map <buffer> <localleader>ta :wall <CR>:call BanPython_RunAllTestSuite(g:test_command) <CR>
+    map <buffer> <localleader>tp :wall <CR>:call BanPython_RunCurrentTestPackage(g:test_command) <CR>
+    map <buffer> <localleader>t% :wall <CR>:call BanPython_RunCurrentTestModule(g:test_command) <CR>
+    map <buffer> <localleader>tc :wall <CR>:call BanPython_RunCurrentTestCase(g:test_command) <CR>
+    map <buffer> <localleader>tm :wall <CR>:call BanPython_RunCurrentTestMethod(g:test_command) <CR>
+    map <buffer> <localleader>tf :wall <CR>:call BanPython_RunCurrentTestFunction(g:test_command) <CR>
 
     " Only mark the target
     map <buffer> <localleader>TA :wall <CR>:call BanPython_SetAllSuiteAsTestTarget() <CR>:echo g:test_target. ' set as test target.'<CR>
-    map <buffer> <localleader>TP :wall <CR>:call BanPython_SetCurrentPackageAsTestTarget() <CR>:echo g:test_target. ' set as test target.'<CR>
-    map <buffer> <localleader>T% :wall <CR>:call BanPython_SetCurrentModuleAsTestTarget() <CR>:echo g:test_target. ' set as test target.'<CR>
-    map <buffer> <localleader>TC :wall <CR>:call BanPython_SetCurrentClassAsTestTarget() <CR>:echo g:test_target. ' set as test target.'<CR>
-    map <buffer> <localleader>TM :wall <CR>:call BanPython_SetCurrentMethodAsTestTarget() <CR>:echo g:test_target. ' set as test target.'<CR>
-    map <buffer> <localleader>TF :wall <CR>:call BanPython_SetCurrentFunctionAsTestTarget() <CR>:echo g:test_target. ' set as test target.'<CR>
+    map <buffer> <localleader>TP :wall <CR>:call BanPython_SetCurrentPackageAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+    map <buffer> <localleader>T% :wall <CR>:call BanPython_SetCurrentModuleAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+    map <buffer> <localleader>TC :wall <CR>:call BanPython_SetCurrentClassAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+    map <buffer> <localleader>TM :wall <CR>:call BanPython_SetCurrentMethodAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+    map <buffer> <localleader>TF :wall <CR>:call BanPython_SetCurrentFunctionAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
 
     " copy current filename and function/method to register z in pytest format (JOE specific)
     nmap <silent> <localleader>tr :let cursorpos = getcurpos() <CR>:call search('def test', 'besc') <CR>:execute 'normal bye' <CR>:let @z = substitute(expand('%'), '.*joe/tests/', '', '').'::'.getreg('"') <CR>:call setpos('.', cursorpos) <CR>:let test_cmd = "t " .trim(getreg('z'))<CR>:execute '!tmux send-keys -t JOE:src.1 -l "' .test_cmd. '"'<CR>:execute '!tmux send-keys -t JOE:src.1 Enter'<CR><CR>
