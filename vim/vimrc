@@ -154,12 +154,25 @@ function! BanPython_MakeValidPythonTestName()
     call setline('.', x)
 endfunction
 
-function! BanPython_GetTestSeparator()
-    if g:test_command =~ 'pytest'
-        return '::'
+function! BanPython_GetTestSeparators()
+    if g:test_command =~ 'unittest'
+        let path_separator = '.'
+        let expand_string = '%:.:r'
+    elseif g:test_command =~ '--pyargs'
+        let path_separator = '.'
+        let expand_string = '%:.:r'
     else
-        return '.'
+        let path_separator = '/'
+        let expand_string = '%:.'
     endif
+
+    if g:test_command =~ 'pytest'
+        let class_separator = '::'
+    else
+        let class_separator = '.'
+    endif
+
+    return [path_separator, class_separator, expand_string]
 endfunction
 
 function! BanPython_SetAllSuiteAsTestTarget()
@@ -167,31 +180,31 @@ function! BanPython_SetAllSuiteAsTestTarget()
 endfunction
 
 function! BanPython_SetCurrentPackageAsTestTarget()
-    let g:test_target = expand('%:.:h')
-    let g:test_target = substitute(g:test_target, '/', '.', 'g')
+    let [path_sep, _, _] = BanPython_GetTestSeparators()
+    let g:test_target = substitute(expand('%:.:h'), '/', path_sep, 'g')
 endfunction
 
 function! BanPython_SetCurrentModuleAsTestTarget()
-    let g:test_target = expand('%:.:r')
-    let g:test_target = substitute(g:test_target, '/', '.', 'g')
+    let [path_sep, _, expand_arg] = BanPython_GetTestSeparators()
+    let g:test_target = substitute(expand(expand_arg), '/', path_sep, 'g')
 endfunction
 
 function! BanPython_SetCurrentClassAsTestTarget()
-    let sep = BanPython_GetTestSeparator()
-    let g:test_target = expand('%:.:r') . sep . BanPython_GetCurrentPythonClassName()
-    let g:test_target = substitute(g:test_target, '/', '.', 'g')
+    let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators()
+    let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonClassName()
+    let g:test_target = substitute(target, '/', path_sep, 'g')
 endfunction
 
 function! BanPython_SetCurrentMethodAsTestTarget()
-    let sep = BanPython_GetTestSeparator()
-    let g:test_target = expand('%:.:r') . sep . BanPython_GetCurrentPythonClassName() . sep . BanPython_GetCurrentPythonMethodName()
-    let g:test_target = substitute(g:test_target, '/', '.', 'g')
+    let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators()
+    let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonClassName() . class_sep . BanPython_GetCurrentPythonMethodName()
+    let g:test_target = substitute(target, '/', path_sep, 'g')
 endfunction
 
 function! BanPython_SetCurrentFunctionAsTestTarget()
-    let sep = BanPython_GetTestSeparator()
-    let g:test_target = expand('%:.:r') . sep . BanPython_GetCurrentPythonFunctionName()
-    let g:test_target = substitute(g:test_target, '/', '.', 'g')
+    let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators()
+    let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonFunctionName()
+    let g:test_target = substitute(target, '/', path_sep, 'g')
 endfunction
 
 function! BanPython_RunCurrentTestMethod()
