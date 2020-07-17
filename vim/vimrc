@@ -618,6 +618,7 @@ map gl :Git --paginate l -50<CR><C-W>_
 
 " toggle options
 map <leader>oi :setlocal wrap cursorline nocursorcolumn number norelativenumber<CR>
+map <leader>od :windo setlocal wrap nocursorline nocursorcolumn nonumber relativenumber<CR>p
 map <leader>oh :set hlsearch!<CR>:set hlsearch?<CR>
 map <leader>ol :setlocal cursorline!<CR>
 map <leader>o+ :setlocal cursorline! cursorcolumn!<CR>
