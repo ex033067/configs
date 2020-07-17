@@ -61,7 +61,7 @@ __variables () {
     [[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
     export HISTCONTROL=ignoreboth
     export HISTTIMEFORMAT="%F %T "
-    export EDITOR=$(which nvim || which vim)
+    export EDITOR=$(which vim)
     export VISUAL=$EDITOR
 
     # Custom hostname in prompt. See "ps1_hostname_alias.example" file.
