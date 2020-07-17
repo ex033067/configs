@@ -417,8 +417,7 @@ augroup aug_ft_gitcommit
     au!
     autocmd FileType gitcommit setlocal foldenable foldmethod=syntax
     autocmd BufRead COMMIT_EDITMSG setlocal nocursorline
-    " commit window in split view
-    autocmd BufRead COMMIT_EDITMSG call execute(['normal gg','4split','wincmd b'])
+    autocmd BufRead COMMIT_EDITMSG call execute(['normal gg'])
     " go to next/prev file in commit
     autocmd FileType gitcommit nmap <silent> <buffer> ]] :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>/^diff\\|^# On branch/<CR>ztzv:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
     autocmd FileType gitcommit nmap <silent> <buffer> [[ :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>?^diff\\|^# On branch?<CR>ztzv:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
