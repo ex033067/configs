@@ -4,4 +4,4 @@
 
 ## Installation ##
 
-Copy this directory contents to `%appdata%\wsltty\` of your Windows installation.
+Copy this directory contents to `%appdata%\Roaming\wsltty\` of your Windows installation.
