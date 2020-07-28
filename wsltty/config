@@ -1,9 +1,10 @@
 # To use common configuration in %APPDATA%\mintty, simply remove this file
+#Font=Monego
 Font=IBM Plex Mono
-FontHeight=15
+FontHeight=16
 CursorType=block
 CtrlShiftShortcuts=yes
-BoldAsFont=no
+BoldAsFont=yes
 BoldAsColour=yes
 ScrollbackLines=50000
 Term=xterm-256color
@@ -22,3 +23,6 @@ BellType=0
 ClipShortcuts=no
 RowSpacing=1
 Scrollbar=none
+Locale=en_GB
+Rows=21
+ComposeKey=off
