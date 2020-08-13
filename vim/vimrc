@@ -454,6 +454,7 @@ augroup aug_viniciusban_notes
     autocmd FileType markdown nmap <buffer> gd :let _w=expand('<cword>')<CR>$:call search('^#\+ .*' ._w, 'e')<CR>:normal zvb<CR>
     " create a random task code
     autocmd FileType markdown imap <buffer> <localleader>it - [ ] <Esc>:let _='_'.strcharpart(sha256(strftime('%c')),0,7).'_'<CR>a=_
+    autocmd FileType markdown imap <buffer> <localleader>ti =strftime("%F %a %R") 
 augroup END
 
 augroup aug_ft_markdown
