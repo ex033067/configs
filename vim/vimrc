@@ -455,6 +455,7 @@ augroup aug_viniciusban_notes
     " create a random task code
     autocmd FileType markdown imap <buffer> <localleader>it - [ ] <Esc>:let _='_'.strcharpart(sha256(strftime('%c')),0,7).'_'<CR>a=_
     autocmd FileType markdown imap <buffer> <localleader>ti =strftime("%F %a %R") 
+    autocmd FileType markdown nmap <buffer> <localleader>tt 0df]\2
 augroup END
 
 augroup aug_ft_markdown
