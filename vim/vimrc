@@ -629,3 +629,5 @@ map <leader>on :setlocal number!<CR>
 map <leader>op :set paste!<CR>:set paste?<CR>
 map <leader>or :setlocal relativenumber!<CR>
 map <leader>ow :setlocal wrap!<CR>:set wrap?<CR>
+
+execute "normal ". mapleader ."oi"
