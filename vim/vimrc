@@ -486,11 +486,6 @@ set cpoptions+=n showbreak=→\
 
 set wildmode=list:longest,full
 
-" TODO probably may be removed (2020-08-13)
-" let &t_SI = "\<Esc>]12;green\x7" | " solid non-blinking cursor
-" let &t_SR = &t_SI
-" let &t_EI = &t_SI
-
 set ttymouse=xterm2  | " enable resizing windows with the mouse
 
 " syntax and colors
