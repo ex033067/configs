@@ -461,6 +461,7 @@ augroup END
 augroup aug_ft_markdown
     au!
     " add a codeblock paragraph
+    autocmd FileType markdown imap <buffer> <localleader>` <Esc><Esc>:call append(".", ["```", "", "```"])<CR>:normal 2j<CR>a
     autocmd FileType markdown nmap <buffer> <localleader>` :call append(".", ["```", "", "```"])<CR>:normal 2j<CR>
 augroup END
 
