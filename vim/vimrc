@@ -517,9 +517,12 @@ set grepprg=ack\ --nogroup\ $* | " ack is better than grep
 map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
     \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
     \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
-map <leader>2 :NERDTreeToggle<CR>
-map <leader>3 :FZF<CR>
-map <leader>4 :execute 'colorscheme ' . g:next_colorscheme <CR>
+map <leader>9 :execute 'colorscheme ' . g:next_colorscheme <CR>
+
+map <leader>1 :NERDTreeToggle<CR>
+map <leader>2 :FZF<CR>
+map <leader>3 :Buffers<CR>
+
 nmap <leader>< <plug>(QuickScopeToggle)
 xmap <leader>< <plug>(QuickScopeToggle)
 
