@@ -317,16 +317,16 @@ augroup END
 
 function! FtPython()
     setlocal foldmethod=indent
+    setlocal equalprg=~/.local/bin/python-style
     if filereadable('Makefile')
         setlocal equalprg=make\ --no-print-directory\ --silent\ pep8
         setlocal makeprg=TARGET=%\ make\ --no-print-directory\ --silent
     elseif executable('pylint')
-        setlocal equalprg=~/.local/bin/binscripts/python-style
         setlocal makeprg=pylint\ %
     elseif executable('flake8')
-        setlocal equalprg=~/.local/bin/binscripts/python-style
         setlocal makeprg=flake8\ %
     endif
+    map <buffer> <localleader>= :update<CR><Esc>gg=G
     map <buffer> <localleader>m :update<CR>:make %<CR>
 
     " Mappings for classes, functions and docstrings text-objects
