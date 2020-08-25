@@ -456,13 +456,7 @@ augroup aug_viniciusban_notes
     autocmd FileType markdown imap <buffer> <localleader>it - [ ] <Esc>:let _='_'.strcharpart(sha256(strftime('%c')),0,7).'_'<CR>a=_
     autocmd FileType markdown imap <buffer> <localleader>ti =strftime("%F %a %R") 
     autocmd FileType markdown nmap <buffer> <localleader>tt 0df]\2
-augroup END
-
-augroup aug_ft_markdown
-    au!
-    " add a codeblock paragraph
-    autocmd FileType markdown imap <buffer> <localleader>` <Esc><Esc>:call append(".", ["```", "", "```"])<CR>:normal 2j<CR>a
-    autocmd FileType markdown nmap <buffer> <localleader>` :call append(".", ["```", "", "```"])<CR>:normal 2j<CR>
+    autocmd FileType markdown imap <buffer> <localleader>d # =strftime("%F %a")
 augroup END
 
 augroup aug_quickscope_colors
