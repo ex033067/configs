@@ -507,6 +507,7 @@ let g:markdown_folding = 1 | " enable folded headings in markdown files
 " other options
 set hidden
 set grepprg=ack\ --nogroup\ $* | " ack is better than grep
+set modeline
 
 
 " ==================================================
