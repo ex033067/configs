@@ -32,7 +32,8 @@ Plug 'bps/vim-textobj-python' | " ac, ic, af, if.
 Plug 'jeetsukumaran/vim-pythonsense' | " ad, id (docstring objects). See https://github.com/viniciusban/myconfigs/issues/1
 Plug 'inkarkat/vim-ReplaceWithRegister'  | " <register>gr{motion}, {Visual}<register>gr
 Plug 'davidhalter/jedi-vim'
-" Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'viniciusban/vim-ft-markdown'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-fugitive'
