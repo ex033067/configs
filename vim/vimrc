@@ -71,6 +71,9 @@ let g:jedi#usages_command = '<localleader>jn'
 " ultisnips
 let g:UltiSnipsSnippetDirectories=[$HOME.'/src/vim-snippets']
 
+" emmet
+let g:user_emmet_leader_key = '<C-\>'
+
 " NERDTree
 let NERDTreeIgnore=['__pycache__[[dir]]']
 let NERDTreeHijackNetrw = 0
