@@ -456,7 +456,13 @@ augroup aug_viniciusban_notes
     autocmd FileType markdown nmap <buffer> gd :let _w=expand('<cword>')<CR>$:call search('^#\+ .*' ._w, 'e')<CR>:normal zvb<CR>
     " create a random task code prefixed with g:PROJECT
     autocmd FileType markdown imap <buffer> <localleader>it - [ ] <Esc>:let _='_'. g:PROJECT .'_'. strcharpart(sha256(strftime('%c')),0,7) .'_'<CR>a=_
-    autocmd FileType markdown imap <buffer> <localleader>ti =strftime("%F %a %R") 
+
+    " create a time-marked entry and move through them
+    autocmd FileType markdown imap <buffer> <localleader>tm =strftime("%F %a %R") 
+    autocmd FileType markdown nmap <silent> <buffer> ]t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d')<CR>
+    autocmd FileType markdown nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d', 'b')<CR>
+
+
     autocmd FileType markdown nmap <buffer> <localleader>tt 0df]\2
     autocmd FileType markdown imap <buffer> <localleader>d # =strftime("%F %a")
 augroup END
