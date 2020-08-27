@@ -465,8 +465,9 @@ augroup aug_viniciusban_notes
     autocmd FileType markdown nmap <silent> <buffer> ]t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d')<CR>
     autocmd FileType markdown nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d', 'b')<CR>
 
+    " start executing a task from the task item definition
+    autocmd FileType markdown nmap <buffer> <localleader>te \*yyGo<Esc>p0df]\2o\tm
 
-    autocmd FileType markdown nmap <buffer> <localleader>tt 0df]\2
     " create a new day in journal
     autocmd FileType markdown imap <buffer> <localleader>d # =strftime("%F %a")
 augroup END
