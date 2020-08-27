@@ -453,6 +453,7 @@ augroup END
 augroup aug_viniciusban_journal
     au!
     autocmd FileType markdown if ! exists("g:PROJECT") | let g:PROJECT='eu' | endif
+    autocmd FileType markdown nmap <buffer> <localleader>P :let g:PROJECT=
 
     " start a new day in journal
     autocmd FileType markdown imap <buffer> <localleader>d # =strftime("%F %a")
