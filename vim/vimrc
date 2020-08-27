@@ -450,7 +450,7 @@ augroup aug_list_items
     autocmd FileType markdown,text nmap <silent> <buffer> <localleader>P :let _lz=&lazyredraw<CR>:let _hls=&hlsearch<CR>:let _pat=@/<CR>:set nohlsearch lazyredraw<CR>^:execute '?\%<' .col('.'). 'c\S'<CR>^:let @/=_pat<CR>:let &hlsearch=_hls<CR>:noh<CR>:let &lazyredraw=_lz<CR>:unlet _lz _hls _pat<CR>
 augroup END
 
-augroup aug_viniciusban_notes
+augroup aug_viniciusban_journal
     au!
     autocmd FileType markdown if ! exists("g:PROJECT") | let g:PROJECT='eu' | endif
 
