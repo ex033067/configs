@@ -454,13 +454,13 @@ augroup aug_viniciusban_journal
     au!
     autocmd FileType markdown if ! exists("g:PROJECT") | let g:PROJECT='eu' | endif
 
-    " create a new day in journal
+    " start a new day in journal
     autocmd FileType markdown imap <buffer> <localleader>d # =strftime("%F %a")
 
     " create a task item with random task code prefixed with g:PROJECT
     autocmd FileType markdown imap <buffer> <localleader>it - [ ] <Esc>:let _='_'. g:PROJECT .'_'. strcharpart(sha256(strftime('%c')),0,7) .'_'<CR>a=_
 
-    " jump through task definitions using the location list
+    " jump to other definitions of the same task item using the location list
     autocmd FileType markdown nmap <buffer> gd :let _=expand('<cword>')<CR>:execute 'lvimgrep' '"- \[.\] ' ._. '" %'<CR>
 
     " create a time-marked entry and navigate them
