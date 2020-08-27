@@ -26,3 +26,10 @@ Scrollbar=none
 Locale=en_GB
 Rows=21
 ComposeKey=off
+
+# See KeyFunctions configuration at:
+# https://mintty.github.io/mintty.1.html#CONFIGURATION
+#
+# There must be only one "KeyFunctions" clause in the file.
+#
+KeyFunctions=w:void
