@@ -1,7 +1,7 @@
 # To use common configuration in %APPDATA%\mintty, simply remove this file
 #Font=Monego
 Font=IBM Plex Mono
-FontHeight=16
+FontHeight=17
 CursorType=block
 CtrlShiftShortcuts=yes
 BoldAsFont=yes
