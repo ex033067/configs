@@ -605,6 +605,8 @@ noremap <silent> <buffer> == :update<CR>gg=G
 noremap <Space> <C-F>
 noremap ]q :cnext<CR>
 noremap [q :cprevious<CR>
+noremap ]l :lnext<CR>
+noremap [l :lprevious<CR>
 noremap ]a :next<CR>
 noremap [a :previous<CR>
 
