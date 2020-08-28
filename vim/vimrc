@@ -465,7 +465,7 @@ augroup aug_viniciusban_journal
     autocmd FileType markdown nmap <buffer> gd :let _=expand('<cword>')<CR>:execute 'lvimgrep' '"- \[.\] ' ._. '" %'<CR>
 
     " create a time-marked entry and navigate them
-    autocmd FileType markdown imap <buffer> <localleader>tm =strftime("%F %a %R") 
+    autocmd FileType markdown imap <buffer> <localleader>tm =strftime("%F %a %R")
     autocmd FileType markdown nmap <silent> <buffer> ]t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d')<CR>
     autocmd FileType markdown nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d', 'b')<CR>
 
