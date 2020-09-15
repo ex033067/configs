@@ -318,15 +318,41 @@ augroup END
 
 function! FtPython()
     setlocal foldmethod=indent
-    setlocal equalprg=~/.local/bin/python-style
-    if filereadable('Makefile')
-        setlocal equalprg=make\ --no-print-directory\ --silent\ pep8
-        setlocal makeprg=TARGET=%\ make\ --no-print-directory\ --silent
-    elseif executable('pylint')
-        setlocal makeprg=pylint\ %
+
+    " set makeprg option
+    let b:default_makeprg = ''
+    let b:_makeprg = b:default_makeprg
+    if exists('$VIM_MAKEPRG')
+        if $VIM_MAKEPRG == 'default'
+            let b:_makeprg = b:default_makeprg
+        else
+            let b:_makeprg = $VIM_MAKEPRG
+        endif
+    elseif filereadable('Makefile')
+        let b:_makeprg = 'TARGET=%\ make\ --no-print-directory\ --silent'
     elseif executable('flake8')
-        setlocal makeprg=flake8\ %
+        let b:_makeprg = 'flake8\ %'
+    elseif executable('pylint')
+        let b:_makeprg = 'pylint\ %'
     endif
+    execute 'setlocal makeprg='.b:_makeprg
+    unlet b:_makeprg
+
+    " set equalprg option
+    let b:default_equalprg = '~/.local/bin/python-style'
+    let b:_equalprg = b:default_equalprg
+    if exists('$VIM_EQUALPRG')
+        if $VIM_EQUALPRG == 'default'
+            let b:_equalprg = b:default_equalprg
+        else
+            let b:_equalprg = $VIM_EQUALPRG
+        endif
+    elseif filereadable('Makefile')
+        let b:_equalprg = 'make\ --no-print-directory\ --silent\ pep8'
+    endif
+    execute 'setlocal equalprg='.b:_equalprg
+    unlet b:_equalprg
+
     map <buffer> <localleader>= :update<CR><Esc>gg=G
     map <buffer> <localleader>m :update<CR>:make %<CR>
 
