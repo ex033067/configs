@@ -496,7 +496,7 @@ augroup aug_viniciusban_journal
     autocmd FileType markdown nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
 
     " start executing a task from the task item definition
-    autocmd FileType markdown nmap <buffer> <localleader>te \*yyG2o<Esc>p0df]\2o\tm
+    autocmd FileType markdown nmap <buffer> <localleader>te \*yyG2o<Esc>p0df]\202Ea =strftime("%F")o\tm
 augroup END
 
 augroup aug_quickscope_colors
