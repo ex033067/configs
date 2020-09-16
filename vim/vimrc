@@ -482,7 +482,7 @@ augroup aug_viniciusban_journal
     autocmd FileType markdown nmap <buffer> <localleader>P :let g:PROJECT=
 
     " start a new day in journal
-    autocmd FileType markdown imap <buffer> <localleader>d <Esc>3oa# =strftime("%F %a")2o:let g:PROJECT='mydaily'<CR>a\it mydaily\*o:let g:PROJECT='timesheet'<CR>a\it timesheet\*o[1[1jzcG:redraw<CR>\P
+    autocmd FileType markdown imap <buffer> <localleader>d <Esc>3oa# =strftime("%F %a")2o:let g:PROJECT='mydaily'<CR>a\it =g:PROJECT =strftime("%F %a")\*o:let g:PROJECT='timesheet'<CR>a\it =g:PROJECT =strftime("%F %a")\*o[1[1jzcG:redraw<CR>\P
 
     " create a task item with random task code prefixed with g:PROJECT
     autocmd FileType markdown imap <buffer> <localleader>it - [ ] <Esc>:let _='_'. g:PROJECT .'_'. strcharpart(sha256(strftime('%c')),0,7) .'_'<CR>a=_
