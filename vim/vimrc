@@ -482,7 +482,7 @@ augroup aug_viniciusban_journal
     autocmd FileType markdown nmap <buffer> <localleader>P :let g:PROJECT=
 
     " start a new day in journal
-    autocmd FileType markdown imap <buffer> <localleader>d <Esc>{}dG3oa# =strftime("%F %a")2o:let g:PROJECT='mydaily'<CR>a\it mydailyo:let g:PROJECT='timesheet'<CR>a\it timesheeto[1[1jzcG:redraw<CR>\P
+    autocmd FileType markdown imap <buffer> <localleader>d <Esc>{}"_dG3oa# =strftime("%F %a")2o:let g:PROJECT='mydaily'<CR>a\it mydailyo:let g:PROJECT='timesheet'<CR>a\it timesheeto[1[1jzcG:redraw<CR>\P
 
     " create a task item with random task code prefixed with g:PROJECT
     autocmd FileType markdown imap <buffer> <localleader>it - [ ] <Esc>:let _='_'. g:PROJECT .'_'. strcharpart(sha256(strftime('%c')),0,7) .'_'<CR>a=_
@@ -496,7 +496,7 @@ augroup aug_viniciusban_journal
     autocmd FileType markdown nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
 
     " start executing a task from the task item definition
-    autocmd FileType markdown nmap <buffer> <localleader>te \*yyGo{}dGo<Esc>"0p0df]\202Ea =strftime("%F")o\tm
+    autocmd FileType markdown nmap <buffer> <localleader>te :let _=@0<CR>\*yyGo{}"_dGo<Esc>p0"_df]\202Ea =strftime("%F")o\tm:let @0=_<CR>a
 augroup END
 
 augroup aug_quickscope_colors
