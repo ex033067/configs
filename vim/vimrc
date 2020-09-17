@@ -502,7 +502,8 @@ augroup aug_viniciusban_journal
     autocmd FileType markdown nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
 
     " start executing a task from the task item definition
-    autocmd FileType markdown nmap <buffer> <localleader>te :let _=@0<CR>\*yyGo{}"_dGo<Esc>p0"_df]\202Ea =strftime("%F")o\tm:let @0=_<CR>a
+    autocmd FileType markdown nmap <buffer> <localleader>te :let _saved_yank_register=@0<CR>\*yyG2o{}j"_dGo<Esc>"0p0"_df]\2:call search('^# \zs\d\d\d\d-\d\d-\d\d ', 'sb')<CR>y$`'02Ea "0pa -o\tm:let @0=_saved_yank_register<CR>
+
 augroup END
 
 augroup aug_quickscope_colors
