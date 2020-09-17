@@ -40,8 +40,14 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', {'dir': '~/.vim/bundle/fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
-" Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 call plug#end()
+
+" tagbar
+let g:tagbar_ctags_bin = 'ctags'
+let g:tagbar_autofocus = 1
+let g:tagbar_position = 'leftabove vertical'
+let g:tagbar_case_insensitive = 1
 
 " quick-scope
 let g:qs_enable=0  |" start plugin with highlight disabled
@@ -557,6 +563,7 @@ map <leader>9 :execute 'colorscheme ' . g:next_colorscheme <CR>
 map <leader>1 :NERDTreeToggle<CR>
 map <leader>2 :FZF<CR>
 map <leader>3 :Buffers<CR>
+map <leader>4 :TagbarToggle<CR>
 
 nmap <leader>< <plug>(QuickScopeToggle)
 xmap <leader>< <plug>(QuickScopeToggle)
