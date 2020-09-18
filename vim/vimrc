@@ -502,7 +502,7 @@ augroup aug_viniciusban_journal
     autocmd FileType markdown nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
 
     " start executing a task from the task item definition
-    autocmd FileType markdown nmap <buffer> <localleader>te :let _saved_yank_register=@0<CR>\*yy]z2o{}j"_d]z<Esc>"0p0"_df]\2:call search('^# \zs\d\d\d\d-\d\d-\d\d ', 'sb')<CR>y$`'02Ea "0pa -2o:let @0=_saved_yank_register<CR>
+    autocmd FileType markdown nmap <buffer> <localleader>te :let _saved_yank_register=@0<CR>\*"0yy]z2o{}j"_d]z"0p0"_df]\2:call search('^# \zs\d\d\d\d-\d\d-\d\d ', 'sb')<CR>"0y$`'0A (0):let @0=_saved_yank_register<CR>
 
 augroup END
 
