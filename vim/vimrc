@@ -668,7 +668,7 @@ map <leader>oi :setlocal wrap wrapscan nohlsearch cursorline nocursorcolumn numb
 map <leader>od :windo setlocal wrap wrapscan nohlsearch nocursorline nocursorcolumn nonumber relativenumber<CR>p
 map <leader>oh :set hlsearch!<CR>:set hlsearch?<CR>
 map <leader>ol :setlocal cursorline!<CR>
-map <leader>o+ :setlocal cursorline! cursorcolumn!<CR>
+map <leader>o+ :setlocal cursorcolumn!<CR>
 map <leader>on :setlocal number!<CR>
 map <leader>op :set paste!<CR>:set paste?<CR>
 map <leader>or :setlocal relativenumber!<CR>
