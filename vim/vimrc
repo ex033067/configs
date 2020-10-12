@@ -337,9 +337,9 @@ function! FtPython()
     elseif filereadable('Makefile')
         let b:_makeprg = 'TARGET=%\ make\ --no-print-directory\ --silent'
     elseif executable('flake8')
-        let b:_makeprg = 'flake8\ %'
+        let b:_makeprg = 'flake8'
     elseif executable('pylint')
-        let b:_makeprg = 'pylint\ %'
+        let b:_makeprg = 'pylint'
     endif
     execute 'setlocal makeprg='.b:_makeprg
     unlet b:_makeprg
