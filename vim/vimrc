@@ -386,8 +386,8 @@ function! FtPython()
     " All mappings are prefixed with \t.
     if !exists('g:test_command')
         let g:test_command=''
-        if $DEV_TEST_COMMAND != ''
-            let g:test_command = $DEV_TEST_COMMAND
+        if $VIM_TEST_COMMAND != ''
+            let g:test_command = $VIM_TEST_COMMAND
         else
             if executable('pytest')
                 " makes pytest the default test runner if it is present
