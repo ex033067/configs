@@ -168,6 +168,9 @@ function! BanPython_GetTestSeparators(command)
     elseif a:command =~ '--pyargs'
         let path_separator = '.'
         let expand_string = '%:.:r'
+    elseif a:command =~ 'manage.py test'
+        let path_separator = '.'
+        let expand_string = '%:.:r'
     else
         let path_separator = '/'
         let expand_string = '%:.'
