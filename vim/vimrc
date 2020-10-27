@@ -399,7 +399,8 @@ function! FtPython()
         let g:test_target = ''
     endif
 
-    " \tt and \TT run tests.
+    " \tt run tests in current vim session.
+    " \TT run tests in tmux next pane.
     nmap <localleader>tt :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>
     nmap <silent> <localleader>TT :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .g:test_target. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>
     nmap t<CR> <localleader>tt
