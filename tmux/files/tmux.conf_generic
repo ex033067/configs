@@ -32,3 +32,7 @@ set-option -g window-status-current-style "fg=#FFFFFF"
 # Navigate to pane above/below
 bind k select-pane -U
 bind j select-pane -D
+
+# Pane numbers shown in display-panes
+set-option -g display-panes-colour "brightred"
+set-option -g display-panes-active-colour "brightwhite"
