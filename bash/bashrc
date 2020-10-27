@@ -38,6 +38,10 @@ __start_wsl_services () {
 
 
 __start_ssh_agent () {
+    if [[ -n "$TMUX" ]]; then
+        return
+    fi
+
     if [[ -n "$SSH_AGENT_PID" ]]; then
         current_agent=$(pgrep -f ssh-agent)
         if [[ "$current_agent" = "$SSH_AGENT_PID" ]]; then
