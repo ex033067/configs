@@ -573,9 +573,6 @@ map <leader>4 :TagbarToggle<CR>
 nmap <leader>< <plug>(QuickScopeToggle)
 xmap <leader>< <plug>(QuickScopeToggle)
 
-" visual elements
-map <leader><leader> :noh<CR>
-
 " editing
 nmap <leader>d :call DuplicateLine("normal")<CR>
 vmap <leader>d :<C-U>call DuplicateLine("visual")<CR>
