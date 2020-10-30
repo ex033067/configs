@@ -659,8 +659,8 @@ endif
 " git
 map g1 :Git<CR>
 map gA :Gwrite<CR>:echo 'File staged'<CR>|" git add
-map gCC :Git<CR>cvc|" git commit -v
-map gCA :Git<CR>cva|" git commit -v --amend
+map gCC :Git commit -v <CR>
+map gCA :Git commit -v --amend <CR>
 map g= :Git diff % <CR><C-W>_
 map gl :Git --paginate l -50<CR><C-W>_
 
