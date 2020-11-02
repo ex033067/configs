@@ -490,6 +490,7 @@ augroup aug_viniciusban_journal
     au!
     autocmd FileType markdown if ! exists("g:PROJECT") | let g:PROJECT='eu' | endif
     autocmd FileType markdown nmap <buffer> <localleader>P :let g:PROJECT=
+    autocmd FileType markdown nmap <buffer> <localleader>PP m`:execute ':?^# ?,$s/<project>/' .g:PROJECT. '/g'<CR>``
 
     " start a new day in journal
     autocmd FileType markdown imap <buffer> <localleader>d <Esc>{}"_dG3oa# =strftime("%F %a")2o:let g:PROJECT='timesheet'<CR>a\it <project> timesheet[1]-\te[1]-o:let g:PROJECT='mydaily'<CR>a\it [1[1jzcG:redraw<CR>\P
