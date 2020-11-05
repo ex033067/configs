@@ -285,6 +285,12 @@ function! BanPython_TransformSelectedTextIntoFilename()
     return filename
 endfunction
 
+function! BanChangeColorscheme()
+    let colors = ["amberonblack", "brownonblack", "greenonblack", "redonblack", "whiteonblack"]
+    let next_color = get(colors, index(colors, g:colors_name) + 1, colors[0])
+    execute "colorscheme " . next_color
+endfunction
+
 
 " ==================================================
 " Autocommands
@@ -564,7 +570,7 @@ set modeline
 map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
     \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
     \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
-map <leader>9 :execute 'colorscheme ' . g:next_colorscheme <CR>
+map <leader>9 :call BanChangeColorscheme()<CR>
 
 map <leader>1 :NERDTreeToggle<CR>
 map <leader>2 :FZF<CR>
