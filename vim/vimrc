@@ -515,6 +515,9 @@ augroup aug_viniciusban_journal
     " start executing a task from the task item definition
     autocmd FileType markdown nmap <buffer> <localleader>te :let _saved_yank_register=@0<CR>\*"0yy]z4o{}j"_d]z"0p0"_df]\2:call search('^# \zs\d\d\d\d-\d\d-\d\d ', 'sb')<CR>"0y$`'0A (0):let @0=_saved_yank_register<CR>A
 
+    " type the current task code
+    autocmd FileType markdown imap <buffer> <localleader>tc :let _r0=@0<CR>[[wyiw`^pa:let @0=_r0<CR>a
+
 augroup END
 
 augroup aug_quickscope_colors
