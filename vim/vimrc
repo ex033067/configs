@@ -19,7 +19,7 @@ endif
 call plug#begin('~/.vim/bundle')
 Plug 'unblevable/quick-scope'
 Plug 'viniciusban/vim-polyglot'  | " up to date syntax files
-Plug 'viniciusban/vim-distractionfree-colorschemes'
+Plug 'viniciusban/vim-simple-onblack-colorschemes'
 Plug 'luochen1990/rainbow' | " colorize parentheses
 Plug 'ap/vim-css-color'  | " show the color in CSS
 Plug 'tpope/vim-commentary'  | " gcc, gc<motion>, {Visual}gc
@@ -286,7 +286,7 @@ function! BanPython_TransformSelectedTextIntoFilename()
 endfunction
 
 function! BanChangeColorscheme()
-    let colors = ["amberonblack", "brownonblack", "greenonblack", "redonblack", "whiteonblack"]
+    let colors = ["amber_simple_onblack", "brown_simple_onblack", "green_simple_onblack", "red_simple_onblack", "white_simple_onblack"]
     let next_color = get(colors, index(colors, g:colors_name) + 1, colors[0])
     execute "colorscheme " . next_color
 endfunction
@@ -542,7 +542,7 @@ set ttymouse=xterm2  | " enable resizing windows with the mouse
 
 " syntax and colors
 syntax reset
-silent! colorscheme greenonblack
+silent! colorscheme green_simple_onblack
 if exists('+termguicolors')
   " truecolor under tmux
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
