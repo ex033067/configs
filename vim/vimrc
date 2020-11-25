@@ -542,7 +542,10 @@ set ttymouse=xterm2  | " enable resizing windows with the mouse
 
 " syntax and colors
 syntax reset
-silent! colorscheme green_simple_onblack
+if filereadable(expandcmd('~/.vim_colorscheme'))
+    execute 'source ~/.vim_colorscheme'
+endif
+
 if exists('+termguicolors')
   " truecolor under tmux
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
