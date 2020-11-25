@@ -1,7 +1,8 @@
 # source: https://github.com/geekjuice/flat-ui-mintty/
 # MIT License
 
-ForegroundColour=   28,  205, 170
+# ForegroundColour=   28,  205, 170
+ForegroundColour=   22,  160, 133
 BackgroundColour=   24,   24,  24
 CursorColour=       211,  84,   0
 BoldBlack=          52,   73,  94
