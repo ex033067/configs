@@ -554,21 +554,25 @@ augroup END
     function! BanJournal_BuildTaskCode(project)
         " Assemble different pieces to build a task code.
         let template = '_{project}_{today}_{random}_'
+        let random = BanJournal_CreateRandomCodeWithLength(2)
 
         let task_code = template
         let task_code = substitute(task_code, '{project}', a:project, '')
         let task_code = substitute(task_code, '{today}', strftime("%y%m%d"), '')
-        let task_code = substitute(task_code, '{random}', BanJournal_CreateRandomCode(), '')
+        let task_code = substitute(task_code, '{random}', random, '')
         return task_code
     endfunction
 
-    function! BanJournal_CreateRandomCode()
-        " Create task code random code with 2 chars.
-        let chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
+    function! BanJournal_CreateRandomCodeWithLength(length)
+        " Create a random code with `length` chars.
+        let chars = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         let len_chars = len(chars)
-        let index_1 = rand() % len_chars
-        let index_2 = rand() % len_chars
-        return chars[index_1] . chars[index_2]
+        let result = []
+        for _ in range(a:length)
+            let i = rand() % len_chars
+            call add(result, chars[i])
+        endfor
+        return join(result, '')
     endfunction
 
     function! BanJournal_AddTimestampNote(description = '')
