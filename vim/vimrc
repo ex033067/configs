@@ -540,8 +540,13 @@ augroup END
         " Format "_{project}_{date}_{random_code}_
         " Actually, it transforms current line in task entry.
 
+        let template = '- [ ] {task_code} {previous_content} xxx'
         let task_code = BanJournal_GenerateTaskCode(a:project)
-        let new_line = '- [ ] '. task_code .' '. trim(getline('.'))
+        let new_line = template
+
+        let new_line = substitute(new_line, '{task_code}', task_code, '')
+        let new_line = substitute(new_line, '{previous_content}', trim(getline('.')), '')
+
         call setline('.', new_line)
         call cursor('.', col('$'))
     endfunction
