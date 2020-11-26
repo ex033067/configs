@@ -657,6 +657,7 @@ augroup END
         let line_found = search('^## '. task_code, 'W')
         call cursor(line_found + 2, 1)
         call BanJournal_AddTimestampNote()
+        call append(line_found + 2, ['', ''])
     endfunction
 
     function! BanJournal_EndTask()
