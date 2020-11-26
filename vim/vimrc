@@ -494,6 +494,24 @@ augroup END
 
 augroup aug_viniciusban_journal
     au!
+
+    " New journal file structure behaviour
+    " ------------------------------------
+
+    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ct <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
+    autocmd BufReadPost *journal.md nmap <buffer> <localleader>st :call BanJournal_StartTask()<CR>
+    autocmd BufReadPost *journal.md nmap <buffer> <localleader>et :call BanJournal_EndTask()<CR>
+    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_AddTimeMarker()<CR>
+
+    " TODO Start a new daily overview:
+    "   - add a new "_daily_YYYYMMDD_www_ daily YYYY-MM-DD Www" task
+
+    " TODO Start a new timesheet:
+    "   - add a new "_time_YYYYMMDD_www_ timesheet YYYY-MM-DD Www" task
+
+    " Legacy journal file behaviour
+    " -----------------------------
+
     autocmd BufReadPost *journal.md if ! exists("g:PROJECT") | let g:PROJECT='eu' | endif
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>P :let g:PROJECT=
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>PP m`:execute ':?^# ?,$s/<project>/' .g:PROJECT. '/g'<CR>``
@@ -503,28 +521,25 @@ augroup aug_viniciusban_journal
 
     " create a task item with random task code prefixed with g:PROJECT
     autocmd BufReadPost *journal.md imap <buffer> <localleader>it - [ ] <Esc>:let _='_'. g:PROJECT .'_'. strcharpart(sha256(strftime('%c')),0,7) .'_'<CR>a=_
-    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>at <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
 
     " jump to other definitions of the same task item using the location list
     autocmd BufReadPost *journal.md nmap <buffer> gd :let _=expand('<cword>')<CR>:execute 'lvimgrep' '"- \[.\] ' ._. '" %'<CR>
 
     " create a time-marked note and navigate them
-    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>tm <C-o>:call BanJournal_AddTimeMarker()<CR>
     autocmd BufReadPost *journal.md nmap <silent> <buffer> ]t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR>
     autocmd BufReadPost *journal.md nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
 
     " start executing a task from the task item definition
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>te :let _saved_yank_register=@0<CR>\*"0yy]z4o{}j"_d]z"0p0"_df]\2:call search('^# \zs\d\d\d\d-\d\d-\d\d ', 'sb')<CR>"0y$`'0A (0):let @0=_saved_yank_register<CR>A
-    autocmd BufReadPost *journal.md nmap <buffer> <localleader>ts :call BanJournal_StartTask()<CR>
-
-    " end the execution of a task from the task item definition
-    autocmd BufReadPost *journal.md nmap <buffer> <localleader>tE :call BanJournal_EndTask()<CR>
-
 
 augroup END
 
     function! BanJournal_CreateTask(project)
-        " Transform current line in task entry
+        " Create a task in BACKLOG.
+        "
+        " Format "_{project}_{date}_{random_code}_
+        " Actually, it transforms current line in task entry.
+
         let task_code = BanJournal_GenerateTaskCode(a:project)
         let new_line = '- [ ] '. task_code .' '. trim(getline('.'))
         call setline('.', new_line)
@@ -551,6 +566,8 @@ augroup END
     endfunction
 
     function! BanJournal_AddTimeMarker(description = '')
+        " Add a timestamp note.
+
         let marker = '{timestamp} {task_code}'
         let timestamp = strftime("%F %a %R")
         let task_code = BanJournal_GetTaskCodeForCurrentLine()
@@ -577,6 +594,10 @@ augroup END
     endfunction
 
     function! BanJournal_StartTask()
+        " Start the selected task.
+        "
+        " Create the task section in DOING. Keep it in BACKLOG.
+
         call BanJournal_AddStartDateToTaskTitle(line('.'))
         call BanJournal_MarkTaskAsDoing(line('.'))
         call BanJournal_CopyTaskToDoing(line('.'))
@@ -617,6 +638,10 @@ augroup END
     endfunction
 
     function! BanJournal_EndTask()
+        " End the selected task.
+        "
+        " Remove from BACKLOG. Move from DOING to DONE.
+
         let initial_line_no = line('.')
         let pattern = '^- \[.\] \(_\w\+_\)\W'
         let matches = matchlist(getline('.'), pattern)
