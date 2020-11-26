@@ -643,11 +643,11 @@ augroup END
     endfunction
 
     function! BanJournal_CopyTaskToDoing(line_no)
-        let task_line = getline(a:line_no)
-        let doing_line_no = search('^# DOING', 'nW')
-        let new_line = substitute(task_line, '^- \[.\]', '##', '')
-        let new_lines = ['', new_line, '', '']
-        call append(doing_line_no, new_lines)
+        let task_item = getline(a:line_no)
+        let task_section_heading = substitute(task_item, '^- \[.\]', '##', '')
+
+        let doing_section_line_no = search('^# DOING', 'n')
+        call append(doing_section_line_no, ['', task_section_heading, ''])
     endfunction
 
     function! BanJournal_AddTimestampNoteWhenStartingTask(line_no)
