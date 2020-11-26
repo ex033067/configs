@@ -509,7 +509,7 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal.md nmap <buffer> gd :let _=expand('<cword>')<CR>:execute 'lvimgrep' '"- \[.\] ' ._. '" %'<CR>
 
     " create a time-marked note and navigate them
-    autocmd BufReadPost *journal.md imap <buffer> <localleader>tm =strftime("%F %a %R")
+    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>tm <C-o>:call BanJournal_AddTimeMarker()<CR>
     autocmd BufReadPost *journal.md nmap <silent> <buffer> ]t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR>
     autocmd BufReadPost *journal.md nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
 
@@ -544,6 +544,28 @@ augroup END
         let index_1 = rand() % len_chars
         let index_2 = rand() % len_chars
         return chars[index_1] . chars[index_2]
+    endfunction
+
+    function! BanJournal_AddTimeMarker()
+        let marker = '{timestamp} {task_code}'
+        let timestamp = strftime("%F %a %R")
+        let task_code = BanJournal_GetTaskCodeForCurrentLine()
+        let new_line = marker
+        let new_line = substitute(new_line, '{timestamp}', timestamp, '')
+        let new_line = substitute(new_line, '{task_code}', task_code, '')
+        call setline('.', new_line)
+        call cursor('.', col('$'))
+    endfunction
+
+    function! BanJournal_GetTaskCodeForCurrentLine()
+        " Task codes are in level 2 heading
+        let pattern = '^## \(_\w\+_\)\W'
+        let line_found = search(pattern, 'bnW')
+        let matches = matchlist(getline(line_found), pattern)
+        if !empty(matches)
+            return matches[1]
+        endif
+        return ''
     endfunction
 
 augroup aug_quickscope_colors
