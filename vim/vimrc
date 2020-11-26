@@ -537,7 +537,7 @@ augroup END
     function! BanJournal_CreateTask(project)
         " Create a task in BACKLOG.
         "
-        " Format "_{project}_{date}_{random_code}_
+        " Format "_{project}_{date}_{suffix}_
         " Actually, it transforms current line in task entry.
 
         let template = '- [ ] {task_code} {previous_content} xxx'
@@ -553,13 +553,13 @@ augroup END
 
     function! BanJournal_BuildTaskCode(project)
         " Assemble different pieces to build a task code.
-        let template = '_{project}_{today}_{random}_'
-        let random = BanJournal_CreateRandomCodeWithLength(2)
+        let template = '_{project}_{today}_{suffix}_'
+        let suffix = BanJournal_CreateRandomCodeWithLength(2)
 
         let task_code = template
         let task_code = substitute(task_code, '{project}', a:project, '')
         let task_code = substitute(task_code, '{today}', strftime("%y%m%d"), '')
-        let task_code = substitute(task_code, '{random}', random, '')
+        let task_code = substitute(task_code, '{suffix}', suffix, '')
         return task_code
     endfunction
 
