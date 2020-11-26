@@ -503,6 +503,7 @@ augroup aug_viniciusban_journal
 
     " create a task item with random task code prefixed with g:PROJECT
     autocmd BufReadPost *journal.md imap <buffer> <localleader>it - [ ] <Esc>:let _='_'. g:PROJECT .'_'. strcharpart(sha256(strftime('%c')),0,7) .'_'<CR>a=_
+    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>at <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
 
     " jump to other definitions of the same task item using the location list
     autocmd BufReadPost *journal.md nmap <buffer> gd :let _=expand('<cword>')<CR>:execute 'lvimgrep' '"- \[.\] ' ._. '" %'<CR>
@@ -515,7 +516,35 @@ augroup aug_viniciusban_journal
     " start executing a task from the task item definition
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>te :let _saved_yank_register=@0<CR>\*"0yy]z4o{}j"_d]z"0p0"_df]\2:call search('^# \zs\d\d\d\d-\d\d-\d\d ', 'sb')<CR>"0y$`'0A (0):let @0=_saved_yank_register<CR>A
 
+
 augroup END
+
+    function! BanJournal_CreateTask(project)
+        " Transform current line in task entry
+        let task_code = BanJournal_GenerateTaskCode(a:project)
+        let new_line = '- [ ] '. task_code .' '. trim(getline('.'))
+        call setline('.', new_line)
+        call cursor('.', col('$'))
+    endfunction
+
+    function! BanJournal_GenerateTaskCode(project)
+        let task_code = '_{project}_{date}_{code}_'
+        let random = BanJournal_CreateRandomCode()
+        let date = strftime("%y%m%d")
+        let task_code = substitute(task_code, '{project}', a:project, '')
+        let task_code = substitute(task_code, '{date}', date, '')
+        let task_code = substitute(task_code, '{code}', random, '')
+        return task_code
+    endfunction
+
+    function! BanJournal_CreateRandomCode()
+        " Create task code random code with 2 chars.
+        let chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
+        let len_chars = len(chars)
+        let index_1 = rand() % len_chars
+        let index_2 = rand() % len_chars
+        return chars[index_1] . chars[index_2]
+    endfunction
 
 augroup aug_quickscope_colors
     autocmd!
