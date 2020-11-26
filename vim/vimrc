@@ -679,11 +679,12 @@ augroup END
     endfunction
 
     function! BanJournal_MoveTaskToDone(task_code)
-        let start_line_no = search(a:task_code, 'W')
-        let end_line_no = search('^##\? ', 'W')
-        let end_line_no = line('.') -1
-        let done_line_no = search('^# DONE', 'nW') + 1
-        execute start_line_no .','. end_line_no .'move '. done_line_no
+        call search('^# DOING', '')
+        let start_line_no = search('^## '. a:task_code, 'W')
+        normal zv
+        let end_line_no = search('^##\? ', 'W') -1
+        let done_section_line_no = search('^# DONE', 'n') + 1
+        execute start_line_no .','. end_line_no .'move '. done_section_line_no
     endfunction
 
     function! BanJournal_AddEndDateToTaskTitle(task_code)
