@@ -517,20 +517,11 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_CreateTask(project)
-        " Create a task in BACKLOG.
-        "
-        " Format "_{project}_{date}_{suffix}_
-        " Actually, it transforms current line in task entry.
+        " Create a task in current line
 
-        let template = '- [ ] {task_code} {previous_content}'
-        let task_code = BanJournal_BuildTaskCode(a:project)
-        let new_line = template
-
-        let new_line = substitute(new_line, '{task_code}', task_code, '')
-        let new_line = substitute(new_line, '{previous_content}', trim(getline('.')), '')
-
-        call setline('.', new_line)
-        call cursor('.', col('$'))
+        let lnum = line('.')
+        call BanJournal_DoCreateTask(lnum, a:project, trim(getline(lnum)))
+        call cursor(lnum, col('$'))
     endfunction
 
     function! BanJournal_StartTask()
@@ -562,6 +553,21 @@ augroup aug_viniciusban_journal
 
         normal zX
         execute 'normal '. initial_line_no .'gg'
+    endfunction
+
+    function! BanJournal_DoCreateTask(lnum, project, description)
+        " Create a task in line `lnum`.
+        "
+        " Format: _{project}_{date}_{suffix}_
+
+        let template = '- [ ] {task_code} {description}'
+        let task_code = BanJournal_BuildTaskCode(a:project)
+        let new_line = template
+
+        let new_line = substitute(new_line, '{task_code}', task_code, '')
+        let new_line = substitute(new_line, '{description}', a:description, '')
+
+        call setline(a:lnum, new_line)
     endfunction
 
     function! BanJournal_AddTimestampNote(description = '')
