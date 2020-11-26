@@ -540,7 +540,7 @@ augroup END
         " Format "_{project}_{date}_{suffix}_
         " Actually, it transforms current line in task entry.
 
-        let template = '- [ ] {task_code} {previous_content} xxx'
+        let template = '- [ ] {task_code} {previous_content}'
         let task_code = BanJournal_BuildTaskCode(a:project)
         let new_line = template
 
