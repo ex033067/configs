@@ -623,10 +623,16 @@ augroup END
 
     function! BanJournal_AddStartDateToTaskTitle(line_no)
         " Add note in task about when started doing: (#start:YYYY-MM-DD)
-        let note = '(#start:{date})'
-        let date = strftime('%Y-%m-%d')
-        let note = substitute(note, '{date}', date, '')
-        let new_line = getline(a:line_no) .' '. note
+        let line_template = '{previous_contents} {note}'
+        let note_template = '(#start:{today})'
+
+        let note = note_template
+        let note = substitute(note, '{today}', strftime('%Y-%m-%d'), '')
+
+        let new_line = line_template
+        let new_line = substitute(new_line, '{previous_contents}', getline(a:line_no), '')
+        let new_line = substitute(new_line, '{note}', note, '')
+
         call setline(a:line_no, new_line)
     endfunction
 
@@ -682,13 +688,14 @@ augroup END
 
     function! BanJournal_AddEndDateToTaskTitle(task_code)
         " Add note in task about when finished it doing: #end:YYYY-MM-DD
+        let template = ' #end:{today}'
+        let note = template
+        let note = substitute(note, '{today}', strftime('%Y-%m-%d'), '')
+
         normal gg
         call search('^# DONE')
         call search('^## '. a:task_code, 'W')
-        let note = '#end:{date}'
-        let note = substitute(note, '{date}', strftime('%Y-%m-%d'), '')
-
-        let new_line = substitute(getline('.'), ')$', ' '. note .')', '')
+        let new_line = substitute(getline('.'), '\()\)$', note.'\1', '')
         call setline('.', new_line)
     endfunction
 
