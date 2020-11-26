@@ -578,16 +578,22 @@ augroup END
     function! BanJournal_AddTimestampNote(description = '')
         " Add a timestamp note.
 
-        let marker = '{timestamp} {task_code}'
-        let timestamp = strftime("%F %a %R")
+        let template = '{today} {weekday} {now} {task_code}{description}'
+        let new_line = template
+
         let task_code = BanJournal_GetTaskCodeForCurrentLine()
         if empty(a:description)
-            let new_line = marker
+            let description = ''
         else
-            let new_line = marker .' '. a:description
+            let description = ' '. a:description
         endif
-        let new_line = substitute(new_line, '{timestamp}', timestamp, '')
+
+        let new_line = substitute(new_line, '{today}', strftime("%Y-%m-%d"), '')
+        let new_line = substitute(new_line, '{weekday}', strftime("%a"), '')
+        let new_line = substitute(new_line, '{now}', strftime("%H:%M"), '')
         let new_line = substitute(new_line, '{task_code}', task_code, '')
+        let new_line = substitute(new_line, '{description}', description, '')
+
         call setline('.', new_line)
         call cursor('.', col('$'))
     endfunction
