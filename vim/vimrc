@@ -515,6 +515,7 @@ augroup aug_viniciusban_journal
 
     " start executing a task from the task item definition
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>te :let _saved_yank_register=@0<CR>\*"0yy]z4o{}j"_d]z"0p0"_df]\2:call search('^# \zs\d\d\d\d-\d\d-\d\d ', 'sb')<CR>"0y$`'0A (0):let @0=_saved_yank_register<CR>A
+    autocmd BufReadPost *journal.md nmap <buffer> <localleader>ts :call BanJournal_StartTask()<CR>
 
 
 augroup END
@@ -567,6 +568,46 @@ augroup END
         endif
         return ''
     endfunction
+
+    function! BanJournal_StartTask()
+        call BanJournal_AddStartDateToTaskTitle(line('.'))
+        call BanJournal_MarkTaskAsDoing(line('.'))
+        call BanJournal_CopyTaskToDoing(line('.'))
+        call BanJournal_AddTimeMarkerWhenStartingTask(line('.'))
+    endfunction
+
+    function! BanJournal_AddStartDateToTaskTitle(line_no)
+        " Add note in task about when started doing: (#start:YYYY-MM-DD)
+        let note = '(#start:{date})'
+        let date = strftime('%Y-%m-%d')
+        let note = substitute(note, '{date}', date, '')
+        let new_line = getline(a:line_no) .' '. note
+        call setline(a:line_no, new_line)
+    endfunction
+
+    function! BanJournal_MarkTaskAsDoing(line_no)
+        let line = getline(a:line_no)
+        let new_line= substitute(line, '\[.\] ', '\[*\] ', '')
+        call setline(a:line_no, new_line)
+    endfunction
+
+    function! BanJournal_CopyTaskToDoing(line_no)
+        let task_line = getline(a:line_no)
+        let doing_line_no = search('^# DOING', 'nW')
+        let new_line = substitute(task_line, '^- \[.\]', '##', '')
+        let new_lines = ['', new_line, '', '']
+        call append(doing_line_no, new_lines)
+    endfunction
+
+    function! BanJournal_AddTimeMarkerWhenStartingTask(line_no)
+        let pattern = '^- \[.\] \(_\w\+_\)\W'
+        let matches = matchlist(getline(a:line_no), pattern)
+        let task_code = matches[1]
+        let line_found = search('^## '. task_code, 'W')
+        call cursor(line_found + 2, 1)
+        call BanJournal_AddTimeMarker()
+    endfunction
+
 
 augroup aug_quickscope_colors
     autocmd!
