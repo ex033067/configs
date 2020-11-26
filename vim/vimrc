@@ -495,8 +495,8 @@ augroup END
 augroup aug_viniciusban_journal
     au!
 
-    " New journal file structure behaviour
-    " ------------------------------------
+    " Journal file v2 behaviour and functions
+    " ---------------------------------------
 
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ct <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>st :call BanJournal_StartTask()<CR>
@@ -507,32 +507,14 @@ augroup aug_viniciusban_journal
     "   - add a new "_daily_YYYYMMDD_www_ daily YYYY-MM-DD Www" task
 
     " TODO Start a new timesheet:
-    "   - add a new "_time_YYYYMMDD_www_ timesheet YYYY-MM-DD Www" task
+    "   - add a new "_timesheet_YYYYMMDD_www_ timesheet YYYY-MM-DD Www" task
 
-    " Legacy journal file behaviour
-    " -----------------------------
+    " New journal file support functions
+    " ----------------------------------
 
-    autocmd BufReadPost *journal.md if ! exists("g:PROJECT") | let g:PROJECT='eu' | endif
-    autocmd BufReadPost *journal.md nmap <buffer> <localleader>P :let g:PROJECT=
-    autocmd BufReadPost *journal.md nmap <buffer> <localleader>PP m`:execute ':?^# ?,$s/<project>/' .g:PROJECT. '/g'<CR>``
-
-    " start a new day in journal
-    autocmd BufReadPost *journal.md imap <buffer> <localleader>d <Esc>{}"_dG3oa# =strftime("%F %a")2o:let g:PROJECT='timesheet'<CR>a\it <project> timesheet[1]-\te[1]-o:let g:PROJECT='mydaily'<CR>a\it [1[1jzcG:redraw<CR>a\tm \P 
-
-    " create a task item with random task code prefixed with g:PROJECT
-    autocmd BufReadPost *journal.md imap <buffer> <localleader>it - [ ] <Esc>:let _='_'. g:PROJECT .'_'. strcharpart(sha256(strftime('%c')),0,7) .'_'<CR>a=_
-
-    " jump to other definitions of the same task item using the location list
-    autocmd BufReadPost *journal.md nmap <buffer> gd :let _=expand('<cword>')<CR>:execute 'lvimgrep' '"- \[.\] ' ._. '" %'<CR>
-
-    " create a time-marked note and navigate them
-    autocmd BufReadPost *journal.md nmap <silent> <buffer> ]t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR>
-    autocmd BufReadPost *journal.md nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
-
-    " start executing a task from the task item definition
-    autocmd BufReadPost *journal.md nmap <buffer> <localleader>te :let _saved_yank_register=@0<CR>\*"0yy]z4o{}j"_d]z"0p0"_df]\2:call search('^# \zs\d\d\d\d-\d\d-\d\d ', 'sb')<CR>"0y$`'0A (0):let @0=_saved_yank_register<CR>A
-
-augroup END
+    function! BanJournal_ShowMappings()
+        return 'Tasks: \ct(create) \st(start) \et(end) \ts(timestamp note)'
+    endfunction
 
     function! BanJournal_CreateTask(project)
         " Create a task in BACKLOG.
@@ -546,6 +528,60 @@ augroup END
 
         let new_line = substitute(new_line, '{task_code}', task_code, '')
         let new_line = substitute(new_line, '{previous_content}', trim(getline('.')), '')
+
+        call setline('.', new_line)
+        call cursor('.', col('$'))
+    endfunction
+
+    function! BanJournal_StartTask()
+        " Start the selected task.
+        "
+        " Create the task section in DOING. Keep it in BACKLOG.
+
+        call BanJournal_AddStartDateToTaskTitle(line('.'))
+        call BanJournal_MarkTaskAsDoing(line('.'))
+        call BanJournal_CopyTaskToDoing(line('.'))
+        call BanJournal_AddTimestampNoteWhenStartingTask(line('.'))
+        normal zv
+    endfunction
+
+    function! BanJournal_EndTask()
+        " End the selected task.
+        "
+        " Remove from BACKLOG. Move from DOING to DONE.
+
+        let initial_line_no = line('.')
+        let pattern = '^- \[.\] \(_\w\+_\)\W'
+        let matches = matchlist(getline('.'), pattern)
+        let task_code = matches[1]
+        delete
+
+        call BanJournal_MoveTaskToDone(task_code)
+        call BanJournal_AddEndDateToTaskTitle(task_code)
+        call BanJournal_AddTimestampNoteWhenFinishingTask(task_code)
+
+        normal zX
+        execute 'normal '. initial_line_no .'gg'
+    endfunction
+
+    function! BanJournal_AddTimestampNote(description = '')
+        " Add a timestamp note.
+
+        let template = '{today} {weekday} {now} {task_code}{description}'
+        let new_line = template
+
+        let task_code = BanJournal_GetTaskCodeForCurrentLine()
+        if empty(a:description)
+            let description = ''
+        else
+            let description = ' '. a:description
+        endif
+
+        let new_line = substitute(new_line, '{today}', strftime("%Y-%m-%d"), '')
+        let new_line = substitute(new_line, '{weekday}', strftime("%a"), '')
+        let new_line = substitute(new_line, '{now}', strftime("%H:%M"), '')
+        let new_line = substitute(new_line, '{task_code}', task_code, '')
+        let new_line = substitute(new_line, '{description}', description, '')
 
         call setline('.', new_line)
         call cursor('.', col('$'))
@@ -575,29 +611,6 @@ augroup END
         return join(result, '')
     endfunction
 
-    function! BanJournal_AddTimestampNote(description = '')
-        " Add a timestamp note.
-
-        let template = '{today} {weekday} {now} {task_code}{description}'
-        let new_line = template
-
-        let task_code = BanJournal_GetTaskCodeForCurrentLine()
-        if empty(a:description)
-            let description = ''
-        else
-            let description = ' '. a:description
-        endif
-
-        let new_line = substitute(new_line, '{today}', strftime("%Y-%m-%d"), '')
-        let new_line = substitute(new_line, '{weekday}', strftime("%a"), '')
-        let new_line = substitute(new_line, '{now}', strftime("%H:%M"), '')
-        let new_line = substitute(new_line, '{task_code}', task_code, '')
-        let new_line = substitute(new_line, '{description}', description, '')
-
-        call setline('.', new_line)
-        call cursor('.', col('$'))
-    endfunction
-
     function! BanJournal_GetTaskCodeForCurrentLine()
         " Task codes are in level 2 heading
         let pattern = '^## \(_\w\+_\)\W'
@@ -607,18 +620,6 @@ augroup END
             return matches[1]
         endif
         return ''
-    endfunction
-
-    function! BanJournal_StartTask()
-        " Start the selected task.
-        "
-        " Create the task section in DOING. Keep it in BACKLOG.
-
-        call BanJournal_AddStartDateToTaskTitle(line('.'))
-        call BanJournal_MarkTaskAsDoing(line('.'))
-        call BanJournal_CopyTaskToDoing(line('.'))
-        call BanJournal_AddTimestampNoteWhenStartingTask(line('.'))
-        normal zv
     endfunction
 
     function! BanJournal_AddStartDateToTaskTitle(line_no)
@@ -660,25 +661,6 @@ augroup END
         call append(line_found + 2, ['', ''])
     endfunction
 
-    function! BanJournal_EndTask()
-        " End the selected task.
-        "
-        " Remove from BACKLOG. Move from DOING to DONE.
-
-        let initial_line_no = line('.')
-        let pattern = '^- \[.\] \(_\w\+_\)\W'
-        let matches = matchlist(getline('.'), pattern)
-        let task_code = matches[1]
-        delete
-
-        call BanJournal_MoveTaskToDone(task_code)
-        call BanJournal_AddEndDateToTaskTitle(task_code)
-        call BanJournal_AddTimestampNoteWhenFinishingTask(task_code)
-
-        normal zX
-        execute 'normal '. initial_line_no .'gg'
-    endfunction
-
     function! BanJournal_MoveTaskToDone(task_code)
         call search('^# DOING', '')
         let start_line_no = search('^## '. a:task_code, 'W')
@@ -711,6 +693,31 @@ augroup END
         normal j
         call BanJournal_AddTimestampNote('#end')
     endfunction
+
+
+    " Legacy journal file behaviour
+    " -----------------------------
+
+    autocmd BufReadPost *journal.md if ! exists("g:PROJECT") | let g:PROJECT='eu' | endif
+    autocmd BufReadPost *journal.md nmap <buffer> <localleader>P :let g:PROJECT=
+    autocmd BufReadPost *journal.md nmap <buffer> <localleader>PP m`:execute ':?^# ?,$s/<project>/' .g:PROJECT. '/g'<CR>``
+
+    " start a new day in journal
+    autocmd BufReadPost *journal.md imap <buffer> <localleader>d <Esc>{}"_dG3oa# =strftime("%F %a")2o:let g:PROJECT='timesheet'<CR>a\it <project> timesheet[1]-\te[1]-o:let g:PROJECT='mydaily'<CR>a\it [1[1jzcG:redraw<CR>a\tm \P 
+
+    " create a task item with random task code prefixed with g:PROJECT
+    autocmd BufReadPost *journal.md imap <buffer> <localleader>it - [ ] <Esc>:let _='_'. g:PROJECT .'_'. strcharpart(sha256(strftime('%c')),0,7) .'_'<CR>a=_
+
+    " jump to other definitions of the same task item using the location list
+    autocmd BufReadPost *journal.md nmap <buffer> gd :let _=expand('<cword>')<CR>:execute 'lvimgrep' '"- \[.\] ' ._. '" %'<CR>
+
+    " create a time-marked note and navigate them
+    autocmd BufReadPost *journal.md nmap <silent> <buffer> ]t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR>
+    autocmd BufReadPost *journal.md nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
+
+    " start executing a task from the task item definition
+    autocmd BufReadPost *journal.md nmap <buffer> <localleader>te :let _saved_yank_register=@0<CR>\*"0yy]z4o{}j"_d]z"0p0"_df]\2:call search('^# \zs\d\d\d\d-\d\d-\d\d ', 'sb')<CR>"0y$`'0A (0):let @0=_saved_yank_register<CR>A
+augroup END
 
 
 augroup aug_quickscope_colors
