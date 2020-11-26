@@ -541,7 +541,7 @@ augroup END
         " Actually, it transforms current line in task entry.
 
         let template = '- [ ] {task_code} {previous_content} xxx'
-        let task_code = BanJournal_GenerateTaskCode(a:project)
+        let task_code = BanJournal_BuildTaskCode(a:project)
         let new_line = template
 
         let new_line = substitute(new_line, '{task_code}', task_code, '')
@@ -551,13 +551,14 @@ augroup END
         call cursor('.', col('$'))
     endfunction
 
-    function! BanJournal_GenerateTaskCode(project)
-        let task_code = '_{project}_{date}_{code}_'
-        let random = BanJournal_CreateRandomCode()
-        let date = strftime("%y%m%d")
+    function! BanJournal_BuildTaskCode(project)
+        " Assemble different pieces to build a task code.
+        let template = '_{project}_{today}_{random}_'
+
+        let task_code = template
         let task_code = substitute(task_code, '{project}', a:project, '')
-        let task_code = substitute(task_code, '{date}', date, '')
-        let task_code = substitute(task_code, '{code}', random, '')
+        let task_code = substitute(task_code, '{today}', strftime("%y%m%d"), '')
+        let task_code = substitute(task_code, '{random}', BanJournal_CreateRandomCode(), '')
         return task_code
     endfunction
 
