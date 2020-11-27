@@ -592,7 +592,7 @@ augroup aug_viniciusban_journal
         let template = '{today} {weekday} {now} {task_code}{description}'
         let new_line = template
 
-        let task_code = BanJournal_GetTaskCodeForCurrentLine()
+        let task_code = BanJournal_GetTaskCodeForLine(a:lnum)
         if empty(a:description)
             let description = ''
         else
@@ -668,17 +668,6 @@ augroup aug_viniciusban_journal
             return ''
         endif
         return matches[1]
-    endfunction
-
-    function! BanJournal_GetTaskCodeForCurrentLine()
-        " Task codes are in level 2 heading
-        let pattern = '^## \(_\w\+_\)\W'
-        let line_found = search(pattern, 'bnW')
-        let matches = matchlist(getline(line_found), pattern)
-        if !empty(matches)
-            return matches[1]
-        endif
-        return ''
     endfunction
 
     function! BanJournal_AddStartDateToTaskTitleAtLine(lnum)
