@@ -697,7 +697,7 @@ augroup aug_viniciusban_journal
         call cursor(initial_lnum, 1)
 
         if task_first_lnum == 0
-            return
+            return ''
         endif
 
         let matches = matchlist(getline(task_first_lnum), pattern)
