@@ -726,17 +726,17 @@ augroup aug_viniciusban_journal
         let template = ' #end:{today}'
 
         let start_of_done_section = search('^# DONE', 'nw')
-        let title_line = search('^## '. a:task_code, 'nw')
+        let task_lines = BanJournal_GetTaskSectionInterval(a:task_code)
 
-        if title_line < start_of_done_section
+        if task_lines[0] < start_of_done_section
             " for some reason, the task is not in DONE
             return
         endif
 
         let note = template
         let note = substitute(note, '{today}', strftime('%Y-%m-%d'), '')
-        let title_with_note = substitute(getline(title_line), '\()\)$', note.'\1', '')
-        call setline(title_line, title_with_note)
+        let title_with_note = substitute(getline(task_lines[0]), '\()\)$', note.'\1', '')
+        call setline(task_lines[0], title_with_note)
     endfunction
 
     function! BanJournal_AddTimestampNoteWhenFinishingTask(task_code)
