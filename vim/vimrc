@@ -501,7 +501,7 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ct <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>st :call BanJournal_StartTask()<CR>
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>et :call BanJournal_EndTask()<CR>
-    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_AddTimestampNote()<CR>
+    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
 
     " TODO Start a new daily overview:
     "   - add a new "_daily_YYYYMMDD_www_ daily YYYY-MM-DD Www" task
@@ -555,6 +555,12 @@ augroup aug_viniciusban_journal
         execute 'normal '. initial_line_no .'gg'
     endfunction
 
+    function! BanJournal_AddTimestampNoteToCurrentLine(description = '')
+        let lnum = line('.')
+        call BanJournal_AddTimestampNoteToLine(lnum, a:description)
+        call cursor(lnum, col('$'))
+    endfunction
+
     function! BanJournal_DoCreateTask(lnum, project, description)
         " Create a task in line `lnum`.
         "
@@ -584,9 +590,7 @@ augroup aug_viniciusban_journal
         normal zv
     endfunction
 
-    function! BanJournal_AddTimestampNote(description = '')
-        " Add a timestamp note.
-
+    function! BanJournal_AddTimestampNoteToLine(lnum, description = '')
         let template = '{today} {weekday} {now} {task_code}{description}'
         let new_line = template
 
@@ -603,8 +607,7 @@ augroup aug_viniciusban_journal
         let new_line = substitute(new_line, '{task_code}', task_code, '')
         let new_line = substitute(new_line, '{description}', description, '')
 
-        call setline('.', new_line)
-        call cursor('.', col('$'))
+        call setline(a:lnum, new_line)
     endfunction
 
     function! BanJournal_BuildTaskCode(project)
@@ -676,9 +679,11 @@ augroup aug_viniciusban_journal
         let matches = matchlist(getline(a:lnum), pattern)
         let task_code = matches[1]
         let line_found = search('^## '. task_code, 'nW')
-        call cursor(line_found + 2, 1)
-        call BanJournal_AddTimestampNote()
-        call append(line_found + 2, ['', ''])
+
+        let timestamp_note_lnum = line_found + 2
+        call cursor(timestamp_note_lnum, 1)
+        call BanJournal_AddTimestampNoteToLine(timestamp_note_lnum)
+        call append(timestamp_note_lnum, ['', ''])
     endfunction
 
     function! BanJournal_MoveTaskToDone(task_code)
@@ -711,7 +716,7 @@ augroup aug_viniciusban_journal
         normal 2{}
         call append(line('.'), ['', '', ''])
         normal j
-        call BanJournal_AddTimestampNote('#end')
+        call BanJournal_AddTimestampNoteToLine(line('.'), '#end')
     endfunction
 
 
