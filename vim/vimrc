@@ -607,10 +607,14 @@ augroup aug_viniciusban_journal
         call setline(a:lnum, new_line)
     endfunction
 
-    function! BanJournal_BuildTaskCode(project)
+    function! BanJournal_BuildTaskCode(project, suffix='')
         " Assemble different pieces to build a task code.
         let template = '_{project}_{today}_{suffix}_'
-        let suffix = BanJournal_CreateRandomCodeWithLength(2)
+        if a:suffix == ''
+            let suffix = BanJournal_CreateRandomCodeWithLength(2)
+        else
+            let suffix = a:suffix
+        endif
 
         let task_code = template
         let task_code = substitute(task_code, '{project}', a:project, '')
