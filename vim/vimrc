@@ -527,21 +527,21 @@ augroup aug_viniciusban_journal
     function! BanJournal_StartCurrentTask()
         " Create the task section in DOING. Keep it in BACKLOG.
 
-        let current_line = line('.')
-        call BanJournal_DoStartTaskAtLine(current_line)
-        let task_code = BanJournal_GetTaskCodeForLine(current_line)
+        let lnum = line('.')
+        call BanJournal_DoStartTaskAtLine(lnum)
+        let task_code = BanJournal_GetTaskCodeForLine(lnum)
         let task_section = BanJournal_GetTaskSectionInterval(task_code)
         call cursor(task_section[1], 1000)
     endfunction
 
     function! BanJournal_EndCurrentTask()
-        let current_line = line('.')
-        let task_code = BanJournal_GetTaskCodeForLine(current_line)
+        let lnum = line('.')
+        let task_code = BanJournal_GetTaskCodeForLine(lnum)
         if task_code == ''
             echom 'Error: Not a task'
             return
         endif
-        call BanJournal_DoEndTask(current_line, task_code)
+        call BanJournal_DoEndTask(lnum, task_code)
         normal zv
     endfunction
 
@@ -580,8 +580,8 @@ augroup aug_viniciusban_journal
     function! BanJournal_DoEndTask(lnum, task_code)
         " Remove from BACKLOG. Move from DOING to DONE.
 
-        let task_item_line = BanJournal_FindTaskItemWithTaskCode(a:task_code)
-        execute task_item_line . 'delete _'
+        let task_item_lnum = BanJournal_FindTaskItemWithTaskCode(a:task_code)
+        execute task_item_lnum . 'delete _'
         call BanJournal_MoveTaskToDone(a:task_code)
         call BanJournal_AddEndDateToTaskTitle(a:task_code)
         call BanJournal_AddTimestampNoteWhenFinishingTask(a:task_code)
@@ -632,14 +632,14 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_FindTaskItemWithTaskCode(task_code)
-        let item_line = search('^- \[.\] '. a:task_code, 'n')
-        return item_line
+        let item_lnum = search('^- \[.\] '. a:task_code, 'n')
+        return item_lnum
     endfunction
 
     function! BanJournal_GetTaskCodeForLine(lnum)
         let task_code = BanJournal_GetTaskCodeFromItemList(a:lnum)
         if task_code == ''
-            let task_code = BanJournal_GetTaskCodeFromInsideTask(a:lnum)
+            let task_code = BanJournal_GetTaskCodeFromInsideTaskSection(a:lnum)
         endif
 
         return task_code
@@ -654,20 +654,20 @@ augroup aug_viniciusban_journal
         return matches[1]
     endfunction
 
-    function! BanJournal_GetTaskCodeFromInsideTask(lnum)
+    function! BanJournal_GetTaskCodeFromInsideTaskSection(lnum)
         " Task codes are in level 2 heading
         let pattern = '^## \(_\w\+_\)\W'
-        let initial_line = line('.')
+        let initial_lnum = line('.')
 
         call cursor(a:lnum, 1)
-        let task_first_line = search(pattern, 'bcnW')
-        call cursor(initial_line, 1)
+        let task_first_lnum = search(pattern, 'bcnW')
+        call cursor(initial_lnum, 1)
 
-        if task_first_line == 0
+        if task_first_lnum == 0
             return
         endif
 
-        let matches = matchlist(getline(task_first_line), pattern)
+        let matches = matchlist(getline(task_first_lnum), pattern)
         if empty(matches)
             return ''
         endif
@@ -690,8 +690,8 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_MarkTaskAtLineAsDoing(lnum)
-        let line = getline(a:lnum)
-        let new_line= substitute(line, '\[.\] ', '\[*\] ', '')
+        let contents = getline(a:lnum)
+        let new_line= substitute(contents, '\[.\] ', '\[*\] ', '')
         call setline(a:lnum, new_line)
     endfunction
 
@@ -705,67 +705,67 @@ augroup aug_viniciusban_journal
 
     function! BanJournal_AddTimestampNoteWhenStartingTaskAtLine(lnum)
         let task_code = BanJournal_GetTaskCodeForLine(a:lnum)
-        let task_lines = BanJournal_GetTaskSectionInterval(task_code)
-        let timestamp_lnum = task_lines[0] + 2
+        let task_lnums = BanJournal_GetTaskSectionInterval(task_code)
+        let timestamp_lnum = task_lnums[0] + 2
         call BanJournal_AddTimestampNoteToLine(timestamp_lnum)
         call append(timestamp_lnum, ['', ''])
     endfunction
 
     function! BanJournal_MoveTaskToDone(task_code)
-        let initial_line = line('.')
-        let start_of_done_section = search('^# DONE', 'nw')
-        let task_lines = BanJournal_GetTaskSectionInterval(a:task_code)
+        let initial_lnum = line('.')
+        let done_section_lnum = search('^# DONE', 'nw')
+        let task_lnums = BanJournal_GetTaskSectionInterval(a:task_code)
 
-        if task_lines[0] > start_of_done_section
+        if task_lnums[0] > done_section_lnum
             " for some reason, the task is already in DONE
             return
         endif
 
-        execute task_lines[0] .','. task_lines[1] .'move '. (start_of_done_section + 1)
-        call cursor(initial_line, 1)
+        execute task_lnums[0] .','. task_lnums[1] .'move '. (done_section_lnum + 1)
+        call cursor(initial_lnum, 1)
     endfunction
 
     function! BanJournal_AddEndDateToTaskTitle(task_code)
         " Add note in task about when finished it doing: #end:YYYY-MM-DD
         let template = ' #end:{today}'
 
-        let start_of_done_section = search('^# DONE', 'nw')
-        let task_lines = BanJournal_GetTaskSectionInterval(a:task_code)
+        let done_section_lnum = search('^# DONE', 'nw')
+        let task_lnums = BanJournal_GetTaskSectionInterval(a:task_code)
 
-        if task_lines[0] < start_of_done_section
+        if task_lnums[0] < done_section_lnum
             " for some reason, the task is not in DONE
             return
         endif
 
         let note = template
         let note = substitute(note, '{today}', strftime('%Y-%m-%d'), '')
-        let title_with_note = substitute(getline(task_lines[0]), '\()\)$', note.'\1', '')
-        call setline(task_lines[0], title_with_note)
+        let title_with_note = substitute(getline(task_lnums[0]), '\()\)$', note.'\1', '')
+        call setline(task_lnums[0], title_with_note)
     endfunction
 
     function! BanJournal_AddTimestampNoteWhenFinishingTask(task_code)
-        let task_lines = BanJournal_GetTaskSectionInterval(a:task_code)
-        call append(task_lines[1], ['', '', '', ''])
-        call BanJournal_AddTimestampNoteToLine(task_lines[1] + 2, '#end')
+        let task_lnums = BanJournal_GetTaskSectionInterval(a:task_code)
+        call append(task_lnums[1], ['', '', '', ''])
+        call BanJournal_AddTimestampNoteToLine(task_lnums[1] + 2, '#end')
     endfunction
 
     function! BanJournal_GetTaskSectionInterval(task_code)
         let initial_lnum = line('.')
 
-        let task_first_line = search('^## '. a:task_code, 'nw')
-        call cursor(task_first_line, 1)
+        let task_first_lnum = search('^## '. a:task_code, 'nw')
+        call cursor(task_first_lnum, 1)
 
-        let start_of_next_section = search('^##\? ', 'nW')
-        if start_of_next_section == 0
+        let next_section_lnum = search('^##\? ', 'nW')
+        if next_section_lnum == 0
             call cursor(line('$'), 1000)
         else
-            call cursor(start_of_next_section, 1)
+            call cursor(next_section_lnum, 1)
         endif
 
-        let task_last_line = search('^.', 'bnW')
+        let task_last_lnum = search('^.', 'bnW')
         call cursor(initial_lnum, 1)
 
-        return [task_first_line, task_last_line]
+        return [task_first_lnum, task_last_lnum]
     endfunction
 
 
