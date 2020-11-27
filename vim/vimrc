@@ -501,7 +501,7 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ct <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
-    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
+    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>tn <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>day <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>tt <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine()<CR><Esc>A
 
@@ -513,7 +513,7 @@ augroup aug_viniciusban_journal
     " ----------------------------------
 
     function! BanJournal_ShowMappings()
-        return 'Tasks: \ct(create) \st(start) \et(end) \ts(timestamp note)'
+        return 'Tasks: \ct(create) \st(start) \et(end) \tn(timestamp note)'
     endfunction
 
     function! BanJournal_CreateTask(project)
