@@ -502,8 +502,12 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
-    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>da <C-o>:call BanJournal_CreateTheDailyTaskInCurrentLine()<CR>
+    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>day <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>tt <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine()<CR><Esc>A
+
+
+
+
 
     " New journal file support functions
     " ----------------------------------
@@ -560,11 +564,11 @@ augroup aug_viniciusban_journal
         call cursor(task_lnums[1] + 2, 1)
     endfunction
 
-    function! BanJournal_CreateTheTimesheetTaskInCurrentLine()
+    function! BanJournal_CreateTheTimesheetTaskInCurrentLine(project)
         let lnum = line('.')
-        let task_description = $JOURNAL_PROJECT . ' timesheet '. strftime('%Y-%m-%d %a')
+        let task_description = a:project . ' timesheet '. strftime('%Y-%m-%d %a')
         let task_suffix = 'timesheet_'. strftime('%a')
-        call BanJournal_DoCreateTask(lnum, $JOURNAL_PROJECT, task_description, task_suffix)
+        call BanJournal_DoCreateTask(lnum, a:project, task_description, task_suffix)
         call BanJournal_MarkTaskAtLineAsDoing(lnum)
         call BanJournal_CopyTaskAtLineToDoing(lnum)
         call BanJournal_AddTimestampNoteWhenStartingTimesheetAtLine(lnum)
@@ -573,6 +577,14 @@ augroup aug_viniciusban_journal
         call append(task_lnums[1], '')
         call cursor(task_lnums[1], 1000)
         normal zx
+    endfunction
+
+    function! BanJournal_StartANewDay(project)
+        let lnum = line('.')
+        call BanJournal_CreateTheDailyTaskInCurrentLine()
+        call append(lnum, '')
+        call cursor(lnum + 1, 1)
+        call BanJournal_CreateTheTimesheetTaskInCurrentLine(a:project)
     endfunction
 
     function! BanJournal_DoCreateTask(lnum, project, description, task_suffix='')
