@@ -503,12 +503,7 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>da <C-o>:call BanJournal_CreateTheDailyTaskInCurrentLine()<CR>
-
-    " TODO Start a new daily overview:
-    "   - add a new "_daily_YYYYMMDD_www_ daily YYYY-MM-DD Www" task
-
-    " TODO Start a new timesheet:
-    "   - add a new "_timesheet_YYYYMMDD_www_ timesheet YYYY-MM-DD Www" task
+    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>tt <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine()<CR><Esc>A
 
     " New journal file support functions
     " ----------------------------------
@@ -563,6 +558,21 @@ augroup aug_viniciusban_journal
         let task_lnums = BanJournal_GetTaskSectionInterval(task_code)
         call append(task_lnums[1], '')
         call cursor(task_lnums[1] + 2, 1)
+    endfunction
+
+    function! BanJournal_CreateTheTimesheetTaskInCurrentLine()
+        let lnum = line('.')
+        let task_description = $JOURNAL_PROJECT . ' timesheet '. strftime('%Y-%m-%d %a')
+        let task_suffix = 'timesheet_'. strftime('%a')
+        call BanJournal_DoCreateTask(lnum, $JOURNAL_PROJECT, task_description, task_suffix)
+        call BanJournal_MarkTaskAtLineAsDoing(lnum)
+        call BanJournal_CopyTaskAtLineToDoing(lnum)
+        call BanJournal_AddTimestampNoteWhenStartingTimesheetAtLine(lnum)
+        let task_code = BanJournal_GetTaskCodeForLine(lnum)
+        let task_lnums = BanJournal_GetTaskSectionInterval(task_code)
+        call append(task_lnums[1], '')
+        call cursor(task_lnums[1], 1000)
+        normal zx
     endfunction
 
     function! BanJournal_DoCreateTask(lnum, project, description, task_suffix='')
@@ -732,6 +742,13 @@ augroup aug_viniciusban_journal
         let timestamp_lnum = task_lnums[0] + 2
         call BanJournal_AddTimestampNoteToLine(timestamp_lnum)
         call append(timestamp_lnum, ['', ''])
+    endfunction
+
+    function! BanJournal_AddTimestampNoteWhenStartingTimesheetAtLine(lnum)
+        let task_code = BanJournal_GetTaskCodeForLine(a:lnum)
+        let task_lnums = BanJournal_GetTaskSectionInterval(task_code)
+        let timestamp_lnum = task_lnums[0] + 2
+        call BanJournal_AddTimestampNoteToLine(timestamp_lnum, '-', 'without_task_code')
     endfunction
 
     function! BanJournal_MoveTaskToDone(task_code)
