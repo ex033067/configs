@@ -509,7 +509,7 @@ augroup aug_viniciusban_journal
     " ----------------------------------
 
     function! BanJournal_ShowMappings()
-        return 'Tasks: \ct(create) \st(start) \et(end) \tn(timestamp note)'
+        return 'Tasks: \ct(create) \st(start) \et(end) \tn(timestamp note) \day \tt(timesheet)'
     endfunction
 
     function! BanJournal_CreateTask(project)
