@@ -715,6 +715,7 @@ augroup aug_viniciusban_journal
         endif
 
         execute task_lines[0] .','. task_lines[1] .'move '. (start_of_done_section + 1)
+        call cursor(initial_line, 1)
     endfunction
 
     function! BanJournal_AddEndDateToTaskTitle(task_code)
