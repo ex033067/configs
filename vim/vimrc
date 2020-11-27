@@ -766,6 +766,25 @@ augroup aug_viniciusban_journal
         call cursor(initial_line, 1)
     endfunction
 
+    function! BanJournal_GetTaskSectionInterval(task_code)
+        let initial_lnum = line('.')
+
+        let task_first_line = search('^## '. a:task_code, 'nw')
+        call cursor(task_first_line, 1)
+
+        let start_of_next_section = search('^##\? ', 'nW')
+        if start_of_next_section == 0
+            call cursor(line('$'), 1000)
+        else
+            call cursor(start_of_next_section, 1)
+        endif
+
+        let task_last_line = search('^.', 'bnW')
+        call cursor(initial_lnum, 1)
+
+        return [task_first_line, task_last_line]
+    endfunction
+
 
     " Legacy journal file behaviour
     " -----------------------------
