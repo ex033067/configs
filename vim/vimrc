@@ -502,6 +502,7 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
+    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>da <C-o>:call BanJournal_CreateTheDailyTaskInCurrentLine()<CR>
 
     " TODO Start a new daily overview:
     "   - add a new "_daily_YYYYMMDD_www_ daily YYYY-MM-DD Www" task
@@ -551,13 +552,26 @@ augroup aug_viniciusban_journal
         call cursor(lnum, col('$'))
     endfunction
 
-    function! BanJournal_DoCreateTask(lnum, project, description)
+    function! BanJournal_CreateTheDailyTaskInCurrentLine()
+        let lnum = line('.')
+        let task_description = 'daily '. strftime('%Y-%m-%d %a')
+        let day_of_week = strftime('%a')
+        call BanJournal_DoCreateTask(lnum, 'daily', task_description, day_of_week)
+        call BanJournal_MarkTaskAtLineAsDoing(lnum)
+        call BanJournal_CopyTaskAtLineToDoing(lnum)
+        let task_code = BanJournal_GetTaskCodeForLine(lnum)
+        let task_lnums = BanJournal_GetTaskSectionInterval(task_code)
+        call append(task_lnums[1], '')
+        call cursor(task_lnums[1] + 2, 1)
+    endfunction
+
+    function! BanJournal_DoCreateTask(lnum, project, description, task_suffix='')
         " Create a task in line `lnum`.
         "
         " Format: _{project}_{date}_{suffix}_
 
         let template = '- [ ] {task_code} {description}'
-        let task_code = BanJournal_BuildTaskCode(a:project)
+        let task_code = BanJournal_BuildTaskCode(a:project, a:task_suffix)
         let new_line = template
 
         let new_line = substitute(new_line, '{task_code}', task_code, '')
