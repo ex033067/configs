@@ -580,7 +580,8 @@ augroup aug_viniciusban_journal
     function! BanJournal_DoEndTask(lnum, task_code)
         " Remove from BACKLOG. Move from DOING to DONE.
 
-        execute a:lnum . 'delete _'
+        let task_item_line = BanJournal_FindTaskItemWithTaskCode(a:task_code)
+        execute task_item_line . 'delete _'
         call BanJournal_MoveTaskToDone(a:task_code)
         call BanJournal_AddEndDateToTaskTitle(a:task_code)
         call BanJournal_AddTimestampNoteWhenFinishingTask(a:task_code)
@@ -628,6 +629,11 @@ augroup aug_viniciusban_journal
             call add(result, chars[i])
         endfor
         return join(result, '')
+    endfunction
+
+    function! BanJournal_FindTaskItemWithTaskCode(task_code)
+        let item_line = search('^- \[.\] '. a:task_code, 'n')
+        return item_line
     endfunction
 
     function! BanJournal_GetTaskCodeForLine(lnum)
