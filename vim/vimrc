@@ -631,6 +631,44 @@ augroup aug_viniciusban_journal
         return join(result, '')
     endfunction
 
+    function! BanJournal_GetTaskCodeForLine(lnum)
+        let task_code = BanJournal_GetTaskCodeFromItemList(a:lnum)
+        if task_code == ''
+            let task_code = BanJournal_GetTaskCodeFromInsideTask(a:lnum)
+        endif
+
+        return task_code
+    endfunction
+
+    function! BanJournal_GetTaskCodeFromItemList(lnum)
+        let pattern = '^- \[.\] \(_\w\+_\)\W'
+        let matches = matchlist(getline(a:lnum), pattern)
+        if empty(matches)
+            return ''
+        endif
+        return matches[1]
+    endfunction
+
+    function! BanJournal_GetTaskCodeFromInsideTask(lnum)
+        " Task codes are in level 2 heading
+        let pattern = '^## \(_\w\+_\)\W'
+        let initial_line = line('.')
+
+        call cursor(a:lnum, 1)
+        let task_first_line = search(pattern, 'bcnW')
+        call cursor(initial_line, 1)
+
+        if task_first_line == 0
+            return
+        endif
+
+        let matches = matchlist(getline(task_first_line), pattern)
+        if empty(matches)
+            return ''
+        endif
+        return matches[1]
+    endfunction
+
     function! BanJournal_GetTaskCodeForCurrentLine()
         " Task codes are in level 2 heading
         let pattern = '^## \(_\w\+_\)\W'
