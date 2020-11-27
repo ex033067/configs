@@ -499,7 +499,7 @@ augroup aug_viniciusban_journal
     " ---------------------------------------
 
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ct <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
-    autocmd BufReadPost *journal.md nmap <buffer> <localleader>st :call BanJournal_StartTask()<CR>
+    autocmd BufReadPost *journal.md nmap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>et :call BanJournal_EndTask()<CR>
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
 
@@ -524,16 +524,13 @@ augroup aug_viniciusban_journal
         call cursor(lnum, col('$'))
     endfunction
 
-    function! BanJournal_StartTask()
-        " Start the selected task.
-        "
+    function! BanJournal_StartCurrentTask()
         " Create the task section in DOING. Keep it in BACKLOG.
 
         " TODO do not move cursor in internal functions
         " TODO move cursor only when everything is finished
 
-        let lnum = line('.')
-        call BanJournal_DoStartTaskAtLine(lnum)
+        call BanJournal_DoStartTaskAtLine(line('.'))
     endfunction
 
     function! BanJournal_EndTask()
@@ -585,7 +582,7 @@ augroup aug_viniciusban_journal
         call BanJournal_MarkTaskAtLineAsDoing(lnum)
         call BanJournal_CopyTaskAtLineToDoing(lnum)
         call BanJournal_AddTimestampNoteWhenStartingTaskAtLine(lnum)
-        normal zv
+        normal zx
     endfunction
 
     function! BanJournal_AddTimestampNoteToLine(lnum, description = '')
