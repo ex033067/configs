@@ -500,7 +500,7 @@ augroup aug_viniciusban_journal
 
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ct <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
     autocmd BufReadPost *journal.md nmap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
-    autocmd BufReadPost *journal.md nmap <buffer> <localleader>et :call BanJournal_EndTask()<CR>
+    autocmd BufReadPost *journal.md nmap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
     autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
 
     " TODO Start a new daily overview:
@@ -533,21 +533,9 @@ augroup aug_viniciusban_journal
         call BanJournal_DoStartTaskAtLine(line('.'))
     endfunction
 
-    function! BanJournal_EndTask()
-        " End the selected task.
-        "
-        " Remove from BACKLOG. Move from DOING to DONE.
-
-        let pattern = '^- \[.\] \(_\w\+_\)\W'
-        let matches = matchlist(getline('.'), pattern)
-        let task_code = matches[1]
-        delete
-
-        call BanJournal_MoveTaskToDone(task_code)
-        call BanJournal_AddEndDateToTaskTitle(task_code)
-        call BanJournal_AddTimestampNoteWhenFinishingTask(task_code)
-
-        normal zx
+    function! BanJournal_EndCurrentTask()
+        call BanJournal_DoEndTaskAtLine(line('.'))
+        normal zv
     endfunction
 
     function! BanJournal_AddTimestampNoteToCurrentLine(description = '')
@@ -583,6 +571,20 @@ augroup aug_viniciusban_journal
         call BanJournal_CopyTaskAtLineToDoing(lnum)
         call BanJournal_AddTimestampNoteWhenStartingTaskAtLine(lnum)
         normal zx
+    endfunction
+
+    function! BanJournal_DoEndTaskAtLine(lnum)
+        " Remove from BACKLOG. Move from DOING to DONE.
+
+        let pattern = '^- \[.\] \(_\w\+_\)\W'
+        let matches = matchlist(getline(a:lnum), pattern)
+        let task_code = matches[1]
+
+        execute a:lnum . 'delete _'
+
+        call BanJournal_MoveTaskToDone(task_code)
+        call BanJournal_AddEndDateToTaskTitle(task_code)
+        call BanJournal_AddTimestampNoteWhenFinishingTask(task_code)
     endfunction
 
     function! BanJournal_AddTimestampNoteToLine(lnum, description = '')
