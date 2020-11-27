@@ -736,7 +736,6 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_AddTimestampNoteWhenFinishingTask(task_code)
-        let initial_line = line('.')
         let task_lines = BanJournal_GetTaskSectionInterval(a:task_code)
         call append(task_lines[1], ['', '', '', ''])
         call BanJournal_AddTimestampNoteToLine(task_lines[1] + 2, '#end')
