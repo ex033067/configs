@@ -569,9 +569,6 @@ augroup aug_viniciusban_journal
     function! BanJournal_DoStartTaskAtLine(lnum)
         " Start the task at `lnum` line.
 
-        " TODO do not move cursor in internal functions
-        " TODO move cursor only when everything is finished
-
         let lnum = line('.')
         call BanJournal_AddStartDateToTaskTitleAtLine(lnum)
         call BanJournal_MarkTaskAtLineAsDoing(lnum)
@@ -714,22 +711,14 @@ augroup aug_viniciusban_journal
     function! BanJournal_MoveTaskToDone(task_code)
         let initial_line = line('.')
         let start_of_done_section = search('^# DONE', 'nw')
-        let task_first_line = search('^## '. a:task_code, 'nw')
+        let task_lines = BanJournal_GetTaskSectionInterval(a:task_code)
 
-        if task_first_line > start_of_done_section
+        if task_lines[0] > start_of_done_section
             " for some reason, the task is already in DONE
             return
         endif
 
-        call cursor(task_first_line + 1, 1)
-        let start_of_next_section = search('^##\? ', 'nW')
-        call cursor(initial_line, 1)
-        if start_of_next_section == 0
-            let start_of_next_section = line('$')
-        endif
-
-        let task_last_line = start_of_next_section - 1
-        execute task_first_line .','. task_last_line .'move '. (start_of_done_section + 1)
+        execute task_lines[0] .','. task_lines[1] .'move '. (start_of_done_section + 1)
     endfunction
 
     function! BanJournal_AddEndDateToTaskTitle(task_code)
