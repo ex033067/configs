@@ -723,14 +723,19 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_AddTimestampNoteWhenFinishingTask(task_code)
-        call search('^## '. a:task_code, 'bW')
-        normal zv
-        call cursor(line('.') +1, 1)
-        call search('^##\? ', 'W')
-        normal 2{}
-        call append(line('.'), ['', '', ''])
-        normal j
-        call BanJournal_AddTimestampNoteToLine(line('.'), '#end')
+        let initial_line = line('.')
+        let task_first_line = search('^## '. a:task_code, 'nw')
+        call cursor(task_first_line + 1, 1)
+
+        let start_of_next_section = search('^##\? ', 'nW')
+        if start_of_next_section == 0
+            let start_of_next_section = line('$')
+        endif
+
+        let task_last_line = start_of_next_section - 1
+        call append(task_last_line, ['', '', ''])
+        call BanJournal_AddTimestampNoteToLine(task_last_line + 1, '#end')
+        call cursor(initial_line, 1)
     endfunction
 
 
