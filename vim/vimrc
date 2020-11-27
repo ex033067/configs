@@ -601,11 +601,16 @@ augroup aug_viniciusban_journal
         call BanJournal_AddTimestampNoteWhenFinishingTask(a:task_code)
     endfunction
 
-    function! BanJournal_AddTimestampNoteToLine(lnum, description = '')
-        let template = '{today} {weekday} {now} {task_code}{description}'
+    function! BanJournal_AddTimestampNoteToLine(lnum, description = '', ...)
+        if count(a:000, 'without_task_code') == 0
+            let template = '{today} {weekday} {now} {task_code}{description}'
+            let task_code = BanJournal_GetTaskCodeForLine(a:lnum)
+        else
+            let template = '{today} {weekday} {now}{description}'
+            let task_code = ''
+        endif
         let new_line = template
 
-        let task_code = BanJournal_GetTaskCodeForLine(a:lnum)
         if empty(a:description)
             let description = ''
         else
