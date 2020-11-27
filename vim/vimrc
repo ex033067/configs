@@ -527,10 +527,11 @@ augroup aug_viniciusban_journal
     function! BanJournal_StartCurrentTask()
         " Create the task section in DOING. Keep it in BACKLOG.
 
-        " TODO do not move cursor in internal functions
-        " TODO move cursor only when everything is finished
-
-        call BanJournal_DoStartTaskAtLine(line('.'))
+        let current_line = line('.')
+        call BanJournal_DoStartTaskAtLine(current_line)
+        let task_code = BanJournal_GetTaskCodeForLine(current_line)
+        let task_section = BanJournal_GetTaskSectionInterval(task_code)
+        call cursor(task_section[1], 1000)
     endfunction
 
     function! BanJournal_EndCurrentTask()
@@ -706,7 +707,6 @@ augroup aug_viniciusban_journal
         let line_found = search('^## '. task_code, 'nW')
 
         let timestamp_note_lnum = line_found + 2
-        call cursor(timestamp_note_lnum, 1)
         call BanJournal_AddTimestampNoteToLine(timestamp_note_lnum)
         call append(timestamp_note_lnum, ['', ''])
     endfunction
