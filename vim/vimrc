@@ -534,7 +534,13 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_EndCurrentTask()
-        call BanJournal_DoEndTaskAtLine(line('.'))
+        let current_line = line('.')
+        let task_code = BanJournal_GetTaskCodeForLine(current_line)
+        if task_code == ''
+            echom 'Error: Not a task'
+            return
+        endif
+        call BanJournal_DoEndTask(current_line, task_code)
         normal zv
     endfunction
 
@@ -573,18 +579,13 @@ augroup aug_viniciusban_journal
         normal zx
     endfunction
 
-    function! BanJournal_DoEndTaskAtLine(lnum)
+    function! BanJournal_DoEndTask(lnum, task_code)
         " Remove from BACKLOG. Move from DOING to DONE.
 
-        let pattern = '^- \[.\] \(_\w\+_\)\W'
-        let matches = matchlist(getline(a:lnum), pattern)
-        let task_code = matches[1]
-
         execute a:lnum . 'delete _'
-
-        call BanJournal_MoveTaskToDone(task_code)
-        call BanJournal_AddEndDateToTaskTitle(task_code)
-        call BanJournal_AddTimestampNoteWhenFinishingTask(task_code)
+        call BanJournal_MoveTaskToDone(a:task_code)
+        call BanJournal_AddEndDateToTaskTitle(a:task_code)
+        call BanJournal_AddTimestampNoteWhenFinishingTask(a:task_code)
     endfunction
 
     function! BanJournal_AddTimestampNoteToLine(lnum, description = '')
