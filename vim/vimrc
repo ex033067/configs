@@ -707,14 +707,19 @@ augroup aug_viniciusban_journal
     function! BanJournal_AddEndDateToTaskTitle(task_code)
         " Add note in task about when finished it doing: #end:YYYY-MM-DD
         let template = ' #end:{today}'
+
+        let start_of_done_section = search('^# DONE', 'nw')
+        let title_line = search('^## '. a:task_code, 'nw')
+
+        if title_line < start_of_done_section
+            " for some reason, the task is not in DONE
+            return
+        endif
+
         let note = template
         let note = substitute(note, '{today}', strftime('%Y-%m-%d'), '')
-
-        normal gg
-        call search('^# DONE')
-        call search('^## '. a:task_code, 'W')
-        let new_line = substitute(getline('.'), '\()\)$', note.'\1', '')
-        call setline('.', new_line)
+        let title_with_note = substitute(getline(title_line), '\()\)$', note.'\1', '')
+        call setline(title_line, title_with_note)
     endfunction
 
     function! BanJournal_AddTimestampNoteWhenFinishingTask(task_code)
