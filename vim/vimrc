@@ -528,6 +528,7 @@ augroup aug_viniciusban_journal
         let task_code = BanJournal_GetTaskCodeForLine(lnum)
         let task_section = BanJournal_GetTaskSectionInterval(task_code)
         call cursor(task_section[1], 1000)
+        normal zx
     endfunction
 
     function! BanJournal_EndCurrentTask()
