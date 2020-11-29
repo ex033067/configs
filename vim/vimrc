@@ -498,12 +498,12 @@ augroup aug_viniciusban_journal
     " Journal file v2 behaviour and functions
     " ---------------------------------------
 
-    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>ct <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
-    autocmd BufReadPost *journal.md nmap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
-    autocmd BufReadPost *journal.md nmap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
-    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>tn <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
-    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>day <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
-    autocmd BufReadPost *journal.md inoremap <buffer> <localleader>tt <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine($JOURNAL_PROJECT)<CR><Esc>A
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>ct <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
+    autocmd BufReadPost *journal*.md nmap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md nmap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>tn <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>day <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>tt <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine($JOURNAL_PROJECT)<CR><Esc>A
 
     " New journal file support functions
     " ----------------------------------
@@ -820,25 +820,25 @@ augroup aug_viniciusban_journal
     " Legacy journal file behaviour
     " -----------------------------
 
-    autocmd BufReadPost *journal.md if ! exists("g:PROJECT") | let g:PROJECT='eu' | endif
-    autocmd BufReadPost *journal.md nmap <buffer> <localleader>P :let g:PROJECT=
-    autocmd BufReadPost *journal.md nmap <buffer> <localleader>PP m`:execute ':?^# ?,$s/<project>/' .g:PROJECT. '/g'<CR>``
+    autocmd BufReadPost *journal*.md if ! exists("g:PROJECT") | let g:PROJECT='eu' | endif
+    autocmd BufReadPost *journal*.md nmap <buffer> <localleader>P :let g:PROJECT=
+    autocmd BufReadPost *journal*.md nmap <buffer> <localleader>PP m`:execute ':?^# ?,$s/<project>/' .g:PROJECT. '/g'<CR>``
 
     " start a new day in journal
-    autocmd BufReadPost *journal.md imap <buffer> <localleader>d <Esc>{}"_dG3oa# =strftime("%F %a")2o:let g:PROJECT='timesheet'<CR>a\it <project> timesheet[1]-\te[1]-o:let g:PROJECT='mydaily'<CR>a\it [1[1jzcG:redraw<CR>a\tm \P 
+    autocmd BufReadPost *journal*.md imap <buffer> <localleader>d <Esc>{}"_dG3oa# =strftime("%F %a")2o:let g:PROJECT='timesheet'<CR>a\it <project> timesheet[1]-\te[1]-o:let g:PROJECT='mydaily'<CR>a\it [1[1jzcG:redraw<CR>a\tm \P 
 
     " create a task item with random task code prefixed with g:PROJECT
-    autocmd BufReadPost *journal.md imap <buffer> <localleader>it - [ ] <Esc>:let _='_'. g:PROJECT .'_'. strcharpart(sha256(strftime('%c')),0,7) .'_'<CR>a=_
+    autocmd BufReadPost *journal*.md imap <buffer> <localleader>it - [ ] <Esc>:let _='_'. g:PROJECT .'_'. strcharpart(sha256(strftime('%c')),0,7) .'_'<CR>a=_
 
     " jump to other definitions of the same task item using the location list
-    autocmd BufReadPost *journal.md nmap <buffer> gd :let _=expand('<cword>')<CR>:execute 'lvimgrep' '"- \[.\] ' ._. '" %'<CR>
+    autocmd BufReadPost *journal*.md nmap <buffer> gd :let _=expand('<cword>')<CR>:execute 'lvimgrep' '"- \[.\] ' ._. '" %'<CR>
 
     " create a time-marked note and navigate them
-    autocmd BufReadPost *journal.md nmap <silent> <buffer> ]t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR>
-    autocmd BufReadPost *journal.md nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
+    autocmd BufReadPost *journal*.md nmap <silent> <buffer> ]t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR>
+    autocmd BufReadPost *journal*.md nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
 
     " start executing a task from the task item definition
-    autocmd BufReadPost *journal.md nmap <buffer> <localleader>te :let _saved_yank_register=@0<CR>\*"0yy]z4o{}j"_d]z"0p0"_df]\2:call search('^# \zs\d\d\d\d-\d\d-\d\d ', 'sb')<CR>"0y$`'0A (0):let @0=_saved_yank_register<CR>A
+    autocmd BufReadPost *journal*.md nmap <buffer> <localleader>te :let _saved_yank_register=@0<CR>\*"0yy]z4o{}j"_d]z"0p0"_df]\2:call search('^# \zs\d\d\d\d-\d\d-\d\d ', 'sb')<CR>"0y$`'0A (0):let @0=_saved_yank_register<CR>A
 augroup END
 
 
