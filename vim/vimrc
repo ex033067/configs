@@ -21,7 +21,6 @@ Plug 'unblevable/quick-scope'
 Plug 'viniciusban/vim-polyglot'  | " up to date syntax files
 Plug 'viniciusban/vim-simple-onblack-colorschemes'
 Plug 'luochen1990/rainbow' | " colorize parentheses
-Plug 'ap/vim-css-color'  | " show the color in CSS
 Plug 'tpope/vim-commentary'  | " gcc, gc<motion>, {Visual}gc
 Plug 'machakann/vim-sandwich'  | " sa, sd, sr
 Plug 'andymass/vim-matchup'  | " %, g%, a%, i%, and more
