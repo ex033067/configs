@@ -17,71 +17,69 @@ endif
 "    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 call plug#begin('~/.vim/bundle')
+
 Plug 'unblevable/quick-scope'
+let g:qs_enable=0  |" start plugin with highlight disabled
+
 Plug 'viniciusban/vim-polyglot'  | " up to date syntax files
 Plug 'viniciusban/vim-simple-onblack-colorschemes'
+
 Plug 'luochen1990/rainbow' | " colorize parentheses
+let g:rainbow_active = 0
+
 Plug 'tpope/vim-commentary'  | " gcc, gc<motion>, {Visual}gc
 Plug 'machakann/vim-sandwich'  | " sa, sd, sr
+
 " Plug 'andymass/vim-matchup'  | " %, g%, a%, i%, and more
 " Plug 'kana/vim-textobj-user' | " required by other text object plugins
 " Plug 'kana/vim-textobj-indent' | " ai, ii
-" Plug 'glts/vim-textobj-comment' | " ac, ic (remapped below to...)
-" Plug 'bps/vim-textobj-python' | " ac, ic, af, if.
+
+" " Plug 'glts/vim-textobj-comment' | " ac, ic (remapped below to...)
+" omap aC <Plug>(textobj-comment-a)
+" xmap aC <Plug>(textobj-comment-a)
+" omap iC <Plug>(textobj-comment-i)
+" xmap iC <Plug>(textobj-comment-i)
+
+" " Plug 'bps/vim-textobj-python' | " ac, ic, af, if.
+" let g:is_pythonsense_suppress_object_keymaps = 1
+" let g:is_pythonsense_suppress_motion_keymaps = 1
+
 " Plug 'jeetsukumaran/vim-pythonsense' | " ad, id (docstring objects). See https://github.com/viniciusban/myconfigs/issues/1
 " Plug 'inkarkat/vim-ReplaceWithRegister'  | " <register>gr{motion}, {Visual}<register>gr
-Plug 'davidhalter/jedi-vim'
+
+" Plug 'davidhalter/jedi-vim'
+" let g:jedi#popup_on_dot=0
+" let g:jedi#show_call_signatures_delay=100
+" let g:jedi#goto_command = 'gD' |"# '<localleader>jd'
+" let g:jedi#goto_assignments_command = '<localleader>jg'
+" let g:jedi#goto_stubs_command = '<localleader>js'
+" let g:jedi#rename_command = '<localleader>jr'
+" let g:jedi#usages_command = '<localleader>jn'
+
 Plug 'SirVer/ultisnips'
+let g:UltiSnipsSnippetDirectories=[$HOME.'/src/vim-snippets']
+
 Plug 'honza/vim-snippets'
 Plug 'viniciusban/vim-ft-markdown'
+
 Plug 'mattn/emmet-vim'
+let g:user_emmet_leader_key = '<C-\>'
+
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', {'dir': '~/.vim/bundle/fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'majutsushi/tagbar'
-call plug#end()
 
-" tagbar
+Plug 'scrooloose/nerdtree'
+let NERDTreeIgnore=['__pycache__[[dir]]']
+let NERDTreeHijackNetrw = 0
+
+Plug 'majutsushi/tagbar'
 let g:tagbar_ctags_bin = 'ctags'
 let g:tagbar_autofocus = 1
 let g:tagbar_position = 'leftabove vertical'
 let g:tagbar_case_insensitive = 1
 
-" quick-scope
-let g:qs_enable=0  |" start plugin with highlight disabled
-
-" rainbow
-let g:rainbow_active = 0
-
-" vim-text-object-comment
-omap aC <Plug>(textobj-comment-a)
-xmap aC <Plug>(textobj-comment-a)
-omap iC <Plug>(textobj-comment-i)
-xmap iC <Plug>(textobj-comment-i)
-
-" vim-textobj-python
-let g:is_pythonsense_suppress_object_keymaps = 1
-let g:is_pythonsense_suppress_motion_keymaps = 1
-
-" jedi-vim
-let g:jedi#popup_on_dot=0
-let g:jedi#show_call_signatures_delay=100
-let g:jedi#goto_command = 'gD' |"# '<localleader>jd'
-let g:jedi#goto_assignments_command = '<localleader>jg'
-let g:jedi#goto_stubs_command = '<localleader>js'
-let g:jedi#rename_command = '<localleader>jr'
-let g:jedi#usages_command = '<localleader>jn'
-
-" ultisnips
-let g:UltiSnipsSnippetDirectories=[$HOME.'/src/vim-snippets']
-
-" emmet
-let g:user_emmet_leader_key = '<C-\>'
-
-" NERDTree
-let NERDTreeIgnore=['__pycache__[[dir]]']
-let NERDTreeHijackNetrw = 0
+call plug#end()
 
 
 " ==================================================
