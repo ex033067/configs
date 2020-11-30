@@ -927,7 +927,10 @@ set termguicolors
 " sane editing
 set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
 set ignorecase smartcase
-set foldenable foldmethod=indent foldlevel=1
+set foldenable foldlevel=1
+if !exists('g:loaded_vimrc')
+    set foldmethod=indent
+endif
 let g:markdown_folding = 1 | " enable folded headings in markdown files
 
 " other options
@@ -1057,3 +1060,4 @@ map <leader>or :setlocal relativenumber!<CR>
 map <leader>ow :setlocal wrap!<CR>:set wrap?<CR>
 
 set wrap wrapscan nohlsearch cursorline nocursorcolumn number norelativenumber
+let g:loaded_vimrc=1
