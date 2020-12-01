@@ -1055,15 +1055,15 @@ nnoremap g= :Git diff % <CR><C-W>_
 nnoremap gl :Git --paginate l -50<CR><C-W>_
 
 " toggle options
-nnoremap <leader>oi :setlocal wrap wrapscan nohlsearch cursorline nocursorcolumn number norelativenumber<CR>
-nnoremap <leader>od :windo setlocal wrap wrapscan nohlsearch nocursorline nocursorcolumn nonumber relativenumber<CR>p
-nnoremap <leader>oh :set hlsearch!<CR>:set hlsearch?<CR>
-nnoremap <leader>ol :setlocal cursorline!<CR>
-nnoremap <leader>o+ :setlocal cursorcolumn!<CR>
-nnoremap <leader>on :setlocal number!<CR>
-nnoremap <leader>op :set paste!<CR>:set paste?<CR>
-nnoremap <leader>or :setlocal relativenumber!<CR>
-nnoremap <leader>ow :setlocal wrap!<CR>:set wrap?<CR>
+nnoremap <silent> <leader>oe :setlocal wrap wrapscan nohlsearch cursorline nocursorcolumn number norelativenumber<CR>
+nnoremap <silent> <leader>od :windo setlocal wrap wrapscan nohlsearch nocursorline nocursorcolumn nonumber relativenumber<CR>p
+nnoremap <silent> <leader>oh :set hlsearch!<CR>:set hlsearch?<CR>
+nnoremap <silent> <leader>o- :setlocal cursorline!<CR>
+nnoremap <silent> <leader>o\ :setlocal cursorcolumn!<CR>
+nnoremap <silent> <leader>on :setlocal number!<CR>
+nnoremap <silent> <leader>op :set paste!<CR>:set paste?<CR>
+nnoremap <silent> <leader>or :setlocal relativenumber!<CR>
+nnoremap <silent> <leader>ow :setlocal wrap!<CR>:set wrap?<CR>
 
-set wrap wrapscan nohlsearch cursorline nocursorcolumn number norelativenumber
+normal ,oe
 let g:loaded_vimrc=1
