@@ -1047,10 +1047,10 @@ else
 endif
 
 " git
-nnoremap g1 :Git<CR>
+nnoremap gG :Git<CR>
 nnoremap gA :Gwrite<CR>:echo 'File staged'<CR>|" git add
-nnoremap gCC :Git commit -v <CR>
-nnoremap gCA :Git commit -v --amend <CR>
+nnoremap gC :Git commit -v <CR>
+nnoremap g! :Git commit -v --amend <CR>
 nnoremap g= :Git diff % <CR><C-W>_
 nnoremap gl :Git --paginate l -50<CR><C-W>_
 
