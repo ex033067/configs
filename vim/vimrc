@@ -556,6 +556,8 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>et C<-o>:call BanJournal_EndCurrentTask()<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>tn <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>tn :call BanJournal_AddTimestampNoteToCurrentLine()<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>tN <C-o>:call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>tN :call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>day <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine($JOURNAL_PROJECT)<CR><Esc>A
 
@@ -596,9 +598,9 @@ augroup aug_viniciusban_journal
         normal zv
     endfunction
 
-    function! BanJournal_AddTimestampNoteToCurrentLine(description = '')
+    function! BanJournal_AddTimestampNoteToCurrentLine(description = '', option = '')
         let lnum = line('.')
-        call BanJournal_AddTimestampNoteToLine(lnum, a:description)
+        call BanJournal_AddTimestampNoteToLine(lnum, a:description, a:option)
         call cursor(lnum, col('$'))
     endfunction
 
