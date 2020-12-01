@@ -543,6 +543,9 @@ augroup aug_viniciusban_journal
     " Journal file v2 behaviour and functions
     " ---------------------------------------
 
+    autocmd BufReadPre  *journal*.md syntax manual
+    autocmd BufReadPost *journal*.md setlocal foldmethod=manual
+    autocmd CursorHold  *journal*.md setlocal foldmethod=expr syntax=ON
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>ct <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
     autocmd BufReadPost *journal*.md nmap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
     autocmd BufReadPost *journal*.md nmap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
