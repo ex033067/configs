@@ -413,25 +413,25 @@ function! FtPython()
     execute 'setlocal equalprg='.b:_equalprg
     unlet b:_equalprg
 
-    map <buffer> <localleader>= :update<CR><Esc>gg=G
-    map <buffer> <localleader>m :update<CR>:make %<CR>
+    nnoremap <buffer> <localleader>= :update<CR><Esc>gg=G
+    nnoremap <buffer> <localleader>m :update<CR>:make %<CR>
 
     " Mappings for classes, functions and docstrings text-objects
-    xmap <buffer> ic <Plug>(textobj-python-class-i)
-    omap <buffer> ic <Plug>(textobj-python-class-i)
-    xmap <buffer> ac <Plug>(textobj-python-class-a)
-    omap <buffer> ac <Plug>(textobj-python-class-a)
-    xmap <buffer> if <Plug>(textobj-python-function-i)
-    omap <buffer> if <Plug>(textobj-python-function-i)
-    xmap <buffer> af <Plug>(textobj-python-function-a)
-    omap <buffer> af <Plug>(textobj-python-function-a)
-    xmap <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
-    omap <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
-    xmap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
-    omap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
+    xnoremap <buffer> ic <Plug>(textobj-python-class-i)
+    onoremap <buffer> ic <Plug>(textobj-python-class-i)
+    xnoremap <buffer> ac <Plug>(textobj-python-class-a)
+    onoremap <buffer> ac <Plug>(textobj-python-class-a)
+    xnoremap <buffer> if <Plug>(textobj-python-function-i)
+    onoremap <buffer> if <Plug>(textobj-python-function-i)
+    xnoremap <buffer> af <Plug>(textobj-python-function-a)
+    onoremap <buffer> af <Plug>(textobj-python-function-a)
+    xnoremap <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
+    onoremap <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
+    xnoremap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
+    onoremap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
 
     " edit selected module name
-    xmap <localleader>f :<C-U>let @g = BanPython_TransformSelectedTextIntoFilename() <CR>
+    xnoremap <localleader>f :<C-U>let @g = BanPython_TransformSelectedTextIntoFilename() <CR>
 
     " Mappings to help with tests (this is a big section).
     " All mappings are prefixed with \t.
@@ -452,39 +452,42 @@ function! FtPython()
 
     " \tt run tests in current vim session.
     " \TT run tests in tmux next pane.
-    nmap <localleader>tt :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>
-    nmap <silent> <localleader>TT :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .g:test_target. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>
-    nmap t<CR> <localleader>tt
-    nmap T<CR> <localleader>TT
+    nnoremap <localleader>tt :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>
+    nnoremap <silent> <localleader>TT :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .g:test_target. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>
+
+    " t<CR> run tests in current vim session.
+    " T<CR> run tests in tmux next pane.
+    nnoremap t<CR> :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>
+    nnoremap <silent> T<CR> :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .g:test_target. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>
 
     " \tC configure the test command (along with its arguments).
     " Examples:
     "   - pytest --pyargs
     "   - python manage.py test -v 2
     "   - python -m unittest
-    map <localleader>tC :let g:test_command='<c-r>=g:test_command<cr>'
+    nnoremap <localleader>tC :let g:test_command='<c-r>=g:test_command<cr>'
 
     " \tn Make a test name from current line contents
-    map <buffer> <localleader>tn :call BanPython_MakeValidPythonTestName() <CR>
+    nnoremap <buffer> <localleader>tn :call BanPython_MakeValidPythonTestName() <CR>
 
     " Mark the target and run tests
-    map <buffer> <localleader>ta :wall <CR>:call BanPython_RunAllTestSuite(g:test_command) <CR>
-    map <buffer> <localleader>tp :wall <CR>:call BanPython_RunCurrentTestPackage(g:test_command) <CR>
-    map <buffer> <localleader>t% :wall <CR>:call BanPython_RunCurrentTestModule(g:test_command) <CR>
-    map <buffer> <localleader>tc :wall <CR>:call BanPython_RunCurrentTestCase(g:test_command) <CR>
-    map <buffer> <localleader>tm :wall <CR>:call BanPython_RunCurrentTestMethod(g:test_command) <CR>
-    map <buffer> <localleader>tf :wall <CR>:call BanPython_RunCurrentTestFunction(g:test_command) <CR>
+    nnoremap <buffer> <localleader>ta :wall <CR>:call BanPython_RunAllTestSuite(g:test_command) <CR>
+    nnoremap <buffer> <localleader>tp :wall <CR>:call BanPython_RunCurrentTestPackage(g:test_command) <CR>
+    nnoremap <buffer> <localleader>t% :wall <CR>:call BanPython_RunCurrentTestModule(g:test_command) <CR>
+    nnoremap <buffer> <localleader>tc :wall <CR>:call BanPython_RunCurrentTestCase(g:test_command) <CR>
+    nnoremap <buffer> <localleader>tm :wall <CR>:call BanPython_RunCurrentTestMethod(g:test_command) <CR>
+    nnoremap <buffer> <localleader>tf :wall <CR>:call BanPython_RunCurrentTestFunction(g:test_command) <CR>
 
     " Only mark the target
-    map <buffer> <localleader>TA :wall <CR>:call BanPython_SetAllSuiteAsTestTarget() <CR>:echo g:test_target. ' set as test target.'<CR>
-    map <buffer> <localleader>TP :wall <CR>:call BanPython_SetCurrentPackageAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
-    map <buffer> <localleader>T% :wall <CR>:call BanPython_SetCurrentModuleAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
-    map <buffer> <localleader>TC :wall <CR>:call BanPython_SetCurrentClassAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
-    map <buffer> <localleader>TM :wall <CR>:call BanPython_SetCurrentMethodAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
-    map <buffer> <localleader>TF :wall <CR>:call BanPython_SetCurrentFunctionAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+    nnoremap <buffer> <localleader>TA :wall <CR>:call BanPython_SetAllSuiteAsTestTarget() <CR>:echo g:test_target. ' set as test target.'<CR>
+    nnoremap <buffer> <localleader>TP :wall <CR>:call BanPython_SetCurrentPackageAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+    nnoremap <buffer> <localleader>T% :wall <CR>:call BanPython_SetCurrentModuleAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+    nnoremap <buffer> <localleader>TC :wall <CR>:call BanPython_SetCurrentClassAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+    nnoremap <buffer> <localleader>TM :wall <CR>:call BanPython_SetCurrentMethodAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+    nnoremap <buffer> <localleader>TF :wall <CR>:call BanPython_SetCurrentFunctionAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
 
     " copy current filename and function/method to register z in pytest format (JOE specific)
-    nmap <silent> <localleader>tr :let cursorpos = getcurpos() <CR>:call search('def test', 'besc') <CR>:execute 'normal bye' <CR>:let @z = substitute(expand('%'), '.*joe/tests/', '', '').'::'.getreg('"') <CR>:call setpos('.', cursorpos) <CR>:let test_cmd = "t " .trim(getreg('z'))<CR>:execute '!tmux send-keys -t JOE:src.1 -l "' .test_cmd. '"'<CR>:execute '!tmux send-keys -t JOE:src.1 Enter'<CR><CR>
+    nnoremap <silent> <localleader>tr :let cursorpos = getcurpos() <CR>:call search('def test', 'besc') <CR>:execute 'normal bye' <CR>:let @z = substitute(expand('%'), '.*joe/tests/', '', '').'::'.getreg('"') <CR>:call setpos('.', cursorpos) <CR>:let test_cmd = "t " .trim(getreg('z'))<CR>:execute '!tmux send-keys -t JOE:src.1 -l "' .test_cmd. '"'<CR>:execute '!tmux send-keys -t JOE:src.1 Enter'<CR><CR>
 
     syn keyword pythonTodo          TODO FIXME NOTE contained
     hi! link pythonBuiltin Statement
@@ -507,34 +510,34 @@ augroup aug_ft_gitcommit
     autocmd BufRead COMMIT_EDITMSG setlocal nocursorline
     autocmd BufRead COMMIT_EDITMSG call execute(['normal gg'])
     " go to next/prev file in commit
-    autocmd FileType gitcommit nmap <silent> <buffer> ]] :call search('^diff\\|^# On branch', "z")<CR>ztzv
-    autocmd FileType gitcommit nmap <silent> <buffer> [[ :call search('^diff\\|^# On branch', "b")<CR>ztzv
+    autocmd FileType gitcommit nnoremap <silent> <buffer> ]] :call search('^diff\\|^# On branch', "z")<CR>ztzv
+    autocmd FileType gitcommit nnoremap <silent> <buffer> [[ :call search('^diff\\|^# On branch', "b")<CR>ztzv
     " go to next/prev change
-    autocmd FileType gitcommit nmap <silent> <buffer> ]c :call search('^@@', "z")<CR>zt
-    autocmd FileType gitcommit nmap <silent> <buffer> [c :call search('^@@', "b")<CR>zt
+    autocmd FileType gitcommit nnoremap <silent> <buffer> ]c :call search('^@@', "z")<CR>zt
+    autocmd FileType gitcommit nnoremap <silent> <buffer> [c :call search('^@@', "b")<CR>zt
 augroup END
 
 augroup aug_list_items
     au!
 
     " add item
-    autocmd FileType markdown,text nmap <buffer> <localleader>i o- [ ]
-    autocmd FileType markdown,text imap <buffer> <localleader>i - [ ]
+    autocmd FileType markdown,text nnoremap <buffer> <localleader>i o- [ ]
+    autocmd FileType markdown,text inoremap <buffer> <localleader>i - [ ]
 
     " mark item as doing/done
-    autocmd FileType markdown,text nmap <silent> <buffer> <localleader>* :keeppatterns :s/^\(\s*- \[\).]/\1*]/<CR>
-    autocmd FileType markdown,text nmap <silent> <buffer> <localleader>x :keeppatterns :s/^\(\s*- \[\).]/\1x]/<CR>
+    autocmd FileType markdown,text nnoremap <silent> <buffer> <localleader>* :keeppatterns :s/^\(\s*- \[\).]/\1*]/<CR>
+    autocmd FileType markdown,text nnoremap <silent> <buffer> <localleader>x :keeppatterns :s/^\(\s*- \[\).]/\1x]/<CR>
 
     " go to next/previous list item (any level)
-    autocmd FileType markdown,text nmap <silent> <buffer> ]- :call search('^\s*- ', "z")<CR>
-    autocmd FileType markdown,text nmap <silent> <buffer> [- :call search('^\s*- ', "b")<CR>
+    autocmd FileType markdown,text nnoremap <silent> <buffer> ]- :call search('^\s*- ', "z")<CR>
+    autocmd FileType markdown,text nnoremap <silent> <buffer> [- :call search('^\s*- ', "b")<CR>
 
     " go to next/previous sibling
-    autocmd FileType markdown,text nmap <silent> <buffer> ]= ^:call search("^". strpart(getline("."), 0, col(".")), "z")<CR>
-    autocmd FileType markdown,text nmap <silent> <buffer> [= ^:let _pat=strpart(getline("."), 0, col("."))<CR>0:call search("^". _pat, "b")<CR>
+    autocmd FileType markdown,text nnoremap <silent> <buffer> ]= ^:call search("^". strpart(getline("."), 0, col(".")), "z")<CR>
+    autocmd FileType markdown,text nnoremap <silent> <buffer> [= ^:let _pat=strpart(getline("."), 0, col("."))<CR>0:call search("^". _pat, "b")<CR>
 
     " go to parent
-    autocmd FileType markdown,text nmap <silent> <buffer> [_ ^:call search('\%<' .col("."). 'c\S', "b")<CR>
+    autocmd FileType markdown,text nnoremap <silent> <buffer> [_ ^:call search('\%<' .col("."). 'c\S', "b")<CR>
 augroup END
 
 augroup aug_viniciusban_journal
@@ -547,8 +550,8 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal*.md setlocal foldmethod=manual
     autocmd CursorHold  *journal*.md setlocal foldmethod=expr syntax=ON
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>ct <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
-    autocmd BufReadPost *journal*.md nmap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
-    autocmd BufReadPost *journal*.md nmap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>tn <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>day <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>tt <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine($JOURNAL_PROJECT)<CR><Esc>A
@@ -870,24 +873,24 @@ augroup aug_viniciusban_journal
     " -----------------------------
 
     autocmd BufReadPost *journal*.md if ! exists("g:PROJECT") | let g:PROJECT='eu' | endif
-    autocmd BufReadPost *journal*.md nmap <buffer> <localleader>P :let g:PROJECT=
-    autocmd BufReadPost *journal*.md nmap <buffer> <localleader>PP m`:execute ':?^# ?,$s/<project>/' .g:PROJECT. '/g'<CR>``
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>P :let g:PROJECT=
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>PP m`:execute ':?^# ?,$s/<project>/' .g:PROJECT. '/g'<CR>``
 
     " start a new day in journal
-    autocmd BufReadPost *journal*.md imap <buffer> <localleader>d <Esc>{}"_dG3oa# =strftime("%F %a")2o:let g:PROJECT='timesheet'<CR>a\it <project> timesheet[1]-\te[1]-o:let g:PROJECT='mydaily'<CR>a\it [1[1jzcG:redraw<CR>a\tm \P 
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>d <Esc>{}"_dG3oa# =strftime("%F %a")2o:let g:PROJECT='timesheet'<CR>a\it <project> timesheet[1]-\te[1]-o:let g:PROJECT='mydaily'<CR>a\it [1[1jzcG:redraw<CR>a\tm \P 
 
     " create a task item with random task code prefixed with g:PROJECT
-    autocmd BufReadPost *journal*.md imap <buffer> <localleader>it - [ ] <Esc>:let _='_'. g:PROJECT .'_'. strcharpart(sha256(strftime('%c')),0,7) .'_'<CR>a=_
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>it - [ ] <Esc>:let _='_'. g:PROJECT .'_'. strcharpart(sha256(strftime('%c')),0,7) .'_'<CR>a=_
 
     " jump to other definitions of the same task item using the location list
-    autocmd BufReadPost *journal*.md nmap <buffer> gd :let _=expand('<cword>')<CR>:execute 'lvimgrep' '"- \[.\] ' ._. '" %'<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> gd :let _=expand('<cword>')<CR>:execute 'lvimgrep' '"- \[.\] ' ._. '" %'<CR>
 
     " create a time-marked note and navigate them
-    autocmd BufReadPost *journal*.md nmap <silent> <buffer> ]t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR>
-    autocmd BufReadPost *journal*.md nmap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
+    autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> ]t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR>
+    autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> [t :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
 
     " start executing a task from the task item definition
-    autocmd BufReadPost *journal*.md nmap <buffer> <localleader>te :let _saved_yank_register=@0<CR>\*"0yy]z4o{}j"_d]z"0p0"_df]\2:call search('^# \zs\d\d\d\d-\d\d-\d\d ', 'sb')<CR>"0y$`'0A (0):let @0=_saved_yank_register<CR>A
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>te :let _saved_yank_register=@0<CR>\*"0yy]z4o{}j"_d]z"0p0"_df]\2:call search('^# \zs\d\d\d\d-\d\d-\d\d ', 'sb')<CR>"0y$`'0A (0):let @0=_saved_yank_register<CR>A
 augroup END
 
 
@@ -947,22 +950,22 @@ set modeline
 " ==================================================
 
 " Show highlight group of word under cursor
-map <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
+nnoremap <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
     \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
     \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
-map <leader>9 :call BanChangeColorscheme()<CR>
+nnoremap <leader>9 :call BanChangeColorscheme()<CR>
 
-map <leader>1 :NERDTreeToggle<CR>
-map <leader>2 :FZF<CR>
-map <leader>3 :Buffers<CR>
-map <leader>4 :TagbarToggle<CR>
+nnoremap <leader>1 :NERDTreeToggle<CR>
+nnoremap <leader>2 :FZF<CR>
+nnoremap <leader>3 :Buffers<CR>
+nnoremap <leader>4 :TagbarToggle<CR>
 
-nmap <leader>< <plug>(QuickScopeToggle)
-xmap <leader>< <plug>(QuickScopeToggle)
+nnoremap <leader>< <plug>(QuickScopeToggle)
+xnoremap <leader>< <plug>(QuickScopeToggle)
 
 " editing
-nmap <leader>d :call DuplicateLine("normal")<CR>
-vmap <leader>d :<C-U>call DuplicateLine("visual")<CR>
+nnoremap <leader>d :call DuplicateLine("normal")<CR>
+vnoremap <leader>d :<C-U>call DuplicateLine("visual")<CR>
 function! DuplicateLine(mode)
     if a:mode == "normal"
         let _pos = col('.')
@@ -974,8 +977,8 @@ function! DuplicateLine(mode)
     endif
 endfunction
 
-nmap <leader>c :call DuplicateAndCommentLine("normal")<CR>
-vmap <leader>c :<C-U>call DuplicateAndCommentLine("visual")<CR>
+nnoremap <leader>c :call DuplicateAndCommentLine("normal")<CR>
+vnoremap <leader>c :<C-U>call DuplicateAndCommentLine("visual")<CR>
 function! DuplicateAndCommentLine(mode)
     if a:mode == "normal"
         let _pos = col('.')
@@ -993,8 +996,8 @@ function! DuplicateAndCommentLine(mode)
     endif
 endfunction
 
-nmap <leader>s :call IsolateLineWithSpacesAround("normal")<CR>
-vmap <leader>s :<C-U>call IsolateLineWithSpacesAround("visual")<CR>
+nnoremap <leader>s :call IsolateLineWithSpacesAround("normal")<CR>
+vnoremap <leader>s :<C-U>call IsolateLineWithSpacesAround("visual")<CR>
 function! IsolateLineWithSpacesAround(mode)
     if a:mode == "normal"
         call append(line(".")-1, [""])
@@ -1006,10 +1009,10 @@ function! IsolateLineWithSpacesAround(mode)
     endif
 endfunction
 
-nmap <C-j> :call MoveLine("normal", "down")<CR>
-vmap <C-j> :<C-U>call MoveLine("visual", "down")<CR>
-nmap <C-k> :call MoveLine("normal", "up")<CR>
-vmap <C-k> :<C-U>call MoveLine("visual", "up")<CR>
+nnoremap <C-j> :call MoveLine("normal", "down")<CR>
+vnoremap <C-j> :<C-U>call MoveLine("visual", "down")<CR>
+nnoremap <C-k> :call MoveLine("normal", "up")<CR>
+vnoremap <C-k> :<C-U>call MoveLine("visual", "up")<CR>
 function! MoveLine(mode, direction)
     let offset = #{down:"+1", up:"-2"}
     if a:mode == "normal"
@@ -1022,18 +1025,18 @@ function! MoveLine(mode, direction)
 endfunction
 
 " file and buffer
-map <leader>w :update<CR>
-map <leader>fd :saveas! %:p.copy<CR>| " duplicate current file
-noremap <silent> <buffer> == :update<CR>gg=G
+nnoremap <leader>w :update<CR>
+nnoremap <leader>fd :saveas! %:p.copy<CR>| " duplicate current file
+nnoremap <silent> <buffer> == :update<CR>gg=G
 
 " navigation
-noremap <Space> <C-F>
-noremap ]q :cnext<CR>
-noremap [q :cprevious<CR>
-noremap ]l :lnext<CR>
-noremap [l :lprevious<CR>
-noremap ]a :next<CR>
-noremap [a :previous<CR>
+nnoremap <Space> <C-F>
+nnoremap ]q :cnext<CR>
+nnoremap [q :cprevious<CR>
+nnoremap ]l :lnext<CR>
+nnoremap [l :lprevious<CR>
+nnoremap ]a :next<CR>
+nnoremap [a :previous<CR>
 
 " clipboard
 if !has('clipboard') && executable('clip.exe')
@@ -1044,23 +1047,23 @@ else
 endif
 
 " git
-map g1 :Git<CR>
-map gA :Gwrite<CR>:echo 'File staged'<CR>|" git add
-map gCC :Git commit -v <CR>
-map gCA :Git commit -v --amend <CR>
-map g= :Git diff % <CR><C-W>_
-map gl :Git --paginate l -50<CR><C-W>_
+nnoremap g1 :Git<CR>
+nnoremap gA :Gwrite<CR>:echo 'File staged'<CR>|" git add
+nnoremap gCC :Git commit -v <CR>
+nnoremap gCA :Git commit -v --amend <CR>
+nnoremap g= :Git diff % <CR><C-W>_
+nnoremap gl :Git --paginate l -50<CR><C-W>_
 
 " toggle options
-map <leader>oi :setlocal wrap wrapscan nohlsearch cursorline nocursorcolumn number norelativenumber<CR>
-map <leader>od :windo setlocal wrap wrapscan nohlsearch nocursorline nocursorcolumn nonumber relativenumber<CR>p
-map <leader>oh :set hlsearch!<CR>:set hlsearch?<CR>
-map <leader>ol :setlocal cursorline!<CR>
-map <leader>o+ :setlocal cursorcolumn!<CR>
-map <leader>on :setlocal number!<CR>
-map <leader>op :set paste!<CR>:set paste?<CR>
-map <leader>or :setlocal relativenumber!<CR>
-map <leader>ow :setlocal wrap!<CR>:set wrap?<CR>
+nnoremap <leader>oi :setlocal wrap wrapscan nohlsearch cursorline nocursorcolumn number norelativenumber<CR>
+nnoremap <leader>od :windo setlocal wrap wrapscan nohlsearch nocursorline nocursorcolumn nonumber relativenumber<CR>p
+nnoremap <leader>oh :set hlsearch!<CR>:set hlsearch?<CR>
+nnoremap <leader>ol :setlocal cursorline!<CR>
+nnoremap <leader>o+ :setlocal cursorcolumn!<CR>
+nnoremap <leader>on :setlocal number!<CR>
+nnoremap <leader>op :set paste!<CR>:set paste?<CR>
+nnoremap <leader>or :setlocal relativenumber!<CR>
+nnoremap <leader>ow :setlocal wrap!<CR>:set wrap?<CR>
 
 set wrap wrapscan nohlsearch cursorline nocursorcolumn number norelativenumber
 let g:loaded_vimrc=1
