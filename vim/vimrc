@@ -550,9 +550,12 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal*.md setlocal foldmethod=manual
     autocmd CursorHold  *journal*.md setlocal foldmethod=expr syntax=ON
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>ct <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>ct :call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>et C<-o>:call BanJournal_EndCurrentTask()<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>tn <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>tn :call BanJournal_AddTimestampNoteToCurrentLine()<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>day <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine($JOURNAL_PROJECT)<CR><Esc>A
 
