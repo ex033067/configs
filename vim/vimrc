@@ -38,11 +38,11 @@ Plug 'viniciusban/vim-polyglot'
 Plug 'davidhalter/jedi-vim'
 let g:jedi#popup_on_dot=0
 let g:jedi#show_call_signatures_delay=100
-let g:jedi#goto_command = 'gD' |"# '<localleader>jd'
-let g:jedi#goto_assignments_command = '<localleader>jg'
-let g:jedi#goto_stubs_command = '<localleader>js'
-let g:jedi#rename_command = '<localleader>jr'
-let g:jedi#usages_command = '<localleader>jn'
+let g:jedi#goto_command = '<localleader>D'
+let g:jedi#goto_assignments_command = ''
+let g:jedi#goto_stubs_command = ''
+let g:jedi#rename_command = '<localleader>r'
+let g:jedi#usages_command = '<localleader>n'
 
 " My discreet color schemes
 Plug 'viniciusban/vim-simple-onblack-colorschemes'
