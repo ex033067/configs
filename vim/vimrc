@@ -560,9 +560,9 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>ct :call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>et C<-o>:call BanJournal_EndCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>et <C-o>:call BanJournal_EndCurrentTask()<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>pt :call BanJournal_PauseCurrentTask()<CR>
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>pt C<-o>:call BanJournal_PauseCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>pt <C-o>:call BanJournal_PauseCurrentTask()<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>tn <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>tn :call BanJournal_AddTimestampNoteToCurrentLine()<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>tN <C-o>:call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
