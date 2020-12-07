@@ -603,7 +603,7 @@ augroup aug_viniciusban_journal
             echom 'Error: Not a task'
             return
         endif
-        call BanJournal_DoEndTask(lnum, task_code)
+        call BanJournal_DoEndTask(task_code)
         normal zv
     endfunction
 
@@ -685,7 +685,7 @@ augroup aug_viniciusban_journal
         normal zx
     endfunction
 
-    function! BanJournal_DoEndTask(lnum, task_code)
+    function! BanJournal_DoEndTask(task_code)
         " Remove from BACKLOG. Move from DOING to DONE.
 
         let task_item_lnum = BanJournal_FindTaskItemWithTaskCode(a:task_code)
