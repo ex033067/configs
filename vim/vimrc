@@ -891,8 +891,11 @@ augroup aug_viniciusban_journal
 
     function! BanJournal_AddTimestampNoteWhenPausingTask(task_code)
         let [_, last_lnum] = BanJournal_GetTaskSectionInterval(a:task_code)
-        call append(last_lnum, ['', ''])
-        call BanJournal_AddTimestampNoteToLine(last_lnum + 2, '#paused')
+        let note_lnum = last_lnum + 2
+        call append(note_lnum, ['', ''])
+        call BanJournal_AddTimestampNoteToLine(note_lnum, '#paused')
+        call cursor(note_lnum, 1)
+        normal zv
     endfunction
 
     function! BanJournal_GetTaskSectionInterval(task_code)
