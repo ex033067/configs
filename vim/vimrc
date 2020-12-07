@@ -569,6 +569,8 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>tN :call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>day <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine($JOURNAL_PROJECT)<CR><Esc>A
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>wt :let _=strftime('%Y-%m-%d')<CR>:call BanJournal_ListTasksInDate('=_<CR>')
+
 
     " New journal file support functions
     " ----------------------------------
@@ -910,6 +912,67 @@ augroup aug_viniciusban_journal
         call cursor(initial_lnum, 1)
 
         return [task_first_lnum, task_last_lnum]
+    endfunction
+
+    function! BanJournal_ListTasksInDate(when)
+        " Use location list to show all the tasks I have worked on in that date.
+        let _loclist_template = '{filename}:{lnum}:{message}'
+        let _loclist_template = substitute(_loclist_template, '{filename}', expand('%'), '')
+
+        execute 'lvimgrep '. a:when . ' '. expand('%')
+
+        let tasks_worked_on = {}
+
+        for line in getloclist(0)
+            let [lnum, text] = [line['lnum'], line['text']]
+
+            if match(text, '^- \[.\] ') > -1
+                " line is a task item
+                let matches = matchlist(getline(lnum), ' \(_\w\{-\}_\)\>.\(.*\)')
+                let task_code = matches[1]
+                let description = matches[2]
+                let text = task_code .' '. description
+            elseif match(text, '^## ') > -1
+                " line is the start of a task session
+                let matches = matchlist(getline(lnum), ' \(_\w\{-\}_\)\>.\(.*\)')
+                let task_code = matches[1]
+                let description = matches[2]
+                let text = task_code .' '. description
+            elseif match(text, '^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d ') > -1
+                " line is a timestamp note
+                let task_code = BanJournal_GetTaskCodeFromInsideTaskSection(lnum)
+                let [first_lnum, _] = BanJournal_GetTaskSectionInterval(task_code)
+                let matches = matchlist(getline(first_lnum), ' \(_\w\{-\}_\)\>.\(.*\)')
+                let task_code = matches[1]
+                let description = matches[2]
+                let text = task_code .' '. description
+            else
+                continue
+            endif
+
+            if match(task_code, '_daily_\|_timesheet_') > -1
+                " ignore daily and timesheet tasks
+                continue
+            endif
+
+            let tasks_worked_on[task_code] = {'lnum': lnum, 'text': text}
+        endfor
+
+        let sorted_list = sort(values(tasks_worked_on), 'BanJournal_SortListTasksInDate')
+        let loclist = []
+        for item in sorted_list
+            let line = substitute(_loclist_template, '{lnum}', item['lnum'], '')
+            let line = substitute(line, '{message}', item['text'], '')
+            call add(loclist, line)
+        endfor
+        lexpr loclist
+    endfunction
+
+    function! BanJournal_SortListTasksInDate(first, second)
+        if a:first['lnum'] < a:second['lnum']
+            return -1
+        endif
+        return 1
     endfunction
 
 
