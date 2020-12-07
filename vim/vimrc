@@ -561,6 +561,8 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>et C<-o>:call BanJournal_EndCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>pt :call BanJournal_PauseCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>pt C<-o>:call BanJournal_PauseCurrentTask()<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>tn <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>tn :call BanJournal_AddTimestampNoteToCurrentLine()<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>tN <C-o>:call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
@@ -603,6 +605,16 @@ augroup aug_viniciusban_journal
         endif
         call BanJournal_DoEndTask(lnum, task_code)
         normal zv
+    endfunction
+
+    function! BanJournal_PauseCurrentTask()
+        let lnum = line('.')
+        let task_code = BanJournal_GetTaskCodeForLine(lnum)
+        if task_code == ''
+            echom 'Error: Not a task'
+            return
+        endif
+        call BanJournal_DoPauseTask(task_code)
     endfunction
 
     function! BanJournal_AddTimestampNoteToCurrentLine(description = '', option = '')
@@ -681,6 +693,14 @@ augroup aug_viniciusban_journal
         call BanJournal_MoveTaskToDone(a:task_code)
         call BanJournal_AddEndDateToTaskTitle(a:task_code)
         call BanJournal_AddTimestampNoteWhenFinishingTask(a:task_code)
+    endfunction
+
+    function! BanJournal_DoPauseTask(task_code)
+        " Mark task as paused.
+
+        let task_item_lnum = BanJournal_FindTaskItemWithTaskCode(a:task_code)
+        call BanJournal_MarkTaskAtLineAsPaused(task_item_lnum)
+        call BanJournal_AddTimestampNoteWhenPausingTask(a:task_code)
     endfunction
 
     function! BanJournal_AddTimestampNoteToLine(lnum, description = '', ...)
@@ -800,6 +820,12 @@ augroup aug_viniciusban_journal
         call setline(a:lnum, new_line)
     endfunction
 
+    function! BanJournal_MarkTaskAtLineAsPaused(lnum)
+        let contents = getline(a:lnum)
+        let new_line= substitute(contents, '\[.\] ', '\[.\] ', '')
+        call setline(a:lnum, new_line)
+    endfunction
+
     function! BanJournal_CopyTaskAtLineToDoing(lnum)
         let task_item = getline(a:lnum)
         let task_section_heading = substitute(task_item, '^- \[.\]', '##', '')
@@ -859,6 +885,12 @@ augroup aug_viniciusban_journal
         let task_lnums = BanJournal_GetTaskSectionInterval(a:task_code)
         call append(task_lnums[1], ['', '', '', ''])
         call BanJournal_AddTimestampNoteToLine(task_lnums[1] + 2, '#end')
+    endfunction
+
+    function! BanJournal_AddTimestampNoteWhenPausingTask(task_code)
+        let [first_line, last_line] = BanJournal_GetTaskSectionInterval(a:task_code)
+        call append(last_line, ['', ''])
+        call BanJournal_AddTimestampNoteToLine(last_line + 2, '#paused')
     endfunction
 
     function! BanJournal_GetTaskSectionInterval(task_code)
