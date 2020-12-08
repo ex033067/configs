@@ -918,12 +918,10 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_ListTasksInDate(when)
-        " Use location list to show all the tasks I have worked on in that date.
-        let _loclist_template = '{filename}:{lnum}:{message}'
-        let _loclist_template = substitute(_loclist_template, '{filename}', expand('%'), '')
+        " Use location list to show all the tasks I have worked on at that date.
         let v:errmsg = ''
-
         silent! execute 'lvimgrep '. a:when . ' '. expand('%')
+
         if v:errmsg != ''
             echohl ErrorMsg | echom 'Nothing found for ' . a:when | echohl None
             return
@@ -939,13 +937,11 @@ augroup aug_viniciusban_journal
                 let matches = matchlist(getline(lnum), ' \(_\w\{-\}_\)\>.\(.*\)')
                 let task_code = matches[1]
                 let description = matches[2]
-                let text = task_code .' '. description
             elseif match(text, '^## ') > -1
                 " line is the start of a task session
                 let matches = matchlist(getline(lnum), ' \(_\w\{-\}_\)\>.\(.*\)')
                 let task_code = matches[1]
                 let description = matches[2]
-                let text = task_code .' '. description
             elseif match(text, '^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d ') > -1
                 " line is a timestamp note
                 let task_code = BanJournal_GetTaskCodeFromInsideTaskSection(lnum)
@@ -953,7 +949,6 @@ augroup aug_viniciusban_journal
                 let matches = matchlist(getline(first_lnum), ' \(_\w\{-\}_\)\>.\(.*\)')
                 let task_code = matches[1]
                 let description = matches[2]
-                let text = task_code .' '. description
             else
                 continue
             endif
@@ -963,17 +958,18 @@ augroup aug_viniciusban_journal
                 continue
             endif
 
-            let tasks_worked_on[task_code] = {'lnum': lnum, 'text': text}
+            let tasks_worked_on[task_code] = {'lnum': lnum, 'text': description, 'task_code': task_code}
         endfor
 
         let sorted_list = sort(values(tasks_worked_on), 'BanJournal_SortListTasksInDate')
-        let loclist = []
+        let loclist_lines = []
+        let filename = expand('%')
+
         for item in sorted_list
-            let line = substitute(_loclist_template, '{lnum}', item['lnum'], '')
-            let line = substitute(line, '{message}', item['text'], '')
-            call add(loclist, line)
+            let line = {'filename': filename, 'module': item['task_code'], 'lnum': item['lnum'], 'text': item['text']}
+            call add(loclist_lines, line)
         endfor
-        lexpr loclist
+        call setloclist(0, [], 'r', {'title': 'Tasks for '. a:when, 'items': loclist_lines})
     endfunction
 
     function! BanJournal_SortListTasksInDate(first, second)
