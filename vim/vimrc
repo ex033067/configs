@@ -934,12 +934,12 @@ augroup aug_viniciusban_journal
 
             if match(text, '^- \[.\] ') > -1
                 " line is a task item
-                let matches = matchlist(getline(lnum), ' \(_\w\{-\}_\)\>.\(.*\)')
+                let matches = matchlist(text, ' \(_\w\{-\}_\)\>.\(.*\)')
                 let task_code = matches[1]
                 let description = matches[2]
             elseif match(text, '^## ') > -1
                 " line is the start of a task session
-                let matches = matchlist(getline(lnum), ' \(_\w\{-\}_\)\>.\(.*\)')
+                let matches = matchlist(text, ' \(_\w\{-\}_\)\>.\(.*\)')
                 let task_code = matches[1]
                 let description = matches[2]
             elseif match(text, '^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d ') > -1
