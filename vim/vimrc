@@ -942,13 +942,25 @@ augroup aug_viniciusban_journal
                 let matches = matchlist(text, ' \(_\w\{-\}_\)\>.\(.*\)')
                 let task_code = matches[1]
                 let description = matches[2]
-            elseif match(text, '^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d ') > -1
+            elseif match(text, '^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d \(_\w\{-\}_\>\)\?\(.*\)') > -1
                 " line is a timestamp note
-                let task_code = BanJournal_GetTaskCodeFromInsideTaskSection(lnum)
+                let notes = ''
+                let matches = matchlist(text, '^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d \(_\w\{-\}_\>\)\?\(.*\)')
+                if matches[1] != ''
+                    let task_code = matches[1]
+                    if matches[2] != ''
+                        let notes = matches[2]
+                    endif
+                else
+                    let task_code = BanJournal_GetTaskCodeFromInsideTaskSection(lnum)
+                endif
+
                 let [first_lnum, _] = BanJournal_GetTaskSectionInterval(task_code)
-                let matches = matchlist(getline(first_lnum), ' \(_\w\{-\}_\)\>.\(.*\)')
-                let task_code = matches[1]
-                let description = matches[2]
+                " let matches = matchlist(getline(first_lnum), ' \(_\w\{-\}_\)\>.\(.*\)')
+                " let task_code = matches[1]
+                " let description = matches[2] . notes
+                let matches = matchlist(getline(first_lnum), ' _\w\{-\}_\>.\(.*\)')
+                let description = matches[1] . notes
             else
                 continue
             endif
