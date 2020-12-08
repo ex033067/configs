@@ -556,27 +556,40 @@ augroup aug_viniciusban_journal
         \ |    let b:journal_loaded=1
         \ |endif
 
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>ct <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
-    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>ct :call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
-    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>st :call BanJournal_StartCurrentTask()<CR>
-    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>et :call BanJournal_EndCurrentTask()<CR>
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>et <C-o>:call BanJournal_EndCurrentTask()<CR>
-    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>pt :call BanJournal_PauseCurrentTask()<CR>
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>pt <C-o>:call BanJournal_PauseCurrentTask()<CR>
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>tn <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
-    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>tn :call BanJournal_AddTimestampNoteToCurrentLine()<CR>
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>tN <C-o>:call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
-    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>tN :call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>day <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine($JOURNAL_PROJECT)<CR><Esc>A
-    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>wt :let _=strftime('%Y-%m-%d')<CR>:call BanJournal_ListTasksTouchedOnDate('=_<CR>')
+    " task items
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>t  <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>t  :call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>T  <C-o>:call BanJournal_CreateTask('<project>')
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>T  :call BanJournal_CreateTask('<project>')
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>*  :call BanJournal_StartCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>8  :call BanJournal_StartCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>x  :call BanJournal_EndCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>x  <C-o>:call BanJournal_EndCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>.  :call BanJournal_PauseCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>.  <C-o>:call BanJournal_PauseCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>l  :let _=strftime('%Y-%m-%d')<CR>:call BanJournal_ListTasksTouchedOnDate('=_<CR>')
+
+    " timestamp notes
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>n  <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>n  :call BanJournal_AddTimestampNoteToCurrentLine()<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>N  <C-o>:call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>N  :call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
+    autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> ]n :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR>
+    autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> [n :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
+
+    " daily records
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>d  <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>s  <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine('<project>')
+
 
 
     " New journal file support functions
     " ----------------------------------
 
     function! BanJournal_ShowMappings()
-        return 'Tasks: \ct(create) \st(start) \et(end) \tn(timestamp note) \day \ts(timesheet)'
+        echom '      New: day \d      timesheet \s'
+        echom '    Tasks: create \t   start \*   end \x   pause \.   touched \l'
+        echom 'Timestamp: create \n   prev [n    next ]n'
     endfunction
 
     function! BanJournal_CreateTask(project)
