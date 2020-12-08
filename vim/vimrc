@@ -917,13 +917,13 @@ augroup aug_viniciusban_journal
         return [task_first_lnum, task_last_lnum]
     endfunction
 
-    function! BanJournal_ListTasksInDate(when)
+    function! BanJournal_ListTasksInDate(date_arg)
         " Use location list to show all the tasks I have worked on at that date.
         let v:errmsg = ''
-        silent! execute 'lvimgrep '. a:when . ' '. expand('%')
+        silent! execute 'lvimgrep '. a:date_arg . ' '. expand('%')
 
         if v:errmsg != ''
-            echohl ErrorMsg | echom 'Nothing found for ' . a:when | echohl None
+            echohl ErrorMsg | echom 'Nothing found for ' . a:date_arg | echohl None
             return
         endif
 
@@ -969,7 +969,7 @@ augroup aug_viniciusban_journal
             let line = {'filename': filename, 'module': item['task_code'], 'lnum': item['lnum'], 'text': item['text']}
             call add(loclist_lines, line)
         endfor
-        call setloclist(0, [], 'r', {'title': 'Tasks for '. a:when, 'items': loclist_lines})
+        call setloclist(0, [], 'r', {'title': 'Tasks for '. a:date_arg, 'items': loclist_lines})
     endfunction
 
     function! BanJournal_SortListTasksInDate(first, second)
