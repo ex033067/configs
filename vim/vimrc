@@ -1180,11 +1180,12 @@ else
 endif
 
 " git
-nnoremap gG :Git<CR>
-nnoremap gA :Gwrite<CR>:echo 'File staged'<CR>|" git add
+nnoremap g1 :Gwrite<CR>:echo 'File staged'<CR>|" git add
+nnoremap g! :Git reset -- % <CR>|" unstage
 nnoremap gC :Git commit -v <CR>
-nnoremap g! :Git commit -v --amend <CR>
+nnoremap gA :Git commit -v --amend <CR>
 nnoremap g= :Git diff % <CR><C-W>_
+nnoremap g. gg:Ghdiffsplit <CR>
 nnoremap gl :Git --paginate l -50<CR><C-W>_
 
 " toggle options
