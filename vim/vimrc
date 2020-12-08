@@ -949,18 +949,33 @@ augroup aug_viniciusban_journal
                 if matches[1] != ''
                     let task_code = matches[1]
                     if matches[2] != ''
-                        let notes = matches[2]
+                        let notes = trim(matches[2])
                     endif
                 else
                     let task_code = BanJournal_GetTaskCodeFromInsideTaskSection(lnum)
                 endif
 
                 let [first_lnum, _] = BanJournal_GetTaskSectionInterval(task_code)
-                " let matches = matchlist(getline(first_lnum), ' \(_\w\{-\}_\)\>.\(.*\)')
-                " let task_code = matches[1]
-                " let description = matches[2] . notes
                 let matches = matchlist(getline(first_lnum), ' _\w\{-\}_\>.\(.*\)')
-                let description = matches[1] . notes
+                let task_description = trim(matches[1])
+
+                " Get subsection title to show in location list
+                let initial_lnum = line('.')
+                call cursor(lnum, 1)
+                let subsection_lnum = search('^#', 'bnW', first_lnum)
+                call cursor(initial_lnum, 1)
+                if subsection_lnum <= first_lnum
+                    let subsection_title = ''
+                else
+                    let matches = matchlist(getline(subsection_lnum), '^#\+ \(.\+\)')
+                    let subsection_title = matches[1]
+                endif
+
+                if subsection_title == ''
+                    let description = task_description .' | '. notes
+                else
+                    let description = task_description .' | '. subsection_title .' | '. notes
+                endif
             else
                 continue
             endif
