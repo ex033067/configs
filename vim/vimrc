@@ -921,8 +921,13 @@ augroup aug_viniciusban_journal
         " Use location list to show all the tasks I have worked on in that date.
         let _loclist_template = '{filename}:{lnum}:{message}'
         let _loclist_template = substitute(_loclist_template, '{filename}', expand('%'), '')
+        let v:errmsg = ''
 
-        execute 'lvimgrep '. a:when . ' '. expand('%')
+        silent! execute 'lvimgrep '. a:when . ' '. expand('%')
+        if v:errmsg != ''
+            echohl ErrorMsg | echom 'Nothing found for ' . a:when | echohl None
+            return
+        endif
 
         let tasks_worked_on = {}
 
