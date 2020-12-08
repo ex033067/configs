@@ -569,7 +569,7 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>tN :call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>day <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>ts <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine($JOURNAL_PROJECT)<CR><Esc>A
-    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>wt :let _=strftime('%Y-%m-%d')<CR>:call BanJournal_ListTasksInDate('=_<CR>')
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>wt :let _=strftime('%Y-%m-%d')<CR>:call BanJournal_ListTasksTouchedOnDate('=_<CR>')
 
 
     " New journal file support functions
@@ -917,8 +917,8 @@ augroup aug_viniciusban_journal
         return [task_first_lnum, task_last_lnum]
     endfunction
 
-    function! BanJournal_ListTasksInDate(date_arg)
-        " Use location list to show all the tasks I have worked on at that date.
+    function! BanJournal_ListTasksTouchedOnDate(date_arg)
+        " Use location list to show all the tasks I have worked on that date.
         let v:errmsg = ''
         silent! execute 'lvimgrep '. a:date_arg . ' '. expand('%')
 
@@ -927,10 +927,10 @@ augroup aug_viniciusban_journal
             return
         endif
 
-        let tasks_worked_on = {}
+        let tasks_touched = {}
 
-        for line in getloclist(0)
-            let [lnum, text] = [line['lnum'], line['text']]
+        for item in getloclist(0)
+            let [lnum, text] = [item['lnum'], item['text']]
 
             if match(text, '^- \[.\] ') > -1
                 " line is a task item
@@ -958,21 +958,26 @@ augroup aug_viniciusban_journal
                 continue
             endif
 
-            let tasks_worked_on[task_code] = {'lnum': lnum, 'text': description, 'task_code': task_code}
+            let tasks_touched[task_code] = {'lnum': lnum, 'text': description, 'task_code': task_code}
         endfor
 
-        let sorted_list = sort(values(tasks_worked_on), 'BanJournal_SortListTasksInDate')
-        let loclist_lines = []
+        let sorted_list = sort(values(tasks_touched), 'BanJournal_SortListOfTasksTouchedOnDateByLnum')
+        let new_items = []
         let filename = expand('%')
 
         for item in sorted_list
-            let line = {'filename': filename, 'module': item['task_code'], 'lnum': item['lnum'], 'text': item['text']}
-            call add(loclist_lines, line)
+            call add(new_items, {
+                \ 'filename': filename,
+                \ 'module': item['task_code'],
+                \ 'lnum': item['lnum'],
+                \ 'text': item['text']
+                \})
         endfor
-        call setloclist(0, [], 'r', {'title': 'Tasks for '. a:date_arg, 'items': loclist_lines})
+        call setloclist(0, [], 'r', {'title': 'Tasks for '. a:date_arg, 'items': new_items})
+        lopen
     endfunction
 
-    function! BanJournal_SortListTasksInDate(first, second)
+    function! BanJournal_SortListOfTasksTouchedOnDateByLnum(first, second)
         if a:first['lnum'] < a:second['lnum']
             return -1
         endif
