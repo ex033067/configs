@@ -450,25 +450,17 @@ function! FtPython()
         let g:test_target = ''
     endif
 
-    " \tt run tests in current vim session.
-    " \TT run tests in tmux next pane.
-    nnoremap <localleader>tt :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>
-    nnoremap <silent> <localleader>TT :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .g:test_target. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>
-
-    " t<CR> run tests in current vim session.
-    " T<CR> run tests in tmux next pane.
-    nnoremap t<CR> :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>
-    nnoremap <silent> T<CR> :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .g:test_target. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>
+    nnoremap t<CR> :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR> |" Run tests in current vim session
+    nnoremap <silent> T<CR> :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .g:test_target. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR> |" Run tests in tmux next pane
 
     " \tC configure the test command (along with its arguments).
-    " Examples:
+    " Examples below:
     "   - pytest --pyargs
     "   - python manage.py test -v 2
     "   - python -m unittest
     nnoremap <localleader>tC :let g:test_command='<c-r>=g:test_command<cr>'
 
-    " \tn Make a test name from current line contents
-    nnoremap <buffer> <localleader>tn :call BanPython_MakeValidPythonTestName() <CR>
+    nnoremap <buffer> <localleader>tn :call BanPython_MakeValidPythonTestName() <CR> |" Make a test name from current line contents
 
     " Mark the target and run tests
     nnoremap <buffer> <localleader>ta :wall <CR>:call BanPython_RunAllTestSuite(g:test_command) <CR>
@@ -486,8 +478,7 @@ function! FtPython()
     nnoremap <buffer> <localleader>TM :wall <CR>:call BanPython_SetCurrentMethodAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
     nnoremap <buffer> <localleader>TF :wall <CR>:call BanPython_SetCurrentFunctionAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
 
-    " copy current filename and function/method to register z in pytest format (JOE specific)
-    nnoremap <silent> <localleader>tr :let cursorpos = getcurpos() <CR>:call search('def test', 'besc') <CR>:execute 'normal bye' <CR>:let @z = substitute(expand('%'), '.*joe/tests/', '', '').'::'.getreg('"') <CR>:call setpos('.', cursorpos) <CR>:let test_cmd = "t " .trim(getreg('z'))<CR>:execute '!tmux send-keys -t JOE:src.1 -l "' .test_cmd. '"'<CR>:execute '!tmux send-keys -t JOE:src.1 Enter'<CR><CR>
+    nnoremap <silent> <localleader>tr :let cursorpos = getcurpos() <CR>:call search('def test', 'besc') <CR>:execute 'normal bye' <CR>:let @z = substitute(expand('%'), '.*joe/tests/', '', '').'::'.getreg('"') <CR>:call setpos('.', cursorpos) <CR>:let test_cmd = "t " .trim(getreg('z'))<CR>:execute '!tmux send-keys -t JOE:src.1 -l "' .test_cmd. '"'<CR>:execute '!tmux send-keys -t JOE:src.1 Enter'<CR><CR> |" Copy current filename and function/method to register z in pytest format (JOE specific)
 
     syn keyword pythonTodo          TODO FIXME NOTE contained
     hi! link pythonBuiltin Statement
@@ -509,9 +500,11 @@ augroup aug_ft_gitcommit
     autocmd FileType gitcommit setlocal foldenable foldmethod=syntax
     autocmd BufRead COMMIT_EDITMSG setlocal nocursorline
     autocmd BufRead COMMIT_EDITMSG call execute(['normal gg'])
+
     " go to next/prev file in commit
     autocmd FileType gitcommit nnoremap <silent> <buffer> ]] :call search('^diff\\|^# On branch', "z")<CR>ztzv
     autocmd FileType gitcommit nnoremap <silent> <buffer> [[ :call search('^diff\\|^# On branch', "b")<CR>ztzv
+
     " go to next/prev change
     autocmd FileType gitcommit nnoremap <silent> <buffer> ]c :call search('^@@', "z")<CR>zt
     autocmd FileType gitcommit nnoremap <silent> <buffer> [c :call search('^@@', "b")<CR>zt
@@ -569,16 +562,16 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>l  :let _=strftime('%Y-%m-%d')<CR>:call BanJournal_ListTasksTouchedOnDate('=_<CR>')
 
     " timestamp notes
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>n  <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
-    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>n  :call BanJournal_AddTimestampNoteToCurrentLine()<CR>
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>N  <C-o>:call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
-    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>N  :call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
-    autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> ]n :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR>
-    autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> [n :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>n <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>n :call BanJournal_AddTimestampNoteToCurrentLine()<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>N <C-o>:call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>N :call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
+    autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> [n :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR> |" Go to prev timestamp note
+    autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> ]n :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR> |" Go to next timestamp note
 
     " daily records
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>d  <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>s  <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine('<project>')
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>d <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>s <C-o>:call BanJournal_CreateTheTimesheetTaskInCurrentLine('<project>')
 
 
 
@@ -1081,19 +1074,21 @@ set modeline
 " Global mappings
 " ==================================================
 
-" Show highlight group of word under cursor
+" General mappings
+nnoremap <leader>9 :call BanChangeColorscheme()<CR>
 nnoremap <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
     \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
     \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
-nnoremap <leader>9 :call BanChangeColorscheme()<CR>
+    \ |" Show highlight group of word under cursor
 
+" Show/hide helpers
 nnoremap <leader>1 :NERDTreeToggle<CR>
 nnoremap <leader>2 :FZF<CR>
 nnoremap <leader>3 :Buffers<CR>
 nnoremap <leader>4 :TagbarToggle<CR>
 
-nnoremap <leader>< <plug>(QuickScopeToggle)
-xnoremap <leader>< <plug>(QuickScopeToggle)
+nnoremap <leader>< <plug>(QuickScopeToggle) |" Show/hide quick scope
+xnoremap <leader>< <plug>(QuickScopeToggle) |" Show/hide quick scope
 
 " editing
 inoremap KJ <C-Bslash><C-N>|" back to normal mode
@@ -1160,7 +1155,7 @@ endfunction
 " file and buffer
 nnoremap <leader>w :update<CR>
 nnoremap <leader>fd :saveas! %:p.copy<CR>| " duplicate current file
-nnoremap <silent> <leader>= :update<CR>:let _state=winsaveview()<CR>gg=G:call winrestview(_state)<CR>:unlet _state<CR>
+nnoremap <silent> <leader>= :update<CR>:let _state=winsaveview()<CR>gg=G:call winrestview(_state)<CR>:unlet _state<CR> |" Format all the source code and move back to original position
 
 " navigation
 nnoremap <Space> <C-F>
@@ -1173,8 +1168,7 @@ nnoremap [a :previous<CR>
 
 " clipboard
 if !has('clipboard') && executable('clip.exe')
-    " Use Windows clipboard under WSL
-    vnoremap <leader>y "sy:call system('clip.exe', @s)<CR>
+    vnoremap <leader>y "sy:call system('clip.exe', @s)<CR> |" Copy to Windows clipboard under WSL
 else
     vnoremap <leader>y "+y
 endif
