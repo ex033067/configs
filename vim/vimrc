@@ -1159,7 +1159,7 @@ endfunction
 " file and buffer
 nnoremap <leader>w :update<CR>
 nnoremap <leader>fd :saveas! %:p.copy<CR>| " duplicate current file
-nnoremap <silent> <buffer> == :update<CR>gg=G
+nnoremap <silent> <leader>= :update<CR>:let _state=winsaveview()<CR>gg=G:call winrestview(_state)<CR>:unlet _state<CR>
 
 " navigation
 nnoremap <Space> <C-F>
