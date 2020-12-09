@@ -1096,6 +1096,7 @@ nnoremap <leader>< <plug>(QuickScopeToggle)
 xnoremap <leader>< <plug>(QuickScopeToggle)
 
 " editing
+inoremap KJ <C-Bslash><C-N>|" back to normal mode
 nnoremap <leader>d :call DuplicateLine("normal")<CR>
 vnoremap <leader>d :<C-U>call DuplicateLine("visual")<CR>
 function! DuplicateLine(mode)
