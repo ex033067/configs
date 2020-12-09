@@ -1178,13 +1178,13 @@ nnoremap g1 :Gwrite<CR>:echo 'File staged'<CR>|" git add
 nnoremap g! :Git reset -- % <CR>|" unstage
 nnoremap gC :Git commit -v <CR>
 nnoremap gA :Git commit -v --amend <CR>
-nnoremap g= :Git diff % <CR><C-W>_
+nnoremap g= :Git diff % <CR>:wincmd _<CR>
 nnoremap g. gg:Ghdiffsplit <CR>
-nnoremap gl :Git --paginate l -50<CR><C-W>_
+nnoremap gl :Git --paginate l -50<CR>:wincmd _<CR>
 
 " toggle options
 nnoremap <silent> <leader>oe :setlocal wrap wrapscan nohlsearch cursorline nocursorcolumn number norelativenumber<CR>
-nnoremap <silent> <leader>od :windo setlocal wrap wrapscan nohlsearch nocursorline nocursorcolumn nonumber relativenumber<CR>p
+nnoremap <silent> <leader>od :windo setlocal wrap wrapscan nohlsearch nocursorline nocursorcolumn nonumber relativenumber<CR>:wincmd p<CR>
 nnoremap <silent> <leader>oh :set hlsearch!<CR>:set hlsearch?<CR>
 nnoremap <silent> <leader>o- :setlocal cursorline!<CR>
 nnoremap <silent> <leader>o\ :setlocal cursorcolumn!<CR>
