@@ -414,7 +414,6 @@ function! FtPython()
     execute 'setlocal equalprg='.b:_equalprg
     unlet b:_equalprg
 
-    nnoremap <buffer> <localleader>= :update<CR><Esc>gg=G
     nnoremap <buffer> <localleader>m :update<CR>:make %<CR>
 
     " Mappings for classes, functions and docstrings text-objects
