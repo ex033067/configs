@@ -567,10 +567,20 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_EndCurrentTask()
+        let journal_task_patt = '^- \[.\] _\w\+_\>'
+        let simple_task_patt = '^- \[.\] '
+
         let lnum = line('.')
+        if match(getline(lnum), journal_task_patt) > -1
+            let _=1
+        elseif match(getline(lnum), simple_task_patt) > -1
+            call BanJournal_MarkTaskAtLineAsDone(lnum)
+            return
+        endif
+
         let task_code = BanJournal_GetTaskCodeForLine(lnum)
         if task_code == ''
-            echom 'Error: Not a task'
+            echohl ErrorMsg | echom  'Error: Not a task' | echohl None
             return
         endif
         call BanJournal_DoEndTask(task_code)
@@ -787,6 +797,11 @@ augroup aug_viniciusban_journal
     function! BanJournal_MarkTaskAtLineAsDoing(lnum)
         let contents = getline(a:lnum)
         let new_line= substitute(contents, '\[.\] ', '\[*\] ', '')
+        call setline(a:lnum, new_line)
+    endfunction
+
+    function! BanJournal_MarkTaskAtLineAsDone(lnum)
+        let new_line= substitute(getline(a:lnum), '\[.\] ', '\[x\] ', '')
         call setline(a:lnum, new_line)
     endfunction
 
