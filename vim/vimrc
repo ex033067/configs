@@ -476,8 +476,7 @@ augroup aug_list_items
     au!
 
     " add item
-    autocmd FileType markdown,text nnoremap <buffer> <localleader>i o- [ ]
-    autocmd FileType markdown,text inoremap <buffer> <localleader>i - [ ]
+    autocmd FileType markdown,text inoremap <buffer> <localleader>i - [ ]<Space>
 
     " mark item as doing/done
     autocmd FileType markdown,text nnoremap <silent> <buffer> <localleader>* :keeppatterns :s/^\(\s*- \[\).]/\1*]/<CR>
