@@ -547,14 +547,23 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_StartCurrentTask()
-        " Create the task section in DOING. Keep it in BACKLOG.
+        " Mark as doing. Create the task section in DOING. Keep it in BACKLOG.
+
+        let journal_task_patt = '^- \[.\] _\w\+_\>'
+        let simple_task_patt = '^- \[.\] '
 
         let lnum = line('.')
-        call BanJournal_DoStartTaskAtLine(lnum)
-        let task_code = BanJournal_GetTaskCodeForLine(lnum)
-        let [_, last_lnum] = BanJournal_GetTaskSectionInterval(task_code)
-        call cursor(last_lnum, 1000)
-        normal zx
+        if match(getline(lnum), journal_task_patt) > -1
+            call BanJournal_DoStartTaskAtLine(lnum)
+            let task_code = BanJournal_GetTaskCodeForLine(lnum)
+            let [_, last_lnum] = BanJournal_GetTaskSectionInterval(task_code)
+            call cursor(last_lnum, 1000)
+            normal zx
+        elseif match(getline(lnum), simple_task_patt) > -1
+            call BanJournal_MarkTaskAtLineAsDoing(lnum)
+        else
+            echohl ErrorMsg | echom  'Error: Not a task' | echohl None
+        endif
     endfunction
 
     function! BanJournal_EndCurrentTask()
