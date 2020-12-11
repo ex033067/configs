@@ -500,6 +500,7 @@ augroup aug_viniciusban_journal
     " Journal file v2 behaviour and functions
     " ---------------------------------------
 
+    " As time goes by, journal becomes bigger. This block speeds up its load time.
     autocmd BufReadPre  *journal*.md let b:journal_loaded=0
     autocmd BufReadPre  *journal*.md syntax manual
     autocmd BufReadPost *journal*.md setlocal foldmethod=manual
