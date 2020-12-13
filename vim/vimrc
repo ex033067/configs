@@ -410,8 +410,8 @@ function! FtPython()
         let g:test_target = ''
     endif
 
-    nnoremap t<CR> :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR> |" Run tests in current vim session
-    nnoremap <silent> T<CR> :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .g:test_target. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR> |" Run tests in tmux next pane
+    nnoremap t<CR> :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>|" Run tests in current vim session
+    nnoremap <silent> T<CR> :update<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .g:test_target. '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>|" Run tests in tmux next pane
 
     " \tC configure the test command (along with its arguments).
     " Examples below:
@@ -420,7 +420,7 @@ function! FtPython()
     "   - python -m unittest
     nnoremap <localleader>tC :let g:test_command='<c-r>=g:test_command<cr>'
 
-    nnoremap <buffer> <localleader>tn :call BanPython_MakeValidPythonTestName() <CR> |" Make a test name from current line contents
+    nnoremap <buffer> <localleader>tn :call BanPython_MakeValidPythonTestName() <CR>|" Make a test name from current line contents
 
     " Mark targets
     nnoremap <buffer> <localleader>ta :wall <CR>:call BanPython_SetAllSuiteAsTestTarget() <CR>:echo g:test_target. ' set as test target.'<CR>
@@ -521,8 +521,8 @@ augroup aug_viniciusban_journal
     " timestamp notes
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>n <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>N <C-o>:call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
-    autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> [n :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR> |" Go to prev timestamp note
-    autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> ]n :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR> |" Go to next timestamp note
+    autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> [n :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>|" Go to prev timestamp note
+    autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> ]n :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR>|" Go to next timestamp note
 
     " daily records
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>d <C-o>:call BanJournal_StartANewDay($JOURNAL_PROJECT)<CR><Esc>A
@@ -1134,7 +1134,7 @@ endfunction
 " file and buffer
 nnoremap <leader>w :update<CR>
 nnoremap <leader>fd :saveas! %:p.copy<CR>| " duplicate current file
-nnoremap <silent> <leader>= :update<CR>:let _state=winsaveview()<CR>gg=G:call winrestview(_state)<CR>:unlet _state<CR> |" Format all the source code and move back to original position
+nnoremap <silent> <leader>= :update<CR>:let _state=winsaveview()<CR>gg=G:call winrestview(_state)<CR>:unlet _state<CR>|" Format all the source code and move back to original position
 
 " navigation
 nnoremap <Space> <C-F>
@@ -1147,7 +1147,7 @@ nnoremap [a :previous<CR>
 
 " clipboard
 if !has('clipboard') && executable('clip.exe')
-    vnoremap <leader>y "sy:call system('clip.exe', @s)<CR> |" Copy to Windows clipboard under WSL
+    vnoremap <leader>y "sy:call system('clip.exe', @s)<CR>|" Copy to Windows clipboard under WSL
 else
     vnoremap <leader>y "+y
 endif
