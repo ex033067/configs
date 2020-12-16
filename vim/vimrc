@@ -1100,15 +1100,12 @@ function! DuplicateAndCommentLine(mode)
     endif
 endfunction
 
-nnoremap <leader>s :call IsolateLineWithSpacesAround("normal")<CR>
-vnoremap <leader>s :<C-U>call IsolateLineWithSpacesAround("visual")<CR>
-function! IsolateLineWithSpacesAround(mode)
-    if a:mode == "normal"
-        call append(line(".")-1, [""])
-        call append(".", [""])
-    elseif a:mode == "visual"
-        call append(line("'<")-1, [""])
-        call append("'>", [""])
+nnoremap <leader><Space> :call IsolateLineWithSpacesAround("normal")<CR>
+vnoremap <leader><Space> :call IsolateLineWithSpacesAround("visual")<CR>
+function! IsolateLineWithSpacesAround(mode) range
+    call append(a:lastline, '')
+    call append(a:firstline -1, '')
+    if a:mode == "visual"
         normal gv
     endif
 endfunction
