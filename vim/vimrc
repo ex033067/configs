@@ -1064,8 +1064,7 @@ nnoremap <leader>2 :FZF<CR>
 nnoremap <leader>3 :Buffers<CR>
 nnoremap <leader>4 :TagbarToggle<CR>
 
-nnoremap <leader>< <plug>(QuickScopeToggle) |" Show/hide quick scope
-xnoremap <leader>< <plug>(QuickScopeToggle) |" Show/hide quick scope
+nnoremap <leader>< :QuickScopeToggle<CR>|" Show/hide quick scope
 
 " editing
 inoremap KJ <C-Bslash><C-N>|" back to normal mode
