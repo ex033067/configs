@@ -438,7 +438,7 @@ function! FtPython()
         \ :execute '!tmux send-keys -t JOE:src.1 -l "t ' .trim(_target). '"'<CR>
         \ :execute '!tmux send-keys -t JOE:src.1 Enter'<CR><CR>
         \ :unlet _curpos _curr_method _target<CR>
-        \ |" Copy current filename and function/method to register z in pytest format (JOE specific)
+        \|" Copy current filename and function/method to register z in pytest format (JOE specific)
 
     syn keyword pythonTodo          TODO FIXME NOTE contained
     hi! link pythonBuiltin Statement
@@ -1056,7 +1056,7 @@ nnoremap <leader>9 :call BanChangeColorscheme()<CR>
 nnoremap <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
     \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
     \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
-    \ |" Show highlight group of word under cursor
+    \|" Show highlight group of word under cursor
 
 " Show/hide helpers
 nnoremap <leader>1 :NERDTreeToggle<CR>
