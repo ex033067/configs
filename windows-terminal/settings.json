@@ -11,150 +11,167 @@
 // https://github.com/microsoft/terminal/blob/master/doc/cascadia/SettingsSchema.md
 
 {
-  "$schema": "https://aka.ms/terminal-profiles-schema",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
 
-  "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-  "initialRows": 20,
-  "initialCols": 90,
+    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "initialRows": 20,
+    "initialCols": 90,
 
-  "profiles": {
-    "defaults":
-    {
-      // "fontFace": "Cascadia Mono",
-      // "fontFace": "Monaco",
-      // "fontFace": "IBM Plex Mono",
-      "fontFace": "Noto Mono",
-      "fontWeight": "normal",
-      "fontSize": 14
+    "profiles": {
+        "defaults":
+        {
+            "fontFace": "IBM Plex Mono",
+            "fontSize": 14
+        },
+        "list": [
+            {
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "name": "Windows PowerShell",
+                "commandline": "powershell.exe",
+                "background": "#1e0b63"
+            },
+            {
+                "guid": "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
+                "name": "Ubuntu-18.04",
+                "commandline" : "wsl -d Ubuntu-18.04",
+                "startingDirectory" : "//wsl$/Ubuntu-18.04/home/viniciusban",
+                "icon": "C:\\Users\\vinic\\OneDrive\\Imagens\\ico\\ubuntu.ico",
+                "colorScheme": "viniciusban-flatui",
+                "cursorShape": "vintage"
+            },
+            {
+                "guid": "{e91681d4-ebfa-50dc-9302-b8db0e52d4ef}",
+                "name": "Arca63",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{eb47cabf-3a5b-598c-afde-94824793addd}",
+                "name": "Disposable",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{a6ffbc2e-866c-519c-b2e9-a2dc3aa16308}",
+                "name": "FoldingAtHome",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{6811f0b6-294b-5a3f-9c98-b6850859714e}",
+                "name": "ShippingDocker",
+                "source": "Windows.Terminal.Wsl",
+                "icon": "C:\\Users\\vinic\\OneDrive\\Imagens\\ico\\docker.ico",
+                "colorScheme": "Dracula",
+                "cursorShape": "vintage"
+            },
+            {
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "name": "cmd",
+                "commandline": "cmd.exe",
+                "hidden": false
+            },
+            {
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+                "hidden": false,
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure"
+            }
+        ]
     },
 
-    "list": [
-      {
-        "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-        "name": "Windows PowerShell",
-        "commandline": "powershell.exe",
-        "background": "#1e0b63"
-      },
-      {
-        "guid": "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
-        "name": "Ubuntu-18.04",
-        "commandline" : "wsl -d Ubuntu-18.04",
-        "startingDirectory" : "//wsl$/Ubuntu-18.04/home/viniciusban",
-        "icon": "C:\\Users\\vinic\\OneDrive\\Imagens\\ico\\ubuntu.ico",
-        "colorScheme": "Dracula-green",
-        "cursorColor": "#FFA500",
-        "cursorShape": "vintage",
-      },
-      {
-        "guid": "{e91681d4-ebfa-50dc-9302-b8db0e52d4ef}",
-        "name": "Arca63",
-        "source": "Windows.Terminal.Wsl"
-      },
-      {
-        "guid": "{eb47cabf-3a5b-598c-afde-94824793addd}",
-        "name": "Disposable",
-        "source": "Windows.Terminal.Wsl"
-      },
-      {
-        "guid": "{a6ffbc2e-866c-519c-b2e9-a2dc3aa16308}",
-        "name": "FoldingAtHome",
-        "source": "Windows.Terminal.Wsl"
-      },
-      {
-        "guid": "{6811f0b6-294b-5a3f-9c98-b6850859714e}",
-        "name": "ShippingDocker",
-        "source": "Windows.Terminal.Wsl",
-        "icon": "C:\\Users\\vinic\\OneDrive\\Imagens\\ico\\docker.ico",
-        "colorScheme": "Dracula",
-        "cursorShape": "vintage"
-      },
-      {
-        "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-        "name": "cmd",
-        "commandline": "cmd.exe",
-        "hidden": false
-      },
-      {
-        "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-        "hidden": false,
-        "name": "Azure Cloud Shell",
-        "source": "Windows.Terminal.Azure"
-      }
-    ]
-  },
+    // Add custom color schemes to this array
+    "schemes": [
+        {
+            "name" : "viniciusban-flatui",
+            "foreground" : "#ecf0f1",
+            "background" : "#181818",
+            "cursorColor": "#d35400",
+            "black" : "#2c3e50",
+            "brightBlack" : "#34495e",
+            "blue" : "#2980b9",
+            "brightBlue" : "#00d2ff",
+            "cyan" : "#7aa085",
+            "brightCyan" : "#1abc9c",
+            "green" : "#27ae60",
+            "brightGreen" : "#2ecc71",
+            "purple" : "#8e44ad",
+            "brightPurple" : "#9b59b6",
+            "red" : "#c0392b",
+            "brightRed" : "#e74c3c",
+            "white" : "#bdc3c7",
+            "brightWhite" : "#ecf0f1",
+            "yellow" : "#f39c12",
+            "brightYellow" : "#f1c40f"
+        },
+        {
+            "name" : "Dracula-green",
+            "background" : "#181818",
+            "black" : "#2C3E50",
+            "blue" : "#2980B9",
+            "brightBlack" : "#34495E",
+            "brightBlue" : "#00D2FF",
+            "brightCyan" : "#1ABC9C",
+            "brightGreen" : "#2ECC71",
+            "brightPurple" : "#9B59B6",
+            "brightRed" : "#E74C3C",
+            "brightWhite" : "#ECF0F1",
+            "brightYellow" : "#F1C40F",
+            "cyan" : "#7AA085",
+            "foreground" : "#1CCDAA",
+            "green" : "#27AE60",
+            "purple" : "#8E44AD",
+            "red" : "#C0392B",
+            "white" : "#BDC3C7",
+            "yellow" : "#F39C12",
+            "cursorColor": "#FFA500",
+            "selectionBackground": "#FFFFFF"
+        },
+        {
+            "name" : "Dracula",
+            "background" : "#282A36",
+            "black" : "#21222C",
+            "blue" : "#BD93F9",
+            "brightBlack" : "#6272A4",
+            "brightBlue" : "#D6ACFF",
+            "brightCyan" : "#A4FFFF",
+            "brightGreen" : "#69FF94",
+            "brightPurple" : "#FF92DF",
+            "brightRed" : "#FF6E6E",
+            "brightWhite" : "#FFFFFF",
+            "brightYellow" : "#FFFFA5",
+            "cyan" : "#8BE9FD",
+            "foreground" : "#F8F8F2",
+            "green" : "#50FA7B",
+            "purple" : "#FF79C6",
+            "red" : "#FF5555",
+            "white" : "#F8F8F2",
+            "yellow" : "#F1FA8C",
+            "cursorColor": "#FFA500"
+        },
+        {
+            "name": "Viniciusban Light",
+            "background": "#FFFFFF",
+            "black": "#000000",
+            "blue": "#2626AD",
+            "brightBlack": "#262626",
+            "brightBlue": "#7777E1",
+            "brightCyan": "#77E1E1",
+            "brightGreen": "#77E177",
+            "brightPurple": "#E177E1",
+            "brightRed": "#E17777",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#E1E177",
+            "cursorColor": "#FFA500",
+            "cyan": "#26ADAD",
+            "foreground": "#000000",
+            "green": "#26AD26",
+            "purple": "#AD26AD",
+            "red": "#AD2626",
+            "white": "#D9D9D9",
+            "yellow": "#ADAD26"
+        }
+    ],
 
-  // Add custom color schemes to this array
-  "schemes": [
-    {
-      "name" : "Dracula-green",
-      "background" : "#181818",
-      "black" : "#2C3E50",
-      "blue" : "#2980B9",
-      "brightBlack" : "#34495E",
-      "brightBlue" : "#00D2FF",
-      "brightCyan" : "#1ABC9C",
-      "brightGreen" : "#2ECC71",
-      "brightPurple" : "#9B59B6",
-      "brightRed" : "#E74C3C",
-      "brightWhite" : "#ECF0F1",
-      "brightYellow" : "#F1C40F",
-      "cyan" : "#7AA085",
-      "foreground" : "#1CCDAA",
-      "green" : "#27AE60",
-      "purple" : "#8E44AD",
-      "red" : "#C0392B",
-      "white" : "#BDC3C7",
-      "yellow" : "#F39C12",
-      "cursorColor": "#FFA500",
-      "selectionBackground": "#FFFFFF"
-    },
-    {
-      "name" : "Dracula",
-      "background" : "#282A36",
-      "black" : "#21222C",
-      "blue" : "#BD93F9",
-      "brightBlack" : "#6272A4",
-      "brightBlue" : "#D6ACFF",
-      "brightCyan" : "#A4FFFF",
-      "brightGreen" : "#69FF94",
-      "brightPurple" : "#FF92DF",
-      "brightRed" : "#FF6E6E",
-      "brightWhite" : "#FFFFFF",
-      "brightYellow" : "#FFFFA5",
-      "cyan" : "#8BE9FD",
-      "foreground" : "#F8F8F2",
-      "green" : "#50FA7B",
-      "purple" : "#FF79C6",
-      "red" : "#FF5555",
-      "white" : "#F8F8F2",
-      "yellow" : "#F1FA8C",
-      "cursorColor": "#FFA500"
-    },
-    {
-      "name": "Viniciusban Light",
-      "background": "#FFFFFF",
-      "black": "#000000",
-      "blue": "#2626AD",
-      "brightBlack": "#262626",
-      "brightBlue": "#7777E1",
-      "brightCyan": "#77E1E1",
-      "brightGreen": "#77E177",
-      "brightPurple": "#E177E1",
-      "brightRed": "#E17777",
-      "brightWhite": "#FFFFFF",
-      "brightYellow": "#E1E177",
-      "cursorColor": "#FFA500",
-      "cyan": "#26ADAD",
-      "foreground": "#000000",
-      "green": "#26AD26",
-      "purple": "#AD26AD",
-      "red": "#AD2626",
-      "white": "#D9D9D9",
-      "yellow": "#ADAD26"
-    }
-  ],
-
-  // Add any keybinding overrides to this array.
-  // To unbind a default keybinding, set the command to "unbound"
-  "keybindings": []
+    // Add any keybinding overrides to this array.
+    // To unbind a default keybinding, set the command to "unbound"
+    "keybindings": []
 }
+
