@@ -33,6 +33,9 @@ set-option -g window-status-current-style "fg=#FFFFFF"
 bind k select-pane -U
 bind j select-pane -D
 
+# Zoom the other pane
+bind Z select-pane -t :.+ \; resize-pane -Z
+
 # Pane numbers shown in display-panes
 set-option -g display-panes-colour "brightred"
 set-option -g display-panes-active-colour "brightwhite"
