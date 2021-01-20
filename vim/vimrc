@@ -516,6 +516,7 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>x  :call BanJournal_EndCurrentTask()<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>.  :call BanJournal_PauseCurrentTask()<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>l  :let _=strftime('%Y-%m-%d')<CR>:call BanJournal_ListTasksTouchedOnDate('=_<CR>')
+    autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> <C-]> :execute 'keeppatterns /^#\+ '. expand('<cword>')<CR>|" Go to task definition
 
     " timestamp notes
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>n <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
