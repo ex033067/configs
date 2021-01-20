@@ -1151,7 +1151,7 @@ endif
 
 " git
 nnoremap g1 :term ++close git add %<CR>
-nnoremap g! :term ++close git reset -- %'<CR>
+nnoremap g! :term ++close git reset -- %<CR>
 nnoremap gC :Git commit -v <CR>
 nnoremap gA :Git commit -v --amend <CR>
 nnoremap g= :Git diff % <CR>:wincmd _<CR>
