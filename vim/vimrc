@@ -322,6 +322,11 @@ augroup aug_ft_html
         \ ',{% call:{% endcall,{% filter:{% endfilter,{% set:{% endset'
 augroup END
 
+augroup aug_ft_vue
+    au!
+    autocmd FileType vue setlocal tabstop=2 foldenable foldlevel=5
+augroup END
+
 augroup aug_ft_json
     au!
     autocmd FileType json setlocal tabstop=2
