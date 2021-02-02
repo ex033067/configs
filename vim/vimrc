@@ -664,9 +664,14 @@ augroup aug_viniciusban_journal
         " Start the task at `lnum` line.
 
         let lnum = line('.')
+        let task_code = BanJournal_GetTaskCodeForLine(lnum)
+        let [first_line, _] = BanJournal_GetTaskSectionInterval(task_code)
+
         call BanJournal_AddStartDateToTaskTitleAtLine(lnum)
         call BanJournal_MarkTaskAtLineAsDoing(lnum)
-        call BanJournal_CopyTaskAtLineToDoing(lnum)
+        if first_line == 0
+            call BanJournal_CopyTaskAtLineToDoing(lnum)
+        endif
         call BanJournal_AddTimestampNoteWhenStartingTaskAtLine(lnum)
         normal zx
     endfunction
@@ -798,6 +803,18 @@ augroup aug_viniciusban_journal
         let new_line = substitute(new_line, '{note}', note, '')
 
         call setline(a:lnum, new_line)
+
+        " Add start date to task title if it already exists in DOING
+        let task_code = BanJournal_GetTaskCodeForLine(a:lnum)
+        let [title_lnum, _] = BanJournal_GetTaskSectionInterval(task_code)
+        if title_lnum == 0
+            return
+        endif
+
+        let new_title = line_template
+        let new_title = substitute(new_title, '{previous_contents}', getline(title_lnum), '')
+        let new_title = substitute(new_title, '{note}', note, '')
+        call setline(title_lnum, new_title)
     endfunction
 
     function! BanJournal_MarkTaskAtLineAsDoing(lnum)
@@ -827,8 +844,8 @@ augroup aug_viniciusban_journal
 
     function! BanJournal_AddTimestampNoteWhenStartingTaskAtLine(lnum)
         let task_code = BanJournal_GetTaskCodeForLine(a:lnum)
-        let [first_lnum, _] = BanJournal_GetTaskSectionInterval(task_code)
-        let timestamp_lnum = first_lnum + 2
+        let [_, last_lnum] = BanJournal_GetTaskSectionInterval(task_code)
+        let timestamp_lnum = last_lnum + 2
         call BanJournal_AddTimestampNoteToLine(timestamp_lnum)
         call append(timestamp_lnum, ['', ''])
     endfunction
