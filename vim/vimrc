@@ -525,7 +525,7 @@ augroup aug_viniciusban_journal
 
     " timestamp notes
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>n <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>N <C-o>:call BanJournal_AddTimestampNoteToCurrentLine('-', 'without_task_code')<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>N <C-o>:call BanJournal_AddTimestampNoteToCurrentLine('', 'without_task_code')<CR>
     autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> [n :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'b')<CR>|" Go to prev timestamp note
     autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> ]n :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d')<CR>|" Go to next timestamp note
 
