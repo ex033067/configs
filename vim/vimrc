@@ -514,6 +514,9 @@ augroup aug_viniciusban_journal
         \ |    let b:journal_loaded=1
         \ |endif
 
+    " help
+    autocmd BufReadPost *journal*.md noremap  <buffer> <localleader>?  :call BanJournal_ShowMappings()<CR>
+
     " task items
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>t  <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>T  <C-o>:call BanJournal_CreateTask('<project>')
@@ -540,9 +543,12 @@ augroup aug_viniciusban_journal
     " ----------------------------------
 
     function! BanJournal_ShowMappings()
-        echom '      New: day \d      timesheet \s'
-        echom '    Tasks: create \t   start \*   end \x   pause \.   touched \l'
-        echom 'Timestamp: create \n   prev [n    next ]n'
+        echom '      New:    task \t     day \d   timesheet \s'
+        echom ' '
+        echom '    Tasks:  create \t   start \*      finish \x'
+        echom '           archive \a   pause \.     touched \l'
+        echom ' '
+        echom 'Timestamp:  create \n    prev [n        next ]n'
     endfunction
 
     function! BanJournal_CreateTask(project)
