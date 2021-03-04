@@ -518,6 +518,7 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>t  <C-o>:call BanJournal_CreateTask($JOURNAL_PROJECT)<CR>
     autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>T  <C-o>:call BanJournal_CreateTask('<project>')
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>*  :call BanJournal_StartCurrentTask()<CR>
+    autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>a  :call BanJournal_ArchiveCurrentTask()<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>x  :call BanJournal_EndCurrentTask()<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>.  :call BanJournal_PauseCurrentTask()<CR>
     autocmd BufReadPost *journal*.md nnoremap <buffer> <localleader>l  :let _=strftime('%Y-%m-%d')<CR>:call BanJournal_ListTasksTouchedOnDate('=_<CR>')
@@ -590,6 +591,17 @@ augroup aug_viniciusban_journal
             return
         endif
         call BanJournal_DoEndTask(task_code)
+        normal zv
+    endfunction
+
+    function! BanJournal_ArchiveCurrentTask()
+        let lnum = line('.')
+        let task_code = BanJournal_GetTaskCodeForLine(lnum)
+        if task_code == ''
+            echohl ErrorMsg | echom  'Error: Not a task' | echohl None
+            return
+        endif
+        call BanJournal_DoArchiveTask(task_code)
         normal zv
     endfunction
 
@@ -684,6 +696,14 @@ augroup aug_viniciusban_journal
         call BanJournal_MoveTaskToDone(a:task_code)
         call BanJournal_AddEndDateToTaskTitle(a:task_code)
         call BanJournal_AddTimestampNoteWhenFinishingTask(a:task_code)
+    endfunction
+
+    function! BanJournal_DoArchiveTask(task_code)
+        " Remove from BACKLOG. Move from DOING to DONE.
+
+        let task_item_lnum = BanJournal_FindTaskItemWithTaskCode(a:task_code)
+        execute task_item_lnum . 'delete _'
+        call BanJournal_MoveTaskToDone(a:task_code)
     endfunction
 
     function! BanJournal_DoPauseTask(task_code)
