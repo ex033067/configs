@@ -689,11 +689,10 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_DoEndTask(task_code)
-        " Remove from BACKLOG. Move from DOING to DONE.
+        " Mark task as ended and register the timestamp
 
         let task_item_lnum = BanJournal_FindTaskItemWithTaskCode(a:task_code)
-        execute task_item_lnum . 'delete _'
-        call BanJournal_MoveTaskToDone(a:task_code)
+        call BanJournal_MarkTaskAtLineAsDone(task_item_lnum)
         call BanJournal_AddEndDateToTaskTitle(a:task_code)
         call BanJournal_AddTimestampNoteWhenFinishingTask(a:task_code)
     endfunction
@@ -895,13 +894,7 @@ augroup aug_viniciusban_journal
         " Add note in task about when finished it doing: #end:YYYY-MM-DD
         let template = ' #end:{today}'
 
-        let done_section_lnum = search('^# DONE', 'nw')
         let [first_lnum, _] = BanJournal_GetTaskSectionInterval(a:task_code)
-
-        if first_lnum < done_section_lnum
-            " for some reason, the task is not in DONE
-            return
-        endif
 
         let note = template
         let note = substitute(note, '{today}', strftime('%Y-%m-%d'), '')
