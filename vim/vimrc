@@ -971,9 +971,9 @@ augroup aug_viniciusban_journal
                 " line is a timestamp note
                 let notes = ''
 
-                let matches = matchlist(text, '^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d \(.*\)')
+                let matches = matchlist(text, '^\d\d\d\d-\d\d-\d\d \w\w\w \d\d:\d\d\(.*\)')
                 if matches[1] != ''
-                    let notes = trim(matches[1])
+                    let notes = ' ' . trim(matches[1])
                 endif
 
                 let task_code = BanJournal_GetTaskCodeFromInsideTaskSection(lnum)
@@ -991,13 +991,13 @@ augroup aug_viniciusban_journal
                     let subsection_title = ''
                 else
                     let matches = matchlist(getline(subsection_lnum), '^#\+ \(.\+\)')
-                    let subsection_title = matches[1]
+                    let subsection_title = ' (' . matches[1] . ')'
                 endif
 
                 if subsection_title == ''
-                    let description = task_description .' | '. notes
+                    let description = task_description . notes
                 else
-                    let description = task_description .' | '. subsection_title .' | '. notes
+                    let description = task_description . subsection_title . notes
                 endif
             else
                 continue
