@@ -871,7 +871,7 @@ augroup aug_viniciusban_journal
         let task_code = BanJournal_GetTaskCodeForLine(a:lnum)
         let [_, last_lnum] = BanJournal_GetTaskSectionInterval(task_code)
         let timestamp_lnum = last_lnum + 2
-        call BanJournal_AddTimestampNoteToLine(timestamp_lnum)
+        call BanJournal_AddTimestampNoteToLine(timestamp_lnum, '#start', 'without_task_code')
         call append(timestamp_lnum, ['', ''])
     endfunction
 
@@ -911,14 +911,14 @@ augroup aug_viniciusban_journal
     function! BanJournal_AddTimestampNoteWhenFinishingTask(task_code)
         let [_, last_lnum] = BanJournal_GetTaskSectionInterval(a:task_code)
         call append(last_lnum, ['', '', '', ''])
-        call BanJournal_AddTimestampNoteToLine(last_lnum + 2, '#end')
+        call BanJournal_AddTimestampNoteToLine(last_lnum + 2, '#end', 'without_task_code')
     endfunction
 
     function! BanJournal_AddTimestampNoteWhenPausingTask(task_code)
         let [_, last_lnum] = BanJournal_GetTaskSectionInterval(a:task_code)
         let note_lnum = last_lnum + 2
         call append(note_lnum, ['', ''])
-        call BanJournal_AddTimestampNoteToLine(note_lnum, '#paused')
+        call BanJournal_AddTimestampNoteToLine(note_lnum, '#paused', 'without_task_code')
         call cursor(note_lnum, 1)
         normal zv
     endfunction
