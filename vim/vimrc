@@ -564,29 +564,30 @@ augroup aug_viniciusban_journal
 
         let journal_task_patt = '^- \[.\] _\w\+_\>'
         let simple_task_patt = '^- \[.\] '
-
         let lnum = line('.')
+
+        if match(getline(lnum), simple_task_patt) > -1
+            call BanJournal_MarkTaskAtLineAsDoing(lnum)
+            return
+        endif
+
         if match(getline(lnum), journal_task_patt) > -1
             call BanJournal_DoStartTaskAtLine(lnum)
             let task_code = BanJournal_GetTaskCodeForLine(lnum)
             let [_, last_lnum] = BanJournal_GetTaskSectionInterval(task_code)
             call cursor(last_lnum, 1000)
             normal zx
-        elseif match(getline(lnum), simple_task_patt) > -1
-            call BanJournal_MarkTaskAtLineAsDoing(lnum)
-        else
-            echohl ErrorMsg | echom  'Error: Not a task' | echohl None
+            return
         endif
+
+        echohl ErrorMsg | echom  'Error: Not a task' | echohl None
     endfunction
 
     function! BanJournal_EndCurrentTask()
-        let journal_task_patt = '^- \[.\] _\w\+_\>'
         let simple_task_patt = '^- \[.\] '
 
         let lnum = line('.')
-        if match(getline(lnum), journal_task_patt) > -1
-            let _=1
-        elseif match(getline(lnum), simple_task_patt) > -1
+        if match(getline(lnum), simple_task_patt) > -1
             call BanJournal_MarkTaskAtLineAsDone(lnum)
             return
         endif
