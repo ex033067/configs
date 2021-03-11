@@ -462,7 +462,7 @@ augroup END
 
 augroup aug_ft_gitcommit
     au!
-    autocmd FileType gitcommit setlocal foldenable foldmethod=syntax
+    autocmd FileType gitcommit setlocal nofoldenable
     autocmd BufRead COMMIT_EDITMSG setlocal nocursorline
     autocmd BufRead COMMIT_EDITMSG call execute(['normal gg'])
 
