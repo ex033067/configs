@@ -528,8 +528,8 @@ augroup aug_viniciusban_journal
     autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> <C-]> :normal! m'<CR>:execute 'keeppatterns /\m^#\+ '. expand('<cword>')<CR>:normal! zvw<CR>|" Go to task definition
 
     " timestamp notes
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>n <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
-    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>N <C-o>:call BanJournal_AddTimestampNoteToCurrentLine('', 'without_task_code')<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>n <C-o>:call BanJournal_AddTimestampNoteToCurrentLine('', 'without_task_code')<CR>
+    autocmd BufReadPost *journal*.md inoremap <buffer> <localleader>N <C-o>:call BanJournal_AddTimestampNoteToCurrentLine()<CR>
     autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> [n 0:call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 'bs')<CR>|" Go to prev timestamp note
     autocmd BufReadPost *journal*.md nnoremap <silent> <buffer> ]n :call search('^\d\d\d\d-\d\d-\d\d \w\w\w \d\?\d:\d\d', 's')<CR>|" Go to next timestamp note
 
