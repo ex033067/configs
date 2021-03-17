@@ -42,6 +42,7 @@
             git status -s | grep --quiet '^?' && echo && echo 'There are remaining untracked files in your project.';"
 
         rollbackkk = reset --mixed HEAD^
+        unstage = reset --
         prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
 
         rstash = "! \
