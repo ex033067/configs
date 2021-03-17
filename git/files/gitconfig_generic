@@ -38,18 +38,17 @@
         l = log -5 --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(auto)%h %ad%C(auto)%d %s'
         s = status -s
         initt = "!git init; git commit --allow-empty -m 'Create the empty repo'"
-
-        # potentially destructive aliases
-        rollbackkk = reset --mixed HEAD^
-        unstage = reset --
         prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
-        discard = "!git reset --hard HEAD; \
-            git status -s; \
-            git status -s | grep --quiet '^?' && echo && echo 'There are remaining untracked files in your project.';"
 
+        # move back in commit history
+        back1 = reset --mixed HEAD^
+        backto = reset --mixed
+
+        # undo uncommited changes
+        discarduncommited = reset --hard HEAD
+        subtract = reset --
 
         # complex commands
-
         rstash = "! \
             _help () { \
                 echo 'Like git stash, but saves on a remote called \"rstash\".'; \
