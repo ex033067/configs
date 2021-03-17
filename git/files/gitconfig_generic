@@ -29,7 +29,7 @@
         stashes = stash list
         tags = tag -l -n1 --sort="version:refname"
 
-        initialcommit = commit --allow-empty -m 'Initial commit'
+        initt = "!git init; git commit --allow-empty -m 'Create the empty repo'"
 
         path = rev-parse --show-toplevel
         s = status -s
