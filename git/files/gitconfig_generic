@@ -23,27 +23,32 @@
         prompt = no
 
 [alias]
+        # retrieve group of info
         aliases = !git config --name-only --list | grep ^alias | cut -d'.' -f 2 | sort
         branches = branch -a
         remotes = remote -v
         stashes = stash list
         tags = tag -l -n1 --sort="version:refname"
 
+        # retrieve atomic info
+        pwb = symbolic-ref --short HEAD
+        path = rev-parse --show-toplevel
+
+        # shortcut to simple but long commands
+        l = log -5 --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(auto)%h %ad%C(auto)%d %s'
+        s = status -s
         initt = "!git init; git commit --allow-empty -m 'Create the empty repo'"
 
-        path = rev-parse --show-toplevel
-        s = status -s
-        pwb = symbolic-ref --short HEAD
-
-        l = log -5 --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(auto)%h %ad%C(auto)%d %s'
-
+        # potentially destructive aliases
+        rollbackkk = reset --mixed HEAD^
+        unstage = reset --
+        prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
         discard = "!git reset --hard HEAD; \
             git status -s; \
             git status -s | grep --quiet '^?' && echo && echo 'There are remaining untracked files in your project.';"
 
-        rollbackkk = reset --mixed HEAD^
-        unstage = reset --
-        prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
+
+        # complex commands
 
         rstash = "! \
             _help () { \
