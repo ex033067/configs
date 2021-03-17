@@ -31,8 +31,8 @@
         tags = tag -l -n1 --sort="version:refname"
 
         # retrieve atomic info
-        pwb = symbolic-ref --short HEAD
-        path = rev-parse --show-toplevel
+        showbranch = symbolic-ref --short HEAD
+        showpath = rev-parse --show-toplevel
 
         # shortcut to simple but long commands
         l = log -5 --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(auto)%h %ad%C(auto)%d %s'
