@@ -11,7 +11,7 @@
 // https://github.com/microsoft/terminal/blob/master/doc/cascadia/SettingsSchema.md
 
 {
-    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "$schema": "https://aka.ms/terminal-profiles-schema", 
 
     "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
     "initialRows": 20,
@@ -21,8 +21,9 @@
         "defaults":
         {
             "fontFace": "IBM Plex Mono",
-            "fontSize": 14
+            "fontSize": 15,
         },
+
         "list": [
             {
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
@@ -36,31 +37,14 @@
                 "commandline" : "wsl -d Ubuntu-18.04",
                 "startingDirectory" : "//wsl$/Ubuntu-18.04/home/viniciusban",
                 "icon": "C:\\Users\\vinic\\OneDrive\\Imagens\\ico\\ubuntu.ico",
-                "colorScheme": "viniciusban-flatui",
-                "cursorShape": "vintage"
-            },
-            {
-                "guid": "{e91681d4-ebfa-50dc-9302-b8db0e52d4ef}",
-                "name": "Arca63",
-                "source": "Windows.Terminal.Wsl"
+                "colorScheme": "viniciusban-flatui-amber",
+            //    "cursorColor": "#FFA500",
+                "cursorShape": "vintage",
             },
             {
                 "guid": "{eb47cabf-3a5b-598c-afde-94824793addd}",
                 "name": "Disposable",
                 "source": "Windows.Terminal.Wsl"
-            },
-            {
-                "guid": "{a6ffbc2e-866c-519c-b2e9-a2dc3aa16308}",
-                "name": "FoldingAtHome",
-                "source": "Windows.Terminal.Wsl"
-            },
-            {
-                "guid": "{6811f0b6-294b-5a3f-9c98-b6850859714e}",
-                "name": "ShippingDocker",
-                "source": "Windows.Terminal.Wsl",
-                "icon": "C:\\Users\\vinic\\OneDrive\\Imagens\\ico\\docker.ico",
-                "colorScheme": "Dracula",
-                "cursorShape": "vintage"
             },
             {
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
@@ -99,7 +83,29 @@
             "white" : "#bdc3c7",
             "brightWhite" : "#ecf0f1",
             "yellow" : "#f39c12",
-            "brightYellow" : "#f1c40f"
+            "brightYellow" : "#f1c40f",
+        },
+        {
+            "name" : "viniciusban-flatui-amber",
+            "foreground" : "#ffbf00",
+            "background" : "#181818",
+            "cursorColor": "#d35400",
+            "black" : "#2c3e50",
+            "brightBlack" : "#34495e",
+            "blue" : "#2980b9",
+            "brightBlue" : "#00d2ff",
+            "cyan" : "#7aa085",
+            "brightCyan" : "#1abc9c",
+            "green" : "#27ae60",
+            "brightGreen" : "#2ecc71",
+            "purple" : "#8e44ad",
+            "brightPurple" : "#9b59b6",
+            "red" : "#c0392b",
+            "brightRed" : "#e74c3c",
+            "white" : "#bdc3c7",
+            "brightWhite" : "#ecf0f1",
+            "yellow" : "#f39c12",
+            "brightYellow" : "#f1c40f",
         },
         {
             "name" : "Dracula-green",
