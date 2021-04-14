@@ -569,7 +569,7 @@ augroup aug_viniciusban_journal
         " Mark as doing. Create the task section in DOING. Keep it in BACKLOG.
 
         let journal_task_patt = '^- \[.\] _\w\+_\>'
-        let simple_task_patt = '^- \[.\] '
+        let simple_task_patt = '^ *- \[.\] '
         let lnum = line('.')
 
         if match(getline(lnum), journal_task_patt) > -1
@@ -595,7 +595,7 @@ augroup aug_viniciusban_journal
 
     function! BanJournal_EndCurrentTask()
         let journal_task_patt = '^- \[.\] _\w\+_\>'
-        let simple_task_patt = '^- \[.\] '
+        let simple_task_patt = '^ *- \[.\] '
         let lnum = line('.')
 
         if match(getline(lnum), journal_task_patt) == -1 && match(getline(lnum), simple_task_patt) > -1
