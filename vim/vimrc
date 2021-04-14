@@ -46,7 +46,7 @@ let g:jedi#rename_command = '<localleader>r'
 let g:jedi#usages_command = '<localleader>n'
 
 " My discreet color schemes
-Plug 'viniciusban/vim-simple-onblack-colorschemes'
+Plug 'viniciusban/vim-onblack-colorschemes'
 
 
 " 2. Good to have plugins
@@ -299,7 +299,7 @@ function! BanPython_TransformSelectedTextIntoFilename()
 endfunction
 
 function! BanChangeColorscheme()
-    let colors = ["amber_simple_onblack", "brown_simple_onblack", "green_simple_onblack", "white_simple_onblack", "black_simple_onwhite"]
+    let colors = ["amber_onblack", "brown_onblack", "green_onblack", "white_onblack", "black_onwhite"]
     let next_color = get(colors, index(colors, g:colors_name) + 1, colors[0])
     execute "colorscheme " . next_color
 endfunction
