@@ -94,8 +94,9 @@ __variables () {
 
 
     # pyenv
-    if [[ -d ~/.local/bin/pyenv ]]; then
-        export PYENV_ROOT=~/.local/bin/pyenv
+    [[ -d ~/.pyenv ]] && export PYENV_ROOT=~/.pyenv
+    [[ -d ~/.local/bin/pyenv ]] && export PYENV_ROOT=~/.local/bin/pyenv
+    if [[ -n "$PYENV_ROOT" ]]; then
         export PATH="$PYENV_ROOT/bin:$PATH"
 
         if which pyenv > /dev/null
