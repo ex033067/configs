@@ -1,1 +1,1 @@
-silent! source some_colerscheme
+silent! colorscheme some_colerscheme
