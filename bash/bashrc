@@ -85,8 +85,6 @@ __variables () {
 
 
     # PATH
-    [[ -n "${ENVIRONMENT_LOADED}" ]] && return
-
     if [[ -r /usr/local/Homebrew ]]; then
         eval $(/usr/local/bin/brew shellenv)
     fi
@@ -102,7 +100,6 @@ __variables () {
         if which pyenv > /dev/null
         then
             eval "$(pyenv init -)"
-            export -f pyenv
             # Custom python versions. See "pyenv_global_command.example" file.
             [[ -r ~/.pyenv_global_command ]] && source ~/.pyenv_global_command
         fi
@@ -112,10 +109,7 @@ __variables () {
     if [[ -d ~/.asdf ]]; then
         source $HOME/.asdf/asdf.sh
         source $HOME/.asdf/completions/asdf.bash
-        export -f asdf
     fi
-
-    export ENVIRONMENT_LOADED=1
 }
 
 
