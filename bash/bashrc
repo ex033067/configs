@@ -177,7 +177,7 @@ __main () {
     set -o vi
     __variables
     __aliases
-    [[ -n "$WSL_DISTRO_NAME" ]] && __start_wsl_services
+    [[ -n "$WSL_DISTRO_NAME" ]] && __start_wsl_services || true
 }
 
 __main
