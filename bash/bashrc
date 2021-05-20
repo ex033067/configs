@@ -2,8 +2,7 @@
 #
 # Set environment for bash.
 #
-# Open "ps1_hostname_alias.example" and "ps1_colors.example" for examples of
-# prompt customization.
+# Open "ps1_customizations.example" for examples of prompt customization.
 #
 # Open "pyenv_global_command.example" file for example of pyenv global command.
 
@@ -71,12 +70,9 @@ __variables () {
     export EDITOR=$(which vim)
     export VISUAL=$EDITOR
 
-    # Custom hostname in prompt. See "ps1_hostname_alias.example" file.
-    [[ -r ~/.ps1_hostname_alias ]] && source ~/.ps1_hostname_alias
-
-    # Custom color prompt. See "ps1_colors.example" file.
+    # Customizations for PS1. See "ps1_customizations.example" file.
+    [[ -r ~/.ps1_customizations ]] && source ~/.ps1_customizations
     export PS1_COLOR_RESET="\[\033[m\]"
-    [[ -r ~/.ps1_colors ]] && source ~/.ps1_colors
 
     export PS1="\n${PS1_COLOR_RESET}> ${PS1_COLOR_ERROR}\$(VALU=\$? ; [ \$VALU -ne 0 ] && echo ' '\${VALU}' ')${PS1_COLOR_DEFAULT}\$(date '+%a %T')\${HOSTNAME_ALIAS:+ @\${HOSTNAME_ALIAS}} in \W \$(__ps1_git ; echo \${PS1_GIT:+'on '\${PS1_GIT}}) \${VIRTUAL_ENV:+(\$(basename \$VIRTUAL_ENV))} ${PS1_COLOR_RESET}\n\$ "
 

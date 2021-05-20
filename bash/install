@@ -12,6 +12,5 @@ fi
 
 ln -sf ${PWD}/bashrc ${filename}
 
-cp -n ${PWD}/ps1_colors.example ~/.ps1_colors
-cp -n ${PWD}/ps1_hostname_alias.example ~/.ps1_hostname_alias
+cp -n ${PWD}/ps1_customizations.example ~/.ps1_customizations
 cp -n ${PWD}/pyenv_global_command.example ~/.pyenv_global_command
