@@ -62,6 +62,9 @@ Plug 'tpope/vim-commentary'  | " gcc, gc<motion>, {Visual}gc
 " My mappings for markdown
 Plug 'viniciusban/vim-ft-markdown'
 
+" Run flake8
+Plug 'nvie/vim-flake8'
+
 
 " 3. Nice to have plugins
 " =======================
@@ -351,25 +354,7 @@ augroup END
 
 function! FtPython()
     setlocal foldmethod=indent
-
-    " set makeprg option
-    let b:default_makeprg = ''
-    let b:_makeprg = b:default_makeprg
-    if exists('$VIM_MAKEPRG')
-        if $VIM_MAKEPRG == 'default'
-            let b:_makeprg = b:default_makeprg
-        else
-            let b:_makeprg = $VIM_MAKEPRG
-        endif
-    elseif filereadable('Makefile')
-        let b:_makeprg = 'TARGET=%\ make\ --no-print-directory\ --silent'
-    elseif executable('flake8')
-        let b:_makeprg = 'flake8'
-    elseif executable('pylint')
-        let b:_makeprg = 'pylint'
-    endif
-    execute 'setlocal makeprg='.b:_makeprg
-    unlet b:_makeprg
+    nnoremap <silent> <buffer> <leader>m :update<CR>:call flake8#Flake8()<CR>
 
     " set equalprg option
     let b:default_equalprg = '~/.local/bin/python-style'
