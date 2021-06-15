@@ -354,22 +354,8 @@ augroup END
 
 function! FtPython()
     setlocal foldmethod=indent
+    setlocal equalprg=~/.local/bin/python-style
     nnoremap <silent> <buffer> <leader>m :update<CR>:call flake8#Flake8()<CR>
-
-    " set equalprg option
-    let b:default_equalprg = '~/.local/bin/python-style'
-    let b:_equalprg = b:default_equalprg
-    if exists('$VIM_EQUALPRG')
-        if $VIM_EQUALPRG == 'default'
-            let b:_equalprg = b:default_equalprg
-        else
-            let b:_equalprg = $VIM_EQUALPRG
-        endif
-    elseif filereadable('Makefile')
-        let b:_equalprg = 'make\ --no-print-directory\ --silent\ pep8'
-    endif
-    execute 'setlocal equalprg='.b:_equalprg
-    unlet b:_equalprg
 
     " Mappings for classes, functions and docstrings text-objects
     xnoremap <buffer> ic <Plug>(textobj-python-class-i)
