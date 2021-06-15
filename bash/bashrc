@@ -96,6 +96,7 @@ __variables () {
 
         if which pyenv > /dev/null
         then
+            eval "$(pyenv init --path)"
             eval "$(pyenv init -)"
             # Custom python versions. See "pyenv_global_command.example" file.
             [[ -r ~/.pyenv_global_command ]] && source ~/.pyenv_global_command
