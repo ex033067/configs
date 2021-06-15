@@ -82,8 +82,10 @@ __variables () {
 
 
     # PATH
-    if [[ -r /usr/local/Homebrew ]]; then
-        eval $(/usr/local/bin/brew shellenv)
+    if ! which brew > /dev/null; then
+        if [[ -r /usr/local/Homebrew ]]; then
+            eval $(/usr/local/bin/brew shellenv)
+        fi
     fi
     PATH="$HOME/.local/bin:$PATH"
 
