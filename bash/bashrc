@@ -185,5 +185,56 @@ __main () {
 
 __main
 
+loadenv () {
+    local verbose=
+    local env_filename=
+    while [[ -n "$1" ]]; do
+        case $1 in
+            -h | --help )
+                echo "Export .env file to environment, like Docker Compose."
+                echo "Usage: loadenv <file> [-v[v]]"
+                echo "   -v: verbose mode"
+                echo "  -vv: more verbose"
+                return
+                ;;
+            -v )
+                verbose=1
+                ;;
+            -vv )
+                verbose=2
+                ;;
+            * )
+                env_filename=$1
+                ;;
+        esac
+        shift
+    done
+
+    if [[ -z "$env_filename" ]]; then
+        env_filename='<empty>'
+        for fname in {.env,.env.dev,.env.override}; do
+            [[ -e "${fname}" ]] && env_filename=${fname}
+        done
+    fi
+
+    if [[ ! -e "${env_filename}" ]]; then
+        echo "${env_filename} does not exist"
+        return 1
+    fi
+
+    [[ -n "${verbose}" ]] && echo "Loading ${env_filename}"
+
+    while IFS== read -r k v
+    do
+        if [[ $v =~ \${ ]]; then
+            x=$(eval echo "$v")
+        else
+            x=$(eval echo '$v')
+        fi
+        [[ "${verbose}" = "2" ]] && echo export $k="$x"
+        export $k="$x"
+    done < <(grep '^[a-zA-Z]' ${env_filename})
+}
+
 # [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
