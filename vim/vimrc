@@ -1177,9 +1177,9 @@ nnoremap g1 :term ++close git add %<CR>
 nnoremap g! :term ++close git reset -- %<CR>
 nnoremap gC :Git commit -v <CR>
 nnoremap gA :Git commit -v --amend <CR>
-nnoremap g= :Git diff % <CR>:wincmd _<CR>
+nnoremap g= :Git diff % <CR>:wincmd _<CR>:setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>
 nnoremap g. gg:Ghdiffsplit <CR>
-nnoremap gl :let _=tempname()<CR>:execute '!git l -50 >'._<CR>:execute 'split '._<CR>:wincmd _<CR>
+nnoremap gl :let _=tempname()<CR>:execute '!git l -50 >'._<CR>:execute 'split '._<CR>:wincmd _<CR>:setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>
 
 " toggle options
 nnoremap <silent> <leader>oe :setlocal wrap wrapscan nohlsearch cursorline nocursorcolumn number norelativenumber<CR>
