@@ -1090,6 +1090,7 @@ nnoremap <leader>1 :NERDTreeToggle<CR>
 nnoremap <leader>2 :FZF<CR>
 nnoremap <leader>3 :Buffers<CR>
 nnoremap <leader>4 :TagbarToggle<CR>
+nnoremap <leader>g1 :Git<CR>
 
 nnoremap <leader>< :QuickScopeToggle<CR>|" Show/hide quick scope
 
