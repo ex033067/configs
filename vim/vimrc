@@ -1176,13 +1176,13 @@ else
 endif
 
 " git
-nnoremap g1 :term ++close git add %<CR>
-nnoremap g! :term ++close git reset -- %<CR>
-nnoremap gC :keepalt Git commit -v <CR>
-nnoremap gA :keepalt Git commit -v --amend <CR>
-nnoremap g= :keepalt Git diff % <CR>:wincmd _<CR>:setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>
-nnoremap g. gg:Ghdiffsplit <CR>
-nnoremap gl :let _=tempname()<CR>:execute '!git l -50 >'._<CR>:execute 'keepalt split '._<CR>:wincmd _<CR>:setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>
+nnoremap <leader>ga :term ++close git add %<CR>
+nnoremap <leader>gA :term ++close git reset -- %<CR>
+nnoremap <leader>gc :keepalt Git commit -v <CR>
+nnoremap <leader>gC :keepalt Git commit -v --amend <CR>
+nnoremap <leader>g= :keepalt Git diff % <CR>:wincmd _<CR>:setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>
+nnoremap <leader>gp gg:Ghdiffsplit <CR>
+nnoremap <leader>gl :let _=tempname()<CR>:execute '!git l -50 >'._<CR>:execute 'keepalt split '._<CR>:wincmd _<CR>:setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>
 
 " toggle options
 nnoremap <silent> <leader>oe :setlocal wrap wrapscan nohlsearch cursorline nocursorcolumn number norelativenumber<CR>
