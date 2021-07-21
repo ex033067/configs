@@ -334,7 +334,7 @@ augroup END
 
 augroup aug_ft_vue
     au!
-    autocmd FileType vue setlocal tabstop=2 foldenable foldlevel=5
+    autocmd FileType vue setlocal tabstop=2
 augroup END
 
 augroup aug_ft_json
@@ -484,7 +484,7 @@ augroup aug_viniciusban_journal
     " As time goes by, journal becomes bigger. This block speeds up its load time.
     autocmd BufReadPre  *journal*.md let b:journal_loaded=0
     autocmd BufReadPre  *journal*.md syntax off
-    autocmd BufReadPost *journal*.md setlocal foldmethod=manual
+    autocmd BufReadPost *journal*.md setlocal foldmethod=manual foldenable foldlevel=1
     autocmd CursorHold  *journal*.md
         \  if b:journal_loaded == 0
         \ |    setlocal foldmethod=expr
@@ -1060,7 +1060,7 @@ set termguicolors
 " sane editing
 set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
 set ignorecase smartcase
-set foldenable foldlevel=1
+set nofoldenable foldlevel=0
 if !exists('g:loaded_vimrc')
     set foldmethod=indent
 endif
