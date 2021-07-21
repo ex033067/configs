@@ -538,7 +538,7 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_StartCurrentTask()
-        " Mark as doing. Create the task section in DOING. Keep it in BACKLOG.
+        " Mark as doing. Create the task section in ACTIVE. Keep it in BACKLOG.
 
         let journal_task_patt = '^- \[.\] _\w\+_\>'
         let simple_task_patt = '^ *- \[.\] '
@@ -617,7 +617,7 @@ augroup aug_viniciusban_journal
         let day_of_week = strftime('%a')
         call BanJournal_DoCreateTask(lnum, 'daily', task_description, day_of_week)
         call BanJournal_MarkTaskAtLineAsDoing(lnum)
-        call BanJournal_CopyTaskAtLineToDoing(lnum)
+        call BanJournal_CopyTaskAtLineToActive(lnum)
         let task_code = BanJournal_GetTaskCodeForLine(lnum)
         let [_, last_lnum] = BanJournal_GetTaskSectionInterval(task_code)
         call append(last_lnum, '')
@@ -630,7 +630,7 @@ augroup aug_viniciusban_journal
         let task_suffix = 'timesheet_'. strftime('%a')
         call BanJournal_DoCreateTask(lnum, a:project, task_description, task_suffix)
         call BanJournal_MarkTaskAtLineAsDoing(lnum)
-        call BanJournal_CopyTaskAtLineToDoing(lnum)
+        call BanJournal_CopyTaskAtLineToActive(lnum)
         call BanJournal_AddTimestampNoteWhenStartingTimesheetAtLine(lnum)
         let task_code = BanJournal_GetTaskCodeForLine(lnum)
         let [_, last_lnum] = BanJournal_GetTaskSectionInterval(task_code)
@@ -672,7 +672,7 @@ augroup aug_viniciusban_journal
         call BanJournal_AddStartDateToTaskTitleAtLine(lnum)
         call BanJournal_MarkTaskAtLineAsDoing(lnum)
         if first_line == 0
-            call BanJournal_CopyTaskAtLineToDoing(lnum)
+            call BanJournal_CopyTaskAtLineToActive(lnum)
         endif
         call BanJournal_AddTimestampNoteWhenStartingTaskAtLine(lnum)
         normal zx
@@ -688,11 +688,11 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_DoArchiveTask(task_code)
-        " Remove from BACKLOG. Move from DOING to DONE.
+        " Remove from BACKLOG. Move from ACTIVE to ARCHIVE.
 
         let task_item_lnum = BanJournal_FindTaskItemWithTaskCode(a:task_code)
         execute task_item_lnum . 'delete _'
-        call BanJournal_MoveTaskToDone(a:task_code)
+        call BanJournal_MoveTaskToArchive(a:task_code)
     endfunction
 
     function! BanJournal_DoPauseTask(task_code)
@@ -813,7 +813,7 @@ augroup aug_viniciusban_journal
 
         call setline(a:lnum, new_line)
 
-        " Add start date to task title if it already exists in DOING
+        " Add start date to task title if it already exists in ACTIVE
         let task_code = BanJournal_GetTaskCodeForLine(a:lnum)
         let [title_lnum, _] = BanJournal_GetTaskSectionInterval(task_code)
         if title_lnum == 0
@@ -843,12 +843,12 @@ augroup aug_viniciusban_journal
         call setline(a:lnum, new_line)
     endfunction
 
-    function! BanJournal_CopyTaskAtLineToDoing(lnum)
+    function! BanJournal_CopyTaskAtLineToActive(lnum)
         let task_item = getline(a:lnum)
         let task_section_heading = substitute(task_item, '^- \[.\]', '##', '')
 
-        let doing_section_lnum = search('^# DOING', 'n')
-        call append(doing_section_lnum, ['', task_section_heading, ''])
+        let active_section_lnum = search('^# ACTIVE', 'n')
+        call append(active_section_lnum, ['', task_section_heading, ''])
     endfunction
 
     function! BanJournal_AddTimestampNoteWhenStartingTaskAtLine(lnum)
@@ -866,17 +866,17 @@ augroup aug_viniciusban_journal
         call BanJournal_AddTimestampNoteToLine(timestamp_lnum, '-', 'without_task_code')
     endfunction
 
-    function! BanJournal_MoveTaskToDone(task_code)
+    function! BanJournal_MoveTaskToArchive(task_code)
         let initial_lnum = line('.')
-        let done_section_lnum = search('^# DONE', 'nw')
+        let archive_section_lnum = search('^# ARCHIVE', 'nw')
         let [first_lnum, last_lnum] = BanJournal_GetTaskSectionInterval(a:task_code)
 
-        if first_lnum > done_section_lnum
-            " for some reason, the task is already in DONE
+        if first_lnum > archive_section_lnum
+            " for some reason, the task is already in ARCHIVE
             return
         endif
 
-        execute first_lnum .','. last_lnum .'move '. (done_section_lnum + 1)
+        execute first_lnum .','. last_lnum .'move '. (archive_section_lnum + 1)
         call cursor(initial_lnum, 1)
     endfunction
 
