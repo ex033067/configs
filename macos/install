@@ -80,6 +80,7 @@ brew install bash-completion
 
 brew install --cask iterm2
 brew install --cask firefox
+brew install --cask google-chrome
 brew install --cask dbeaver-community
 brew install --cask telegram
 brew install --cask the-unarchiver
