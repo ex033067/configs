@@ -1152,8 +1152,10 @@ endfunction
 nnoremap <leader><Space> :call IsolateLineWithSpacesAround("normal")<CR>
 vnoremap <leader><Space> :call IsolateLineWithSpacesAround("visual")<CR>
 function! IsolateLineWithSpacesAround(mode) range
-    call append(a:lastline, '')
-    call append(a:firstline -1, '')
+    call append(a:lastline, ['----------- focus here ^', ''])
+    execute a:lastline+1 .'Commentary'
+    call append(a:firstline -1, ['', '----------- focus here v'])
+    execute a:firstline+1 .'Commentary'
     if a:mode == "visual"
         normal gv
     endif
