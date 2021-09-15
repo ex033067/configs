@@ -527,6 +527,7 @@ augroup aug_viniciusban_journal
         echom '           archive \a   pause \.     touched \l'
         echom ' '
         echom 'Timestamp:  create \n    prev [n        next ]n'
+        echom '     Note: Set the $JOURNAL_PROJECT variable first'
     endfunction
 
     function! BanJournal_CreateTask(project)
