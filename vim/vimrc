@@ -392,7 +392,9 @@ function! FtPython()
     endif
 
     nnoremap t<CR> :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>|" Run tests in current vim session
-    nnoremap <silent> T<CR> :update<CR>:let _date="date +'\\%a \\%F \\%T'"<CR>:execute '!tmux send-keys -t .+ -l "' .g:test_command. ' ' .g:test_target.';'._date '"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>|" Run tests in tmux next pane
+    nnoremap <silent> T<CR> :update<CR>:let _all_commands=g:test_command .' '. g:test_target<CR>:execute '!tmux send-keys -t .+ -l "run-with-time '. _all_commands .'"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>|" Run tests in tmux next pane
+
+
 
     " \tC configure the test command (along with its arguments).
     " Examples below:
