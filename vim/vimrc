@@ -1129,6 +1129,26 @@ function! DuplicateAndCommentLine(mode)
     endif
 endfunction
 
+vnoremap gC :call InvertCommentOnRangeOfLines("visual")<CR>
+nnoremap gC :set operatorfunc=InvertCommentOnRangeOfLines<CR>g@
+nnoremap gCC :call InvertCommentOnRangeOfLines("normal")<CR>
+function InvertCommentOnRangeOfLines(mode) range
+    if a:mode == "visual"
+        let first_lnum = a:firstline
+        let last_lnum = a:lastline
+    elseif a:mode == "normal"
+        let first_lnum = a:firstline
+        let last_lnum = a:lastline
+    else
+        let first_lnum = line("'[")
+        let last_lnum = line("']")
+    endif
+
+    for lnum in range(first_lnum, last_lnum)
+        execute lnum ."Commentary"
+    endfor
+endfunction
+
 nnoremap <leader><Space> :call IsolateLineWithSpacesAround("normal")<CR>
 vnoremap <leader><Space> :call IsolateLineWithSpacesAround("visual")<CR>
 function! IsolateLineWithSpacesAround(mode) range
