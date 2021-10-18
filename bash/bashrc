@@ -239,6 +239,12 @@ loadenv () {
 # [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
-if [ -f ~/.bashrc_local ]; then
-    . ~/.bashrc_local
+# Use local customization inside ~/bashrc.d directory.
+if [ -d ~/bashrc.d ]; then
+    for fname in ~/bashrc.d/*.bash; do
+        if [[ -r $fname ]]; then
+            . $fname
+        fi
+    done
+    unset fname
 fi
