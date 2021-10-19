@@ -1042,6 +1042,7 @@ set cpoptions+=n showbreak=→\
 
 set wildmode=list:longest,full
 
+set mouse=a
 set ttymouse=xterm2  | " enable resizing windows with the mouse
 
 " syntax and colors
