@@ -355,6 +355,9 @@ function! FtPython()
     setlocal equalprg=~/.local/bin/python-style
     nnoremap <silent> <buffer> <leader>m :update<CR>:call flake8#Flake8()<CR>
 
+    " Mapping to navigate to object definition in split window
+    nnoremap <buffer> <localleader>D :split<CR>:call jedi#goto()<CR>
+
     " Mappings for classes, functions and docstrings text-objects
     xnoremap <buffer> ic <Plug>(textobj-python-class-i)
     onoremap <buffer> ic <Plug>(textobj-python-class-i)
