@@ -15,7 +15,7 @@ Use `crontab -e` to add the entry below in your personal crontab and change the 
 
 ```
 SHELL=/bin/bash
-*/5 * * * *   /full/path/to/the/script/auto-change-wallpaper.sh >> /tmp/auto-change-wallpaper.log 2>&1
+*/5 * * * *   /full/path/to/the/script/auto-wallpaper.sh >> /tmp/auto-change-wallpaper.log 2>&1
 ```
 
 Notice you must write the correct path to the script.

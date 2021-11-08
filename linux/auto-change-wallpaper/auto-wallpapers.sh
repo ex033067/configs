@@ -19,7 +19,7 @@ NEW_WALLPAPER=
 
 if [[ -r "${SOURCE_DIR}/auto-wallpapers.disabled" ]]; then
     echo ""
-    echo "${NOW} - auto-change-wallpper disabled. Exiting."
+    echo "${NOW} - Found file ${SOURCE}/auto-wallppers.disabled. Exiting."
     exit
 fi
 
