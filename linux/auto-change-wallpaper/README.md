@@ -22,3 +22,4 @@ Notice you must write the correct path to the script.
 
 The script will only change your wallpaper when one automatic is set. Thus, to start the process, you must go to Ubuntu Settings and set one of them.
 
+You can create the file `~/.local/share/backgrounds/auto-wallpapers.disabled` to disable the routine.

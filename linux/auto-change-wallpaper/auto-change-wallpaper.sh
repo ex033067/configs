@@ -17,6 +17,12 @@ WALLPAPERS=(${SOURCE_DIR}/auto-wallpapers-*)
 FOUND=
 NEW_WALLPAPER=
 
+if [[ -r "${SOURCE_DIR}/auto-wallpapers.disabled" ]]; then
+    echo ""
+    echo "${NOW} - auto-change-wallpper disabled. Exiting."
+    exit
+fi
+
 echo ""
 echo "${NOW} - current wallpaper: $CURRENT_WALLPAPER"
 
