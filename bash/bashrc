@@ -17,7 +17,7 @@ __aliases () {
     [[ "${OSNAME}" = "Darwin" ]] && alias ls='ls -Gp'
     [[ "${OSNAME}" = "Linux" ]] && alias ls='ls -p --group-directories-first --color=auto'
 
-    alias ack='ack --sort-files --color-filename="bold blue" --color-lineno="blue" --color-match="bold white on_blue" --ignore-dir=is:.venv --ignore-dir=is:env --ignore-dir=is:.vagrant --ignore-file=ext:sqlite3'
+    alias ack='ack --sort-files --color-filename="bold blue" --color-lineno="blue" --color-match="bold white on_blue" --ignore-dir=is:.venv --ignore-dir=is:venv --ignore-dir=is:env --ignore-dir=is:.vagrant --ignore-file=ext:sqlite3'
     alias envrc='source .envrc'
     alias grep='grep --color=auto'
 
