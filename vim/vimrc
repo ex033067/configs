@@ -311,6 +311,11 @@ endfunction
 " Autocommands
 " ==================================================
 
+augroup quickfix
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+augroup END
+
 augroup aug_terminal_mode
     au!
     silent! autocmd TerminalWinOpen * setlocal nonumber norelativenumber
