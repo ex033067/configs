@@ -1077,6 +1077,7 @@ let g:markdown_folding = 1 | " enable folded headings in markdown files
 " other options
 set hidden
 set grepprg=grep\ -nI\ --exclude-dir=.git\ --exclude-dir=venv\ --exclude-dir=__pycache__\ --exclude-dir='*.egg-info'\ --exclude-dir=.vagrant\ $*\ /dev/null
+set directory=~/tmp//
 set modeline
 
 
