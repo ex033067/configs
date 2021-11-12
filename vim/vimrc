@@ -1102,6 +1102,7 @@ nnoremap <leader>2 :GFiles<CR>
 nnoremap <leader>3 :Buffers<CR>
 nnoremap <leader>4 :TagbarToggle<CR>
 nnoremap <leader>g1 :Git<CR>
+nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'|" Show/hide quickfix window
 
 nnoremap <leader>< :QuickScopeToggle<CR>|" Show/hide quick scope
 
