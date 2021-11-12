@@ -1097,6 +1097,7 @@ nnoremap <leader>c :clo<CR>
 " Show/hide helpers
 nnoremap <leader>' :NERDTreeToggle<CR>
 nnoremap <leader>1 :NERDTreeVCS<CR>
+nnoremap <leader>! :NERDTreeFind<CR>
 nnoremap <leader>2 :GFiles<CR>
 nnoremap <leader>3 :Buffers<CR>
 nnoremap <leader>4 :TagbarToggle<CR>
