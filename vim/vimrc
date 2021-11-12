@@ -1107,6 +1107,7 @@ nnoremap <leader>g1 :Git<CR>
 nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'|" Show/hide quickfix window
 nnoremap <expr> <leader>l empty(filter(getwininfo(), 'v:val.loclist')) ? ':lopen<CR>' : ':lclose<CR>'|" Show/hide location list
 
+nnoremap <leader>h :nohlsearch<CR>
 nnoremap <leader>< :QuickScopeToggle<CR>|" Show/hide quick scope
 
 " editing
