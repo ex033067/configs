@@ -1175,10 +1175,10 @@ nnoremap <silent> <leader>m :update<CR>:make %<CR>
 
 " navigation
 nnoremap <Space> <C-F>
-nnoremap ]q :cnext<CR>
-nnoremap [q :cprevious<CR>
-nnoremap ]l :lnext<CR>
-nnoremap [l :lprevious<CR>
+nnoremap ]q :cnext<CR>|" go to next line in quickfix
+nnoremap [q :cprevious<CR>|" go to previous line in quickfix
+nnoremap ]l :lnext<CR>|" go to next line in location list
+nnoremap [l :lprevious<CR>|" go to previous line in location list
 nnoremap ]a :next<CR>
 nnoremap [a :previous<CR>
 
