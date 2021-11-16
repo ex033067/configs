@@ -1093,7 +1093,8 @@ nnoremap <leader>1 :NERDTreeVCS<CR>
 nnoremap <leader>! :NERDTreeFind<CR>
 nnoremap <leader>2 :GFiles<CR>
 nnoremap <leader>3 :Buffers<CR>
-nnoremap <leader>4 :TagbarToggle<CR>
+nnoremap <leader>4 :TagbarOpen j<CR>
+nnoremap <leader>$ :TagbarToggle<CR>
 nnoremap <leader>g1 :Git<CR>
 nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'|" Show/hide quickfix window
 nnoremap <expr> <leader>l empty(filter(getwininfo(), 'v:val.loclist')) ? ':lopen<CR>' : ':lclose<CR>'|" Show/hide location list
