@@ -44,8 +44,8 @@ let g:jedi#goto_stubs_command = ''
 let g:jedi#rename_command = '<localleader>r'
 let g:jedi#usages_command = '<localleader>n'
 
-" My discreet color schemes
-Plug 'viniciusban/vim-onblack-colorschemes'
+" My discreet color scheme
+Plug 'viniciusban/vim-white-on-black-colorscheme'
 
 
 " 2. Good to have plugins
