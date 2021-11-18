@@ -89,8 +89,8 @@ let g:rainbow_active = 1
 let _only_to_test_rainbow_colors = trim('1'. trim('2'. trim('3'. trim('4'. trim('5'. trim('6'. trim('7'. trim('8'))))))))
 let g:rainbow_conf = {
     \'guifgs': [
-        \'#BFBFBF', '#D88724', '#00FFFF', '#B0C000',
-        \'#3399FF', '#00CC66', '#FF00FF', '#C02F1D'
+        \'#BFBFBF', '#D88724', '#FF00FF', '#B0C000',
+        \'#3399FF', '#00CC66', '#00FFFF', '#C02F1D'
     \]
 \}
 
