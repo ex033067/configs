@@ -1031,51 +1031,6 @@ augroup END
 
 
 " ==================================================
-" Options
-" ==================================================
-
-" elements of interface
-set number
-set scrolloff=0
-set lazyredraw
-
-set hlsearch
-set list listchars=tab:››,trail:·,nbsp:·,extends:→,precedes:←
-set cpoptions+=n showbreak=→\ 
-
-set wildmode=list:longest,full
-
-set mouse=a
-set ttymouse=xterm2  | " enable resizing windows with the mouse
-
-" syntax and colors
-syntax reset
-colorscheme white_on_black
-
-if exists('+termguicolors')
-  " truecolor under tmux
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-set termguicolors
-
-" sane editing
-set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
-set ignorecase smartcase
-set foldenable foldlevel=1
-if !exists('g:loaded_vimrc')
-    set foldmethod=indent
-endif
-let g:markdown_folding = 1 | " enable folded headings in markdown files
-
-" other options
-set hidden
-set grepprg=grep\ -nI\ --exclude-dir=.git\ --exclude-dir=venv\ --exclude-dir=__pycache__\ --exclude-dir='*.egg-info'\ --exclude-dir=.vagrant\ $*\ /dev/null
-set directory=~/tmp//
-set modeline
-
-
-" ==================================================
 " Global mappings
 " ==================================================
 
@@ -1203,5 +1158,50 @@ nnoremap <silent> <leader>op :set paste!<CR>:set paste?<CR>
 nnoremap <silent> <leader>or :setlocal relativenumber!<CR>
 nnoremap <silent> <leader>ow :setlocal wrap!<CR>:set wrap?<CR>
 
-normal ,oe
+
+" ==================================================
+" Options
+" ==================================================
+
+" elements of interface
+set number
+set scrolloff=0
+set lazyredraw
+
+set hlsearch
+set list listchars=tab:››,trail:·,nbsp:·,extends:→,precedes:←
+set cpoptions+=n showbreak=→\ 
+
+set wildmode=list:longest,full
+
+set mouse=a
+set ttymouse=xterm2  | " enable resizing windows with the mouse
+
+" syntax and colors
+syntax reset
+colorscheme white_on_black
+
+if exists('+termguicolors')
+  " truecolor under tmux
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+set termguicolors
+
+" sane editing
+set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
+set ignorecase smartcase
+set foldenable foldlevel=1
+if !exists('g:loaded_vimrc')
+    set foldmethod=indent
+endif
+let g:markdown_folding = 1 | " enable folded headings in markdown files
+
+" other options
+set hidden
+set grepprg=grep\ -nI\ --exclude-dir=.git\ --exclude-dir=venv\ --exclude-dir=__pycache__\ --exclude-dir='*.egg-info'\ --exclude-dir=.vagrant\ $*\ /dev/null
+set directory=~/tmp//
+set modeline
+
 let g:loaded_vimrc=1
+
