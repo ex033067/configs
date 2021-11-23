@@ -315,7 +315,6 @@ augroup END
 augroup aug_terminal_mode
     au!
     silent! autocmd TerminalWinOpen * setlocal nonumber norelativenumber
-    silent! autocmd TerminalOpen * setlocal nonumber norelativenumber
 augroup END
 
 augroup aug_ft_css
