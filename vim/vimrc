@@ -1151,8 +1151,8 @@ nnoremap <leader>gl :let _=tempname()<CR>:execute '!git l -50 >'._<CR>:execute '
 nnoremap <silent> <leader>oe :call Ban_SetDefaultEditOptions()<CR>
 nnoremap <silent> <leader>od :windo setlocal wrap wrapscan nohlsearch nocursorline nocursorcolumn nonumber relativenumber<CR>:wincmd p<CR>
 nnoremap <silent> <leader>oh :set hlsearch!<CR>:set hlsearch?<CR>
-nnoremap <silent> <leader>o- :setlocal cursorline!<CR>
-nnoremap <silent> <leader>o\ :setlocal cursorcolumn!<CR>
+nnoremap <silent> <leader>ocl :setlocal cursorline!<CR>
+nnoremap <silent> <leader>occ :setlocal cursorcolumn!<CR>
 nnoremap <silent> <leader>on :setlocal number!<CR>
 nnoremap <silent> <leader>op :set paste!<CR>:set paste?<CR>
 nnoremap <silent> <leader>or :setlocal relativenumber!<CR>
