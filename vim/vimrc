@@ -1148,7 +1148,7 @@ nnoremap <leader>gp gg:Ghdiffsplit <CR>
 nnoremap <leader>gl :let _=tempname()<CR>:execute '!git l -50 >'._<CR>:execute 'keepalt split '._<CR>:wincmd _<CR>:setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>
 
 " toggle options
-nnoremap <silent> <leader>oe :setlocal wrap wrapscan hlsearch cursorline nocursorcolumn number norelativenumber<CR>
+nnoremap <silent> <leader>oe :call Ban_SetDefaultEditOptions()<CR>
 nnoremap <silent> <leader>od :windo setlocal wrap wrapscan nohlsearch nocursorline nocursorcolumn nonumber relativenumber<CR>:wincmd p<CR>
 nnoremap <silent> <leader>oh :set hlsearch!<CR>:set hlsearch?<CR>
 nnoremap <silent> <leader>o- :setlocal cursorline!<CR>
@@ -1203,5 +1203,17 @@ set grepprg=grep\ -nI\ --exclude-dir=.git\ --exclude-dir=venv\ --exclude-dir=__p
 set directory=~/tmp//
 set modeline
 
-let g:loaded_vimrc=1
 
+function! Ban_SetDefaultEditOptions(scope = 'local')
+    if a:scope == 'global'
+        let command = 'set'
+    else
+        let command = 'setlocal'
+    endif
+
+    execute command . " wrap wrapscan hlsearch cursorline nocursorcolumn number norelativenumber"
+endfunction
+
+call Ban_SetDefaultEditOptions('global')
+
+let g:loaded_vimrc=1
