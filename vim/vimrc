@@ -1059,7 +1059,6 @@ nnoremap <leader>$ :TagbarToggle<CR>
 nnoremap <leader>g1 :Git<CR>
 nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'|" Show/hide quickfix window
 nnoremap <expr> <leader>l empty(filter(getwininfo(), 'v:val.loclist')) ? ':lopen<CR>' : ':lclose<CR>'|" Show/hide location list
-
 nnoremap <leader>h :nohlsearch<CR>
 nnoremap <leader>< :QuickScopeToggle<CR>|" Show/hide quick scope
 
@@ -1157,11 +1156,11 @@ nnoremap <leader>gl :let _=tempname()<CR>:execute '!git l -50 >'._<CR>:execute '
 nnoremap <silent> <leader>oe :call Ban_SetDefaultEditOptions()<CR>
 nnoremap <silent> <leader>od :windo setlocal wrap wrapscan nohlsearch nocursorline nocursorcolumn nonumber relativenumber<CR>:wincmd p<CR>
 nnoremap <silent> <leader>oh :set hlsearch!<CR>:set hlsearch?<CR>
-nnoremap <silent> <leader>ocl :setlocal cursorline!<CR>
-nnoremap <silent> <leader>occ :setlocal cursorcolumn!<CR>
-nnoremap <silent> <leader>on :setlocal number!<CR>
+nnoremap <silent> <leader>ocl :setlocal cursorline!<CR>:setlocal cursorline?<CR>
+nnoremap <silent> <leader>occ :setlocal cursorcolumn!<CR>:setlocal cursorcolumn?<CR>
+nnoremap <silent> <leader>on :setlocal number!<CR>:setlocal number?<CR>
 nnoremap <silent> <leader>op :set paste!<CR>:set paste?<CR>
-nnoremap <silent> <leader>or :setlocal relativenumber!<CR>
+nnoremap <silent> <leader>or :setlocal relativenumber!<CR>:setlocal relativenumber?<CR>
 nnoremap <silent> <leader>ow :setlocal wrap!<CR>:set wrap?<CR>
 
 
