@@ -4,7 +4,6 @@ if [[ -r ~/.vimrc ]]; then
     mv ~/.vimrc ~/.vimrc.$(date +%Y-%m-%d.%H-%M)
 fi
 ln -sf $PWD/vimrc ~/.vimrc
-cp $PWD/vim_colorscheme.example ~/.vim_colorscheme
 
 rm -rf ~/.vim
 mkdir ~/.vim
