@@ -1174,6 +1174,7 @@ set scrolloff=0
 set lazyredraw
 
 set hlsearch
+set shortmess-=S
 set list listchars=tab:››,trail:·,nbsp:·,extends:→,precedes:←
 set cpoptions+=n showbreak=→\ 
 
