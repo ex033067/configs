@@ -1215,7 +1215,7 @@ function! Ban_SetDefaultEditOptions(scope = 'local')
         let command = 'setlocal'
     endif
 
-    execute command . " wrap wrapscan hlsearch cursorline nocursorcolumn number norelativenumber"
+    execute command . ' wrap wrapscan hlsearch cursorline nocursorcolumn number norelativenumber'
 endfunction
 
 
@@ -1223,7 +1223,7 @@ function! Ban_SetDefaultDiffOptions()
     let curtab_winids = map(filter(getwininfo(), 'v:val.tabnr == tabpagenr()'), 'v:val.winid')
     let are_diff_windows = map(copy(curtab_winids), {idx, winid -> {'winid': winid, 'is_diff': getwinvar(winid, '&diff')}})
     let only_diff_windows = filter(copy(are_diff_windows), 'v:val.is_diff == 1')
-    call map(only_diff_windows, {idx, item -> win_execute(item.winid, "setlocal wrap wrapscan hlsearch nocursorline nocursorcolumn nonumber relativenumber")})
+    call map(only_diff_windows, {idx, item -> win_execute(item.winid, 'setlocal wrap wrapscan hlsearch nocursorline nocursorcolumn nonumber relativenumber')})
 endfunction
 
 call Ban_SetDefaultEditOptions('global')
