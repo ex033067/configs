@@ -1209,12 +1209,7 @@ set modeline
 
 
 function! Ban_SetDefaultEditOptions(scope = 'local')
-    if a:scope == 'global'
-        let command = 'set'
-    else
-        let command = 'setlocal'
-    endif
-
+    let command = (a:scope == 'global') ?  'set' : 'setlocal'
     execute command . ' wrap wrapscan hlsearch cursorline nocursorcolumn number norelativenumber'
 endfunction
 
