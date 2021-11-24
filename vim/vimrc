@@ -143,6 +143,9 @@ let g:AutoPairsShortcutFastWrap = '<leader>pe'
 let g:AutoPairsShortcutToggle = '<leader>pp'
 let g:AutoPairsFlyMode = 1
 
+" Colorize color names and hex codes
+Plug 'chrisbra/Colorizer'
+
 call plug#end()
 
 
