@@ -3,7 +3,7 @@ let mapleader=','
 let maplocalleader='\'
 
 " Start with vim defaults
-if filereadable(expand("$VIMRUNTIME/defaults.vim"))
+if has('vim') && filereadable(expand("$VIMRUNTIME/defaults.vim"))
     unlet! skip_defaults_vim
     source $VIMRUNTIME/defaults.vim
 endif
