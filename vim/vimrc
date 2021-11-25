@@ -3,7 +3,7 @@ let mapleader=','
 let maplocalleader='\'
 
 " Start with vim defaults
-if has('vim') && filereadable(expand("$VIMRUNTIME/defaults.vim"))
+if !has('nvim') && filereadable(expand("$VIMRUNTIME/defaults.vim"))
     unlet! skip_defaults_vim
     source $VIMRUNTIME/defaults.vim
 endif
@@ -1192,7 +1192,7 @@ set cpoptions+=n showbreak=→\
 set wildmode=list:longest,full
 
 set mouse=a
-if has('vim')
+if !has('nvim')
     set ttymouse=xterm2  | " enable resizing windows with the mouse
 endif
 
