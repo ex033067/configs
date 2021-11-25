@@ -1159,8 +1159,8 @@ else
 endif
 
 " git
-nnoremap <leader>ga :term ++close git add %<CR>
-nnoremap <leader>gA :term ++close git reset -- %<CR>
+nnoremap <leader>ga :Git add %<CR>
+nnoremap <leader>gA :Git reset -- %<CR>
 nnoremap <leader>gc :keepalt Git commit -v <CR>
 nnoremap <leader>gC :keepalt Git commit -v --amend <CR>
 nnoremap <leader>g= :keepalt Git diff % <CR>:wincmd _<CR>:setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>
