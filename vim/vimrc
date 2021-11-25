@@ -146,10 +146,19 @@ let g:AutoPairsShortcutToggle = '<leader>pp'
 let g:AutoPairsFlyMode = 1
 
 " Colorize color names and hex codes
-Plug 'chrisbra/Colorizer'
+if has('nvim')
+    Plug 'norcalli/nvim-colorizer.lua'
+else
+    Plug 'chrisbra/Colorizer'
+endif
 
 call plug#end()
 
+
+" For 'norcalli/nvim-colorizer.lua' plugin
+if has('nvim')
+    lua require'colorizer'.setup()
+endif
 
 " ==================================================
 " my own functions
