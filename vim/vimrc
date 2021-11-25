@@ -8,6 +8,8 @@ if filereadable(expand("$VIMRUNTIME/defaults.vim"))
     source $VIMRUNTIME/defaults.vim
 endif
 
+" Some plugins need termguicolors beforehand
+set termguicolors
 
 " ==================================================
 " Plugins
@@ -1192,7 +1194,6 @@ if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
-set termguicolors
 
 " sane editing
 set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
