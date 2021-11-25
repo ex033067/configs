@@ -1192,7 +1192,9 @@ set cpoptions+=n showbreak=→\
 set wildmode=list:longest,full
 
 set mouse=a
-set ttymouse=xterm2  | " enable resizing windows with the mouse
+if has('vim')
+    set ttymouse=xterm2  | " enable resizing windows with the mouse
+endif
 
 " syntax and colors
 syntax reset
