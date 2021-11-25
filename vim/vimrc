@@ -318,7 +318,7 @@ augroup quickfix
     autocmd!
     autocmd QuickFixCmdPost [^l]* cwindow
     autocmd QuickFixCmdPost l* lwindow
-    autocmd WinEnter * if &buftype == 'quickfix' | setlocal nocursorline | endif
+    autocmd FileType qf setlocal nocursorline
 augroup END
 
 augroup aug_terminal_mode
