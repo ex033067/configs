@@ -1171,6 +1171,7 @@ nnoremap <leader>gl :let tempfile=tempname()<CR>:silent execute '!git l -50 >'.t
 " toggle options
 nnoremap <silent> <leader>oe :call Ban_SetDefaultEditOptions()<CR>
 nnoremap <silent> <leader>od :call Ban_SetDefaultDiffOptions()<CR>
+nnoremap <silent> <leader>ocl :let _grps={synIDattr(hlID("customDarkCursorLine"), "bg"): 'customLightCursorLine', synIDattr(hlID("customLightCursorLine"), "bg"): 'customDarkCursorLine'}<bar>:let _new_grp=_grps[synIDattr(synIDtrans(hlID("CursorLine")), "bg")]<bar>:execute 'hi! link CursorLine '._new_grp<bar>unlet _grps _new_grp<bar>redraw!<CR>|" change CursorLine based on a dictionary with keys inverted with highlight group names. Key is bgcolor. Value is highlight group name.
 nnoremap <silent> <leader>op :set paste!<CR>:set paste?<CR>
 nnoremap <silent> <leader>ow :setlocal wrap!<CR>:set wrap?<CR>
 nnoremap <leader>o :setlocal
