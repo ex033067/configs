@@ -1166,7 +1166,7 @@ nnoremap <leader>gc :keepalt Git commit -v <CR>
 nnoremap <leader>gC :keepalt Git commit -v --amend <CR>
 nnoremap <leader>g= :keepalt Git diff % <CR>:wincmd _<CR>:setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>
 nnoremap <leader>gp gg:Ghdiffsplit <CR>
-nnoremap <leader>gl :let tempfile=tempname()<CR>:silent execute '!git l -50 >'.tempfile<CR>:silent execute 'keepalt split '.tempfile<CR>:silent wincmd tempfile<CR>:setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>:redraw!<CR>
+nnoremap <leader>gl :let tempfile=tempname()<CR>:execute '!git l -50 >'.tempfile<CR>:execute 'keepalt split '.tempfile<CR>:wincmd _<CR>:setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>:redraw!<CR>
 
 " toggle options
 nnoremap <silent> <leader>oe :call Ban_SetDefaultEditOptions()<CR>
