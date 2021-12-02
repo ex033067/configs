@@ -353,7 +353,7 @@ augroup END
 
 augroup aug_ft_vue
     au!
-    autocmd FileType vue setlocal tabstop=2 foldenable foldlevel=5
+    autocmd FileType vue setlocal tabstop=2 foldlevel=5
 augroup END
 
 augroup aug_ft_json
@@ -462,7 +462,7 @@ augroup END
 
 augroup aug_ft_gitcommit
     au!
-    autocmd FileType gitcommit setlocal nofoldenable
+    autocmd FileType gitcommit setlocal
     autocmd BufRead COMMIT_EDITMSG setlocal nocursorline
     autocmd BufRead COMMIT_EDITMSG call execute(['normal gg'])
 
@@ -1211,7 +1211,7 @@ endif
 " sane editing
 set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
 set ignorecase smartcase
-set foldenable foldlevel=1
+set nofoldenable foldlevel=1
 if !exists('g:loaded_vimrc')
     set foldmethod=indent
 endif
