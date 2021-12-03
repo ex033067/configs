@@ -1075,7 +1075,7 @@ nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.quickfix')) ? ':cope
 nnoremap <expr> <leader>l empty(filter(getwininfo(), 'v:val.loclist')) ? ':lopen<CR>' : ':lclose<CR>'|" Show/hide location list
 nnoremap <BS> :nohlsearch<CR>
 nnoremap <leader>< :QuickScopeToggle<CR>|" Show/hide quick scope
-nnoremap <leader>* :set hlsearch<CR>:let @/='<C-r><C-w>\c'<CR>|" Highlight word under cursor without moving it
+nnoremap <leader>* :set hlsearch<bar>:let @/=expand('<cword>').'\c'<CR>|" Highlight word under cursor without moving it
 nnoremap <leader><leader> :setlocal cursorline!<CR>
 
 " editing
