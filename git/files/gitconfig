@@ -5,5 +5,9 @@
 #
 
 [user]
-    name =
-    email =
+    name = 
+    email = 
+
+[include]
+        path = ~/.gitconfig_generic
+        path = ~/.gitconfig_platform_specific

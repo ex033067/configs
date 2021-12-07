@@ -17,7 +17,7 @@ __aliases () {
     [[ "${OSNAME}" = "Darwin" ]] && alias ls='ls -Gp'
     [[ "${OSNAME}" = "Linux" ]] && alias ls='ls -p --group-directories-first --color=auto'
 
-    alias ack='ack --sort-files --color-filename="bold blue" --color-lineno="blue" --color-match="bold white on_blue" --ignore-dir=is:.venv --ignore-dir=is:env --ignore-dir=is:.vagrant --ignore-file=ext:sqlite3'
+    alias ack='ack --sort-files --color-filename="bold blue" --color-lineno="blue" --color-match="bold white on_blue" --ignore-dir=is:.venv --ignore-dir=is:venv --ignore-dir=is:env --ignore-dir=is:.vagrant --ignore-file=ext:sqlite3'
     alias envrc='source .envrc'
     alias grep='grep --color=auto'
 
@@ -238,3 +238,13 @@ loadenv () {
 
 # [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+
+# Use local customization inside ~/bashrc.d directory.
+if [ -d ~/bashrc.d ]; then
+    for fname in ~/bashrc.d/*.bash; do
+        if [[ -r $fname ]]; then
+            . $fname
+        fi
+    done
+    unset fname
+fi

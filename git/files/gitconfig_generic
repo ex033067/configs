@@ -35,7 +35,7 @@
         showpath = rev-parse --show-toplevel
 
         # shortcut to simple but long commands
-        l = log -5 --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(auto)%h %ad%C(auto)%d %s'
+        l = log -5 --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(auto)%s%n  %C(blue)%ad %ae %h%C(auto)%d'
         s = status -s
         initt = "!git init; git commit --allow-empty -m 'Create the empty repo'"
         prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
