@@ -139,11 +139,11 @@ let g:UltiSnipsSnippetDirectories=[$HOME.'/src/vim-snippets']
 " See https://github.com/viniciusban/myconfigs/issues/1
 " Plug 'jeetsukumaran/vim-pythonsense'
 
-" Insert or delete brackets, parens, quotes in pair
-Plug 'jiangmiao/auto-pairs'
-let g:AutoPairsShortcutFastWrap = '<leader>pe'
-let g:AutoPairsShortcutToggle = '<leader>pp'
-let g:AutoPairsFlyMode = 1
+" " Insert or delete brackets, parens, quotes in pair
+" Plug 'jiangmiao/auto-pairs'
+" let g:AutoPairsShortcutFastWrap = '<leader>pe'
+" let g:AutoPairsShortcutToggle = '<leader>pp'
+" let g:AutoPairsFlyMode = 1
 
 " Colorize color names and hex codes
 if has('nvim')
