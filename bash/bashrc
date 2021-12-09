@@ -93,6 +93,7 @@ __variables () {
     if ! which poetry > /dev/null; then
         [[ -d ${HOME}/.poetry ]] && export PATH="$HOME/.poetry/bin:$PATH"
     fi
+    export POETRY_VIRTUALENVS_PATH="./venv"
 
     # pyenv
     [[ -z "$PYENV_ROOT" ]] && [[ -d ~/.pyenv ]] && export PYENV_ROOT=~/.pyenv
