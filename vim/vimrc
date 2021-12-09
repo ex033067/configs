@@ -1054,50 +1054,6 @@ augroup END
 
 
 " ==================================================
-" Options
-" ==================================================
-
-" elements of interface
-set number
-set scrolloff=0
-set lazyredraw
-
-set list listchars=tab:››,trail:·,nbsp:·,extends:→,precedes:←
-set cpoptions+=n showbreak=→\ 
-
-set wildmode=list:longest,full
-
-set ttymouse=xterm2  | " enable resizing windows with the mouse
-
-" syntax and colors
-syntax reset
-if filereadable(expandcmd('~/.vim_colorscheme'))
-    execute 'source ~/.vim_colorscheme'
-endif
-
-if exists('+termguicolors')
-  " truecolor under tmux
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-set termguicolors
-
-" sane editing
-set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
-set ignorecase smartcase
-set nofoldenable foldlevel=0
-if !exists('g:loaded_vimrc')
-    set foldmethod=indent
-endif
-let g:markdown_folding = 1 | " enable folded headings in markdown files
-
-" other options
-set hidden
-set grepprg=ack\ --nogroup\ $* | " ack is better than grep
-set modeline
-
-
-" ==================================================
 " Global mappings
 " ==================================================
 
