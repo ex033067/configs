@@ -1280,7 +1280,7 @@ endif
 
 " sane editing
 set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
-set ignorecase smartcase
+set ignorecase smartcase tagcase=smart
 set nofoldenable foldlevel=1
 if !exists('g:loaded_vimrc')
     set foldmethod=indent
