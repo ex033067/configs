@@ -1107,8 +1107,6 @@ nnoremap <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') .
     \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
     \|" Show highlight group of word under cursor
 
-nnoremap <leader>c :clo<CR>
-
 " Show/hide helpers
 nnoremap <leader>' :NERDTreeToggle<CR>
 nnoremap <leader>1 :NERDTreeVCS<CR>
