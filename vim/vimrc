@@ -1107,6 +1107,8 @@ nnoremap <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') .
     \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
     \|" Show highlight group of word under cursor
 
+nnoremap <leader>T :!ctags -R --exclude=.git --exclude=__pycache__ --exclude=.pytest_cache --languages=-json --tag-relative=yes -f ./.git/tags . &<CR>|" build tags for the project
+
 " Show/hide helpers
 nnoremap <leader>' :NERDTreeToggle<CR>
 nnoremap <leader>1 :NERDTreeVCS<CR>
