@@ -1291,6 +1291,7 @@ let g:markdown_folding = 1 | " enable folded headings in markdown files
 set hidden
 set grepprg=grep\ -nI\ --exclude-dir=.git\ --exclude-dir=venv\ --exclude-dir=__pycache__\ --exclude-dir='*.egg-info'\ --exclude-dir=.vagrant\ $*\ /dev/null
 set directory=~/tmp//
+set tags+=.git/tags | " The filename doesn't start with './'. See `:h 'tags'` for details.
 set modeline
 
 
