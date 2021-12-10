@@ -8,262 +8,262 @@
 
 
 __aliases () {
-    alias ..='cd ..'
-    alias .2='cd ../..'
-    alias .3='cd ../../..'
+	alias ..='cd ..'
+	alias .2='cd ../..'
+	alias .3='cd ../../..'
 
-    alias l='ls -lhgo'
-    alias ll='ls -lh'
-    [[ "${OSNAME}" = "Darwin" ]] && alias ls='ls -Gp'
-    [[ "${OSNAME}" = "Linux" ]] && alias ls='ls -p --group-directories-first --color=auto'
+	alias l='ls -lhgo'
+	alias ll='ls -lh'
+	[[ "${OSNAME}" = "Darwin" ]] && alias ls='ls -Gp'
+	[[ "${OSNAME}" = "Linux" ]] && alias ls='ls -p --group-directories-first --color=auto'
 
-    alias ack='ack --sort-files --color-filename="bold blue" --color-lineno="blue" --color-match="bold white on_blue" --ignore-dir=is:.venv --ignore-dir=is:venv --ignore-dir=is:env --ignore-dir=is:.vagrant --ignore-file=ext:sqlite3'
-    alias gentags='ctags -R --exclude=.git --exclude=__pycache__ --exclude=.pytest_cache --languages=-json --tag-relative=yes -f ./.git/tags .'
-    alias envrc='source .envrc'
-    alias grep='grep --color=auto'
+	alias ack='ack --sort-files --color-filename="bold blue" --color-lineno="blue" --color-match="bold white on_blue" --ignore-dir=is:.venv --ignore-dir=is:venv --ignore-dir=is:env --ignore-dir=is:.vagrant --ignore-file=ext:sqlite3'
+	alias gentags='ctags -R --exclude=.git --exclude=__pycache__ --exclude=.pytest_cache --languages=-json --tag-relative=yes -f ./.git/tags .'
+	alias envrc='source .envrc'
+	alias grep='grep --color=auto'
 
-    alias now='date -u +%y%m%d%H%M'
-    alias when='cal -3; date +%H:%M'
+	alias now='date -u +%y%m%d%H%M'
+	alias when='cal -3; date +%H:%M'
 
-    # one-letters
-    alias j='jupyter notebook --no-browser --NotebookApp.allow_remote_access=True'
+	# one-letters
+	alias j='jupyter notebook --no-browser --NotebookApp.allow_remote_access=True'
 
-    # reference: https://www.tecmint.com/clear-ram-memory-cache-buffer-and-swap-space-on-linux/
-    alias reclaim_ram="sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'\""
+	# reference: https://www.tecmint.com/clear-ram-memory-cache-buffer-and-swap-space-on-linux/
+	alias reclaim_ram="sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'\""
 }
 
 
 __start_wsl_services () {
-    __start_ssh_agent
+	__start_ssh_agent
 }
 
 
 __start_ssh_agent () {
-    if [[ -n "$TMUX" ]]; then
-        return
-    fi
+	if [[ -n "$TMUX" ]]; then
+		return
+	fi
 
-    if [[ -n "$SSH_AGENT_PID" ]]; then
-        current_agent=$(pgrep -f ssh-agent)
-        if [[ "$current_agent" = "$SSH_AGENT_PID" ]]; then
-            return
-        fi
-    fi
+	if [[ -n "$SSH_AGENT_PID" ]]; then
+		current_agent=$(pgrep -f ssh-agent)
+		if [[ "$current_agent" = "$SSH_AGENT_PID" ]]; then
+			return
+		fi
+	fi
 
-    source_file=/tmp/ssh-agent-source-file
-    if [[ -f "$source_file" ]]; then
-        source $source_file >/dev/null 2>&1
-        current_agent=$(pgrep -f ssh-agent)
-        if [[ "$current_agent" = "$SSH_AGENT_PID" ]]; then
-            return
-        fi
-    fi
+	source_file=/tmp/ssh-agent-source-file
+	if [[ -f "$source_file" ]]; then
+		source $source_file >/dev/null 2>&1
+		current_agent=$(pgrep -f ssh-agent)
+		if [[ "$current_agent" = "$SSH_AGENT_PID" ]]; then
+			return
+		fi
+	fi
 
-    ssh-agent -s >$source_file
-    source $source_file >/dev/null 2>&1
+	ssh-agent -s >$source_file
+	source $source_file >/dev/null 2>&1
 }
 
 
 __variables () {
-    [[ -z "${OSNAME}" ]] && export OSNAME="$(uname)"
-    [[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
-    export HISTCONTROL=ignoreboth
-    export HISTTIMEFORMAT="%F %T "
-    export EDITOR=$(which vim)
-    export VISUAL=$EDITOR
+	[[ -z "${OSNAME}" ]] && export OSNAME="$(uname)"
+	[[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
+	export HISTCONTROL=ignoreboth
+	export HISTTIMEFORMAT="%F %T "
+	export EDITOR=$(which vim)
+	export VISUAL=$EDITOR
 
-    # Customizations for PS1. See "ps1_customizations.example" file.
-    [[ -r ~/.ps1_customizations ]] && source ~/.ps1_customizations
-    export PS1_COLOR_RESET="\[\033[m\]"
+	# Customizations for PS1. See "ps1_customizations.example" file.
+	[[ -r ~/.ps1_customizations ]] && source ~/.ps1_customizations
+	export PS1_COLOR_RESET="\[\033[m\]"
 
-    export PS1="\n${PS1_COLOR_RESET}> ${PS1_COLOR_ERROR}\$(VALU=\$? ; [ \$VALU -ne 0 ] && echo ' '\${VALU}' ')${PS1_COLOR_DEFAULT}\$(date '+%a %T')\${HOSTNAME_ALIAS:+ @\${HOSTNAME_ALIAS}} pwd:\W\$(__ps1_git ; echo \${PS1_GIT:+' branch:'\${PS1_GIT}})\$(__ps1_virtualenv; echo \${PS1_VIRTUAL_ENV:+' ('\${PS1_VIRTUAL_ENV}')'})${PS1_COLOR_RESET}\n\$ "
+	export PS1="\n${PS1_COLOR_RESET}> ${PS1_COLOR_ERROR}\$(VALU=\$? ; [ \$VALU -ne 0 ] && echo ' '\${VALU}' ')${PS1_COLOR_DEFAULT}\$(date '+%a %T')\${HOSTNAME_ALIAS:+ @\${HOSTNAME_ALIAS}} pwd:\W\$(__ps1_git ; echo \${PS1_GIT:+' branch:'\${PS1_GIT}})\$(__ps1_virtualenv; echo \${PS1_VIRTUAL_ENV:+' ('\${PS1_VIRTUAL_ENV}')'})${PS1_COLOR_RESET}\n\$ "
 
-    [[ -n "$WSL_DISTRO_NAME" ]] && export DISPLAY=$(grep '^nameserver' /etc/resolv.conf | cut -d ' ' -f2):0.0
-    [[ "${OSNAME}" = "Darwin" ]] && export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
+	[[ -n "$WSL_DISTRO_NAME" ]] && export DISPLAY=$(grep '^nameserver' /etc/resolv.conf | cut -d ' ' -f2):0.0
+	[[ "${OSNAME}" = "Darwin" ]] && export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
 
 
-    # PATH
-    if ! which brew > /dev/null; then
-        if [[ -r /usr/local/Homebrew ]]; then
-            eval $(/usr/local/bin/brew shellenv)
-        fi
-    fi
-    PATH="$HOME/.local/bin:$PATH"
+	# PATH
+	if ! which brew > /dev/null; then
+		if [[ -r /usr/local/Homebrew ]]; then
+			eval $(/usr/local/bin/brew shellenv)
+		fi
+	fi
+	PATH="$HOME/.local/bin:$PATH"
 
-    if ! which poetry > /dev/null; then
-        [[ -d ${HOME}/.poetry ]] && export PATH="$HOME/.poetry/bin:$PATH"
-    fi
-    export POETRY_VIRTUALENVS_PATH="./venv"
+	if ! which poetry > /dev/null; then
+		[[ -d ${HOME}/.poetry ]] && export PATH="$HOME/.poetry/bin:$PATH"
+	fi
+	export POETRY_VIRTUALENVS_PATH="./venv"
 
-    # pyenv
-    [[ -z "$PYENV_ROOT" ]] && [[ -d ~/.pyenv ]] && export PYENV_ROOT=~/.pyenv
-    [[ -z "$PYENV_ROOT" ]] && [[ -d ~/.local/bin/pyenv ]] && export PYENV_ROOT=~/.local/bin/pyenv
-    if [[ -n "$PYENV_ROOT" ]]; then
-        export PATH="$PYENV_ROOT/bin:$PATH"
+	# pyenv
+	[[ -z "$PYENV_ROOT" ]] && [[ -d ~/.pyenv ]] && export PYENV_ROOT=~/.pyenv
+	[[ -z "$PYENV_ROOT" ]] && [[ -d ~/.local/bin/pyenv ]] && export PYENV_ROOT=~/.local/bin/pyenv
+	if [[ -n "$PYENV_ROOT" ]]; then
+		export PATH="$PYENV_ROOT/bin:$PATH"
 
-        if which pyenv > /dev/null
-        then
-            eval "$(pyenv init --path)"
-            eval "$(pyenv init -)"
-            # Custom python versions. See "pyenv_global_command.example" file.
-            [[ -r ~/.pyenv_global_command ]] && source ~/.pyenv_global_command
-        fi
-    fi
+		if which pyenv > /dev/null
+		then
+			eval "$(pyenv init --path)"
+			eval "$(pyenv init -)"
+			# Custom python versions. See "pyenv_global_command.example" file.
+			[[ -r ~/.pyenv_global_command ]] && source ~/.pyenv_global_command
+		fi
+	fi
 
-    # asdf-vm
-    if [[ -d ~/.asdf ]]; then
-        source $HOME/.asdf/asdf.sh
-        source $HOME/.asdf/completions/asdf.bash
-    fi
+	# asdf-vm
+	if [[ -d ~/.asdf ]]; then
+		source $HOME/.asdf/asdf.sh
+		source $HOME/.asdf/completions/asdf.bash
+	fi
 }
 
 
 __ps1_virtualenv () {
-    if [[ -z "$VIRTUAL_ENV" ]]; then
-        return
-    fi
+	if [[ -z "$VIRTUAL_ENV" ]]; then
+		return
+	fi
 
-    if [[ -n "$POETRY_ACTIVE" ]]; then
-        tool='poetry'
-    elif [[ -n "$PIPENV_ACTIVE" ]]; then
-        tool='pipenv'
-    else
-        tool='pip'
-    fi
+	if [[ -n "$POETRY_ACTIVE" ]]; then
+		tool='poetry'
+	elif [[ -n "$PIPENV_ACTIVE" ]]; then
+		tool='pipenv'
+	else
+		tool='pip'
+	fi
 
-    if [[ "$VIRTUAL_ENV" =~ "$PWD" ]]; then
-        possible_dirnames='./venv ./.venv ./.virtualenv ./.sandbox'
-        for inline_dirname in ${possible_dirnames}; do
-            if [[ -d $inline_dirname ]]; then
-                break
-            fi
-        done
-    else
-        inline_dirname=
-    fi
+	if [[ "$VIRTUAL_ENV" =~ "$PWD" ]]; then
+		possible_dirnames='./venv ./.venv ./.virtualenv ./.sandbox'
+		for inline_dirname in ${possible_dirnames}; do
+			if [[ -d $inline_dirname ]]; then
+				break
+			fi
+		done
+	else
+		inline_dirname=
+	fi
 
-    PS1_VIRTUAL_ENV="${tool}${inline_dirname:+ ${inline_dirname}}"
-    return
+	PS1_VIRTUAL_ENV="${tool}${inline_dirname:+ ${inline_dirname}}"
+	return
 }
 
 __ps1_git () {
-    # Show git branch and indicators about status:
-    #   - "+" means there are staged changes
-    #   - "!" means there are unstaged changes
+	# Show git branch and indicators about status:
+	#   - "+" means there are staged changes
+	#   - "!" means there are unstaged changes
 
-    # The main concern here is performance. So, I return as soon as
-    # possible, cache last execution, avoid calling external processes like
-    # grep, sed, etc. and abuse of bash expressions and logic.
+	# The main concern here is performance. So, I return as soon as
+	# possible, cache last execution, avoid calling external processes like
+	# grep, sed, etc. and abuse of bash expressions and logic.
 
-    PS1_GIT_STATUS_OUTPUT=$(git status -b --porcelain=2 2>/dev/null)
-    if [[ $? -ne 0 ]]; then
-        # Not a git repo
-        PS1_GIT=
-        return
-    fi
+	PS1_GIT_STATUS_OUTPUT=$(git status -b --porcelain=2 2>/dev/null)
+	if [[ $? -ne 0 ]]; then
+		# Not a git repo
+		PS1_GIT=
+		return
+	fi
 
-    if [[ "${PS1_GIT_STATUS_OUTPUT}" = "${CACHED_PS1_GIT_STATUS_OUTPUT}" ]]; then
-        # Nothing changed since previous prompt. Reuse current $PS1_GIT.
-        return
-    fi
+	if [[ "${PS1_GIT_STATUS_OUTPUT}" = "${CACHED_PS1_GIT_STATUS_OUTPUT}" ]]; then
+		# Nothing changed since previous prompt. Reuse current $PS1_GIT.
+		return
+	fi
 
-    CACHED_PS1_GIT_STATUS_OUTPUT="${PS1_GIT_STATUS_OUTPUT}"
+	CACHED_PS1_GIT_STATUS_OUTPUT="${PS1_GIT_STATUS_OUTPUT}"
 
-    local branch staged_indicator unstaged_indicator
-    local rectype field1 field2 other_fields
-    local branch_header="#"
-    local untracked_item="?"
-    local changed_item="1"
-    local renamed_item="2"
-    local unmerged_item="u"
-    while read rectype field1 field2 other_fields; do
-        if [[ -n "${staged_indicator}" && -n "${unstaged_indicator}" ]]; then
-            # Indicator are already set. There's nothing more to look for.
-            break
-        fi
-        if [[ -z "${branch}" && "${rectype}" = "${branch_header}" && "${field1}" = "branch.head" ]]; then
-            local branch="${field2}"
-            continue
-        fi
+	local branch staged_indicator unstaged_indicator
+	local rectype field1 field2 other_fields
+	local branch_header="#"
+	local untracked_item="?"
+	local changed_item="1"
+	local renamed_item="2"
+	local unmerged_item="u"
+	while read rectype field1 field2 other_fields; do
+		if [[ -n "${staged_indicator}" && -n "${unstaged_indicator}" ]]; then
+			# Indicator are already set. There's nothing more to look for.
+			break
+		fi
+		if [[ -z "${branch}" && "${rectype}" = "${branch_header}" && "${field1}" = "branch.head" ]]; then
+			local branch="${field2}"
+			continue
+		fi
 
-        if [[ "${untracked_item}${unmerged_item}" =~ "${rectype}" ]]; then
-            local unstaged_indicator="!"
-            continue
-        fi
+		if [[ "${untracked_item}${unmerged_item}" =~ "${rectype}" ]]; then
+			local unstaged_indicator="!"
+			continue
+		fi
 
-        if [[ "${changed_item}${renamed_item}" =~ "${rectype}" ]]; then
-            if [[ "${field1:0:1}" != "." ]]; then
-                local staged_indicator="+"
-            fi
-            if [[ "${field1:1:1}" != "." ]]; then
-                local unstaged_indicator="!"
-            fi
-            continue
-        fi
-    done <<< "${PS1_GIT_STATUS_OUTPUT}"
+		if [[ "${changed_item}${renamed_item}" =~ "${rectype}" ]]; then
+			if [[ "${field1:0:1}" != "." ]]; then
+				local staged_indicator="+"
+			fi
+			if [[ "${field1:1:1}" != "." ]]; then
+				local unstaged_indicator="!"
+			fi
+			continue
+		fi
+	done <<< "${PS1_GIT_STATUS_OUTPUT}"
 
-    PS1_GIT="${branch}${staged_indicator}${unstaged_indicator}"
+	PS1_GIT="${branch}${staged_indicator}${unstaged_indicator}"
 }
 
 
 __main () {
-    set -o vi
-    __variables
-    __aliases
-    [[ -n "$WSL_DISTRO_NAME" ]] && __start_wsl_services || true
+	set -o vi
+	__variables
+	__aliases
+	[[ -n "$WSL_DISTRO_NAME" ]] && __start_wsl_services || true
 }
 
 __main
 
 loadenv () {
-    local verbose=
-    local env_filename=
-    while [[ -n "$1" ]]; do
-        case $1 in
-            -h | --help )
-                echo "Export .env file to environment, like Docker Compose."
-                echo "Usage: loadenv <file> [-v[v]]"
-                echo "   -v: verbose mode"
-                echo "  -vv: more verbose"
-                return
-                ;;
-            -v )
-                verbose=1
-                ;;
-            -vv )
-                verbose=2
-                ;;
-            * )
-                env_filename=$1
-                ;;
-        esac
-        shift
-    done
+	local verbose=
+	local env_filename=
+	while [[ -n "$1" ]]; do
+		case $1 in
+			-h | --help )
+				echo "Export .env file to environment, like Docker Compose."
+				echo "Usage: loadenv <file> [-v[v]]"
+				echo "  -v: verbose mode"
+				echo "  -vv: more verbose"
+				return
+				;;
+			-v )
+				verbose=1
+				;;
+			-vv )
+				verbose=2
+				;;
+			* )
+				env_filename=$1
+				;;
+		esac
+		shift
+	done
 
-    if [[ -z "$env_filename" ]]; then
-        env_filename='<empty>'
-        for fname in {.env,.env.dev,.env.override}; do
-            [[ -e "${fname}" ]] && env_filename=${fname}
-        done
-    fi
+	if [[ -z "$env_filename" ]]; then
+		env_filename='<empty>'
+		for fname in {.env,.env.dev,.env.override}; do
+			[[ -e "${fname}" ]] && env_filename=${fname}
+		done
+	fi
 
-    if [[ ! -e "${env_filename}" ]]; then
-        echo "${env_filename} does not exist"
-        return 1
-    fi
+	if [[ ! -e "${env_filename}" ]]; then
+		echo "${env_filename} does not exist"
+		return 1
+	fi
 
-    [[ -n "${verbose}" ]] && echo "Loading ${env_filename}"
+	[[ -n "${verbose}" ]] && echo "Loading ${env_filename}"
 
-    while IFS== read -r k v
-    do
-        if [[ $v =~ \${ ]]; then
-            x=$(eval echo "$v")
-        else
-            x=$(eval echo '$v')
-        fi
-        [[ "${verbose}" = "2" ]] && echo export $k="$x"
-        export $k="$x"
-    done < <(grep '^[a-zA-Z]' ${env_filename})
+	while IFS== read -r k v
+	do
+		if [[ $v =~ \${ ]]; then
+			x=$(eval echo "$v")
+		else
+			x=$(eval echo '$v')
+		fi
+		[[ "${verbose}" = "2" ]] && echo export $k="$x"
+		export $k="$x"
+	done < <(grep '^[a-zA-Z]' ${env_filename})
 }
 
 # [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -271,10 +271,10 @@ loadenv () {
 
 # Use local customization inside ~/bashrc.d directory.
 if [ -d ~/bashrc.d ]; then
-    for fname in ~/bashrc.d/*.bash; do
-        if [[ -r $fname ]]; then
-            . $fname
-        fi
-    done
-    unset fname
+	for fname in ~/bashrc.d/*.bash; do
+		if [[ -r $fname ]]; then
+			. $fname
+		fi
+	done
+	unset fname
 fi
