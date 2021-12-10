@@ -1045,6 +1045,10 @@ augroup aug_viniciusban_journal
 
 augroup END
 
+augroup aug_ft_sh
+    au!
+    autocmd FileType sh setlocal noexpandtab
+augroup END
 
 augroup aug_quickscope_colors
     autocmd!
