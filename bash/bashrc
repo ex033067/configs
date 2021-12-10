@@ -7,7 +7,7 @@
 # Open "pyenv_global_command.example" file for example of pyenv global command.
 
 
-__aliases () {
+__aliases() {
 	alias ..='cd ..'
 	alias .2='cd ../..'
 	alias .3='cd ../../..'
@@ -33,12 +33,12 @@ __aliases () {
 }
 
 
-__start_wsl_services () {
+__start_wsl_services() {
 	__start_ssh_agent
 }
 
 
-__start_ssh_agent () {
+__start_ssh_agent() {
 	if [[ -n "$TMUX" ]]; then
 		return
 	fi
@@ -64,7 +64,7 @@ __start_ssh_agent () {
 }
 
 
-__variables () {
+__variables() {
 	[[ -z "${OSNAME}" ]] && export OSNAME="$(uname)"
 	[[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
 	export HISTCONTROL=ignoreboth
@@ -118,7 +118,7 @@ __variables () {
 }
 
 
-__ps1_virtualenv () {
+__ps1_virtualenv() {
 	if [[ -z "$VIRTUAL_ENV" ]]; then
 		return
 	fi
@@ -146,7 +146,7 @@ __ps1_virtualenv () {
 	return
 }
 
-__ps1_git () {
+__ps1_git() {
 	# Show git branch and indicators about status:
 	#   - "+" means there are staged changes
 	#   - "!" means there are unstaged changes
@@ -206,7 +206,7 @@ __ps1_git () {
 }
 
 
-__main () {
+__main() {
 	set -o vi
 	__variables
 	__aliases
@@ -215,7 +215,7 @@ __main () {
 
 __main
 
-loadenv () {
+loadenv() {
 	local verbose=
 	local env_filename=
 	while [[ -n "$1" ]]; do
