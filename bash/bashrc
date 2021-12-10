@@ -276,3 +276,21 @@ if [ -d ~/bashrc.d ]; then
 	done
 	unset fname
 fi
+
+
+######################################
+## functions instead of scripts
+######################################
+
+youtube-dl-mp3()
+{
+	youtube-dl --extract-audio --audio-format mp3 "$1"
+}
+
+converte-pdf-to-jpg()
+{
+	# This script needs imagemagick: `sudo apt-get install imagemagick`
+	fname="$1"
+	convert -density 300 -quality 100 "${fname}" "${fname}.jpg"
+}
+
