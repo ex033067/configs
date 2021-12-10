@@ -76,7 +76,7 @@ __variables() {
 	[[ -r ~/.ps1_customizations ]] && source ~/.ps1_customizations
 	export PS1_COLOR_RESET="\[\033[m\]"
 
-	export PS1="\n${PS1_COLOR_RESET}> ${PS1_COLOR_ERROR}\$(VALU=\$? ; [ \$VALU -ne 0 ] && echo ' '\${VALU}' ')${PS1_COLOR_DEFAULT}\$(date '+%a %T')\${HOSTNAME_ALIAS:+ @\${HOSTNAME_ALIAS}} pwd:\W\$(__ps1_git ; echo \${PS1_GIT:+' branch:'\${PS1_GIT}})\$(__ps1_virtualenv; echo \${PS1_VIRTUAL_ENV:+' ('\${PS1_VIRTUAL_ENV}')'})${PS1_COLOR_RESET}\n\$ "
+	export PS1="\n${PS1_COLOR_RESET}> ${PS1_COLOR_ERROR}\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo ' '\${_exit_status}' ')${PS1_COLOR_DEFAULT}\$(date '+%a %T')\${HOSTNAME_ALIAS:+ @\${HOSTNAME_ALIAS}} pwd:\W\$(__ps1_git ; echo \${PS1_GIT:+' branch:'\${PS1_GIT}})\$(__ps1_virtualenv; echo \${PS1_VIRTUAL_ENV:+' ('\${PS1_VIRTUAL_ENV}')'})${PS1_COLOR_RESET}\n\$ "
 
 	[[ -n "$WSL_DISTRO_NAME" ]] && export DISPLAY=$(grep '^nameserver' /etc/resolv.conf | cut -d ' ' -f2):0.0
 	[[ "${OSNAME}" = "Darwin" ]] && export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
