@@ -221,10 +221,12 @@ loadenv() {
 	while [[ -n "$1" ]]; do
 		case $1 in
 			-h | --help )
-				echo "Export .env file to environment, like Docker Compose."
-				echo "Usage: loadenv <file> [-v[v]]"
-				echo "  -v: verbose mode"
-				echo "  -vv: more verbose"
+				cat <<-LOADENV_HELP
+				Export .env file to environment, like Docker Compose.
+				Usage: loadenv <file> [-v[v]]
+				  -v: verbose mode
+				  -vv: more verbose
+				LOADENV_HELP
 				return
 				;;
 			-v )
