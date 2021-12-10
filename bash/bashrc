@@ -256,15 +256,11 @@ loadenv() {
 
 	[[ -n "${verbose}" ]] && echo "Loading ${env_filename}"
 
-	while IFS== read -r k v
+	while IFS== read -r _key _raw_value
 	do
-		if [[ $v =~ \${ ]]; then
-			x=$(eval echo "$v")
-		else
-			x=$(eval echo '$v')
-		fi
-		[[ "${verbose}" = "2" ]] && echo export $k="$x"
-		export $k="$x"
+		_computed_value=$(eval echo "$_raw_value")
+		[[ "${verbose}" = "2" ]] && echo export $_key="$_computed_value"
+		export $_key="$_computed_value"
 	done < <(grep '^[a-zA-Z]' ${env_filename})
 }
 
