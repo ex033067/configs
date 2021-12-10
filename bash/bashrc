@@ -200,7 +200,7 @@ __ps1_git() {
 			fi
 			continue
 		fi
-	done <<< "${PS1_GIT_STATUS_OUTPUT}"
+	done < <(echo "${PS1_GIT_STATUS_OUTPUT}")
 
 	PS1_GIT="${branch}${staged_indicator}${unstaged_indicator}"
 }
