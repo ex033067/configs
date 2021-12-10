@@ -213,8 +213,6 @@ __main() {
 	[[ -n "$WSL_DISTRO_NAME" ]] && __start_wsl_services || true
 }
 
-__main
-
 loadenv() {
 	local verbose=
 	local env_filename=
@@ -294,3 +292,277 @@ converte-pdf-to-jpg()
 	convert -density 300 -quality 100 "${fname}" "${fname}.jpg"
 }
 
+
+
+# ------------------------------------
+# Utils for logging messages (WIP)
+# ------------------------------------
+
+# TODO document the logging process.
+#+ reference: https://stackoverflow.com/questions/42403558/how-do-i-manage-log-verbosity-inside-a-shell-script
+
+declare -A _log_levels=([NOTSET]=0 [DEBUG]=1 [INFO]=2 [WARNING]=3 [ERROR]=4 [CRITICAL]=5)
+declare -i _log_level=3
+set_log_level()
+{
+	level="${1:-INFO}"
+	_log_level="${_log_levels[$level]}"
+}
+
+set_log_destination()
+{
+	# TODO document how to set the log destination
+	_log_destination="$1"
+	if [[ -z "${_log_destination}" ]]; then
+		_log_destination='stdout'
+	fi
+	if [[ ".stdin.stdout.stderr." =~ ".${_log_destination}." ]]; then
+		_log_destination="/dev/${_log_destination}"
+	fi
+}
+
+log_debug()    { (( _log_level >= ${_log_levels[DEBUG]} ))    && echo "$(date +'%F %T') DEBUG    $*" >>${_log_destination};  }
+log_info()     { (( _log_level >= ${_log_levels[INFO]} ))     && echo "$(date +'%F %T') INFO     $*" >>${_log_destination};  }
+log_warning()  { (( _log_level >= ${_log_levels[WARNING]} ))  && echo "$(date +'%F %T') WARNING  $*" >>${_log_destination};  }
+log_error()    { (( _log_level >= ${_log_levels[ERROR]} ))    && echo "$(date +'%F %T') ERROR    $*" >>${_log_destination};  }
+log_critical() { (( _log_level >= ${_log_levels[CRITICAL]} )) && echo "$(date +'%F %T') CRITICAL $*" >>${_log_destination};  }
+
+# functions for logging command output
+log_debug_file()   { (( _log_level >= ${_log_levels[DEBUG]} ))   && [[ -f $1 ]] && echo "=== command output start ===" && cat "$1" && echo "=== command output end ==="; }
+
+# log()
+# {
+# 	local command="$1"
+# 	shift
+# 	if [[ "$command" == 'start' ]]; then
+# 		local filename="$1"
+# 		export _LOGGER_FILENAME="$1"
+# 	echo "$1" >>$_LOGGER_FILENAME
+# }
+
+# logger-init()
+# {
+# 	export _LOGGER_FILENAME="$1"
+# 	> $_LOGGER_FILENAME
+# }
+
+# logger-show()
+# {
+# 	cat $_LOGGER_FILENAME
+# }
+
+# ------------------------------------
+# Manage virtualenvs
+# ------------------------------------
+
+venv()
+{
+	local command="$1"
+	shift
+	if [[ "$command" == 'help' ]]; then
+		__venv_help venv
+	elif [[ "$command" == 'info' ]]; then
+		__venv__get_virtualenv_info "$@"
+	elif [[ "$command" == 'create' ]]; then
+		__venv_create_virtualenv "$@"
+	elif [[ "$command" == 'shell' ]]; then
+		__venv_shell
+	elif [[ "$command" == 'run' ]]; then
+		__venv_run "$@"
+	else
+		echo "Unknown command: ${command:-<empty>}"
+		__venv_help venv
+		return 1
+	fi
+}
+
+__venv_help()
+{
+	local funcname="$1"
+	cat <<-_ENDOFTEXT_
+		${funcname} manages virtualenv.
+		
+		Usage: ${funcname} <command> [<arg>]
+		Commands:
+		  create [<dirname>]
+		      Create and activate virtualenv <dirname> (default is "venv") inside current directory.
+		      Example: \$ ${funcname} create .sandbox
+		  run <command>
+		      Run <command> inside the virtualenv. Exit the virtualenv when finished.
+		      Example: \$ ${funcname} run pip install -r requirements.txt
+		  shell
+		      Open a sub-shell with the virtualenv activated.
+		      Exit from it with \`$ exit\`.
+		  info
+		      Show info about the virtualenv.
+		  info --path
+		      Show only the virtualenv's path.
+	_ENDOFTEXT_
+}
+
+__venv_create_virtualenv()
+{
+	local dirname="$1"
+	if [[ -z "$dirname" ]]; then
+		dirname='venv'
+	fi
+	python -m venv "${PWD}/${dirname}"
+	venv info
+	venv shell
+}
+
+__venv_shell()
+{
+	if __venv__is_virtualenv_managed_by_pipenv; then
+		echo 'Running through pipenv shell'
+		pipenv shell
+		return
+	fi
+
+	if __venv__is_virtualenv_managed_by_poetry; then
+		echo 'Running through poetry shell'
+		poetry shell
+		return
+	fi
+
+	(
+		__venv_prepare_environment_for_virtualenv
+		retval=$?
+		if [[ $retval -ne 0 ]]; then
+			echo 'No virtualenv found. Shell not launched.'
+			return 1
+		fi
+		$SHELL
+	)
+}
+
+__venv_run()
+{
+	local command_to_run="$@"
+	if __venv__is_virtualenv_managed_by_pipenv; then
+		echo 'Running through pipenv run'
+		pipenv run $command_to_run
+		return
+	fi
+
+	if __venv__is_virtualenv_managed_by_poetry; then
+		echo 'Running through poetry run'
+		poetry run $command_to_run
+		return
+	fi
+
+	(
+		__venv_prepare_environment_for_virtualenv
+		retval=$?
+		if [[ $retval -ne 0 ]]; then
+			echo 'No virtualenv found. Command aborted.'
+			return 1
+		fi
+		$command_to_run 
+	)
+}
+
+__venv__is_virtualenv_managed_by_pipenv()
+{
+	[[ -f Pipfile ]]
+}
+
+__venv__is_virtualenv_managed_by_poetry()
+{
+	poetry env info -q
+}
+
+__venv__who_manages_the_virtualenv()
+{
+	if __venv__is_virtualenv_managed_by_pipenv; then
+		echo pipenv
+	elif __venv__is_virtualenv_managed_by_poetry; then
+		echo poetry
+	else
+		echo pip
+	fi
+}
+
+__venv__get_pip_virtualenv_location()
+{
+	local possible_dirs='venv .venv .virtualenv .sandbox'
+	for dir in ${possible_dirs}; do
+		if [[ -d $dir ]]; then
+			echo $dir
+			return
+		fi
+	done
+}
+
+__make_absolute_path()
+{
+	local path="$1"
+	if [[ -z "$path" ]]; then
+		return
+	fi
+	if [[ "${path:0:1}" = '/' ]]; then  # Start with a slash?
+		echo $path  # It's already an absolute path.
+		return
+	fi
+	if [[ "${path:0:2}" = './' ]]; then  # Explicitly relative to PWD?
+		path="${path:2}"  # Make it implicitly relative.
+	fi
+	echo "${PWD}/${path}"  # Make the path absolute.
+}
+
+__venv__get_virtualenv_location()
+{
+	local location=
+	if __venv__is_virtualenv_managed_by_pipenv; then
+		location=$(pipenv --venv 2> /dev/null)
+	elif __venv__is_virtualenv_managed_by_poetry; then
+		location=$(poetry env info --path)
+	else
+		location=$(__venv__get_pip_virtualenv_location)
+	fi
+	location=$(__make_absolute_path $location)
+	if [[ -z "$location" ]]; then
+		return 1
+	fi
+	echo "$location"
+}
+
+__venv__get_virtualenv_info()
+{
+	local option="$1"
+	if [[ "$option" == '--path' ]]; then
+		local location=
+		location=$(__venv__get_virtualenv_location)
+		retval=$?
+		if [[ $retval -ne 0 ]]; then
+			return 1
+		fi
+		echo "$location"
+		return
+	fi
+
+	local tool=$(__venv__who_manages_the_virtualenv)
+	local location=$(__venv__get_virtualenv_location)
+	cat <<-_ENDOFTEXT_
+		Virtualenv tool: ${tool}
+		Virtualenv path: ${location}
+	_ENDOFTEXT_
+}
+
+__venv_prepare_environment_for_virtualenv()
+{
+	local location=
+	location=$(venv info --path)
+	retval=$?
+	if [[ $retval -ne 0 ]]; then
+		return 1
+	fi
+	export VIRTUAL_ENV="${location}"
+	export PATH="${location}/bin:${PATH}"
+	hash -r
+}
+
+
+# -------------------------------------------------------------------
+
+__main
