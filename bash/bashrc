@@ -426,13 +426,14 @@ __venv_shell()
 	fi
 
 	(
-		__venv_prepare_environment_for_virtualenv
+		local init_commands=
+		init_commands=$(__venv_prepare_environment_for_virtualenv)
 		retval=$?
 		if [[ $retval -ne 0 ]]; then
 			echo 'No virtualenv found. Shell not launched.'
 			return 1
 		fi
-		$SHELL
+		$SHELL --rcfile <(echo ". ${HOME}/.bashrc;${init_commands};echo \"virtualenv at \${VIRTUAL_ENV} (\$(python --version 2>&1))\";echo 'Type \"exit\" or press CTRL-D to exit'")
 	)
 }
 
@@ -452,13 +453,14 @@ __venv_run()
 	fi
 
 	(
-		__venv_prepare_environment_for_virtualenv
+		local initial_commands=
+		initial_commands=$(__venv_prepare_environment_for_virtualenv)
 		retval=$?
 		if [[ $retval -ne 0 ]]; then
 			echo 'No virtualenv found. Command aborted.'
 			return 1
 		fi
-		$command_to_run 
+		echo "${initial_commands};${command_to_run}" | $SHELL -s
 	)
 }
 
@@ -557,9 +559,7 @@ __venv_prepare_environment_for_virtualenv()
 	if [[ $retval -ne 0 ]]; then
 		return 1
 	fi
-	export VIRTUAL_ENV="${location}"
-	export PATH="${location}/bin:${PATH}"
-	hash -r
+	echo "export VIRTUAL_ENV='${location}';export PATH='${location}/bin:${PATH}'"
 }
 
 
