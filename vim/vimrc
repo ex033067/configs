@@ -488,8 +488,8 @@ augroup aug_ft_gitcommit
     autocmd FileType gitcommit nnoremap <silent> <buffer> [[ :call search('^diff\\|^# On branch', "b")<CR>ztzv
 
     " go to next/prev change
-    autocmd FileType gitcommit nnoremap <silent> <buffer> ]c :call search('^@@', "z")<CR>zz
-    autocmd FileType gitcommit nnoremap <silent> <buffer> [c :call search('^@@', "b")<CR>zz
+    autocmd FileType gitcommit nnoremap <silent> <buffer> ]c :call search('^@@', "zW")<CR>zz
+    autocmd FileType gitcommit nnoremap <silent> <buffer> [c :call search('^@@', "bW")<CR>zz
 augroup END
 
 augroup aug_list_items
