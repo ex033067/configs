@@ -31,20 +31,21 @@ let NERDTreeHijackNetrw = 0
 " Fuzzy finder
 Plug 'junegunn/fzf', {'dir': '~/.vim/bundle/fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
-let g:fzf_colors = {
-    \ 'fg': ['fg', 'Normal'],
-    \ 'bg': ['bg', 'Normal'],
-    \ 'hl': ['bg', 'Search'],
-    \ 'fg+': ['fg', 'customSelectedItem', 'CursorLine', 'Normal'],
-    \ 'bg+': ['bg', 'customSelectedItem', 'CursorLine'],
-    \ 'hl+': ['bg', 'Search'],
-    \ 'info': ['fg', 'Normal'],
-    \ 'border': ['fg', 'Comment'],
-    \ 'prompt': ['fg', 'Normal'],
-    \ 'pointer': ['fg', 'customSelectedItem'],
-    \ 'marker': ['fg', 'Normal'],
-    \ 'spinner': ['fg', 'Normal'],
-    \ 'header': ['fg', 'Normal'] }
+
+" let g:fzf_colors = {
+"     \ 'fg': ['fg', 'Normal'],
+"     \ 'bg': ['bg', 'Normal'],
+"     \ 'hl': ['bg', 'Search'],
+"     \ 'fg+': ['fg', 'customSelectedItem', 'CursorLine', 'Normal'],
+"     \ 'bg+': ['bg', 'customSelectedItem', 'CursorLine'],
+"     \ 'hl+': ['bg', 'Search'],
+"     \ 'info': ['fg', 'Normal'],
+"     \ 'border': ['fg', 'Comment'],
+"     \ 'prompt': ['fg', 'Normal'],
+"     \ 'pointer': ['fg', 'customSelectedItem'],
+"     \ 'marker': ['fg', 'Normal'],
+"     \ 'spinner': ['fg', 'Normal'],
+"     \ 'header': ['fg', 'Normal'] }
 
 " Up to date syntax files
 Plug 'viniciusban/vim-polyglot'
