@@ -1137,7 +1137,7 @@ endfunction
 vnoremap gC :call InvertCommentOnRangeOfLines("visual")<CR>
 nnoremap gC :set operatorfunc=InvertCommentOnRangeOfLines<CR>g@
 nnoremap gCC :call InvertCommentOnRangeOfLines("normal")<CR>
-function InvertCommentOnRangeOfLines(mode) range
+function! InvertCommentOnRangeOfLines(mode) range
     if a:mode == "visual"
         let first_lnum = a:firstline
         let last_lnum = a:lastline
