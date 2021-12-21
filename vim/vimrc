@@ -1186,6 +1186,10 @@ nnoremap <leader>W :saveas! %:p.copy<CR>| " duplicate current file
 nnoremap <silent> <leader>= :update<CR>:let _state=winsaveview()<CR>gg=G:call winrestview(_state)<CR>:unlet _state<CR>|" Format all the source code and move back to original position
 nnoremap <silent> <leader>m :update<CR>:make %<CR>
 
+" windows and tabs
+nnoremap <C-w>to :tab split<CR>|" open current buffer in new tab page
+nnoremap <C-w>tc :tabclose<CR>
+
 " navigation
 nnoremap <Space> <C-F>
 nnoremap ]q :cnext<CR>|" go to next line in quickfix
