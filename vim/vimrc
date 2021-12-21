@@ -1092,7 +1092,6 @@ nnoremap <leader>2 :GFiles<CR>
 nnoremap <leader>3 :Buffers<CR>
 nnoremap <leader>4 :TagbarOpen j<CR>
 nnoremap <leader>$ :TagbarToggle<CR>
-nnoremap <leader>g1 :Git<CR>
 nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'|" Show/hide quickfix window
 nnoremap <expr> <leader>l empty(filter(getwininfo(), 'v:val.loclist')) ? ':lopen<CR>' : ':lclose<CR>'|" Show/hide location list
 nnoremap <BS> :nohlsearch<CR>
@@ -1204,6 +1203,7 @@ else
 endif
 
 " git
+nnoremap <leader>gs :Git<CR>
 nnoremap <leader>ga :Git add %<CR>
 nnoremap <leader>gA :Git reset -- %<CR>
 nnoremap <leader>gc :keepalt Git commit -v <CR>
