@@ -1288,63 +1288,6 @@ endfunction
 call Ban_SetDefaultEditOptions('global')
 
 
-" Show filename without path in tabline
-" -------------------------------------
-
-function! MyTabLine()
-    let tabline_value = ''
-    for tabnr in range(1, tabpagenr('$'))
-        " select the highlighting
-        if tabnr == tabpagenr()
-            let tabline_value .= '%#TabLineSel#'
-        else
-            let tabline_value .= '%#TabLine#'
-        endif
-
-        " set the tab page number (for mouse clicks)
-        let tabline_value .= '%' . tabnr . 'T'
-
-        " the label is made by MyTabLabel()
-        let tabline_value .= ' %{MyTabLabel(' . tabnr . ')} '
-    endfor
-
-    " after the last tab fill with TabLineFill and reset tab page nr
-    let tabline_value .= '%#TabLineFill#%T'
-
-    return tabline_value
-endfunction
-
-function! MyTabLabel(tabnr)
-    let buflist = tabpagebuflist(a:tabnr)
-    let winnr = tabpagewinnr(a:tabnr)
-    let current_bufnr = buflist[winnr - 1]
-
-    let modified_indicator = ''
-    " Add '+' if one of the buffers in the tab page is modified
-    for bufnr in buflist
-        if getbufvar(bufnr, "&modified")
-            let modified_indicator = '+'
-            break
-        endif
-    endfor
-
-    " let filename_tail = fnamemodify(bufname(buflist[winnr - 1]), ':t')
-    let current_bufname = bufname(current_bufnr)
-    if current_bufname == ''
-        if getbufvar(current_bufnr, '&buftype') == 'quickfix'
-            let filename_tail = '[Quickfix List]'
-        else
-            let filename_tail = '[No Name]'
-        endif
-    else
-        let filename_tail = fnamemodify(current_bufname, ':t')
-    endif
-    return a:tabnr .' '. modified_indicator . filename_tail
-endfunction
-
-set tabline=%!MyTabLine()
-
-
 " Use a line cursor within insert mode and a block cursor everywhere else.
 "
 " Reference chart of values:
