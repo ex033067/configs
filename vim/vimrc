@@ -383,10 +383,10 @@ augroup END
 
 augroup aug_ft_python
     au!
-    autocmd FileType python call FtPython()
+    autocmd FileType python call BanPython_FiletypeAutocmd()
 augroup END
 
-function! FtPython()
+function! BanPython_FiletypeAutocmd()
     setlocal foldmethod=indent
     setlocal equalprg=~/.local/bin/python-style
     nnoremap <silent> <buffer> <leader>m :update<CR>:call flake8#Flake8()<CR>
@@ -1101,9 +1101,9 @@ nnoremap <leader><leader> :setlocal cursorline!<CR>
 
 " editing
 inoremap KJ <C-Bslash><C-N>|" back to normal mode
-nnoremap <leader>d :call DuplicateLine("normal")<CR>
-vnoremap <leader>d :<C-U>call DuplicateLine("visual")<CR>
-function! DuplicateLine(mode)
+nnoremap <leader>d :call Ban_DuplicateLine("normal")<CR>
+vnoremap <leader>d :<C-U>call Ban_DuplicateLine("visual")<CR>
+function! Ban_DuplicateLine(mode)
     if a:mode == "normal"
         let _pos = col('.')
         copy .
@@ -1114,9 +1114,9 @@ function! DuplicateLine(mode)
     endif
 endfunction
 
-nnoremap <leader>D :call DuplicateAndCommentLine("normal")<CR>
-vnoremap <leader>D :<C-U>call DuplicateAndCommentLine("visual")<CR>
-function! DuplicateAndCommentLine(mode)
+nnoremap <leader>D :call Ban_DuplicateAndCommentLine("normal")<CR>
+vnoremap <leader>D :<C-U>call Ban_DuplicateAndCommentLine("visual")<CR>
+function! Ban_DuplicateAndCommentLine(mode)
     if a:mode == "normal"
         let _pos = col('.')
         copy .
@@ -1133,10 +1133,10 @@ function! DuplicateAndCommentLine(mode)
     endif
 endfunction
 
-vnoremap gC :call InvertCommentOnRangeOfLines("visual")<CR>
-nnoremap gC :set operatorfunc=InvertCommentOnRangeOfLines<CR>g@
-nnoremap gCC :call InvertCommentOnRangeOfLines("normal")<CR>
-function! InvertCommentOnRangeOfLines(mode) range
+vnoremap gC :call Ban_InvertCommentOnRangeOfLines("visual")<CR>
+nnoremap gC :set operatorfunc=Ban_InvertCommentOnRangeOfLines<CR>g@
+nnoremap gCC :call Ban_InvertCommentOnRangeOfLines("normal")<CR>
+function! Ban_InvertCommentOnRangeOfLines(mode) range
     if a:mode == "visual"
         let first_lnum = a:firstline
         let last_lnum = a:lastline
@@ -1153,9 +1153,9 @@ function! InvertCommentOnRangeOfLines(mode) range
     endfor
 endfunction
 
-nnoremap <leader><Space> :call IsolateLineWithSpacesAround("normal")<CR>
-vnoremap <leader><Space> :call IsolateLineWithSpacesAround("visual")<CR>
-function! IsolateLineWithSpacesAround(mode) range
+nnoremap <leader><Space> :call Ban_IsolateLineWithSpacesAround("normal")<CR>
+vnoremap <leader><Space> :call Ban_IsolateLineWithSpacesAround("visual")<CR>
+function! Ban_IsolateLineWithSpacesAround(mode) range
     call append(a:lastline, ['----------- focus here ^', ''])
     execute a:lastline+1 .'Commentary'
     call append(a:firstline -1, ['', '----------- focus here v'])
@@ -1165,11 +1165,11 @@ function! IsolateLineWithSpacesAround(mode) range
     endif
 endfunction
 
-nnoremap <C-j> :call MoveLine("normal", "down")<CR>
-vnoremap <C-j> :<C-U>call MoveLine("visual", "down")<CR>
-nnoremap <C-k> :call MoveLine("normal", "up")<CR>
-vnoremap <C-k> :<C-U>call MoveLine("visual", "up")<CR>
-function! MoveLine(mode, direction)
+nnoremap <C-j> :call Ban_MoveLine("normal", "down")<CR>
+vnoremap <C-j> :<C-U>call Ban_MoveLine("visual", "down")<CR>
+nnoremap <C-k> :call Ban_MoveLine("normal", "up")<CR>
+vnoremap <C-k> :<C-U>call Ban_MoveLine("visual", "up")<CR>
+function! Ban_MoveLine(mode, direction)
     let offset = #{down:"+1", up:"-2"}
     if a:mode == "normal"
         execute 'move .' .offset[a:direction]
