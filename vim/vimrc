@@ -345,15 +345,27 @@ augroup aug_filetype_php
     autocmd FileType php setlocal foldmethod=marker foldmarker={,}
 augroup END
 
-augroup aug_filetype_python
+augroup aug_filetype_python_settings
     " {{{2
     au!
     autocmd FileType python setlocal foldmethod=indent
     autocmd FileType python setlocal equalprg=~/.local/bin/python-style
+
+    autocmd FileType python syn keyword pythonTodo          TODO FIXME NOTE contained
+    autocmd FileType python hi! link pythonBuiltin Statement
+    autocmd FileType python hi! link pythonDocTest2 Comment
+augroup END |" 2}}}
+
+augroup aug_filetype_python_mappings
+    " {{{2
+    " Particular way to "make"
     autocmd FileType python nnoremap <silent> <buffer> <leader>m :update<CR>:call flake8#Flake8()<CR>
 
     " Mapping to navigate to object definition in split window
     autocmd FileType python nnoremap <buffer> <localleader>D :split<CR>:call jedi#goto()<CR>
+
+    " edit selected module name
+    autocmd FileType python xnoremap <localleader>f :<C-U>let @s = BanPython_TransformSelectedTextIntoFilename() <CR>
 
     " Mappings for classes, functions and docstrings text-objects
     autocmd FileType python xnoremap <buffer> ic <Plug>(textobj-python-class-i)
@@ -368,16 +380,16 @@ augroup aug_filetype_python
     autocmd FileType python onoremap <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
     autocmd FileType python xnoremap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
     autocmd FileType python onoremap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
+augroup END |" 2}}}
 
+augroup aug_filetype_python_testing
+    " {{{2
     " initialize global test variables
     autocmd FileType python let g:test_command =
         \ (exists('g:test_command')) ? g:test_command :
         \     (exists('$VIM_TEST_COMMAND')) ? $VIM_TEST_COMMAND :
         \         (executable('pytest')) ? 'pytest' : ''
     autocmd FileType python let g:test_target = (exists('g:test_target')) ? g:test_target : ''
-
-    " edit selected module name
-    autocmd FileType python xnoremap <localleader>f :<C-U>let @s = BanPython_TransformSelectedTextIntoFilename() <CR>
 
     " autocmd FileType python nnoremap t<CR> :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>|" Run tests in current vim session
     autocmd FileType python nnoremap t<CR>
@@ -427,11 +439,10 @@ augroup aug_filetype_python
     "     \ :execute '!tmux send-keys -t JOE:src.1 Enter'<CR><CR>
     "     \ :unlet _curpos _curr_method _target<CR>
     "     \|" Copy current filename and function/method to register z in pytest format (JOE specific)
+augroup END |" 2}}}
 
-    autocmd FileType python syn keyword pythonTodo          TODO FIXME NOTE contained
-    autocmd FileType python hi! link pythonBuiltin Statement
-    autocmd FileType python hi! link pythonDocTest2 Comment
-
+augroup aug_filetype_python_functions
+    " {{{2
     function! Ban_Run(command)
         " {{{3
         " Run an external command using internal or external terminal
@@ -597,7 +608,6 @@ augroup aug_filetype_python
         execute 'normal gv"sy'
         return substitute(@s, '\.', '/', 'ge') .'.py'
     endfunction
-
 augroup END |" 2}}}
 
 augroup aug_filetype_sh
