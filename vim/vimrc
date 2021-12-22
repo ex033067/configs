@@ -1,10 +1,19 @@
-" ========
-" Options: {{{1
-" ========
+" vim: foldlevel=0 foldenable
 
-" ==================================================
-" Options
-" ==================================================
+" Options: {{{1
+" ==============================================================================
+
+
+" Start with vim defaults
+if !has('nvim') && filereadable(expand("$VIMRUNTIME/defaults.vim"))
+    unlet! skip_defaults_vim
+    source $VIMRUNTIME/defaults.vim
+endif
+
+
+let mapleader=','
+let maplocalleader='\'
+
 
 " elements of interface
 set number
@@ -31,6 +40,7 @@ if exists('+termguicolors')
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
+
 " sane editing
 set expandtab tabstop=4 softtabstop=4 shiftwidth=0 | " <TAB> is 4 spaces, once for all!
 set ignorecase smartcase tagcase=smart
@@ -40,28 +50,13 @@ if !exists('g:loaded_vimrc')
 endif
 let g:markdown_folding = 1 | " enable folded headings in markdown files
 
+
 " other options
 set hidden
 set grepprg=grep\ -nI\ --exclude-dir=.git\ --exclude-dir=venv\ --exclude-dir=__pycache__\ --exclude-dir='*.egg-info'\ --exclude-dir=.vagrant\ $*\ /dev/null
 set directory=~/tmp//
 set tags+=.git/tags | " The filename doesn't start with './'. See `:h 'tags'` for details.
 set modeline
-
-
-function! Ban_SetDefaultEditOptions(scope = 'local')
-    let command = (a:scope == 'global') ?  'set' : 'setlocal'
-    execute command . ' wrap wrapscan hlsearch cursorline nocursorcolumn number norelativenumber'
-endfunction
-
-
-function! Ban_SetDefaultDiffOptions()
-    let curtab_winids = map(filter(getwininfo(), 'v:val.tabnr == tabpagenr()'), 'v:val.winid')
-    let are_diff_windows = map(copy(curtab_winids), {idx, winid -> {'winid': winid, 'is_diff': getwinvar(winid, '&diff')}})
-    let only_diff_windows = filter(copy(are_diff_windows), 'v:val.is_diff == 1')
-    call map(only_diff_windows, {idx, item -> win_execute(item.winid, 'setlocal wrap wrapscan hlsearch nocursorline nocursorcolumn nonumber relativenumber')})
-endfunction
-
-call Ban_SetDefaultEditOptions('global')
 
 
 " Use a line cursor within insert mode and a block cursor everywhere else.
@@ -77,27 +72,20 @@ call Ban_SetDefaultEditOptions('global')
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
 
-"
-" leader keys
-let mapleader=','
-let maplocalleader='\'
-
-" Start with vim defaults
-if !has('nvim') && filereadable(expand("$VIMRUNTIME/defaults.vim"))
-    unlet! skip_defaults_vim
-    source $VIMRUNTIME/defaults.vim
-endif
-
 " Some plugins need termguicolors beforehand
 set termguicolors
-"
-" =========
-" Mappings: {{{1
-" =========
 
-" ==================================================
-" Global mappings
-" ==================================================
+
+
+
+
+
+
+
+
+
+" Mappings: {{{1
+" ==============================================================================
 
 " General mappings
 nnoremap <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
@@ -126,82 +114,21 @@ nnoremap <leader><leader> :setlocal cursorline!<CR>
 inoremap KJ <C-Bslash><C-N>|" back to normal mode
 nnoremap <leader>d :call Ban_DuplicateLine("normal")<CR>
 vnoremap <leader>d :<C-U>call Ban_DuplicateLine("visual")<CR>
-function! Ban_DuplicateLine(mode)
-    if a:mode == "normal"
-        let _pos = col('.')
-        copy .
-        execute 'normal ' ._pos. '|'
-    elseif a:mode == "visual"
-        '<,'>copy '>
-        normal '>j
-    endif
-endfunction
 
 nnoremap <leader>D :call Ban_DuplicateAndCommentLine("normal")<CR>
 vnoremap <leader>D :<C-U>call Ban_DuplicateAndCommentLine("visual")<CR>
-function! Ban_DuplicateAndCommentLine(mode)
-    if a:mode == "normal"
-        let _pos = col('.')
-        copy .
-        normal k
-        .Commentary
-        normal j
-        execute 'normal ' ._pos. '|'
-    elseif a:mode == "visual"
-        '<,'>copy '>
-        normal gv
-        '<,'>Commentary
-        execute "normal \<Esc>"
-        normal '>j
-    endif
-endfunction
 
 vnoremap gC :call Ban_InvertCommentOnRangeOfLines("visual")<CR>
 nnoremap gC :set operatorfunc=Ban_InvertCommentOnRangeOfLines<CR>g@
 nnoremap gCC :call Ban_InvertCommentOnRangeOfLines("normal")<CR>
-function! Ban_InvertCommentOnRangeOfLines(mode) range
-    if a:mode == "visual"
-        let first_lnum = a:firstline
-        let last_lnum = a:lastline
-    elseif a:mode == "normal"
-        let first_lnum = a:firstline
-        let last_lnum = a:lastline
-    else
-        let first_lnum = line("'[")
-        let last_lnum = line("']")
-    endif
-
-    for lnum in range(first_lnum, last_lnum)
-        execute lnum ."Commentary"
-    endfor
-endfunction
 
 nnoremap <leader><Space> :call Ban_IsolateLineWithSpacesAround("normal")<CR>
 vnoremap <leader><Space> :call Ban_IsolateLineWithSpacesAround("visual")<CR>
-function! Ban_IsolateLineWithSpacesAround(mode) range
-    call append(a:lastline, ['----------- focus here ^', ''])
-    execute a:lastline+1 .'Commentary'
-    call append(a:firstline -1, ['', '----------- focus here v'])
-    execute a:firstline+1 .'Commentary'
-    if a:mode == "visual"
-        normal gv
-    endif
-endfunction
 
 nnoremap <C-j> :call Ban_MoveLine("normal", "down")<CR>
 vnoremap <C-j> :<C-U>call Ban_MoveLine("visual", "down")<CR>
 nnoremap <C-k> :call Ban_MoveLine("normal", "up")<CR>
 vnoremap <C-k> :<C-U>call Ban_MoveLine("visual", "up")<CR>
-function! Ban_MoveLine(mode, direction)
-    let offset = #{down:"+1", up:"-2"}
-    if a:mode == "normal"
-        execute 'move .' .offset[a:direction]
-    elseif a:mode == "visual"
-        let target = #{down:"'>", up:"'<"}
-        execute "'<,'>move " .target[a:direction] .offset[a:direction]
-        normal gv
-    endif
-endfunction
 
 " file and buffer
 nnoremap <leader>w :update<CR>
@@ -241,273 +168,143 @@ nnoremap <leader>gl :let _tmpfile=tempname()<bar>:silent execute '!git l -50 >'.
 " toggle options
 nnoremap <silent> <leader>oe :call Ban_SetDefaultEditOptions()<CR>
 nnoremap <silent> <leader>od :call Ban_SetDefaultDiffOptions()<CR>
-nnoremap <silent> <leader>ocl :let _grps={synIDattr(hlID("customDarkCursorLine"), "bg"): 'customLightCursorLine', synIDattr(hlID("customLightCursorLine"), "bg"): 'customDarkCursorLine'}<bar>:let _new_grp=_grps[synIDattr(synIDtrans(hlID("CursorLine")), "bg")]<bar>:execute 'hi! link CursorLine '._new_grp<bar>unlet _grps _new_grp<bar>redraw!<CR>|" change CursorLine based on a dictionary with keys inverted with highlight group names. Key is bgcolor. Value is highlight group name.
+" nnoremap <silent> <leader>ocl :let _grps={synIDattr(hlID("customDarkCursorLine"), "bg"): 'customLightCursorLine', synIDattr(hlID("customLightCursorLine"), "bg"): 'customDarkCursorLine'}<bar>:let _new_grp=_grps[synIDattr(synIDtrans(hlID("CursorLine")), "bg")]<bar>:execute 'hi! link CursorLine '._new_grp<bar>unlet _grps _new_grp<bar>redraw!<CR>|" change CursorLine based on a dictionary with keys inverted with highlight group names. Key is bgcolor. Value is highlight group name.
+nnoremap <silent> <leader>ocl
+    \ :let _grps={
+    \       synIDattr(hlID("customDarkCursorLine"), "bg"): 'customLightCursorLine',
+    \       synIDattr(hlID("customLightCursorLine"), "bg"): 'customDarkCursorLine'
+    \ }<bar>
+    \ :let _new_grp=_grps[synIDattr(synIDtrans(hlID("CursorLine")), "bg")]<bar>
+    \ :execute 'hi! link CursorLine '._new_grp<bar>
+    \ :unlet _grps _new_grp<bar>
+    \ :redraw!<CR>
+    \ |" change CursorLine based on a dictionary with keys inverted with highlight group names. Key is bgcolor. Value is highlight group name.
 nnoremap <silent> <leader>on :setlocal number!<CR>
 nnoremap <silent> <leader>op :set paste!<CR>:set paste?<CR>
 nnoremap <silent> <leader>ow :setlocal wrap!<CR>:set wrap?<CR>
 nnoremap <leader>o :setlocal
 
-"
-" ==========
+
+
+
+
+
+
+
+
+
 " Functions: {{{1
-" ==========
-" ==================================================
-" my own functions
-" ==================================================
+" ==============================================================================
 
-function! Ban_Run(command)
-    " Run an external command using internal or external terminal
 
-    if !exists('g:ban_run_internal')
-        if has('gui_running')
-            let g:ban_run_internal = 1
-        elseif has('nvim')
-            let g:ban_run_internal = 1
-        else
-            let g:ban_run_internal = 0
-        endif
+function! Ban_SetDefaultEditOptions(scope = 'local')
+    let command = (a:scope == 'global') ?  'set' : 'setlocal'
+    execute command . ' wrap wrapscan hlsearch cursorline nocursorcolumn number norelativenumber'
+endfunction
+
+function! Ban_SetDefaultDiffOptions()
+    " {{{2
+    let curtab_winids = map(filter(getwininfo(), 'v:val.tabnr == tabpagenr()'), 'v:val.winid')
+    let are_diff_windows = map(copy(curtab_winids), {idx, winid -> {'winid': winid, 'is_diff': getwinvar(winid, '&diff')}})
+    let only_diff_windows = filter(copy(are_diff_windows), 'v:val.is_diff == 1')
+    call map(only_diff_windows, {idx, item -> win_execute(item.winid, 'setlocal wrap wrapscan hlsearch nocursorline nocursorcolumn nonumber relativenumber')})
+endfunction |" 2}}}
+
+function! Ban_MoveLine(mode, direction)
+    " {{{2
+    let offset = #{down:"+1", up:"-2"}
+    if a:mode == "normal"
+        execute 'move .' .offset[a:direction]
+    elseif a:mode == "visual"
+        let target = #{down:"'>", up:"'<"}
+        execute "'<,'>move " .target[a:direction] .offset[a:direction]
+        normal gv
     endif
+endfunction |" 2}}}
 
-    let quote = "'"
-    if g:ban_run_internal == 1
-        if has('nvim')
-            let prefix = 'tabnew | terminal '. &shell .' -c ' . quote
-            let suffix = quote
-        else
-            let prefix = 'tabnew | terminal ++curwin ++shell '
-            let suffix = ''
-        endif
-        let command = substitute(a:command, quote, "'\"\\'\"'", 'g')
-        let command = substitute(command, '#', '\\#', 'g')
+function! Ban_IsolateLineWithSpacesAround(mode) range
+    " {{{2
+    call append(a:lastline, ['----------- focus here ^', ''])
+    execute a:lastline+1 .'Commentary'
+    call append(a:firstline -1, ['', '----------- focus here v'])
+    execute a:firstline+1 .'Commentary'
+    if a:mode == "visual"
+        normal gv
+    endif
+endfunction |" 2}}}
+
+function! Ban_InvertCommentOnRangeOfLines(mode) range
+    " {{{2
+    if a:mode == "visual"
+        let first_lnum = a:firstline
+        let last_lnum = a:lastline
+    elseif a:mode == "normal"
+        let first_lnum = a:firstline
+        let last_lnum = a:lastline
     else
-        let prefix = '!'
-        let command = a:command
-        let suffix = ''
+        let first_lnum = line("'[")
+        let last_lnum = line("']")
     endif
 
-    return prefix . command . suffix
-endfunction
+    for lnum in range(first_lnum, last_lnum)
+        execute lnum ."Commentary"
+    endfor
+endfunction |" 2}}}
 
-function! BanPython_GetCurrentPythonClassName()
-    execute "normal ms$?^class \<Enter>0w"
-    nohls
-    let class_name = expand('<cword>')
-    execute 'normal g`s'
-    return l:class_name
-endfunction
-
-function! BanPython_GetCurrentPythonMethodName()
-    execute 'normal ms$?^ \+\(def\|async def\) \+test\w\+(\_s\{-}self?e' . "\<Enter>" . '3b'
-    nohls
-    let method_name = expand('<cword>')
-    execute 'normal g`s'
-    return l:method_name
-endfunction
-
-function! BanPython_GetCurrentPythonFunctionName()
-    execute 'normal ms$?^\(def\|async def\) \+test\w\+(?e' . "\<Enter>" . 'b'
-    nohls
-    let function_name = expand('<cword>')
-    execute 'normal g`s'
-    return l:function_name
-endfunction
-
-function! BanPython_MakeValidPythonTestName()
-    " Transform a phrase into a test method name.
-    "
-    " Transform this:
-    "   show user name
-    " Into this:
-    "   def test_show_user_name(self):
-    "
-    let x=getline('.')
-    let x=substitute(x, '\(\w\) ', '\1_', 'ge')
-    let x=substitute(x, '-', '_', 'ge')
-    let x=substitute(x, '\(\S\+\)', 'def test_\1(self):', '')
-    call setline('.', x)
-endfunction
-
-function! BanPython_GetTestSeparators(command)
-    if a:command =~ 'unittest'
-        let path_separator = '.'
-        let expand_string = '%:.:r'
-    elseif a:command =~ '--pyargs'
-        let path_separator = '.'
-        let expand_string = '%:.:r'
-    elseif a:command =~ 'manage.py test'
-        let path_separator = '.'
-        let expand_string = '%:.:r'
-    else
-        let path_separator = '/'
-        let expand_string = '%:.'
+function! Ban_DuplicateLine(mode)
+    " {{{2
+    if a:mode == "normal"
+        let _pos = col('.')
+        copy .
+        execute 'normal ' ._pos. '|'
+    elseif a:mode == "visual"
+        '<,'>copy '>
+        normal '>j
     endif
+endfunction |" 2}}}
 
-    if a:command =~ 'pytest'
-        let class_separator = '::'
-    else
-        let class_separator = '.'
+function! Ban_DuplicateAndCommentLine(mode)
+    " {{{2
+    if a:mode == "normal"
+        let _pos = col('.')
+        copy .
+        normal k
+        .Commentary
+        normal j
+        execute 'normal ' ._pos. '|'
+    elseif a:mode == "visual"
+        '<,'>copy '>
+        normal gv
+        '<,'>Commentary
+        execute "normal \<Esc>"
+        normal '>j
     endif
-
-    return [path_separator, class_separator, expand_string]
-endfunction
-
-function! BanPython_SetAllSuiteAsTestTarget()
-    let g:test_target = ''
-endfunction
-
-function! BanPython_SetCurrentPackageAsTestTarget(command)
-    let [path_sep, _, _] = BanPython_GetTestSeparators(a:command)
-    let g:test_target = substitute(expand('%:.:h'), '/', path_sep, 'g')
-endfunction
-
-function! BanPython_SetCurrentModuleAsTestTarget(command)
-    let [path_sep, _, expand_arg] = BanPython_GetTestSeparators(a:command)
-    let g:test_target = substitute(expand(expand_arg), '/', path_sep, 'g')
-endfunction
-
-function! BanPython_SetCurrentClassAsTestTarget(command)
-    let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
-    let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonClassName()
-    let g:test_target = substitute(target, '/', path_sep, 'g')
-endfunction
-
-function! BanPython_SetCurrentMethodAsTestTarget(command)
-    let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
-    let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonClassName() . class_sep . BanPython_GetCurrentPythonMethodName()
-    let g:test_target = substitute(target, '/', path_sep, 'g')
-endfunction
-
-function! BanPython_SetCurrentFunctionAsTestTarget(command)
-    let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
-    let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonFunctionName()
-    let g:test_target = substitute(target, '/', path_sep, 'g')
-endfunction
-
-function! BanPython_BuildTestCommand(command, target)
-    " The {{ target }} part is used mainly with 'make test'.
-    " As you know we can't pass arguments to 'make' as we do to shell scripts.
-    " The easiest way is setting an environment variable and call 'make'.
-    " So, we use the 'var=value command' syntax.
-    "
-    " Let's see an example.
-    "
-    " command: target='--pyargs {{ target }}' make test
-    " target: some.package.module::Class::test_method
-    "
-    " Becomes
-    "
-    " target='--pyargs some.package.module::Class::test_method' make test
-    "
-
-    if a:command =~ '{{ target }}'
-        let x = substitute(a:command, '{{ target }}', a:target, 'g')
-        return 'eval "'. x .'"'
-    endif
-    return a:command .' '. a:target
-endfunction
-
-function! BanPython_TransformSelectedTextIntoFilename()
-    execute 'normal gv"sy'
-    return substitute(@s, '\.', '/', 'ge') .'.py'
-endfunction
-
-
-function! BanPython_FiletypeAutocmd()
-    setlocal foldmethod=indent
-    setlocal equalprg=~/.local/bin/python-style
-    nnoremap <silent> <buffer> <leader>m :update<CR>:call flake8#Flake8()<CR>
-
-    " Mapping to navigate to object definition in split window
-    nnoremap <buffer> <localleader>D :split<CR>:call jedi#goto()<CR>
-
-    " Mappings for classes, functions and docstrings text-objects
-    xnoremap <buffer> ic <Plug>(textobj-python-class-i)
-    onoremap <buffer> ic <Plug>(textobj-python-class-i)
-    xnoremap <buffer> ac <Plug>(textobj-python-class-a)
-    onoremap <buffer> ac <Plug>(textobj-python-class-a)
-    xnoremap <buffer> if <Plug>(textobj-python-function-i)
-    onoremap <buffer> if <Plug>(textobj-python-function-i)
-    xnoremap <buffer> af <Plug>(textobj-python-function-a)
-    onoremap <buffer> af <Plug>(textobj-python-function-a)
-    xnoremap <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
-    onoremap <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
-    xnoremap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
-    onoremap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
-
-    " edit selected module name
-    xnoremap <localleader>f :<C-U>let @s = BanPython_TransformSelectedTextIntoFilename() <CR>
-
-    " Mappings to help with tests (this is a big section).
-    " All mappings are prefixed with \t.
-    if !exists('g:test_command')
-        let g:test_command=''
-        if $VIM_TEST_COMMAND != ''
-            let g:test_command = $VIM_TEST_COMMAND
-        else
-            if executable('pytest')
-                " makes pytest the default test runner if it is present
-                let g:test_command = 'pytest --pyargs'
-            endif
-        endif
-    endif
-    if !exists('g:test_target')
-        let g:test_target = ''
-    endif
-
-    nnoremap t<CR> :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>|" Run tests in current vim session
-    nnoremap <silent> T<CR> :update<CR>:let _all_commands=g:test_command .' '. g:test_target<CR>:execute '!tmux send-keys -t .+ -l "run-with-time '. _all_commands .'"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>|" Run tests in tmux next pane
+endfunction |" 2}}}
 
 
 
-    " \tC configure the test command (along with its arguments).
-    " Examples below:
-    "   - pytest --pyargs
-    "   - python manage.py test -v 2
-    "   - python -m unittest
-    nnoremap <localleader>tC :let g:test_command='<c-r>=g:test_command<cr>'
-
-    nnoremap <buffer> <localleader>tn :call BanPython_MakeValidPythonTestName() <CR>|" Make a test name from current line contents
-
-    " Mark targets
-    nnoremap <buffer> <localleader>ta :wall <CR>:call BanPython_SetAllSuiteAsTestTarget() <CR>:echo g:test_target. ' set as test target.'<CR>
-    nnoremap <buffer> <localleader>tp :wall <CR>:call BanPython_SetCurrentPackageAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
-    nnoremap <buffer> <localleader>t% :wall <CR>:call BanPython_SetCurrentModuleAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
-    nnoremap <buffer> <localleader>tc :wall <CR>:call BanPython_SetCurrentClassAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
-    nnoremap <buffer> <localleader>tm :wall <CR>:call BanPython_SetCurrentMethodAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
-    nnoremap <buffer> <localleader>tf :wall <CR>:call BanPython_SetCurrentFunctionAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
-
-    nnoremap <silent> <localleader>tr
-        \ :let _curpos = getcurpos()<CR>
-        \ :call search('def test', 'besc')<CR>
-        \ :execute 'normal b"sye'<CR>
-        \ :let _curr_method = @s<CR>
-        \ :let _target = substitute(expand('%'), '.*joe/tests/', '', '').'::'._curr_method<CR>
-        \ :call setpos('.', _curpos)<CR>
-        \ :execute '!tmux send-keys -t JOE:src.1 -l "t ' .trim(_target). '"'<CR>
-        \ :execute '!tmux send-keys -t JOE:src.1 Enter'<CR><CR>
-        \ :unlet _curpos _curr_method _target<CR>
-        \|" Copy current filename and function/method to register z in pytest format (JOE specific)
-
-    syn keyword pythonTodo          TODO FIXME NOTE contained
-    hi! link pythonBuiltin Statement
-    hi! link pythonDocTest2 Comment
-endfunction
 
 
-"
-" ============
+
+
+
+
+
 " Autocommands: {{{1
-" ============
-" ==================================================
-" Autocommands
-" ==================================================
+" ==============================================================================
+
+augroup aug_ft_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker shiftwidth=4
+augroup END
 
 augroup quickfix
+    " {{{2
     autocmd!
     autocmd QuickFixCmdPost [^l]* cwindow
     autocmd QuickFixCmdPost l* lwindow
     autocmd FileType qf setlocal nocursorline
-augroup END
+augroup END |" 2}}}
 
 augroup aug_terminal_mode
     au!
@@ -520,13 +317,14 @@ augroup aug_ft_css
 augroup END
 
 augroup aug_ft_html
+    " {{{2
     au!
     autocmd FileType html,htmldjango setlocal tabstop=2
     autocmd FileType html,htmldjango let b:match_words = '<:>,{{:}},{%:%},{:},[:],(:),<!--:-->' .
         \ ',<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>' .
         \ ',{% block:{% endblock,{% if:{% endif,{% for:{% endfor,{% macro:{% endmacro' .
         \ ',{% call:{% endcall,{% filter:{% endfilter,{% set:{% endset'
-augroup END
+augroup END |" 2}}}
 
 augroup aug_ft_vue
     au!
@@ -544,10 +342,259 @@ augroup aug_ft_php
 augroup END
 
 augroup aug_ft_python
+    " {{{2
     au!
-    autocmd FileType python call BanPython_FiletypeAutocmd()
-augroup END
+    autocmd FileType python setlocal foldmethod=indent
+    autocmd FileType python setlocal equalprg=~/.local/bin/python-style
+    autocmd FileType python nnoremap <silent> <buffer> <leader>m :update<CR>:call flake8#Flake8()<CR>
 
+    " Mapping to navigate to object definition in split window
+    autocmd FileType python nnoremap <buffer> <localleader>D :split<CR>:call jedi#goto()<CR>
+
+    " Mappings for classes, functions and docstrings text-objects
+    autocmd FileType python xnoremap <buffer> ic <Plug>(textobj-python-class-i)
+    autocmd FileType python onoremap <buffer> ic <Plug>(textobj-python-class-i)
+    autocmd FileType python xnoremap <buffer> ac <Plug>(textobj-python-class-a)
+    autocmd FileType python onoremap <buffer> ac <Plug>(textobj-python-class-a)
+    autocmd FileType python xnoremap <buffer> if <Plug>(textobj-python-function-i)
+    autocmd FileType python onoremap <buffer> if <Plug>(textobj-python-function-i)
+    autocmd FileType python xnoremap <buffer> af <Plug>(textobj-python-function-a)
+    autocmd FileType python onoremap <buffer> af <Plug>(textobj-python-function-a)
+    autocmd FileType python xnoremap <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
+    autocmd FileType python onoremap <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
+    autocmd FileType python xnoremap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
+    autocmd FileType python onoremap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
+
+    " initialize global test variables
+    autocmd FileType python let g:test_command =
+        \ (exists('g:test_command')) ? g:test_command :
+        \     (exists('$VIM_TEST_COMMAND')) ? $VIM_TEST_COMMAND :
+        \         (executable('pytest')) ? 'pytest' : ''
+    autocmd FileType python let g:test_target = (exists('g:test_target')) ? g:test_target : ''
+
+    " edit selected module name
+    autocmd FileType python xnoremap <localleader>f :<C-U>let @s = BanPython_TransformSelectedTextIntoFilename() <CR>
+
+    " autocmd FileType python nnoremap t<CR> :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>|" Run tests in current vim session
+    autocmd FileType python nnoremap t<CR>
+        \ :wall <bar>
+        \ :let _command = BanPython_BuildTestCommand(g:test_command, g:test_target)<bar>
+        \ :execute Ban_Run('run-test '. _command)<bar>
+        \ :unlet _command<CR>
+        \ |" Run tests in current vim session
+
+    " autocmd FileType python nnoremap <silent> T<CR> :update<CR>:let _all_commands=g:test_command .' '. g:test_target<CR>:execute '!tmux send-keys -t .+ -l "run-with-time '. _all_commands .'"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>|" Run tests in tmux next pane
+    autocmd FileType python nnoremap <silent> T<CR>
+        \ :update<bar>
+        \ :let _command=g:test_command .' '. g:test_target<bar>
+        \ :execute '!tmux send-keys -t .+ -l "run-with-time '. _command .'"'<bar>
+        \ :execute '!tmux send-keys -t .+ Enter'<bar>
+        \ :unlet _command<CR>
+        \ |" Run tests in tmux next pane
+
+    " Mappings to help with tests (this is a big section).
+    " All mappings are prefixed with \t.
+    "
+    " \tC configure the test command (along with its arguments).
+    " Examples below:
+    "   - pytest --pyargs
+    "   - python manage.py test -v 2
+    "   - python -m unittest
+    autocmd FileType python nnoremap <localleader>tC :let g:test_command='<c-r>=g:test_command<cr>'
+
+    autocmd FileType python nnoremap <buffer> <localleader>tn :call BanPython_MakeValidPythonTestName() <CR>|" Make a test name from current line contents
+
+    " Mark targets
+    autocmd FileType python nnoremap <buffer> <localleader>ta :wall <CR>:call BanPython_SetAllSuiteAsTestTarget() <CR>:echo g:test_target. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>tp :wall <CR>:call BanPython_SetCurrentPackageAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>t% :wall <CR>:call BanPython_SetCurrentModuleAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>tc :wall <CR>:call BanPython_SetCurrentClassAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>tm :wall <CR>:call BanPython_SetCurrentMethodAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>tf :wall <CR>:call BanPython_SetCurrentFunctionAsTestTarget(g:test_command) <CR>:echo g:test_target. ' set as test target.'<CR>
+
+    " autocmd FileType python nnoremap <silent> <localleader>tr
+    "     \ :let _curpos = getcurpos()<CR>
+    "     \ :call search('def test', 'besc')<CR>
+    "     \ :execute 'normal b"sye'<CR>
+    "     \ :let _curr_method = @s<CR>
+    "     \ :let _target = substitute(expand('%'), '.*joe/tests/', '', '').'::'._curr_method<CR>
+    "     \ :call setpos('.', _curpos)<CR>
+    "     \ :execute '!tmux send-keys -t JOE:src.1 -l "t ' .trim(_target). '"'<CR>
+    "     \ :execute '!tmux send-keys -t JOE:src.1 Enter'<CR><CR>
+    "     \ :unlet _curpos _curr_method _target<CR>
+    "     \|" Copy current filename and function/method to register z in pytest format (JOE specific)
+
+    autocmd FileType python syn keyword pythonTodo          TODO FIXME NOTE contained
+    autocmd FileType python hi! link pythonBuiltin Statement
+    autocmd FileType python hi! link pythonDocTest2 Comment
+
+    function! Ban_Run(command)
+        " {{{3
+        " Run an external command using internal or external terminal
+
+        if !exists('g:ban_run_internal')
+            if has('gui_running')
+                let g:ban_run_internal = 1
+            elseif has('nvim')
+                let g:ban_run_internal = 1
+            else
+                let g:ban_run_internal = 0
+            endif
+        endif
+
+        let quote = "'"
+        if g:ban_run_internal == 1
+            if has('nvim')
+                let prefix = 'tabnew | terminal '. &shell .' -c ' . quote
+                let suffix = quote
+            else
+                let prefix = 'tabnew | terminal ++curwin ++shell '
+                let suffix = ''
+            endif
+            let command = substitute(a:command, quote, "'\"\\'\"'", 'g')
+            let command = substitute(command, '#', '\\#', 'g')
+        else
+            let prefix = '!'
+            let command = a:command
+            let suffix = ''
+        endif
+
+        return prefix . command . suffix
+    endfunction |" 3}}}
+
+    function! BanPython_GetCurrentPythonClassName()
+        " {{{3
+        execute "normal ms$?^class \<Enter>0w"
+        nohls
+        let class_name = expand('<cword>')
+        execute 'normal g`s'
+        return l:class_name
+    endfunction |" 3}}}
+
+    function! BanPython_GetCurrentPythonMethodName()
+        " {{{3
+        execute 'normal ms$?^ \+\(def\|async def\) \+test\w\+(\_s\{-}self?e' . "\<Enter>" . '3b'
+        nohls
+        let method_name = expand('<cword>')
+        execute 'normal g`s'
+        return l:method_name
+    endfunction |" 3}}}
+
+    function! BanPython_GetCurrentPythonFunctionName()
+        " {{{3
+        execute 'normal ms$?^\(def\|async def\) \+test\w\+(?e' . "\<Enter>" . 'b'
+        nohls
+        let function_name = expand('<cword>')
+        execute 'normal g`s'
+        return l:function_name
+    endfunction |" 3}}}
+
+    function! BanPython_MakeValidPythonTestName()
+        " {{{3
+        " Transform a phrase into a test method name.
+        "
+        " Transform this:
+        "   show user name
+        " Into this:
+        "   def test_show_user_name(self):
+        "
+        let x=getline('.')
+        let x=substitute(x, '\(\w\) ', '\1_', 'ge')
+        let x=substitute(x, '-', '_', 'ge')
+        let x=substitute(x, '\(\S\+\)', 'def test_\1(self):', '')
+        call setline('.', x)
+    endfunction |" 3}}}
+
+    function! BanPython_GetTestSeparators(command)
+        " {{{3
+        if a:command =~ 'unittest'
+            let path_separator = '.'
+            let expand_string = '%:.:r'
+        elseif a:command =~ '--pyargs'
+            let path_separator = '.'
+            let expand_string = '%:.:r'
+        elseif a:command =~ 'manage.py test'
+            let path_separator = '.'
+            let expand_string = '%:.:r'
+        else
+            let path_separator = '/'
+            let expand_string = '%:.'
+        endif
+
+        if a:command =~ 'pytest'
+            let class_separator = '::'
+        else
+            let class_separator = '.'
+        endif
+
+        return [path_separator, class_separator, expand_string]
+    endfunction |" 3}}}
+
+    function! BanPython_SetAllSuiteAsTestTarget()
+        let g:test_target = ''
+    endfunction
+
+    function! BanPython_SetCurrentPackageAsTestTarget(command)
+        let [path_sep, _, _] = BanPython_GetTestSeparators(a:command)
+        let g:test_target = substitute(expand('%:.:h'), '/', path_sep, 'g')
+    endfunction
+
+    function! BanPython_SetCurrentModuleAsTestTarget(command)
+        let [path_sep, _, expand_arg] = BanPython_GetTestSeparators(a:command)
+        let g:test_target = substitute(expand(expand_arg), '/', path_sep, 'g')
+    endfunction
+
+    function! BanPython_SetCurrentClassAsTestTarget(command)
+        " {{{3
+        let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
+        let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonClassName()
+        let g:test_target = substitute(target, '/', path_sep, 'g')
+    endfunction |" 3}}}
+
+    function! BanPython_SetCurrentMethodAsTestTarget(command)
+        " {{{3
+        let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
+        let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonClassName() . class_sep . BanPython_GetCurrentPythonMethodName()
+        let g:test_target = substitute(target, '/', path_sep, 'g')
+    endfunction |" 3}}}
+
+    function! BanPython_SetCurrentFunctionAsTestTarget(command)
+        " {{{3
+        let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
+        let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonFunctionName()
+        let g:test_target = substitute(target, '/', path_sep, 'g')
+    endfunction |" 3}}}
+
+    function! BanPython_BuildTestCommand(command, target)
+        " {{{3
+        " The {{ target }} part is used mainly with 'make test'.
+        " As you know we can't pass arguments to 'make' as we do to shell scripts.
+        " The easiest way is setting an environment variable and call 'make'.
+        " So, we use the 'var=value command' syntax.
+        "
+        " Let's see an example.
+        "
+        " command: target='--pyargs {{ target }}' make test
+        " target: some.package.module::Class::test_method
+        "
+        " Becomes
+        "
+        " target='--pyargs some.package.module::Class::test_method' make test
+        "
+
+        if a:command =~ '{{ target }}'
+            let x = substitute(a:command, '{{ target }}', a:target, 'g')
+            return 'eval "'. x .'"'
+        endif
+        return a:command .' '. a:target
+    endfunction |" 3}}}
+
+    function! BanPython_TransformSelectedTextIntoFilename()
+        execute 'normal gv"sy'
+        return substitute(@s, '\.', '/', 'ge') .'.py'
+    endfunction
+
+augroup END |" 2}}}
 
 augroup aug_ft_make
     au!
@@ -560,6 +607,7 @@ augroup aug_ft_fugitive
 augroup END
 
 augroup aug_ft_gitcommit
+    " {{{2
     au!
     autocmd FileType gitcommit setlocal
     autocmd BufRead COMMIT_EDITMSG setlocal nocursorline
@@ -572,9 +620,10 @@ augroup aug_ft_gitcommit
     " go to next/prev change
     autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> ]c search('^@@', "zW") ? ':call search("^@@", "zW")\|normal zz<CR>' : ':echohl WarningMsg\|echo "Last chunck"\|echohl None<CR>'
     autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> [c search('^@@', "bW") ? ':call search("^@@", "bW")\|normal zz<CR>' : ':echohl WarningMsg\|echo "First chunck"\|echohl None<CR>'
-augroup END
+augroup END |" 2}}}
 
 augroup aug_list_items
+    " {{{2
     au!
 
     " add item
@@ -594,9 +643,10 @@ augroup aug_list_items
 
     " go to parent
     autocmd FileType markdown,text nnoremap <silent> <buffer> [_ ^:call search('\%<' .col("."). 'c\S', "b")<CR>
-augroup END
+augroup END |" 2}}}
 
 augroup aug_viniciusban_journal
+    " {{{2
     au!
 
     " Journal file v2 behaviour and functions
@@ -642,6 +692,7 @@ augroup aug_viniciusban_journal
     " ----------------------------------
 
     function! BanJournal_ShowMappings()
+        " {{{3
         echom '      New:    task \t     day \d   timesheet \s'
         echom ' '
         echom '    Tasks:  create \t   start \*      finish \x'
@@ -649,17 +700,19 @@ augroup aug_viniciusban_journal
         echom ' '
         echom 'Timestamp:  create \n    prev [n        next ]n'
         echom '     Note: Set the $JOURNAL_PROJECT variable first'
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_CreateTask(project)
+        " {{{3
         " Create a task in current line
 
         let lnum = line('.')
         call BanJournal_DoCreateTask(lnum, a:project, trim(getline(lnum)))
         call cursor(lnum, col('$'))
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_StartCurrentTask()
+        " {{{3
         " Mark as doing. Create the task section in ACTIVE. Keep it in BACKLOG.
 
         let journal_task_patt = '^- \[.\] _\w\+_\>'
@@ -685,9 +738,10 @@ augroup aug_viniciusban_journal
         endif
 
         echohl ErrorMsg | echom  'Error: Not a task' | echohl None
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_EndCurrentTask()
+        " {{{3
         let journal_task_patt = '^- \[.\] _\w\+_\>'
         let simple_task_patt = '^ *- \[.\] '
         let lnum = line('.')
@@ -704,9 +758,10 @@ augroup aug_viniciusban_journal
         endif
         call BanJournal_DoEndTask(task_code)
         normal zv
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_ArchiveCurrentTask()
+        " {{{3
         let lnum = line('.')
         let task_code = BanJournal_GetTaskCodeForLine(lnum)
         if task_code == ''
@@ -715,9 +770,10 @@ augroup aug_viniciusban_journal
         endif
         call BanJournal_DoArchiveTask(task_code)
         normal zv
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_PauseCurrentTask()
+        " {{{3
         let lnum = line('.')
         let task_code = BanJournal_GetTaskCodeForLine(lnum)
         if task_code == ''
@@ -725,15 +781,17 @@ augroup aug_viniciusban_journal
             return
         endif
         call BanJournal_DoPauseTask(task_code)
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_AddTimestampNoteToCurrentLine(description = '', option = '')
+        " {{{3
         let lnum = line('.')
         call BanJournal_AddTimestampNoteToLine(lnum, a:description, a:option)
         call cursor(lnum, col('$'))
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_CreateTheDailyTaskInCurrentLine()
+        " {{{3
         let lnum = line('.')
         let task_description = 'daily '. strftime('%Y-%m-%d %a')
         let day_of_week = strftime('%a')
@@ -744,9 +802,10 @@ augroup aug_viniciusban_journal
         let [_, last_lnum] = BanJournal_GetTaskSectionInterval(task_code)
         call append(last_lnum, '')
         call cursor(last_lnum + 2, 1)
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_CreateTheTimesheetTaskInCurrentLine(project)
+        " {{{3
         let lnum = line('.')
         let task_description = a:project . ' timesheet '. strftime('%Y-%m-%d %a')
         let task_suffix = 'timesheet_'. strftime('%a')
@@ -759,17 +818,19 @@ augroup aug_viniciusban_journal
         call append(last_lnum, '')
         call cursor(last_lnum, 1000)
         normal zx
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_StartANewDay(project)
+        " {{{3
         let lnum = line('.')
         call BanJournal_CreateTheDailyTaskInCurrentLine()
         call append(lnum, '')
         call cursor(lnum + 1, 1)
         call BanJournal_CreateTheTimesheetTaskInCurrentLine(a:project)
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_DoCreateTask(lnum, project, description, task_suffix='')
+        " {{{3
         " Create a task in line `lnum`.
         "
         " Format: _{project}_{date}_{suffix}_
@@ -782,9 +843,10 @@ augroup aug_viniciusban_journal
         let new_line = substitute(new_line, '{description}', a:description, '')
 
         call setline(a:lnum, new_line)
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_DoStartTaskAtLine(lnum)
+        " {{{3
         " Start the task at `lnum` line.
 
         let lnum = line('.')
@@ -798,34 +860,38 @@ augroup aug_viniciusban_journal
         endif
         call BanJournal_AddTimestampNoteWhenStartingTaskAtLine(lnum)
         normal zx
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_DoEndTask(task_code)
+        " {{{3
         " Mark task as ended and register the timestamp
 
         let task_item_lnum = BanJournal_FindTaskItemWithTaskCode(a:task_code)
         call BanJournal_MarkTaskAtLineAsDone(task_item_lnum)
         call BanJournal_AddEndDateToTaskTitle(a:task_code)
         call BanJournal_AddTimestampNoteWhenFinishingTask(a:task_code)
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_DoArchiveTask(task_code)
+        " {{{3
         " Remove from BACKLOG. Move from ACTIVE to ARCHIVE.
 
         let task_item_lnum = BanJournal_FindTaskItemWithTaskCode(a:task_code)
         execute task_item_lnum . 'delete _'
         call BanJournal_MoveTaskToArchive(a:task_code)
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_DoPauseTask(task_code)
+        " {{{3
         " Mark task as paused.
 
         let task_item_lnum = BanJournal_FindTaskItemWithTaskCode(a:task_code)
         call BanJournal_MarkTaskAtLineAsPaused(task_item_lnum)
         call BanJournal_AddTimestampNoteWhenPausingTask(a:task_code)
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_AddTimestampNoteToLine(lnum, description = '', ...)
+        " {{{3
         if count(a:000, 'without_task_code') == 0
             let template = '{today} {weekday} {now} {task_code}{description}'
             let task_code = BanJournal_GetTaskCodeForLine(a:lnum)
@@ -848,9 +914,10 @@ augroup aug_viniciusban_journal
         let new_line = substitute(new_line, '{description}', description, '')
 
         call setline(a:lnum, new_line)
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_BuildTaskCode(project, suffix='')
+        " {{{3
         " Assemble different pieces to build a task code.
         let template = '_{project}_{today}_{suffix}_'
         if a:suffix == ''
@@ -864,9 +931,10 @@ augroup aug_viniciusban_journal
         let task_code = substitute(task_code, '{today}', strftime("%y%m%d"), '')
         let task_code = substitute(task_code, '{suffix}', suffix, '')
         return task_code
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_CreateRandomCodeWithLength(length)
+        " {{{3
         " Create a random code with `length` chars.
         let chars = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         let len_chars = len(chars)
@@ -876,7 +944,7 @@ augroup aug_viniciusban_journal
             call add(result, chars[i])
         endfor
         return join(result, '')
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_FindTaskItemWithTaskCode(task_code)
         let item_lnum = search('^- \[.\] '. a:task_code, 'n')
@@ -884,24 +952,27 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_GetTaskCodeForLine(lnum)
+        " {{{3
         let task_code = BanJournal_GetTaskCodeFromItemList(a:lnum)
         if task_code == ''
             let task_code = BanJournal_GetTaskCodeFromInsideTaskSection(a:lnum)
         endif
 
         return task_code
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_GetTaskCodeFromItemList(lnum)
+        " {{{3
         let pattern = '^- \[.\] \(_\w\+_\)\W'
         let matches = matchlist(getline(a:lnum), pattern)
         if empty(matches)
             return ''
         endif
         return matches[1]
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_GetTaskCodeFromInsideTaskSection(lnum)
+        " {{{3
         " Task codes are in level 2 heading
         let pattern = '^## \(_\w\+_\)\W'
         let initial_lnum = line('.')
@@ -919,9 +990,10 @@ augroup aug_viniciusban_journal
             return ''
         endif
         return matches[1]
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_AddStartDateToTaskTitleAtLine(lnum)
+        " {{{3
         " Add note in task about when started doing: (#start:YYYY-MM-DD)
         let line_template = '{previous_contents} {note}'
         let note_template = '(#start:{today})'
@@ -946,13 +1018,14 @@ augroup aug_viniciusban_journal
         let new_title = substitute(new_title, '{previous_contents}', getline(title_lnum), '')
         let new_title = substitute(new_title, '{note}', note, '')
         call setline(title_lnum, new_title)
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_MarkTaskAtLineAsDoing(lnum)
+        " {{{3
         let contents = getline(a:lnum)
         let new_line= substitute(contents, '\[.\] ', '\[*\] ', '')
         call setline(a:lnum, new_line)
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_MarkTaskAtLineAsDone(lnum)
         let new_line= substitute(getline(a:lnum), '\[.\] ', '\[x\] ', '')
@@ -960,35 +1033,40 @@ augroup aug_viniciusban_journal
     endfunction
 
     function! BanJournal_MarkTaskAtLineAsPaused(lnum)
+        " {{{3
         let contents = getline(a:lnum)
         let new_line= substitute(contents, '\[.\] ', '\[.\] ', '')
         call setline(a:lnum, new_line)
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_CopyTaskAtLineToActive(lnum)
+        " {{{3
         let task_item = getline(a:lnum)
         let task_section_heading = substitute(task_item, '^- \[.\]', '##', '')
 
         let active_section_lnum = search('^# ACTIVE', 'n')
         call append(active_section_lnum, ['', task_section_heading, ''])
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_AddTimestampNoteWhenStartingTaskAtLine(lnum)
+        " {{{3
         let task_code = BanJournal_GetTaskCodeForLine(a:lnum)
         let [_, last_lnum] = BanJournal_GetTaskSectionInterval(task_code)
         let timestamp_lnum = last_lnum + 2
         call BanJournal_AddTimestampNoteToLine(timestamp_lnum, '#start', 'without_task_code')
         call append(timestamp_lnum, ['', ''])
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_AddTimestampNoteWhenStartingTimesheetAtLine(lnum)
+        " {{{3
         let task_code = BanJournal_GetTaskCodeForLine(a:lnum)
         let [first_lnum, _] = BanJournal_GetTaskSectionInterval(task_code)
         let timestamp_lnum = first_lnum + 2
         call BanJournal_AddTimestampNoteToLine(timestamp_lnum, '-', 'without_task_code')
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_MoveTaskToArchive(task_code)
+        " {{{3
         let initial_lnum = line('.')
         let archive_section_lnum = search('^# ARCHIVE', 'nw')
         let [first_lnum, last_lnum] = BanJournal_GetTaskSectionInterval(a:task_code)
@@ -1000,9 +1078,10 @@ augroup aug_viniciusban_journal
 
         execute first_lnum .','. last_lnum .'move '. (archive_section_lnum + 1)
         call cursor(initial_lnum, 1)
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_AddEndDateToTaskTitle(task_code)
+        " {{{3
         " Add note in task about when finished it doing: #end:YYYY-MM-DD
         let template = ' #end:{today}'
 
@@ -1012,24 +1091,27 @@ augroup aug_viniciusban_journal
         let note = substitute(note, '{today}', strftime('%Y-%m-%d'), '')
         let title_with_note = substitute(getline(first_lnum), '\()\)$', note.'\1', '')
         call setline(first_lnum, title_with_note)
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_AddTimestampNoteWhenFinishingTask(task_code)
+        " {{{3
         let [_, last_lnum] = BanJournal_GetTaskSectionInterval(a:task_code)
         call append(last_lnum, ['', '', '', ''])
         call BanJournal_AddTimestampNoteToLine(last_lnum + 2, '#end', 'without_task_code')
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_AddTimestampNoteWhenPausingTask(task_code)
+        " {{{3
         let [_, last_lnum] = BanJournal_GetTaskSectionInterval(a:task_code)
         let note_lnum = last_lnum + 2
         call append(note_lnum, ['', ''])
         call BanJournal_AddTimestampNoteToLine(note_lnum, '#paused', 'without_task_code')
         call cursor(note_lnum, 1)
         normal zv
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_GetTaskSectionInterval(task_code)
+        " {{{3
         let initial_lnum = line('.')
 
         let task_first_lnum = search('^## '. a:task_code, 'nw')
@@ -1046,9 +1128,10 @@ augroup aug_viniciusban_journal
         call cursor(initial_lnum, 1)
 
         return [task_first_lnum, task_last_lnum]
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_ListTasksTouchedOnDate(date_arg)
+        " {{{3
         " Use location list to show all the tasks I have worked on that date.
         let v:errmsg = ''
         silent! execute 'lvimgrep '. a:date_arg . ' '. expand('%')
@@ -1131,16 +1214,17 @@ augroup aug_viniciusban_journal
         endfor
         call setloclist(0, [], 'r', {'title': 'Tasks for '. a:date_arg, 'items': new_items})
         lopen
-    endfunction
+    endfunction |" 3}}}
 
     function! BanJournal_SortListOfTasksTouchedOnDateByLnum(first, second)
+        " {{{3
         if a:first['lnum'] < a:second['lnum']
             return -1
         endif
         return 1
-    endfunction
+    endfunction |" 3}}}
 
-augroup END
+augroup END |" 2}}}
 
 augroup aug_ft_sh
     au!
@@ -1148,17 +1232,23 @@ augroup aug_ft_sh
 augroup END
 
 augroup aug_quickscope_colors
+    " {{{2
     autocmd!
     autocmd ColorScheme * highlight QuickScopePrimary guifg=Cyan gui=underline,bold ctermfg=Cyan cterm=underline
     autocmd ColorScheme * highlight QuickScopeSecondary guifg=Magenta gui=underline,bold ctermfg=Magenta cterm=underline
-augroup END
+augroup END |" 2}}}
 
 
 
-"
-" ========
+
+
+
+
+
+
+
 " Plugins: {{{1
-" ========
+" ==============================================================================
 
 " install vim-plug:
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -1322,9 +1412,24 @@ if has('nvim')
 endif
 
 
-" Syntax And Colors: {{{1
+
+
+
+
+
+
+
+
+" Colors And Last Minute Settings: {{{1
+" ==============================================================================
+"
+
+
+call Ban_SetDefaultEditOptions('global')
 
 syntax reset
 colorscheme white_on_black
 
 let g:loaded_vimrc=1
+
+" the end.
