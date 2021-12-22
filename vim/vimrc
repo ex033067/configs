@@ -293,30 +293,33 @@ endfunction |" 2}}}
 " Autocommands: {{{1
 " ==============================================================================
 
-augroup aug_ft_vim
-    autocmd!
-    autocmd FileType vim setlocal foldmethod=marker shiftwidth=4
-augroup END
-
-augroup quickfix
-    " {{{2
-    autocmd!
-    autocmd QuickFixCmdPost [^l]* cwindow
-    autocmd QuickFixCmdPost l* lwindow
-    autocmd FileType qf setlocal nocursorline
-augroup END |" 2}}}
-
-augroup aug_terminal_mode
-    au!
-    silent! autocmd TerminalWinOpen * setlocal nonumber norelativenumber
-augroup END
-
-augroup aug_ft_css
+augroup aug_filetype_css
     au!
     autocmd FileType css setlocal tabstop=2
 augroup END
 
-augroup aug_ft_html
+augroup aug_filetype_fugitive
+    au!
+    autocmd FileType fugitive setlocal cursorline
+augroup END
+
+augroup aug_filetype_gitcommit
+    " {{{2
+    au!
+    autocmd FileType gitcommit setlocal
+    autocmd BufRead COMMIT_EDITMSG setlocal nocursorline
+    autocmd BufRead COMMIT_EDITMSG call execute(['normal gg'])
+
+    " go to next/prev file in commit
+    autocmd FileType gitcommit nnoremap <silent> <buffer> ]] :call search('^diff\\|^# On branch', "z")<CR>ztzv
+    autocmd FileType gitcommit nnoremap <silent> <buffer> [[ :call search('^diff\\|^# On branch', "b")<CR>ztzv
+
+    " go to next/prev change
+    autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> ]c search('^@@', "zW") ? ':call search("^@@", "zW")\|normal zz<CR>' : ':echohl WarningMsg\|echo "Last chunck"\|echohl None<CR>'
+    autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> [c search('^@@', "bW") ? ':call search("^@@", "bW")\|normal zz<CR>' : ':echohl WarningMsg\|echo "First chunck"\|echohl None<CR>'
+augroup END |" 2}}}
+
+augroup aug_filetype_html
     " {{{2
     au!
     autocmd FileType html,htmldjango setlocal tabstop=2
@@ -326,22 +329,22 @@ augroup aug_ft_html
         \ ',{% call:{% endcall,{% filter:{% endfilter,{% set:{% endset'
 augroup END |" 2}}}
 
-augroup aug_ft_vue
-    au!
-    autocmd FileType vue setlocal tabstop=2
-augroup END
-
-augroup aug_ft_json
+augroup aug_filetype_json
     au!
     autocmd FileType json setlocal tabstop=2
 augroup END
 
-augroup aug_ft_php
+augroup aug_filetype_make
+    au!
+    autocmd FileType make setlocal noexpandtab
+augroup END
+
+augroup aug_filetype_php
     au!
     autocmd FileType php setlocal foldmethod=marker foldmarker={,}
 augroup END
 
-augroup aug_ft_python
+augroup aug_filetype_python
     " {{{2
     au!
     autocmd FileType python setlocal foldmethod=indent
@@ -596,31 +599,15 @@ augroup aug_ft_python
 
 augroup END |" 2}}}
 
-augroup aug_ft_make
+augroup aug_filetype_sh
     au!
-    autocmd FileType make setlocal noexpandtab
+    autocmd FileType sh setlocal noexpandtab
 augroup END
 
-augroup aug_ft_fugitive
-    au!
-    autocmd FileType fugitive setlocal cursorline
+augroup aug_filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker shiftwidth=4
 augroup END
-
-augroup aug_ft_gitcommit
-    " {{{2
-    au!
-    autocmd FileType gitcommit setlocal
-    autocmd BufRead COMMIT_EDITMSG setlocal nocursorline
-    autocmd BufRead COMMIT_EDITMSG call execute(['normal gg'])
-
-    " go to next/prev file in commit
-    autocmd FileType gitcommit nnoremap <silent> <buffer> ]] :call search('^diff\\|^# On branch', "z")<CR>ztzv
-    autocmd FileType gitcommit nnoremap <silent> <buffer> [[ :call search('^diff\\|^# On branch', "b")<CR>ztzv
-
-    " go to next/prev change
-    autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> ]c search('^@@', "zW") ? ':call search("^@@", "zW")\|normal zz<CR>' : ':echohl WarningMsg\|echo "Last chunck"\|echohl None<CR>'
-    autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> [c search('^@@', "bW") ? ':call search("^@@", "bW")\|normal zz<CR>' : ':echohl WarningMsg\|echo "First chunck"\|echohl None<CR>'
-augroup END |" 2}}}
 
 augroup aug_list_items
     " {{{2
@@ -645,10 +632,13 @@ augroup aug_list_items
     autocmd FileType markdown,text nnoremap <silent> <buffer> [_ ^:call search('\%<' .col("."). 'c\S', "b")<CR>
 augroup END |" 2}}}
 
-augroup aug_ft_sh
-    au!
-    autocmd FileType sh setlocal noexpandtab
-augroup END
+augroup aug_quickfix
+    " {{{2
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost l* lwindow
+    autocmd FileType qf setlocal nocursorline
+augroup END |" 2}}}
 
 augroup aug_quickscope_colors
     " {{{2
@@ -656,6 +646,11 @@ augroup aug_quickscope_colors
     autocmd ColorScheme * highlight QuickScopePrimary guifg=Cyan gui=underline,bold ctermfg=Cyan cterm=underline
     autocmd ColorScheme * highlight QuickScopeSecondary guifg=Magenta gui=underline,bold ctermfg=Magenta cterm=underline
 augroup END |" 2}}}
+
+augroup aug_terminal_mode
+    au!
+    silent! autocmd TerminalWinOpen * setlocal nonumber norelativenumber
+augroup END
 
 
 
