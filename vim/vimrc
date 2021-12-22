@@ -661,8 +661,8 @@ augroup END
 
 call plug#begin('~/.vim/bundle')
 
-" 1. Must have plugins (in order of importance for me)
-" ====================================================
+
+" Must Have Plugins: {{{2
 
 " File system explorer
 Plug 'scrooloose/nerdtree'
@@ -672,21 +672,6 @@ let NERDTreeHijackNetrw = 0
 " Fuzzy finder
 Plug 'junegunn/fzf', {'dir': '~/.vim/bundle/fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
-
-" let g:fzf_colors = {
-"     \ 'fg': ['fg', 'Normal'],
-"     \ 'bg': ['bg', 'Normal'],
-"     \ 'hl': ['bg', 'Search'],
-"     \ 'fg+': ['fg', 'customSelectedItem', 'CursorLine', 'Normal'],
-"     \ 'bg+': ['bg', 'customSelectedItem', 'CursorLine'],
-"     \ 'hl+': ['bg', 'Search'],
-"     \ 'info': ['fg', 'Normal'],
-"     \ 'border': ['fg', 'Comment'],
-"     \ 'prompt': ['fg', 'Normal'],
-"     \ 'pointer': ['fg', 'customSelectedItem'],
-"     \ 'marker': ['fg', 'Normal'],
-"     \ 'spinner': ['fg', 'Normal'],
-"     \ 'header': ['fg', 'Normal'] }
 
 " Up to date syntax files
 Plug 'viniciusban/vim-polyglot'
@@ -706,8 +691,8 @@ let g:jedi#usages_command = '<localleader>n'
 Plug 'viniciusban/vim-white-on-black-colorscheme'
 
 
-" 2. Good to have plugins
-" =======================
+
+" Good To Have Plugins: {{{2
 
 " Git inside vim
 Plug 'tpope/vim-fugitive'
@@ -716,15 +701,26 @@ Plug 'tpope/vim-fugitive'
 " gcc, gc<motion>, {Visual}gc
 Plug 'tpope/vim-commentary'  | " gcc, gc<motion>, {Visual}gc
 
-" My mappings for markdown
-Plug 'viniciusban/vim-ft-markdown'
+" colorize parentheses
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 0
+let _only_to_test_rainbow_colors = trim('1'. trim('2'. trim('3'. trim('4'. trim('5'. trim('6'. trim('7'. trim('8'))))))))
+let g:rainbow_conf = {
+    \'guifgs': [
+        \'#BFBFBF', '#D9534F', '#3399FF', '#00CC66',
+        \'#FFB3BA', '#FF00FF', '#00FFFF', '#C02F1D'
+    \]
+\}
 
 " Run flake8
 Plug 'nvie/vim-flake8'
 
+" My mappings for markdown
+Plug 'viniciusban/vim-ft-markdown'
 
-" 3. Nice to have plugins
-" =======================
+
+
+" Nice To Have Plugins: {{{2
 
 " Add delimiters to text.
 " sa, sd, sr
@@ -740,17 +736,6 @@ let g:tagbar_case_insensitive = 1
 " Quickly navigate to first and second occurrence of char in line
 Plug 'unblevable/quick-scope'
 let g:qs_enable=0  |" start plugin with highlight disabled
-
-" colorize parentheses
-Plug 'luochen1990/rainbow'
-let g:rainbow_active = 0
-let _only_to_test_rainbow_colors = trim('1'. trim('2'. trim('3'. trim('4'. trim('5'. trim('6'. trim('7'. trim('8'))))))))
-let g:rainbow_conf = {
-    \'guifgs': [
-        \'#BFBFBF', '#D9534F', '#3399FF', '#00CC66',
-        \'#FFB3BA', '#FF00FF', '#00FFFF', '#C02F1D'
-    \]
-\}
 
 " Expand abbreviations
 Plug 'mattn/emmet-vim'
