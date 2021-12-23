@@ -148,12 +148,19 @@ nnoremap <C-w>tc :tabclose<CR>
 
 " navigation
 nnoremap <Space> <C-F>
-nnoremap ]q :cnext<CR>|" go to next line in quickfix
-nnoremap [q :cprevious<CR>|" go to previous line in quickfix
-nnoremap ]l :lnext<CR>|" go to next line in location list
-nnoremap [l :lprevious<CR>|" go to previous line in location list
+
 nnoremap ]a :next<CR>
 nnoremap [a :previous<CR>
+
+nnoremap ]q :cnext<CR>|" go to next line in quickfix
+nnoremap [q :cprevious<CR>|" go to previous line in quickfix
+nnoremap ]Q :cnfile<CR>|" go to next file in quickfix
+nnoremap [Q :cpfile<CR>|" go to previous file in quickfix
+
+nnoremap ]l :lnext<CR>|" go to next line in location list
+nnoremap [l :lprevious<CR>|" go to previous line in location list
+nnoremap ]L :lnfile<CR>|" go to next file in location list
+nnoremap [L :lpfile<CR>|" go to previous file in location list
 
 " clipboard
 if !has('clipboard') && executable('clip.exe')
