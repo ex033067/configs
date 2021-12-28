@@ -1,0 +1,31 @@
+{
+    "type": "phrase",
+    "description": "at\u00e9",
+    "modes": [
+        1
+    ],
+    "usageCount": 0,
+    "prompt": false,
+    "omitTrigger": false,
+    "matchCase": true,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [
+            "ateh"
+        ],
+        "backspace": true,
+        "ignoreCase": true,
+        "immediate": false,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [],
+        "hotKey": null
+    },
+    "filter": {
+        "regex": null,
+        "isRecursive": false
+    },
+    "sendMode": "kb"
+}

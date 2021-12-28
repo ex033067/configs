@@ -1,0 +1,1 @@
+lgrep --exclude=tests -r '<cursor>' ./*

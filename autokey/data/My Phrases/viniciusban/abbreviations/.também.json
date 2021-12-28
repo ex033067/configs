@@ -1,0 +1,31 @@
+{
+    "type": "phrase",
+    "description": "tamb\u00e9m",
+    "modes": [
+        1
+    ],
+    "usageCount": 4,
+    "prompt": false,
+    "omitTrigger": false,
+    "matchCase": true,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [
+            "tbm"
+        ],
+        "backspace": true,
+        "ignoreCase": true,
+        "immediate": false,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [],
+        "hotKey": null
+    },
+    "filter": {
+        "regex": null,
+        "isRecursive": false
+    },
+    "sendMode": "kb"
+}

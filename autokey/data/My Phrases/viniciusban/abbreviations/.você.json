@@ -1,0 +1,31 @@
+{
+    "type": "phrase",
+    "description": "voc\u00ea",
+    "modes": [
+        1
+    ],
+    "usageCount": 9,
+    "prompt": false,
+    "omitTrigger": false,
+    "matchCase": true,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [
+            "vc"
+        ],
+        "backspace": true,
+        "ignoreCase": true,
+        "immediate": true,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [],
+        "hotKey": null
+    },
+    "filter": {
+        "regex": null,
+        "isRecursive": false
+    },
+    "sendMode": "kb"
+}
