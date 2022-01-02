@@ -46,3 +46,6 @@ set-option -g display-panes-active-colour "brightwhite"
 
 # Search backwards for previous prompt. We have to escape the backslash too.
 run-shell 'tmux bind-key P copy-mode \\\; send -X search-backward "@${HOSTNAME_ALIAS:-$(hostname)}"'
+
+# Wait for window name before creating a new one
+bind C command-prompt "new-window -n '%%'"
