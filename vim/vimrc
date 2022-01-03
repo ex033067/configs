@@ -207,6 +207,21 @@ nnoremap <leader>o :setlocal
 
 
 
+" Abbreviations: {{{1
+" ==============================================================================
+
+cnoreabbrev lgrep\ lgrep -r./*<Left><Left><Left>
+cnoreabbrev lgrepnt\ lgrep lgrep --exclude=tests -r./*<Left><Left><Left>
+
+
+
+
+
+
+
+
+
+
 " Functions: {{{1
 " ==============================================================================
 
@@ -393,6 +408,11 @@ augroup aug_filetype_python_mappings
     autocmd FileType python onoremap <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
     autocmd FileType python xnoremap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
     autocmd FileType python onoremap <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
+augroup END |" 2}}}
+
+augroup aug_filetype_python_abbrev
+    " {{{2
+    autocmd FileType python inoreabbrev <buffer> logi\ logger.info(f"{base_log} -")<Left><Left>
 augroup END |" 2}}}
 
 augroup aug_filetype_python_testing
