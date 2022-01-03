@@ -164,9 +164,12 @@ nnoremap [L :lpfile<CR>|" go to previous file in location list
 
 " clipboard
 if !has('clipboard') && executable('clip.exe')
-    vnoremap <leader>y "sy:call system('clip.exe', @s)<CR>|" Copy to Windows clipboard under WSL
+    " Copy to Windows clipboard under WSL
+    vnoremap <leader>y "sy:call system('clip.exe', @s)<CR>|" Copy visual selection
+    nnoremap <leader>y% :let @s=expand("%")<CR>:call system('clip.exe', @s)<CR>|" Copy current filename
 else
     vnoremap <leader>y "+y
+    nnoremap <leader>y% :let @+=expand("%")<CR>
 endif
 
 " git
