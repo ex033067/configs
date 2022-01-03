@@ -5,13 +5,13 @@
     "modes": [
         1
     ],
-    "usageCount": 9,
+    "usageCount": 11,
     "prompt": false,
     "omitTrigger": false,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "\\refcomm\\"
+            "refcomm\\"
         ],
         "backspace": true,
         "ignoreCase": false,

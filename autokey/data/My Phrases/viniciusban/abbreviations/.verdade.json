@@ -6,7 +6,7 @@
     ],
     "usageCount": 8,
     "prompt": false,
-    "omitTrigger": true,
+    "omitTrigger": false,
     "matchCase": true,
     "showInTrayMenu": false,
     "abbreviation": {

@@ -5,13 +5,13 @@
     "modes": [
         1
     ],
-    "usageCount": 0,
+    "usageCount": 1,
     "prompt": false,
     "omitTrigger": false,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "\\time\\"
+            "time\\"
         ],
         "backspace": true,
         "ignoreCase": false,

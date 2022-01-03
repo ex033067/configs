@@ -4,14 +4,14 @@
     "modes": [
         1
     ],
-    "usageCount": 21,
+    "usageCount": 23,
     "prompt": false,
     "omitTrigger": true,
     "matchCase": false,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "\\code\\"
+            "code\\"
         ],
         "backspace": true,
         "ignoreCase": false,

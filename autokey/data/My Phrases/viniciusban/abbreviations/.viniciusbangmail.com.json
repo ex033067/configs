@@ -4,18 +4,18 @@
     "modes": [
         1
     ],
-    "usageCount": 1,
+    "usageCount": 7,
     "prompt": false,
     "omitTrigger": false,
     "matchCase": true,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "email@\\"
+            "@\\"
         ],
         "backspace": true,
         "ignoreCase": true,
-        "immediate": false,
+        "immediate": true,
         "triggerInside": false,
         "wordChars": "[\\w]"
     },

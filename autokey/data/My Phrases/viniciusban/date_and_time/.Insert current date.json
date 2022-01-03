@@ -11,7 +11,7 @@
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "\\today\\"
+            "today\\"
         ],
         "backspace": true,
         "ignoreCase": false,

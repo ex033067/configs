@@ -1,22 +1,22 @@
 {
-    "type": "script",
-    "description": "Insert current date and time",
-    "store": {},
+    "type": "phrase",
+    "description": "kubectl get pods",
     "modes": [
         1
     ],
-    "usageCount": 17,
+    "usageCount": 7,
     "prompt": false,
     "omitTrigger": false,
+    "matchCase": false,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "now\\"
+            "kgp\\"
         ],
         "backspace": true,
         "ignoreCase": false,
-        "immediate": false,
-        "triggerInside": false,
+        "immediate": true,
+        "triggerInside": true,
         "wordChars": "[\\w]"
     },
     "hotkey": {
@@ -26,5 +26,6 @@
     "filter": {
         "regex": null,
         "isRecursive": false
-    }
+    },
+    "sendMode": "kb"
 }

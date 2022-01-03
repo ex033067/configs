@@ -4,14 +4,14 @@
     "modes": [
         1
     ],
-    "usageCount": 6,
+    "usageCount": 7,
     "prompt": false,
     "omitTrigger": false,
     "matchCase": false,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "\\dcu\\"
+            "dcu\\"
         ],
         "backspace": true,
         "ignoreCase": false,

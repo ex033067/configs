@@ -4,14 +4,14 @@
     "modes": [
         1
     ],
-    "usageCount": 14,
+    "usageCount": 26,
     "prompt": false,
     "omitTrigger": false,
     "matchCase": false,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "\\tn\\"
+            "tm\\"
         ],
         "backspace": true,
         "ignoreCase": false,

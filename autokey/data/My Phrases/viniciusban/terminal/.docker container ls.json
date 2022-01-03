@@ -1,21 +1,21 @@
 {
-    "type": "script",
-    "description": "Insert current date and time",
-    "store": {},
+    "type": "phrase",
+    "description": "docker container ls",
     "modes": [
         1
     ],
-    "usageCount": 17,
+    "usageCount": 1,
     "prompt": false,
     "omitTrigger": false,
+    "matchCase": false,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "now\\"
+            "dls\\"
         ],
         "backspace": true,
         "ignoreCase": false,
-        "immediate": false,
+        "immediate": true,
         "triggerInside": false,
         "wordChars": "[\\w]"
     },
@@ -26,5 +26,6 @@
     "filter": {
         "regex": null,
         "isRecursive": false
-    }
+    },
+    "sendMode": "kb"
 }

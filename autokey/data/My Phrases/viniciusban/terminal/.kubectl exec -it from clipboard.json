@@ -1,17 +1,17 @@
 {
-    "type": "phrase",
-    "description": "cd ~/src/Openco/",
+    "type": "script",
+    "description": "kubectl exec -it from clipboard",
+    "store": {},
     "modes": [
         1
     ],
-    "usageCount": 10,
+    "usageCount": 35,
     "prompt": false,
     "omitTrigger": false,
-    "matchCase": false,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "\\cdo\\"
+            "kex\\"
         ],
         "backspace": true,
         "ignoreCase": false,
@@ -26,6 +26,5 @@
     "filter": {
         "regex": null,
         "isRecursive": false
-    },
-    "sendMode": "kb"
+    }
 }
