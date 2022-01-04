@@ -7,7 +7,7 @@
 # Open "pyenv_global_command.example" file for example of pyenv global command.
 
 
-__aliases() {
+function __aliases() {
 	alias ..='cd ..'
 	alias .2='cd ../..'
 	alias .3='cd ../../..'
@@ -36,12 +36,12 @@ __aliases() {
 }
 
 
-__start_wsl_services() {
+function __start_wsl_services() {
 	__start_ssh_agent
 }
 
 
-__start_ssh_agent() {
+function __start_ssh_agent() {
 	if [[ -n "$TMUX" ]]; then
 		return
 	fi
@@ -67,7 +67,7 @@ __start_ssh_agent() {
 }
 
 
-__variables() {
+function __variables() {
 	[[ -z "${OSNAME}" ]] && export OSNAME="$(uname)"
 	[[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
 	export HISTCONTROL=ignoreboth
@@ -122,7 +122,7 @@ __variables() {
 }
 
 
-__ps1_virtualenv() {
+function __ps1_virtualenv() {
 	if [[ -z "$VIRTUAL_ENV" ]]; then
 		return
 	fi
@@ -139,7 +139,7 @@ __ps1_virtualenv() {
 	return
 }
 
-__ps1_git() {
+function __ps1_git() {
 	# Show git branch and indicators about status:
 	#   - "+" means there are staged changes
 	#   - "!" means there are unstaged changes
@@ -199,14 +199,14 @@ __ps1_git() {
 }
 
 
-__main() {
+function __main() {
 	set -o vi
 	__variables
 	__aliases
 	[[ -n "$WSL_DISTRO_NAME" ]] && __start_wsl_services || true
 }
 
-loadenv() {
+function loadenv() {
 	local verbose=
 	local env_filename=
 	while [[ -n "$1" ]]; do
@@ -273,12 +273,12 @@ fi
 ## functions instead of scripts
 ######################################
 
-youtube-dl-mp3()
+function youtube-dl-mp3()
 {
 	youtube-dl --extract-audio --audio-format mp3 "$1"
 }
 
-converte-pdf-to-jpg()
+function converte-pdf-to-jpg()
 {
 	# This script needs imagemagick: `sudo apt-get install imagemagick`
 	fname="$1"
@@ -296,13 +296,13 @@ converte-pdf-to-jpg()
 
 declare -A _log_levels=([NOTSET]=0 [DEBUG]=1 [INFO]=2 [WARNING]=3 [ERROR]=4 [CRITICAL]=5)
 declare -i _log_level=3
-set_log_level()
+function set_log_level()
 {
 	level="${1:-INFO}"
 	_log_level="${_log_levels[$level]}"
 }
 
-set_log_destination()
+function set_log_destination()
 {
 	# TODO document how to set the log destination
 	_log_destination="$1"
@@ -314,16 +314,16 @@ set_log_destination()
 	fi
 }
 
-log_debug()    { (( _log_level >= ${_log_levels[DEBUG]} ))    && echo "$(date +'%F %T') DEBUG    $*" >>${_log_destination};  }
-log_info()     { (( _log_level >= ${_log_levels[INFO]} ))     && echo "$(date +'%F %T') INFO     $*" >>${_log_destination};  }
-log_warning()  { (( _log_level >= ${_log_levels[WARNING]} ))  && echo "$(date +'%F %T') WARNING  $*" >>${_log_destination};  }
-log_error()    { (( _log_level >= ${_log_levels[ERROR]} ))    && echo "$(date +'%F %T') ERROR    $*" >>${_log_destination};  }
-log_critical() { (( _log_level >= ${_log_levels[CRITICAL]} )) && echo "$(date +'%F %T') CRITICAL $*" >>${_log_destination};  }
+function log_debug()    { (( _log_level >= ${_log_levels[DEBUG]} ))    && echo "$(date +'%F %T') DEBUG    $*" >>${_log_destination};  }
+function log_info()     { (( _log_level >= ${_log_levels[INFO]} ))     && echo "$(date +'%F %T') INFO     $*" >>${_log_destination};  }
+function log_warning()  { (( _log_level >= ${_log_levels[WARNING]} ))  && echo "$(date +'%F %T') WARNING  $*" >>${_log_destination};  }
+function log_error()    { (( _log_level >= ${_log_levels[ERROR]} ))    && echo "$(date +'%F %T') ERROR    $*" >>${_log_destination};  }
+function log_critical() { (( _log_level >= ${_log_levels[CRITICAL]} )) && echo "$(date +'%F %T') CRITICAL $*" >>${_log_destination};  }
 
 # functions for logging command output
-log_debug_file()   { (( _log_level >= ${_log_levels[DEBUG]} ))   && [[ -f $1 ]] && echo "=== command output start ===" && cat "$1" && echo "=== command output end ==="; }
+function log_debug_file()   { (( _log_level >= ${_log_levels[DEBUG]} ))   && [[ -f $1 ]] && echo "=== command output start ===" && cat "$1" && echo "=== command output end ==="; }
 
-# log()
+# function log()
 # {
 # 	local command="$1"
 # 	shift
@@ -333,13 +333,13 @@ log_debug_file()   { (( _log_level >= ${_log_levels[DEBUG]} ))   && [[ -f $1 ]] 
 # 	echo "$1" >>$_LOGGER_FILENAME
 # }
 
-# logger-init()
+# function logger-init()
 # {
 # 	export _LOGGER_FILENAME="$1"
 # 	> $_LOGGER_FILENAME
 # }
 
-# logger-show()
+# function logger-show()
 # {
 # 	cat $_LOGGER_FILENAME
 # }
@@ -348,7 +348,7 @@ log_debug_file()   { (( _log_level >= ${_log_levels[DEBUG]} ))   && [[ -f $1 ]] 
 # Manage virtualenvs
 # ------------------------------------
 
-venv()
+function venv()
 {
 	local command="$1"
 	shift
@@ -369,7 +369,7 @@ venv()
 	fi
 }
 
-__venv_help()
+function __venv_help()
 {
 	local funcname="$1"
 	cat <<-_ENDOFTEXT_
@@ -394,7 +394,7 @@ __venv_help()
 	_ENDOFTEXT_
 }
 
-__venv_create_virtualenv()
+function __venv_create_virtualenv()
 {
 	local default_dirname=venv
 	local dirname=
@@ -432,7 +432,7 @@ __venv_create_virtualenv()
 	venv shell
 }
 
-__venv_shell()
+function __venv_shell()
 {
 	if __venv__is_virtualenv_forcibly_unmanaged; then
 		echo 'Running through forcibly unmanaged virtualenv'
@@ -458,7 +458,7 @@ __venv_shell()
 	)
 }
 
-__venv_run()
+function __venv_run()
 {
 	local command_to_run="$@"
 	if __venv__is_virtualenv_forcibly_unmanaged; then
@@ -485,23 +485,23 @@ __venv_run()
 	)
 }
 
-__venv__is_virtualenv_managed_by_pipenv()
+function __venv__is_virtualenv_managed_by_pipenv()
 {
 	[[ -f Pipfile ]]
 }
 
-__venv__is_virtualenv_managed_by_poetry()
+function __venv__is_virtualenv_managed_by_poetry()
 {
 	poetry env info -q
 }
 
-__venv__is_virtualenv_forcibly_unmanaged()
+function __venv__is_virtualenv_forcibly_unmanaged()
 {
 	local path=$(__venv__get_unmanaged_virtualenv_location)
 	[[ -f "${path}/.virtualenv_forcibly_unmanaged" ]]
 }
 
-__venv__who_manages_the_virtualenv()
+function __venv__who_manages_the_virtualenv()
 {
 	if __venv__is_virtualenv_forcibly_unmanaged; then
 		echo 'unmanaged (forced)'
@@ -514,7 +514,7 @@ __venv__who_manages_the_virtualenv()
 	fi
 }
 
-__venv__get_unmanaged_virtualenv_location()
+function __venv__get_unmanaged_virtualenv_location()
 {
 	local possible_dirs='venv .venv .virtualenv .sandbox'
 	for dir in ${possible_dirs}; do
@@ -525,7 +525,7 @@ __venv__get_unmanaged_virtualenv_location()
 	done
 }
 
-__make_absolute_path()
+function __make_absolute_path()
 {
 	local path="$1"
 	if [[ -z "$path" ]]; then
@@ -541,7 +541,7 @@ __make_absolute_path()
 	echo "${PWD}/${path}"  # Make the path absolute.
 }
 
-__venv__get_virtualenv_location()
+function __venv__get_virtualenv_location()
 {
 	local location=
 	if __venv__is_virtualenv_forcibly_unmanaged; then
@@ -560,7 +560,7 @@ __venv__get_virtualenv_location()
 	echo "$location"
 }
 
-__venv__get_virtualenv_info()
+function __venv__get_virtualenv_info()
 {
 	local option="$1"
 	if [[ "$option" == '--path' ]]; then
@@ -582,7 +582,7 @@ __venv__get_virtualenv_info()
 	_ENDOFTEXT_
 }
 
-__venv_prepare_environment_for_virtualenv()
+function __venv_prepare_environment_for_virtualenv()
 {
 	local location=
 	location=$(venv info --path)
