@@ -492,6 +492,12 @@ __venv__is_virtualenv_managed_by_poetry()
 	poetry env info -q
 }
 
+__venv__is_virtualenv_forcibly_unmanaged()
+{
+	local path=$(__venv__get_unmanaged_virtualenv_location)
+	[[ -f "${path}/.virtualenv_forcibly_unmanaged" ]]
+}
+
 __venv__who_manages_the_virtualenv()
 {
 	if __venv__is_virtualenv_managed_by_pipenv; then
