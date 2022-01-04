@@ -500,7 +500,9 @@ __venv__is_virtualenv_forcibly_unmanaged()
 
 __venv__who_manages_the_virtualenv()
 {
-	if __venv__is_virtualenv_managed_by_pipenv; then
+	if __venv__is_virtualenv_forcibly_unmanaged; then
+		echo 'unmanaged (forced)'
+	elif __venv__is_virtualenv_managed_by_pipenv; then
 		echo pipenv
 	elif __venv__is_virtualenv_managed_by_poetry; then
 		echo poetry
