@@ -116,6 +116,7 @@ nnoremap <leader>( :RainbowToggle<CR>|" Colorize parentheses, brackets, etc.
 nnoremap <leader>) :QuickScopeToggle<CR>|" Show/hide quick scope
 nnoremap <leader>* :set hlsearch<bar>:let @/=expand('<cword>').'\c'<CR>|" Highlight word under cursor without moving it
 nnoremap <leader><leader> :setlocal cursorline!<CR>
+nnoremap <silent> <leader>< :setlocal list!<CR>:set list?<CR>
 
 " editing
 inoremap KJ <C-Bslash><C-N>|" back to normal mode
