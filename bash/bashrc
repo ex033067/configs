@@ -507,11 +507,11 @@ __venv__who_manages_the_virtualenv()
 	elif __venv__is_virtualenv_managed_by_poetry; then
 		echo poetry
 	else
-		echo pip
+		echo unmanaged
 	fi
 }
 
-__venv__get_pip_virtualenv_location()
+__venv__get_unmanaged_virtualenv_location()
 {
 	local possible_dirs='venv .venv .virtualenv .sandbox'
 	for dir in ${possible_dirs}; do
@@ -546,7 +546,7 @@ __venv__get_virtualenv_location()
 	elif __venv__is_virtualenv_managed_by_poetry; then
 		location=$(poetry env info --path)
 	else
-		location=$(__venv__get_pip_virtualenv_location)
+		location=$(__venv__get_unmanaged_virtualenv_location)
 	fi
 	location=$(__make_absolute_path $location)
 	if [[ -z "$location" ]]; then
