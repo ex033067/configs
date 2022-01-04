@@ -431,13 +431,13 @@ __venv_create_virtualenv()
 
 __venv_shell()
 {
-	if __venv__is_virtualenv_managed_by_pipenv; then
+	if __venv__is_virtualenv_forcibly_unmanaged; then
+		echo 'Running through forcibly unmanaged virtualenv'
+	elif __venv__is_virtualenv_managed_by_pipenv; then
 		echo 'Running through pipenv shell'
 		pipenv shell
 		return
-	fi
-
-	if __venv__is_virtualenv_managed_by_poetry; then
+	elif __venv__is_virtualenv_managed_by_poetry; then
 		echo 'Running through poetry shell'
 		poetry shell
 		return
