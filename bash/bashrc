@@ -541,7 +541,9 @@ __make_absolute_path()
 __venv__get_virtualenv_location()
 {
 	local location=
-	if __venv__is_virtualenv_managed_by_pipenv; then
+	if __venv__is_virtualenv_forcibly_unmanaged; then
+		location=$(__venv__get_unmanaged_virtualenv_location)
+	elif __venv__is_virtualenv_managed_by_pipenv; then
 		location=$(pipenv --venv 2> /dev/null)
 	elif __venv__is_virtualenv_managed_by_poetry; then
 		location=$(poetry env info --path)
