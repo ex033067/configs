@@ -132,7 +132,7 @@ __ps1_virtualenv() {
 	elif [[ -n "$PIPENV_ACTIVE" ]]; then
 		tool='pipenv'
 	else
-		tool='pip'
+		tool='venv'
 	fi
 
 	PS1_VIRTUAL_ENV="${tool}:$(basename $VIRTUAL_ENV)"
