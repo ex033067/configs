@@ -411,13 +411,27 @@ __venv_create_virtualenv()
 	local dirname=
 	local force_unmanaged=
 
-	if [[ "$1" = "--force-unmanaged" ]]; then
-		dirname="$2"
-		force_unmanaged=$1
-	else
-		dirname="$1"
-		force_unmanaged=$2
-	fi
+	while [[ -n "$1" ]]; do
+		if [[ ! "$1" =~ ^- ]]; then
+			# argument does not start with a dash
+			if [[ -n "$dirname" ]]; then
+				echo 'Another dirname? Invalid argument. Aborting.'
+				return 1
+			fi
+			dirname="$1"
+			shift
+			continue
+		fi
+
+		if [[ "$1" = "--force-unmanaged" ]]; then
+			force_unmanaged=1
+		else
+			echo "Invalid option: ${1}. Aborting."
+			return 1
+		fi
+
+		shift
+	done
 
 	dirname=${dirname:-${default_dirname}}
 
