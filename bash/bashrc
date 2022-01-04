@@ -122,6 +122,19 @@ function __variables() {
 }
 
 
+function __local_customizations() {
+	# Use local customization inside ~/bashrc.d directory.
+	if [ -d ~/bashrc.d ]; then
+		for fname in ~/bashrc.d/*.bash; do
+			if [[ -r $fname ]]; then
+				. $fname
+			fi
+		done
+		unset fname
+	fi
+}
+
+
 function __ps1_virtualenv() {
 	if [[ -z "$VIRTUAL_ENV" ]]; then
 		return
@@ -203,7 +216,11 @@ function __main() {
 	set -o vi
 	__variables
 	__aliases
+	__local_customizations
+
 	[[ -n "$WSL_DISTRO_NAME" ]] && __start_wsl_services || true
+	[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+	# [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 }
 
 function loadenv() {
@@ -254,19 +271,6 @@ function loadenv() {
 		export $_key="$_computed_value"
 	done < <(grep '^[a-zA-Z]' ${env_filename})
 }
-
-# [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-
-# Use local customization inside ~/bashrc.d directory.
-if [ -d ~/bashrc.d ]; then
-	for fname in ~/bashrc.d/*.bash; do
-		if [[ -r $fname ]]; then
-			. $fname
-		fi
-	done
-	unset fname
-fi
 
 
 ######################################
