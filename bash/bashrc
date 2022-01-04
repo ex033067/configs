@@ -381,9 +381,9 @@ function __venv_help()
 		
 		Usage: ${funcname} <command> [<arg>]
 		Commands:
-		  create [<dirname>] [--force-unmanaged]
+		  create [<dirname>] [--force-native]
 		      Create and activate virtualenv <dirname> (default is "venv") inside current directory.
-		      Optionally you can command venv to ignore a Pipfile or pyproject.toml and let the virtualenv unmanaged.
+		      Optionally you can command venv to ignore a Pipfile or pyproject.toml and just use the native virtualenv.
 		      Example: \$ ${funcname} create .sandbox
 		  run <command>
 		      Run <command> inside the virtualenv. Exit the virtualenv when finished.
@@ -402,7 +402,7 @@ function __venv_create_virtualenv()
 {
 	local default_dirname=venv
 	local dirname=
-	local force_unmanaged=
+	local force_native_venv=
 
 	while [[ -n "$1" ]]; do
 		if [[ ! "$1" =~ ^- ]]; then
@@ -416,8 +416,8 @@ function __venv_create_virtualenv()
 			continue
 		fi
 
-		if [[ "$1" = "--force-unmanaged" ]]; then
-			force_unmanaged=1
+		if [[ "$1" = "--force-native" ]]; then
+			force_native_venv=1
 		else
 			echo "Invalid option: ${1}. Aborting."
 			return 1
@@ -429,8 +429,8 @@ function __venv_create_virtualenv()
 	dirname=${dirname:-${default_dirname}}
 
 	python -m venv "${PWD}/${dirname}"
-	if [[ -n "$force_unmanaged" ]]; then
-		echo 'virtualenv forcibly unmanaged' > "${PWD}/${dirname}/.virtualenv_forcibly_unmanaged"
+	if [[ -n "$force_native_venv" ]]; then
+		echo 'virtualenv forcibly native' > "${PWD}/${dirname}/.virtualenv_forcibly_native"
 	fi
 	venv info
 	venv shell
@@ -438,8 +438,8 @@ function __venv_create_virtualenv()
 
 function __venv_shell()
 {
-	if __venv__is_virtualenv_forcibly_unmanaged; then
-		echo 'Running through forcibly unmanaged virtualenv'
+	if __venv__is_virtualenv_forcibly_native; then
+		echo 'Running through forcibly native virtualenv'
 	elif __venv__is_virtualenv_managed_by_pipenv; then
 		echo 'Running through pipenv shell'
 		pipenv shell
@@ -465,8 +465,8 @@ function __venv_shell()
 function __venv_run()
 {
 	local command_to_run="$@"
-	if __venv__is_virtualenv_forcibly_unmanaged; then
-		echo 'Running through forcibly unmanaged virtualenv'
+	if __venv__is_virtualenv_forcibly_native; then
+		echo 'Running through forcibly native virtualenv'
 	elif __venv__is_virtualenv_managed_by_pipenv; then
 		echo 'Running through pipenv run'
 		pipenv run $command_to_run
@@ -499,26 +499,26 @@ function __venv__is_virtualenv_managed_by_poetry()
 	poetry env info -q
 }
 
-function __venv__is_virtualenv_forcibly_unmanaged()
+function __venv__is_virtualenv_forcibly_native()
 {
-	local path=$(__venv__get_unmanaged_virtualenv_location)
-	[[ -f "${path}/.virtualenv_forcibly_unmanaged" ]]
+	local path=$(__venv__get_native_virtualenv_location)
+	[[ -f "${path}/.virtualenv_forcibly_native" ]]
 }
 
 function __venv__who_manages_the_virtualenv()
 {
-	if __venv__is_virtualenv_forcibly_unmanaged; then
-		echo 'unmanaged (forced)'
+	if __venv__is_virtualenv_forcibly_native; then
+		echo 'Python native venv (forced)'
 	elif __venv__is_virtualenv_managed_by_pipenv; then
 		echo pipenv
 	elif __venv__is_virtualenv_managed_by_poetry; then
 		echo poetry
 	else
-		echo unmanaged
+		echo Python native venv
 	fi
 }
 
-function __venv__get_unmanaged_virtualenv_location()
+function __venv__get_native_virtualenv_location()
 {
 	local possible_dirs='venv .venv .virtualenv .sandbox'
 	for dir in ${possible_dirs}; do
@@ -548,14 +548,14 @@ function __make_absolute_path()
 function __venv__get_virtualenv_location()
 {
 	local location=
-	if __venv__is_virtualenv_forcibly_unmanaged; then
-		location=$(__venv__get_unmanaged_virtualenv_location)
+	if __venv__is_virtualenv_forcibly_native; then
+		location=$(__venv__get_native_virtualenv_location)
 	elif __venv__is_virtualenv_managed_by_pipenv; then
 		location=$(pipenv --venv 2> /dev/null)
 	elif __venv__is_virtualenv_managed_by_poetry; then
 		location=$(poetry env info --path)
 	else
-		location=$(__venv__get_unmanaged_virtualenv_location)
+		location=$(__venv__get_native_virtualenv_location)
 	fi
 	location=$(__make_absolute_path $location)
 	if [[ -z "$location" ]]; then
