@@ -388,8 +388,9 @@ __venv_help()
 		
 		Usage: ${funcname} <command> [<arg>]
 		Commands:
-		  create [<dirname>]
+		  create [<dirname>] [--force-unmanaged]
 		      Create and activate virtualenv <dirname> (default is "venv") inside current directory.
+		      Optionally you can command venv to ignore a Pipfile or pyproject.toml and let the virtualenv unmanaged.
 		      Example: \$ ${funcname} create .sandbox
 		  run <command>
 		      Run <command> inside the virtualenv. Exit the virtualenv when finished.
@@ -406,11 +407,24 @@ __venv_help()
 
 __venv_create_virtualenv()
 {
-	local dirname="$1"
-	if [[ -z "$dirname" ]]; then
-		dirname='venv'
+	local default_dirname=venv
+	local dirname=
+	local force_unmanaged=
+
+	if [[ "$1" = "--force-unmanaged" ]]; then
+		dirname="$2"
+		force_unmanaged=$1
+	else
+		dirname="$1"
+		force_unmanaged=$2
 	fi
+
+	dirname=${dirname:-${default_dirname}}
+
 	python -m venv "${PWD}/${dirname}"
+	if [[ -n "$force_unmanaged" ]]; then
+		echo 'virtualenv forcibly unmanaged' > "${PWD}/${dirname}/.virtualenv_forcibly_unmanaged"
+	fi
 	venv info
 	venv shell
 }
