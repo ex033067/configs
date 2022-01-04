@@ -135,18 +135,7 @@ __ps1_virtualenv() {
 		tool='pip'
 	fi
 
-	if [[ "$VIRTUAL_ENV" =~ "$PWD" ]]; then
-		possible_dirnames='./venv ./.venv ./.virtualenv ./.sandbox'
-		for inline_dirname in ${possible_dirnames}; do
-			if [[ -d $inline_dirname ]]; then
-				break
-			fi
-		done
-	else
-		inline_dirname=
-	fi
-
-	PS1_VIRTUAL_ENV="${tool}${inline_dirname:+:${inline_dirname}}"
+	PS1_VIRTUAL_ENV="${tool}:$(basename $VIRTUAL_ENV)"
 	return
 }
 
