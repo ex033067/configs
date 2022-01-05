@@ -439,15 +439,17 @@ function __venv_create_virtualenv()
 function __venv_shell()
 {
 	if __venv__is_virtualenv_forcibly_native; then
-		echo 'Running through forcibly native virtualenv'
+		echo 'Launching forcibly native virtualenv shell'
 	elif __venv__is_virtualenv_managed_by_pipenv; then
-		echo 'Running through pipenv shell'
+		echo 'Launching pipenv shell'
 		pipenv shell
 		return
 	elif __venv__is_virtualenv_managed_by_poetry; then
-		echo 'Running through poetry shell'
+		echo 'Launching poetry shell'
 		poetry shell
 		return
+	else
+		echo 'Launching native virtualenv shell'
 	fi
 
 	(
