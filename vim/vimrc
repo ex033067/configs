@@ -215,7 +215,7 @@ nnoremap <leader>o :setlocal
 " ==============================================================================
 
 cnoreabbrev lgrep\ lgrep -r./*<Left><Left><Left>
-cnoreabbrev lgrepnt\ lgrep lgrep --exclude=tests -r./*<Left><Left><Left>
+cnoreabbrev lgrepnt\ lgrep --exclude-dir=tests -r./*<Left><Left><Left>
 
 
 
