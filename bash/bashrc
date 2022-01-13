@@ -80,7 +80,7 @@ function __variables() {
 	export PS1_COLOR_RESET="\[\033[m\]"
 
 	export PS0="current time: \D{%F %T}\n"
-	export PS1="${PS1_COLOR_RESET}> ${PS1_COLOR_ERROR}\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo ' '\${_exit_status}' ')${PS1_COLOR_DEFAULT}\$(__ps1_virtualenv; echo \${PS1_VIRTUAL_ENV:+'('\${PS1_VIRTUAL_ENV}') '})\$(__ps1_git ; echo \${PS1_GIT:+'git_branch:'\${PS1_GIT}' '})\w \D{%a %T}\${HOSTNAME_ALIAS:+ @\${HOSTNAME_ALIAS}} \$${PS1_COLOR_RESET} "
+	export PS1="${PS1_COLOR_RESET}${PS1_COLOR_ERROR}\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo '     '\${_exit_status}'     ')${PS1_COLOR_RESET}${PS1_COLOR_DEFAULT}\${HOSTNAME_ALIAS:+ @\${HOSTNAME_ALIAS} }\D{%a %T} \w ${PS1_COLOR_RESET}${PS1_COLOR_GIT}\$(__ps1_git ; echo \${PS1_GIT:+' git:'\${PS1_GIT}' '})${PS1_COLOR_RESET}${PS1_COLOR_VIRTUALENV}\$(__ps1_virtualenv; echo \${PS1_VIRTUAL_ENV:+' ('\${PS1_VIRTUAL_ENV}') '})${PS1_COLOR_RESET}\$ "
 
 	[[ -n "$WSL_DISTRO_NAME" ]] && export DISPLAY=$(grep '^nameserver' /etc/resolv.conf | cut -d ' ' -f2):0.0
 	[[ "${OSNAME}" = "Darwin" ]] && export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
