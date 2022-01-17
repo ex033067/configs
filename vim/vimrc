@@ -429,6 +429,7 @@ augroup END |" 2}}}
 
 augroup aug_filetype_python_mappings
     " {{{2
+    au!
     " Particular way to "make"
     autocmd FileType python nnoremap <silent> <buffer> <leader>m
         \ :update<CR>
@@ -460,11 +461,13 @@ augroup END |" 2}}}
 
 augroup aug_filetype_python_abbrev
     " {{{2
+    au!
     autocmd FileType python inoreabbrev <buffer> logi\ logger.info(f"{base_log} -")<Left><Left>
 augroup END |" 2}}}
 
 augroup aug_filetype_python_testing
     " {{{2
+    au!
     " initialize global test variables
     autocmd FileType python let $VIM_TEST_COMMAND =
         \     (exists('$VIM_TEST_COMMAND')) ? $VIM_TEST_COMMAND :
@@ -553,6 +556,7 @@ augroup END |" 2}}}
 
 augroup aug_filetype_python_functions
     " {{{2
+    au!
     function! Ban_Run(command)
         " {{{3
         " Run an external command using internal or external terminal
