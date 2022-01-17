@@ -472,6 +472,8 @@ augroup aug_filetype_python_testing
     autocmd FileType python let $VIM_TEST_COMMAND =
         \     (exists('$VIM_TEST_COMMAND')) ? $VIM_TEST_COMMAND :
         \         (executable('pytest')) ? 'pytest' : ''
+    autocmd FileType python let $VIM_TEST_OPTIONS =
+        \ (exists('$VIM_TEST_OPTIONS')) ? $VIM_TEST_OPTIONS : ''
     autocmd FileType python let $VIM_TEST_TARGET =
         \ (exists('$VIM_TEST_TARGET')) ? $VIM_TEST_TARGET : ''
     autocmd FileType python let $VIM_TEST_FILENAME_STYLE =
@@ -502,6 +504,8 @@ augroup aug_filetype_python_testing
     "   - python -m unittest
     autocmd FileType python nnoremap <localleader>tC
         \ :let $VIM_TEST_COMMAND='<c-r>=$VIM_TEST_COMMAND<cr>'
+    autocmd FileType python nnoremap <localleader>tO
+        \ :let $VIM_TEST_OPTIONS='<c-r>=$VIM_TEST_OPTIONS<cr>'
     autocmd FileType python nnoremap <localleader>tS
         \ :let $VIM_TEST_FILENAME_STYLE='<c-r>=$VIM_TEST_FILENAME_STYLE<cr>'
 
