@@ -441,7 +441,7 @@ augroup aug_filetype_python_testing
         \ :update<bar>
         \ :let _command=g:test_command .' '. g:test_target<bar>
         \ :execute '!tmux send-keys -t .+ -l "run-with-time '. _command .'"'<bar>
-        \ :execute '!tmux send-keys -t .+ Enter'<bar>
+        \ :execute '!tmux send-keys -t .+ Enter'<CR><bar>
         \ :unlet _command<CR>
         \ |" Run tests in tmux next pane
 
