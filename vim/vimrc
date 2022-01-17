@@ -214,8 +214,8 @@ nnoremap <leader>o :setlocal
 " Abbreviations: {{{1
 " ==============================================================================
 
-cnoreabbrev lgrep\ lgrep -r./*<Left><Left><Left>
-cnoreabbrev lgrepnt\ lgrep --exclude-dir=tests -r./*<Left><Left><Left>
+cnoreabbrev lgrep\ lgrep --exclude-dir=tests -r./*<Left><Left><Left>
+cnoreabbrev lgrepwt\ lgrep -r./*<Left><Left><Left>
 
 
 
