@@ -427,6 +427,7 @@ augroup aug_filetype_python_testing
         \     (exists('$VIM_TEST_COMMAND')) ? $VIM_TEST_COMMAND :
         \         (executable('pytest')) ? 'pytest' : ''
     autocmd FileType python let g:test_target = (exists('g:test_target')) ? g:test_target : ''
+    autocmd FileType python let g:test_filename_style = (exists('g:test_filename_style')) ? g:test_filename_style : 'pytest'
 
     " autocmd FileType python nnoremap t<CR> :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>|" Run tests in current vim session
     autocmd FileType python nnoremap t<CR>
@@ -454,6 +455,7 @@ augroup aug_filetype_python_testing
     "   - python manage.py test -v 2
     "   - python -m unittest
     autocmd FileType python nnoremap <localleader>tC :let g:test_command='<c-r>=g:test_command<cr>'
+    autocmd FileType python nnoremap <localleader>tS :let g:test_filename_style='<c-r>=g:test_filename_style<cr>'
 
     autocmd FileType python nnoremap <buffer> <localleader>tn :call BanPython_MakeValidPythonTestName() <CR>|" Make a test name from current line contents
 
@@ -559,6 +561,19 @@ augroup aug_filetype_python_functions
 
     function! BanPython_GetTestSeparators(command)
         " {{{3
+        if exists('g:test_filename_style')
+            if g:test_filename_style =~ 'pytest'
+                let path_separator = '/'
+                let expand_string = '%:.'
+                let class_separator = '::'
+            elseif g:test_filename_style =~ 'unittest'
+                let path_separator = '.'
+                let expand_string = '%:.:r'
+                let class_separator = '.'
+            endif
+            return [path_separator, class_separator, expand_string]
+        endif
+
         if a:command =~ 'unittest'
             let path_separator = '.'
             let expand_string = '%:.:r'
