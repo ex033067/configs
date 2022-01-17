@@ -422,17 +422,16 @@ augroup END |" 2}}}
 augroup aug_filetype_python_testing
     " {{{2
     " initialize global test variables
-    autocmd FileType python let g:test_command =
-        \ (exists('g:test_command')) ? g:test_command :
+    autocmd FileType python let $VIM_TEST_COMMAND =
         \     (exists('$VIM_TEST_COMMAND')) ? $VIM_TEST_COMMAND :
         \         (executable('pytest')) ? 'pytest' : ''
-    autocmd FileType python let g:test_target = (exists('g:test_target')) ? g:test_target : ''
-    autocmd FileType python let g:test_filename_style = (exists('g:test_filename_style')) ? g:test_filename_style : 'pytest'
+    autocmd FileType python let $VIM_TEST_TARGET = (exists('$VIM_TEST_TARGET')) ? $VIM_TEST_TARGET : ''
+    autocmd FileType python let $VIM_TEST_FILENAME_STYLE = (exists('$VIM_TEST_FILENAME_STYLE')) ? $VIM_TEST_FILENAME_STYLE : 'pytest'
 
     " autocmd FileType python nnoremap t<CR> :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>|" Run tests in current vim session
     autocmd FileType python nnoremap t<CR>
         \ :wall <bar>
-        \ :let _command = BanPython_BuildTestCommand(g:test_command, g:test_target)<bar>
+        \ :let _command = BanPython_BuildTestCommand($VIM_TEST_COMMAND, $VIM_TEST_TARGET)<bar>
         \ :execute Ban_Run('run-test '. _command)<bar>
         \ :unlet _command<CR>
         \ |" Run tests in current vim session
@@ -454,18 +453,18 @@ augroup aug_filetype_python_testing
     "   - pytest --pyargs
     "   - python manage.py test -v 2
     "   - python -m unittest
-    autocmd FileType python nnoremap <localleader>tC :let g:test_command='<c-r>=g:test_command<cr>'
-    autocmd FileType python nnoremap <localleader>tS :let g:test_filename_style='<c-r>=g:test_filename_style<cr>'
+    autocmd FileType python nnoremap <localleader>tC :let $VIM_TEST_COMMAND='<c-r>=$VIM_TEST_COMMAND<cr>'
+    autocmd FileType python nnoremap <localleader>tS :let $VIM_TEST_FILENAME_STYLE='<c-r>=$VIM_TEST_FILENAME_STYLE<cr>'
 
     autocmd FileType python nnoremap <buffer> <localleader>tn :call BanPython_MakeValidPythonTestName() <CR>|" Make a test name from current line contents
 
     " Mark targets
-    autocmd FileType python nnoremap <buffer> <localleader>ta :wall <CR>:call BanPython_SetAllSuiteAsTestTarget() <CR>:call BanPython_WriteTestTargetToEnvFile(g:test_target) <CR>:echo g:test_target. ' set as test target.'<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>tp :wall <CR>:call BanPython_SetCurrentPackageAsTestTarget(g:test_command) <CR>:call BanPython_WriteTestTargetToEnvFile(g:test_target) <CR>:echo g:test_target. ' set as test target.'<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>t% :wall <CR>:call BanPython_SetCurrentModuleAsTestTarget(g:test_command) <CR>:call BanPython_WriteTestTargetToEnvFile(g:test_target) <CR>:echo g:test_target. ' set as test target.'<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>tc :wall <CR>:call BanPython_SetCurrentClassAsTestTarget(g:test_command) <CR>:call BanPython_WriteTestTargetToEnvFile(g:test_target) <CR>:echo g:test_target. ' set as test target.'<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>tm :wall <CR>:call BanPython_SetCurrentMethodAsTestTarget(g:test_command) <CR>:call BanPython_WriteTestTargetToEnvFile(g:test_target) <CR>:echo g:test_target. ' set as test target.'<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>tf :wall <CR>:call BanPython_SetCurrentFunctionAsTestTarget(g:test_command) <CR>:call BanPython_WriteTestTargetToEnvFile(g:test_target) <CR>:echo g:test_target. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>ta :wall <CR>:call BanPython_SetAllSuiteAsTestTarget() <CR>:call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <CR>:echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>tp :wall <CR>:call BanPython_SetCurrentPackageAsTestTarget($VIM_TEST_COMMAND) <CR>:call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <CR>:echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>t% :wall <CR>:call BanPython_SetCurrentModuleAsTestTarget($VIM_TEST_COMMAND) <CR>:call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <CR>:echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>tc :wall <CR>:call BanPython_SetCurrentClassAsTestTarget($VIM_TEST_COMMAND) <CR>:call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <CR>:echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>tm :wall <CR>:call BanPython_SetCurrentMethodAsTestTarget($VIM_TEST_COMMAND) <CR>:call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <CR>:echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>tf :wall <CR>:call BanPython_SetCurrentFunctionAsTestTarget($VIM_TEST_COMMAND) <CR>:call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <CR>:echo $VIM_TEST_TARGET. ' set as test target.'<CR>
 
     " autocmd FileType python nnoremap <silent> <localleader>tr
     "     \ :let _curpos = getcurpos()<CR>
@@ -561,12 +560,12 @@ augroup aug_filetype_python_functions
 
     function! BanPython_GetTestSeparators(command)
         " {{{3
-        if exists('g:test_filename_style')
-            if g:test_filename_style =~ 'pytest'
+        if exists('$VIM_TEST_FILENAME_STYLE')
+            if $VIM_TEST_FILENAME_STYLE =~ 'pytest'
                 let path_separator = '/'
                 let expand_string = '%:.'
                 let class_separator = '::'
-            elseif g:test_filename_style =~ 'unittest'
+            elseif $VIM_TEST_FILENAME_STYLE =~ 'unittest'
                 let path_separator = '.'
                 let expand_string = '%:.:r'
                 let class_separator = '.'
@@ -598,38 +597,38 @@ augroup aug_filetype_python_functions
     endfunction |" 3}}}
 
     function! BanPython_SetAllSuiteAsTestTarget()
-        let g:test_target = ''
+        let $VIM_TEST_TARGET = ''
     endfunction
 
     function! BanPython_SetCurrentPackageAsTestTarget(command)
         let [path_sep, _, _] = BanPython_GetTestSeparators(a:command)
-        let g:test_target = substitute(expand('%:.:h'), '/', path_sep, 'g')
+        let $VIM_TEST_TARGET = substitute(expand('%:.:h'), '/', path_sep, 'g')
     endfunction
 
     function! BanPython_SetCurrentModuleAsTestTarget(command)
         let [path_sep, _, expand_arg] = BanPython_GetTestSeparators(a:command)
-        let g:test_target = substitute(expand(expand_arg), '/', path_sep, 'g')
+        let $VIM_TEST_TARGET = substitute(expand(expand_arg), '/', path_sep, 'g')
     endfunction
 
     function! BanPython_SetCurrentClassAsTestTarget(command)
         " {{{3
         let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
         let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonClassName()
-        let g:test_target = substitute(target, '/', path_sep, 'g')
+        let $VIM_TEST_TARGET = substitute(target, '/', path_sep, 'g')
     endfunction |" 3}}}
 
     function! BanPython_SetCurrentMethodAsTestTarget(command)
         " {{{3
         let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
         let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonClassName() . class_sep . BanPython_GetCurrentPythonMethodName()
-        let g:test_target = substitute(target, '/', path_sep, 'g')
+        let $VIM_TEST_TARGET = substitute(target, '/', path_sep, 'g')
     endfunction |" 3}}}
 
     function! BanPython_SetCurrentFunctionAsTestTarget(command)
         " {{{3
         let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
         let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonFunctionName()
-        let g:test_target = substitute(target, '/', path_sep, 'g')
+        let $VIM_TEST_TARGET = substitute(target, '/', path_sep, 'g')
     endfunction |" 3}}}
 
     function! BanPython_WriteTestTargetToEnvFile(test_target)
