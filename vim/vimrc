@@ -710,10 +710,17 @@ augroup aug_filetype_python_functions
         let $VIM_TEST_TARGET = substitute(target, '/', path_sep, 'g')
     endfunction |" 3}}}
 
-    function! BanPython_WriteTestTargetToEnvFile(test_target)
+    function! BanPython_WriteTestTargetToEnvFile(options, test_target)
         " {{{3
+        if a:options != ''
+            let line='export ARGS="{options} {target}"'
+        else
+            let line='export ARGS={target}'
+        endif
+        let line=substitute(line, '{options}', a:options, 'ge')
+        let line=substitute(line, '{target}', a:test_target, 'ge')
         call writefile(
-            \ ['set -x', 'export ARGS='.a:test_target, 'set +x'],
+            \ ['set -x', line, 'set +x'],
             \ './.vim_test_env')
     endfunction |" 3}}}
 
