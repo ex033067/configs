@@ -428,7 +428,6 @@ augroup aug_filetype_python_testing
     autocmd FileType python let $VIM_TEST_TARGET = (exists('$VIM_TEST_TARGET')) ? $VIM_TEST_TARGET : ''
     autocmd FileType python let $VIM_TEST_FILENAME_STYLE = (exists('$VIM_TEST_FILENAME_STYLE')) ? $VIM_TEST_FILENAME_STYLE : 'pytest'
 
-    " autocmd FileType python nnoremap t<CR> :wall <CR>:execute Ban_Run('run-test '. BanPython_BuildTestCommand(g:test_command, g:test_target))<CR>|" Run tests in current vim session
     autocmd FileType python nnoremap t<CR>
         \ :wall <bar>
         \ :let _command = BanPython_BuildTestCommand($VIM_TEST_COMMAND, $VIM_TEST_TARGET)<bar>
@@ -436,7 +435,6 @@ augroup aug_filetype_python_testing
         \ :unlet _command<CR>
         \ |" Run tests in current vim session
 
-    " autocmd FileType python nnoremap <silent> T<CR> :update<CR>:let _all_commands=g:test_command .' '. g:test_target<CR>:execute '!tmux send-keys -t .+ -l "run-with-time '. _all_commands .'"'<CR>:execute '!tmux send-keys -t .+ Enter'<CR><CR>|" Run tests in tmux next pane
     autocmd FileType python nnoremap <silent> T<CR>
         \ :update<bar>
         \ :let _command=g:test_command .' '. g:test_target<bar>
