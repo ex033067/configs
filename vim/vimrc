@@ -488,10 +488,15 @@ augroup aug_filetype_python_testing
 
     autocmd FileType python nnoremap <silent> T<CR>
         \ :update<bar>
-        \ :let _command=g:test_command .' '. g:test_target<bar>
-        \ :execute '!tmux send-keys -t .+ -l "run-with-time '. _command .'"'<bar>
+        \ :call BanPython_WriteTestArgsToEnvFile($VIM_TEST_OPTIONS, $VIM_TEST_TARGET) <bar>
+        \ :let _cmd=($VIM_TEST_COMMAND =~ 'make')
+        \   ? '!tmux send-keys -t .+ -l ". .vim_test_env;run-with-time {test}"'
+        \   : '!tmux send-keys -t .+ -l ". .vim_test_env;run-with-time {test} {target}"'<bar>
+        \ :let _cmd=substitute(_cmd, '{test}', $VIM_TEST_COMMAND, 'ge')<bar>
+        \ :let _cmd=substitute(_cmd, '{target}', $VIM_TEST_TARGET, 'ge')<bar>
+        \ :execute _cmd<bar>
         \ :execute '!tmux send-keys -t .+ Enter'<CR><bar>
-        \ :unlet _command<CR>
+        \ :unlet _cmd<CR>
         \ |" Run tests in tmux next pane
 
     " Mappings to help with tests (this is a big section).
