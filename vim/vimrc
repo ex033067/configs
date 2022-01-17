@@ -99,7 +99,9 @@ nnoremap <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') .
     \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
     \|" Show highlight group of word under cursor
 
-nnoremap <leader>T :!ctags -R --exclude=.git --exclude=__pycache__ --exclude=.pytest_cache --exclude=swagger-ui --languages=-json --tag-relative=yes -f ./.git/tags . &<CR>|" build tags for the project
+nnoremap <leader>T
+    \ :!ctags -R --exclude=.git --exclude=__pycache__ --exclude=.pytest_cache --exclude=swagger-ui --languages=-json --tag-relative=yes -f ./.git/tags . &<CR>
+    \ |" build tags for the project
 
 " Show/hide helpers
 nnoremap <leader>' :NERDTreeToggle<CR>
@@ -140,7 +142,12 @@ vnoremap <C-k> :<C-U>call Ban_MoveLine("visual", "up")<CR>
 
 " file and buffer
 nnoremap <leader>w :update<CR>
-nnoremap <silent> <leader>= :update<CR>:let _state=winsaveview()<CR>gg=G:call winrestview(_state)<CR>:unlet _state<CR>|" Format all the source code and move back to original position
+nnoremap <silent> <leader>=
+    \ :update<bar>
+    \ :let _state=winsaveview()<bar>
+    \ gg=G:call winrestview(_state)<bar>
+    \ :unlet _state<CR>
+    \ |" Format all the source code and move back to original position
 nnoremap <silent> <leader>m :update<CR>:make %<CR>
 
 " windows and tabs
@@ -167,7 +174,10 @@ nnoremap [L :lpfile<CR>|" go to previous file in location list
 if !has('clipboard') && executable('clip.exe')
     " Copy to Windows clipboard under WSL
     vnoremap <leader>y "sy:call system('clip.exe', @s)<CR>|" Copy visual selection
-    nnoremap <leader>y% :let @s=expand("%")<CR>:call system('clip.exe', @s)<CR>|" Copy current filename
+    nnoremap <leader>y%
+        \ :let @s=expand("%")<bar>
+        \ :call system('clip.exe', @s)<CR>
+        \ |" Copy current filename
 else
     vnoremap <leader>y "+y
     nnoremap <leader>y% :let @+=expand("%")<CR>
@@ -179,14 +189,23 @@ nnoremap <leader>ga :Git add %<CR>
 nnoremap <leader>gA :Git reset -- %<CR>
 nnoremap <leader>gc :keepalt Git commit -v <CR>
 nnoremap <leader>gC :keepalt Git commit -v --amend <CR>
-nnoremap <leader>g= :keepalt Git diff % <CR>:wincmd _<CR>:setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>
+nnoremap <leader>g=
+    \ :keepalt Git diff % <bar>
+    \ :wincmd _<bar>
+    \ :setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>
 nnoremap <leader>gp gg:Ghdiffsplit <CR>
-nnoremap <leader>gl :let _tmpfile=tempname()<bar>:silent execute '!git l -50 >'._tmpfile<bar>:silent execute 'keepalt split '._tmpfile<bar>:wincmd _<bar>:setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<bar>:unlet _tmpfile<bar>:redraw!<CR>
+nnoremap <leader>gl
+    \ :let _tmpfile=tempname()<bar>
+    \ :silent execute '!git l -50 >'._tmpfile<bar>
+    \ :silent execute 'keepalt split '._tmpfile<bar>
+    \ :wincmd _<bar>
+    \ :setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted <bar>
+    \ :unlet _tmpfile<bar>
+    \ :redraw!<CR>
 
 " toggle options
 nnoremap <silent> <leader>oe :call Ban_SetDefaultEditOptions()<CR>
 nnoremap <silent> <leader>od :call Ban_SetDefaultDiffOptions()<CR>
-" nnoremap <silent> <leader>ocl :let _grps={synIDattr(hlID("customDarkCursorLine"), "bg"): 'customLightCursorLine', synIDattr(hlID("customLightCursorLine"), "bg"): 'customDarkCursorLine'}<bar>:let _new_grp=_grps[synIDattr(synIDtrans(hlID("CursorLine")), "bg")]<bar>:execute 'hi! link CursorLine '._new_grp<bar>unlet _grps _new_grp<bar>redraw!<CR>|" change CursorLine based on a dictionary with keys inverted with highlight group names. Key is bgcolor. Value is highlight group name.
 nnoremap <silent> <leader>ocl
     \ :let _grps={
     \       synIDattr(hlID("customDarkCursorLine"), "bg"): 'customLightCursorLine',
@@ -238,9 +257,17 @@ endfunction
 function! Ban_SetDefaultDiffOptions()
     " {{{2
     let curtab_winids = map(filter(getwininfo(), 'v:val.tabnr == tabpagenr()'), 'v:val.winid')
-    let are_diff_windows = map(copy(curtab_winids), {idx, winid -> {'winid': winid, 'is_diff': getwinvar(winid, '&diff')}})
+    let are_diff_windows = map(
+        \ copy(curtab_winids),
+        \ {idx, winid -> {'winid': winid, 'is_diff': getwinvar(winid, '&diff')}}
+    \ )
     let only_diff_windows = filter(copy(are_diff_windows), 'v:val.is_diff == 1')
-    call map(only_diff_windows, {idx, item -> win_execute(item.winid, 'setlocal wrap wrapscan hlsearch nocursorline nocursorcolumn nonumber relativenumber')})
+    let options = 'wrap wrapscan hlsearch nocursorline nocursorcolumn '
+        \ . 'nonumber relativenumber'
+    call map(
+        \ only_diff_windows,
+        \ {idx, item -> win_execute(item.winid, 'setlocal '. options)}
+    \ )
 endfunction |" 2}}}
 
 function! Ban_MoveLine(mode, direction)
@@ -344,21 +371,33 @@ augroup aug_filetype_gitcommit
     autocmd BufRead COMMIT_EDITMSG call execute(['normal gg'])
 
     " go to next/prev file in commit
-    autocmd FileType gitcommit nnoremap <silent> <buffer> ]] :call search('^diff\\|^# On branch', "z")<CR>ztzv
-    autocmd FileType gitcommit nnoremap <silent> <buffer> [[ :call search('^diff\\|^# On branch', "b")<CR>ztzv
+    autocmd FileType gitcommit nnoremap <silent> <buffer> ]]
+        \ :call search('^diff\\|^# On branch', "z")<CR>
+        \ ztzv
+    autocmd FileType gitcommit nnoremap <silent> <buffer> [[
+        \ :call search('^diff\\|^# On branch', "b")<CR>
+        \ ztzv
 
     " go to next/prev change
-    autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> ]c search('^@@', "zW") ? ':call search("^@@", "zW")\|normal zz<CR>' : ':echohl WarningMsg\|echo "Last chunck"\|echohl None<CR>'
-    autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> [c search('^@@', "bW") ? ':call search("^@@", "bW")\|normal zz<CR>' : ':echohl WarningMsg\|echo "First chunck"\|echohl None<CR>'
+    autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> ]c
+        \ search('^@@', "zW")
+        \   ? ':call search("^@@", "zW")\|normal zz<CR>'
+        \   : ':echohl WarningMsg\|echo "Last chunck"\|echohl None<CR>'
+    autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> [c
+        \ search('^@@', "bW")
+        \   ? ':call search("^@@", "bW")\|normal zz<CR>'
+        \ : ':echohl WarningMsg\|echo "First chunck"\|echohl None<CR>'
 augroup END |" 2}}}
 
 augroup aug_filetype_html
     " {{{2
     au!
     autocmd FileType html,htmldjango setlocal tabstop=2
-    autocmd FileType html,htmldjango let b:match_words = '<:>,{{:}},{%:%},{:},[:],(:),<!--:-->' .
+    autocmd FileType html,htmldjango let b:match_words =
+        \ '<:>,{{:}},{%:%},{:},[:],(:),<!--:-->' .
         \ ',<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>' .
-        \ ',{% block:{% endblock,{% if:{% endif,{% for:{% endfor,{% macro:{% endmacro' .
+        \ ',{% block:{% endblock,{% if:{% endif,{% for:{% endfor' .
+        \ ',{% macro:{% endmacro' .
         \ ',{% call:{% endcall,{% filter:{% endfilter,{% set:{% endset'
 augroup END |" 2}}}
 
@@ -391,13 +430,18 @@ augroup END |" 2}}}
 augroup aug_filetype_python_mappings
     " {{{2
     " Particular way to "make"
-    autocmd FileType python nnoremap <silent> <buffer> <leader>m :update<CR>:call flake8#Flake8()<CR>
+    autocmd FileType python nnoremap <silent> <buffer> <leader>m
+        \ :update<CR>
+        \ :call flake8#Flake8()<CR>
 
     " Mapping to navigate to object definition in split window
-    autocmd FileType python nnoremap <buffer> <localleader>D :split<CR>:call jedi#goto()<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>D
+        \ :split<CR>
+        \ :call jedi#goto()<CR>
 
     " edit selected module name
-    autocmd FileType python xnoremap <localleader>f :<C-U>let @s = BanPython_TransformSelectedTextIntoFilename() <CR>
+    autocmd FileType python xnoremap <localleader>f
+        \ :<C-U>let @s = BanPython_TransformSelectedTextIntoFilename() <CR>
 
     " Mappings for classes, functions and docstrings text-objects
     autocmd FileType python xnoremap <buffer> ic <Plug>(textobj-python-class-i)
@@ -425,8 +469,10 @@ augroup aug_filetype_python_testing
     autocmd FileType python let $VIM_TEST_COMMAND =
         \     (exists('$VIM_TEST_COMMAND')) ? $VIM_TEST_COMMAND :
         \         (executable('pytest')) ? 'pytest' : ''
-    autocmd FileType python let $VIM_TEST_TARGET = (exists('$VIM_TEST_TARGET')) ? $VIM_TEST_TARGET : ''
-    autocmd FileType python let $VIM_TEST_FILENAME_STYLE = (exists('$VIM_TEST_FILENAME_STYLE')) ? $VIM_TEST_FILENAME_STYLE : 'pytest'
+    autocmd FileType python let $VIM_TEST_TARGET =
+        \ (exists('$VIM_TEST_TARGET')) ? $VIM_TEST_TARGET : ''
+    autocmd FileType python let $VIM_TEST_FILENAME_STYLE =
+        \ (exists('$VIM_TEST_FILENAME_STYLE')) ? $VIM_TEST_FILENAME_STYLE : 'pytest'
 
     autocmd FileType python nnoremap t<CR>
         \ :wall <bar>
@@ -451,18 +497,46 @@ augroup aug_filetype_python_testing
     "   - pytest --pyargs
     "   - python manage.py test -v 2
     "   - python -m unittest
-    autocmd FileType python nnoremap <localleader>tC :let $VIM_TEST_COMMAND='<c-r>=$VIM_TEST_COMMAND<cr>'
-    autocmd FileType python nnoremap <localleader>tS :let $VIM_TEST_FILENAME_STYLE='<c-r>=$VIM_TEST_FILENAME_STYLE<cr>'
+    autocmd FileType python nnoremap <localleader>tC
+        \ :let $VIM_TEST_COMMAND='<c-r>=$VIM_TEST_COMMAND<cr>'
+    autocmd FileType python nnoremap <localleader>tS
+        \ :let $VIM_TEST_FILENAME_STYLE='<c-r>=$VIM_TEST_FILENAME_STYLE<cr>'
 
-    autocmd FileType python nnoremap <buffer> <localleader>tn :call BanPython_MakeValidPythonTestName() <CR>|" Make a test name from current line contents
+    autocmd FileType python nnoremap <buffer> <localleader>tn
+        \ :call BanPython_MakeValidPythonTestName() <CR><bar>
+        \ |" Make a test name from current line contents
 
     " Mark targets
-    autocmd FileType python nnoremap <buffer> <localleader>ta :wall <CR>:call BanPython_SetAllSuiteAsTestTarget() <CR>:call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <CR>:echo $VIM_TEST_TARGET. ' set as test target.'<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>tp :wall <CR>:call BanPython_SetCurrentPackageAsTestTarget($VIM_TEST_COMMAND) <CR>:call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <CR>:echo $VIM_TEST_TARGET. ' set as test target.'<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>t% :wall <CR>:call BanPython_SetCurrentModuleAsTestTarget($VIM_TEST_COMMAND) <CR>:call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <CR>:echo $VIM_TEST_TARGET. ' set as test target.'<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>tc :wall <CR>:call BanPython_SetCurrentClassAsTestTarget($VIM_TEST_COMMAND) <CR>:call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <CR>:echo $VIM_TEST_TARGET. ' set as test target.'<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>tm :wall <CR>:call BanPython_SetCurrentMethodAsTestTarget($VIM_TEST_COMMAND) <CR>:call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <CR>:echo $VIM_TEST_TARGET. ' set as test target.'<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>tf :wall <CR>:call BanPython_SetCurrentFunctionAsTestTarget($VIM_TEST_COMMAND) <CR>:call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <CR>:echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>ta
+        \ :wall <bar>
+        \ :call BanPython_SetAllSuiteAsTestTarget() <bar>
+        \ :call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <bar>
+        \ :echo 'All suite set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>tp
+        \ :wall <bar>
+        \ :call BanPython_SetCurrentPackageAsTestTarget($VIM_TEST_COMMAND) <bar>
+        \ :call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <bar>
+        \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>t%
+        \ :wall <bar>
+        \ :call BanPython_SetCurrentModuleAsTestTarget($VIM_TEST_COMMAND) <bar>
+        \ :call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <bar>
+        \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>tc
+        \ :wall <bar>
+        \ :call BanPython_SetCurrentClassAsTestTarget($VIM_TEST_COMMAND) <bar>
+        \ :call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <bar>
+        \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>tm
+        \ :wall <bar>
+        \ :call BanPython_SetCurrentMethodAsTestTarget($VIM_TEST_COMMAND) <bar>
+        \ :call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <bar>
+        \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+    autocmd FileType python nnoremap <buffer> <localleader>tf
+        \ :wall <bar>
+        \ :call BanPython_SetCurrentFunctionAsTestTarget($VIM_TEST_COMMAND) <bar>
+        \ :call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <bar>
+        \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
 
     " autocmd FileType python nnoremap <silent> <localleader>tr
     "     \ :let _curpos = getcurpos()<CR>
@@ -524,7 +598,8 @@ augroup aug_filetype_python_functions
 
     function! BanPython_GetCurrentPythonMethodName()
         " {{{3
-        execute 'normal ms$?^ \+\(def\|async def\) \+test\w\+(\_s\{-}self?e' . "\<Enter>" . '3b'
+        execute 'normal ms$?^ \+\(def\|async def\) \+test\w\+(\_s\{-}self?e'
+            \ . "\<Enter>" . '3b'
         nohls
         let method_name = expand('<cword>')
         execute 'normal g`s'
@@ -611,27 +686,33 @@ augroup aug_filetype_python_functions
     function! BanPython_SetCurrentClassAsTestTarget(command)
         " {{{3
         let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
-        let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonClassName()
+        let target = expand(expand_arg)
+            \ . class_sep . BanPython_GetCurrentPythonClassName()
         let $VIM_TEST_TARGET = substitute(target, '/', path_sep, 'g')
     endfunction |" 3}}}
 
     function! BanPython_SetCurrentMethodAsTestTarget(command)
         " {{{3
         let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
-        let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonClassName() . class_sep . BanPython_GetCurrentPythonMethodName()
+        let target = expand(expand_arg)
+            \ . class_sep . BanPython_GetCurrentPythonClassName()
+            \ . class_sep . BanPython_GetCurrentPythonMethodName()
         let $VIM_TEST_TARGET = substitute(target, '/', path_sep, 'g')
     endfunction |" 3}}}
 
     function! BanPython_SetCurrentFunctionAsTestTarget(command)
         " {{{3
         let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
-        let target = expand(expand_arg) . class_sep . BanPython_GetCurrentPythonFunctionName()
+        let target = expand(expand_arg)
+            \ . class_sep . BanPython_GetCurrentPythonFunctionName()
         let $VIM_TEST_TARGET = substitute(target, '/', path_sep, 'g')
     endfunction |" 3}}}
 
     function! BanPython_WriteTestTargetToEnvFile(test_target)
         " {{{3
-        call writefile(['set -x', 'export ARGS='.a:test_target, 'set +x'], './.vim_test_env')
+        call writefile(
+            \ ['set -x', 'export ARGS='.a:test_target, 'set +x'],
+            \ './.vim_test_env')
     endfunction |" 3}}}
 
     function! BanPython_BuildTestCommand(command, target)
@@ -685,8 +766,10 @@ augroup END |" 2}}}
 augroup aug_quickscope_colors
     " {{{2
     autocmd!
-    autocmd ColorScheme * highlight QuickScopePrimary guifg=Cyan gui=underline,bold ctermfg=Cyan cterm=underline
-    autocmd ColorScheme * highlight QuickScopeSecondary guifg=Magenta gui=underline,bold ctermfg=Magenta cterm=underline
+    autocmd ColorScheme * highlight QuickScopePrimary
+        \ guifg=Cyan gui=underline,bold ctermfg=Cyan cterm=underline
+    autocmd ColorScheme * highlight QuickScopeSecondary
+        \ guifg=Magenta gui=underline,bold ctermfg=Magenta cterm=underline
 augroup END |" 2}}}
 
 augroup aug_terminal_mode
