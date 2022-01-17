@@ -517,32 +517,26 @@ augroup aug_filetype_python_testing
     autocmd FileType python nnoremap <buffer> <localleader>ta
         \ :wall <bar>
         \ :call BanPython_SetAllSuiteAsTestTarget() <bar>
-        \ :call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <bar>
         \ :echo 'All suite set as test target.'<CR>
     autocmd FileType python nnoremap <buffer> <localleader>tp
         \ :wall <bar>
         \ :call BanPython_SetCurrentPackageAsTestTarget($VIM_TEST_COMMAND) <bar>
-        \ :call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <bar>
         \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
     autocmd FileType python nnoremap <buffer> <localleader>t%
         \ :wall <bar>
         \ :call BanPython_SetCurrentModuleAsTestTarget($VIM_TEST_COMMAND) <bar>
-        \ :call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <bar>
         \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
     autocmd FileType python nnoremap <buffer> <localleader>tc
         \ :wall <bar>
         \ :call BanPython_SetCurrentClassAsTestTarget($VIM_TEST_COMMAND) <bar>
-        \ :call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <bar>
         \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
     autocmd FileType python nnoremap <buffer> <localleader>tm
         \ :wall <bar>
         \ :call BanPython_SetCurrentMethodAsTestTarget($VIM_TEST_COMMAND) <bar>
-        \ :call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <bar>
         \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
     autocmd FileType python nnoremap <buffer> <localleader>tf
         \ :wall <bar>
         \ :call BanPython_SetCurrentFunctionAsTestTarget($VIM_TEST_COMMAND) <bar>
-        \ :call BanPython_WriteTestTargetToEnvFile($VIM_TEST_TARGET) <bar>
         \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
 
     " autocmd FileType python nnoremap <silent> <localleader>tr
