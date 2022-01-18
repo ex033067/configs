@@ -145,7 +145,8 @@ nnoremap <leader>w :update<CR>
 nnoremap <silent> <leader>=
     \ :update<bar>
     \ :let _state=winsaveview()<bar>
-    \ gg=G:call winrestview(_state)<bar>
+    \ :execute "normal gg=G"<bar>
+    \ :call winrestview(_state)<bar>
     \ :unlet _state<CR>
     \ |" Format all the source code and move back to original position
 nnoremap <silent> <leader>m :update<CR>:make %<CR>
