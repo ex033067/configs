@@ -491,8 +491,8 @@ augroup aug_filetype_python_testing
         \ :update<bar>
         \ :call BanPython_WriteTestArgsToEnvFile($VIM_TEST_OPTIONS, $VIM_TEST_TARGET) <bar>
         \ :let _cmd=($VIM_TEST_COMMAND =~ 'make')
-        \   ? '!tmux send-keys -t .+ -l ". .vim_test_env;run-with-time {test}"'
-        \   : '!tmux send-keys -t .+ -l ". .vim_test_env;run-with-time {test} {target}"'<bar>
+        \   ? '!tmux send-keys -t .+ -l ". .vim_test_env;run-with-time {test};unset ARGS"'
+        \   : '!tmux send-keys -t .+ -l ". .vim_test_env;run-with-time {test} {target};unset ARGS"'<bar>
         \ :let _cmd=substitute(_cmd, '{test}', $VIM_TEST_COMMAND, 'ge')<bar>
         \ :let _cmd=substitute(_cmd, '{target}', $VIM_TEST_TARGET, 'ge')<bar>
         \ :execute _cmd<bar>
