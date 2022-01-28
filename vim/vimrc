@@ -441,9 +441,11 @@ augroup aug_filetype_python_mappings
         \ :split<CR>
         \ :call jedi#goto()<CR>
 
-    " edit selected module name
-    autocmd FileType python xnoremap <localleader>f
-        \ :<C-U>let @s = BanPython_TransformSelectedTextIntoFilename() <CR>
+    " transform Python module name into file name
+    autocmd FileType python nnoremap <localleader>mf
+        \ :call setreg('"', BanPython_TransformTextIntoFilename(expand('<cWORD>'))) <CR>
+    autocmd FileType python xnoremap <localleader>mf
+        \ :<C-U>call setreg('"', BanPython_TransformTextIntoFilename(BanPython_GetSelectedText())) <CR>
 
     " Mappings for classes, functions and docstrings text-objects
     autocmd FileType python xnoremap <buffer> ic <Plug>(textobj-python-class-i)
@@ -754,9 +756,17 @@ augroup aug_filetype_python_functions
         return a:command .' '. a:target
     endfunction |" 3}}}
 
-    function! BanPython_TransformSelectedTextIntoFilename()
+    function! BanPython_TransformTextIntoFilename(text)
+        return substitute(trim(a:text), '\.', '/', 'ge') .'.py'
+    endfunction
+
+    function! BanPython_TransformFilenameIntoModulename(filename)
+        return substitute(fnamemodify(a:filename, ':.:r'), '/', '.', 'g')
+    endfunction
+
+    function! BanPython_GetSelectedText()
         execute 'normal gv"sy'
-        return substitute(@s, '\.', '/', 'ge') .'.py'
+        return getreg('s')
     endfunction
 augroup END |" 2}}}
 
