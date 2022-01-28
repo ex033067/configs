@@ -175,9 +175,13 @@ nnoremap [L :lpfile<CR>|" go to previous file in location list
 if !has('clipboard') && executable('clip.exe')
     " Copy to Windows clipboard under WSL
     vnoremap <leader>y :<C-U>call system('clip.exe', BanPython_GetSelectedText())<CR>|" Copy visual selection
+    nnoremap <leader>y
+        \ :call system('clip.exe', getreg('"'))<CR>
+        \ |" Copy default register contents
     nnoremap <leader>y% :call system('clip.exe', expand("%"))<bar>|" Copy current filename
 else
     vnoremap <leader>y "+y
+    nnoremap <leader>y :call setreg('+', getreg('"'))<CR>
     nnoremap <leader>y% :let @+=expand("%")<CR>
 endif
 
