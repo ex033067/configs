@@ -182,7 +182,7 @@ if !has('clipboard') && executable('clip.exe')
 else
     vnoremap <leader>y "+y
     nnoremap <leader>y :call setreg('+', getreg('"'))<CR>
-    nnoremap <leader>y% :let @+=expand("%")<CR>
+    nnoremap <leader>y% :call setreg('+', expand("%"))<CR>
 endif
 
 " git
