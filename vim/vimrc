@@ -447,6 +447,12 @@ augroup aug_filetype_python_mappings
     autocmd FileType python xnoremap <localleader>mf
         \ :<C-U>call setreg('"', BanPython_TransformTextIntoFilename(BanPython_GetSelectedText())) <CR>
 
+    " transform file name into Python module name
+    autocmd FileType python nnoremap <localleader>fm
+        \ :call setreg('"', BanPython_TransformFilenameIntoModulename(expand('%'))) <CR>
+    autocmd FileType python xnoremap <localleader>fm
+        \ :<C-U>call setreg('"', BanPython_TransformFilenameIntoModulename(BanPython_GetSelectedText())) <CR>
+
     " Mappings for classes, functions and docstrings text-objects
     autocmd FileType python xnoremap <buffer> ic <Plug>(textobj-python-class-i)
     autocmd FileType python onoremap <buffer> ic <Plug>(textobj-python-class-i)
