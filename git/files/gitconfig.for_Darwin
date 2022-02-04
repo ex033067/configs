@@ -1,5 +1,2 @@
 [merge]
         tool = opendiff
-[include]
-        path = ~/.gitconfig_credentials
-        path = ~/.gitconfig_generic
