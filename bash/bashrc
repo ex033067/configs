@@ -359,9 +359,9 @@ function venv()
 	if [[ "$command" == 'help' ]]; then
 		__venv_help venv
 	elif [[ "$command" == 'info' ]]; then
-		__venv__get_virtualenv_info "$@"
+		__venv_info "$@"
 	elif [[ "$command" == 'create' ]]; then
-		__venv_create_virtualenv "$@"
+		__venv_create "$@"
 	elif [[ "$command" == 'shell' ]]; then
 		__venv_shell
 	elif [[ "$command" == 'run' ]]; then
@@ -398,7 +398,7 @@ function __venv_help()
 	_ENDOFTEXT_
 }
 
-function __venv_create_virtualenv()
+function __venv_create()
 {
 	local default_dirname=venv
 	local dirname=
@@ -566,7 +566,7 @@ function __venv__get_virtualenv_location()
 	echo "$location"
 }
 
-function __venv__get_virtualenv_info()
+function __venv_info()
 {
 	local option="$1"
 	if [[ "$option" == '--path' ]]; then
