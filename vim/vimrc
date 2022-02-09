@@ -491,14 +491,7 @@ augroup aug_filetype_python_testing
     autocmd FileType python let $VIM_TEST_FILENAME_STYLE =
         \ (exists('$VIM_TEST_FILENAME_STYLE')) ? $VIM_TEST_FILENAME_STYLE : 'pytest'
 
-    autocmd FileType python nnoremap t<CR>
-        \ :wall <bar>
-        \ :let _command = BanPython_BuildTestCommand($VIM_TEST_COMMAND, $VIM_TEST_TARGET)<bar>
-        \ :execute Ban_Run('run-test '. _command)<bar>
-        \ :unlet _command<CR>
-        \ |" Run tests in current vim session
-
-    autocmd FileType python nnoremap <silent> T<CR>
+    autocmd FileType python nnoremap <silent> t<CR>
         \ :update<bar>
         \ :call BanPython_WriteTestArgsToEnvFile($VIM_TEST_OPTIONS, $VIM_TEST_TARGET) <bar>
         \ :let _cmd=($VIM_TEST_COMMAND =~ 'make')
