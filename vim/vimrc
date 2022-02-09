@@ -730,7 +730,7 @@ augroup aug_filetype_python_functions
         let line=substitute(line, '{options}', a:options, 'ge')
         let line=substitute(line, '{target}', a:test_target, 'ge')
         call writefile(
-            \ ['set -x', line, 'set +x'],
+            \ ['set -x', line, 'export PYTEST_ADDOPTS="$ARGS"', 'set +x'],
             \ './.vim_test_env')
     endfunction |" 3}}}
 
