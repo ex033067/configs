@@ -112,7 +112,6 @@ nnoremap <leader>3 :Buffers<CR>
 nnoremap <leader>4 :TagbarOpen j<CR>
 nnoremap <leader>$ :TagbarToggle<CR>
 nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'|" Show/hide quickfix window
-nnoremap <expr> <leader>l empty(filter(getwininfo(), 'v:val.loclist')) ? ':lopen<CR>' : ':lclose<CR>'|" Show/hide location list
 nnoremap <BS> :nohlsearch<CR>
 nnoremap <leader>( :RainbowToggle<CR>|" Colorize parentheses, brackets, etc.
 nnoremap <leader>) :QuickScopeToggle<CR>|" Show/hide quick scope
@@ -166,10 +165,29 @@ nnoremap [q :cprevious<CR>|" go to previous line in quickfix
 nnoremap ]Q :cnfile<CR>|" go to next file in quickfix
 nnoremap [Q :cpfile<CR>|" go to previous file in quickfix
 
-nnoremap ]l :lnext<CR>|" go to next line in location list
-nnoremap [l :lprevious<CR>|" go to previous line in location list
-nnoremap ]L :lnfile<CR>|" go to next file in location list
-nnoremap [L :lpfile<CR>|" go to previous file in location list
+" custom location list navigation
+command Lgrep
+    \ :let t:loclist_cword=expand('<cword>') <bar>
+    \ :let _template='lgrep --exclude-dir=tests -r -w "<cword>" ./*' <bar>
+    \ :let _cmd=substitute(_template, '<cword>', t:loclist_cword, '') <bar>
+    \ :execute _cmd|" lgrep current word
+command Lprev :lprev<bar>:if exists('t:loclist_cword')<bar>:call search(t:loclist_cword, 'c')<bar>:endif
+command Lnext :lnext<bar>:if exists('t:loclist_cword')<bar>:call search(t:loclist_cword, 'c')<bar>:endif
+command Lpfile :lpfile<bar>:if exists('t:loclist_cword')<bar>:call search(t:loclist_cword, 'c')<bar>:endif
+command Lnfile :lnfile<bar>:if exists('t:loclist_cword')<bar>:call search(t:loclist_cword, 'c')<bar>:endif
+
+nnoremap <leader>l
+    \ :Lgrep <CR>
+    \ :call search(t:loclist_cword, 'c')<CR><CR>
+nnoremap <leader>L
+    \ :unlet t:loclist_cword <bar>
+    \ :lclose <CR>
+
+nnoremap [l :Lprev <CR>
+nnoremap ]l :Lnext <CR>
+nnoremap [L :Lnfile<CR>
+nnoremap ]L :Lpfile<CR>
+
 
 " clipboard
 if !has('clipboard') && executable('clip.exe')
