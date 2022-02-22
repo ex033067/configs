@@ -94,14 +94,14 @@ set termguicolors
 " ==============================================================================
 
 " General mappings
+" ↓ Show highlight group of word under cursor
 nnoremap <leader>0 :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<'
     \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
     \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
-    \|" Show highlight group of word under cursor
 
+" ↓ build tags for the project
 nnoremap <leader>T
     \ :!ctags -R --exclude=.git --exclude=__pycache__ --exclude=.pytest_cache --exclude=swagger-ui --languages=-json --tag-relative=yes -f ./.git/tags . &<CR>
-    \ |" build tags for the project
 
 " Show/hide helpers
 nnoremap <leader>' :NERDTreeToggle<CR>
@@ -111,16 +111,19 @@ nnoremap <leader>2 :GFiles<CR>
 nnoremap <leader>3 :Buffers<CR>
 nnoremap <leader>4 :TagbarOpen j<CR>
 nnoremap <leader>$ :TagbarToggle<CR>
-nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'|" Show/hide quickfix window
+nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'
 nnoremap <BS> :nohlsearch<CR>
-nnoremap <leader>( :RainbowToggle<CR>|" Colorize parentheses, brackets, etc.
-nnoremap <leader>) :QuickScopeToggle<CR>|" Show/hide quick scope
-nnoremap <leader>* :set hlsearch<bar>:let @/=expand('<cword>').'\c'<CR>|" Highlight word under cursor without moving it
+" ↓ Colorize parentheses, brackets, etc.
+nnoremap <leader>( :RainbowToggle<CR>
+nnoremap <leader>) :QuickScopeToggle<CR>
+" ↓ Highlight word under cursor without moving it
+nnoremap <leader>* :set hlsearch<bar>:let @/=expand('<cword>').'\c'<CR>
 nnoremap <leader><leader> :setlocal cursorline!<CR>
 nnoremap <silent> <leader>< :setlocal list!<CR>:set list?<CR>
 
 " editing
-inoremap KJ <C-Bslash><C-N>|" back to normal mode
+" ↓ back to normal mode
+inoremap KJ <C-Bslash><C-N>
 nnoremap <leader>d :call Ban_DuplicateLine("normal")<CR>
 vnoremap <leader>d :<C-U>call Ban_DuplicateLine("visual")<CR>
 
@@ -141,17 +144,18 @@ vnoremap <C-k> :<C-U>call Ban_MoveLine("visual", "up")<CR>
 
 " file and buffer
 nnoremap <leader>w :update<CR>
+" ↓ Format all the source code and move back to original position
 nnoremap <silent> <leader>=
     \ :update<bar>
     \ :let _state=winsaveview()<bar>
     \ :execute "normal gg=G"<bar>
     \ :call winrestview(_state)<bar>
     \ :unlet _state<CR>
-    \ |" Format all the source code and move back to original position
 nnoremap <silent> <leader>m :update<CR>:make %<CR>
 
 " windows and tabs
-nnoremap <C-w>to :tab split<CR>|" open current buffer in new tab page
+" ↓ open current buffer in new tab page
+nnoremap <C-w>to :tab split<CR>
 nnoremap <C-w>tc :tabclose<CR>
 
 " navigation
@@ -160,10 +164,10 @@ nnoremap <Space> <C-F>
 nnoremap ]a :next<CR>
 nnoremap [a :previous<CR>
 
-nnoremap ]q :cnext<CR>|" go to next line in quickfix
-nnoremap [q :cprevious<CR>|" go to previous line in quickfix
-nnoremap ]Q :cnfile<CR>|" go to next file in quickfix
-nnoremap [Q :cpfile<CR>|" go to previous file in quickfix
+nnoremap ]q :cnext<CR>
+nnoremap [q :cprevious<CR>
+nnoremap ]Q :cnfile<CR>
+nnoremap [Q :cpfile<CR>
 
 " custom location list navigation
 command! LgrepPositioned
@@ -196,13 +200,12 @@ nnoremap ]L :LpfilePositioned <CR>
 " clipboard
 if !has('clipboard') && executable('clip.exe')
     " Copy to Windows clipboard under WSL
+    " ↓ Copy visual selection
     vnoremap <leader>y :<C-U>call system('clip.exe', BanPython_GetSelectedText())<CR>
-        \ |" Copy visual selection
-    nnoremap <leader>y
-        \ :call system('clip.exe', getreg('"'))<CR>
-        \ |" Copy default register contents
+    " ↓ Copy default register contents
+    nnoremap <leader>y :call system('clip.exe', getreg('"'))<CR>
+    " ↓ Copy current filename
     nnoremap <leader>y% :call system('clip.exe', expand("%"))<CR>
-        \ |" Copy current filename
 else
     vnoremap <leader>y "+y
     nnoremap <leader>y :call setreg('+', getreg('"'))<CR>
@@ -232,6 +235,8 @@ nnoremap <leader>gl
 " toggle options
 nnoremap <silent> <leader>oe :call Ban_SetDefaultEditOptions()<CR>
 nnoremap <silent> <leader>od :call Ban_SetDefaultDiffOptions()<CR>
+" ↓↓ change CursorLine based on a dictionary with keys inverted with highlight group names.
+" ↓↓ Key is bgcolor. Value is highlight group name.
 nnoremap <silent> <leader>ocl
     \ :let _grps={
     \       synIDattr(hlID("customInvisibleCursorLine"), "bg"): 'customDarkCursorLine',
@@ -242,7 +247,6 @@ nnoremap <silent> <leader>ocl
     \ :execute 'hi! link CursorLine '._new_grp<bar>
     \ :unlet _grps _new_grp<bar>
     \ :redraw!<CR>
-    \ |" change CursorLine based on a dictionary with keys inverted with highlight group names. Key is bgcolor. Value is highlight group name.
 nnoremap <silent> <leader>on :setlocal number!<CR>
 nnoremap <silent> <leader>op :set paste!<CR>:set paste?<CR>
 nnoremap <silent> <leader>ow :setlocal wrap!<CR>:set wrap?<CR>
@@ -514,6 +518,7 @@ augroup aug_filetype_python_testing
     autocmd FileType python let $VIM_TEST_FILENAME_STYLE =
         \ (exists('$VIM_TEST_FILENAME_STYLE')) ? $VIM_TEST_FILENAME_STYLE : 'pytest'
 
+    " ↓ Run tests in tmux next pane
     autocmd FileType python nnoremap <silent> t<CR>
         \ :update<bar>
         \ :call BanPython_WriteTestArgsToEnvFile($VIM_TEST_OPTIONS, $VIM_TEST_TARGET) <bar>
@@ -525,7 +530,6 @@ augroup aug_filetype_python_testing
         \ :execute _cmd<bar>
         \ :execute '!tmux send-keys -t .+ Enter'<CR><bar>
         \ :unlet _cmd<CR>
-        \ |" Run tests in tmux next pane
 
     " Mappings to help with tests (this is a big section).
     " All mappings are prefixed with \t.
@@ -542,9 +546,9 @@ augroup aug_filetype_python_testing
     autocmd FileType python nnoremap <localleader>tS
         \ :let $VIM_TEST_FILENAME_STYLE='<c-r>=$VIM_TEST_FILENAME_STYLE<cr>'
 
+    " ↓ Make a test name from current line contents
     autocmd FileType python nnoremap <buffer> <localleader>tn
         \ :call BanPython_MakeValidPythonTestName() <CR><bar>
-        \ |" Make a test name from current line contents
 
     " Mark targets
     autocmd FileType python nnoremap <buffer> <localleader>ta
@@ -572,6 +576,7 @@ augroup aug_filetype_python_testing
         \ :call BanPython_SetCurrentFunctionAsTestTarget($VIM_TEST_COMMAND) <bar>
         \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
 
+    " ↓ Copy current filename and function/method to register z in pytest format (JOE specific)
     " autocmd FileType python nnoremap <silent> <localleader>tr
     "     \ :let _curpos = getcurpos()<CR>
     "     \ :call search('def test', 'besc')<CR>
@@ -582,7 +587,6 @@ augroup aug_filetype_python_testing
     "     \ :execute '!tmux send-keys -t JOE:src.1 -l "t ' .trim(_target). '"'<CR>
     "     \ :execute '!tmux send-keys -t JOE:src.1 Enter'<CR><CR>
     "     \ :unlet _curpos _curr_method _target<CR>
-    "     \|" Copy current filename and function/method to register z in pytest format (JOE specific)
 augroup END |" 2}}}
 
 augroup aug_filetype_python_functions
@@ -917,7 +921,8 @@ let g:tagbar_case_insensitive = 1
 
 " Quickly navigate to first and second occurrence of char in line
 Plug 'unblevable/quick-scope'
-let g:qs_enable=0  |" start plugin with highlight disabled
+" ↓ start plugin with highlight disabled
+let g:qs_enable=0
 
 " Expand abbreviations
 Plug 'mattn/emmet-vim'
