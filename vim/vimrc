@@ -182,6 +182,8 @@ vnoremap <leader>l
 nnoremap <leader>L
     \ :unlet t:Lgrep_pattern <bar>
     \ :lclose <CR>
+nnoremap <leader>lt :Lfilter tests<CR>
+nnoremap <leader>lT :Lfilter! tests<CR>
 
 nnoremap [l :LprevPositioned <CR>
 nnoremap ]l :LnextPositioned <CR>
@@ -834,6 +836,7 @@ augroup END
 " Plugins: {{{1
 " ==============================================================================
 
+packadd cfilter
 
 call plug#begin('~/.vim/bundle')
 
