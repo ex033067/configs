@@ -166,27 +166,27 @@ nnoremap ]Q :cnfile<CR>|" go to next file in quickfix
 nnoremap [Q :cpfile<CR>|" go to previous file in quickfix
 
 " custom location list navigation
-command Lgrep
-    \ :let t:loclist_cword=expand('<cword>') <bar>
-    \ :let _template='lgrep --exclude-dir=tests -r -w "<cword>" ./*' <bar>
-    \ :let _cmd=substitute(_template, '<cword>', t:loclist_cword, '') <bar>
-    \ :execute _cmd|" lgrep current word
-command Lprev :lprev<bar>:if exists('t:loclist_cword')<bar>:call search(t:loclist_cword, 'c')<bar>:endif
-command Lnext :lnext<bar>:if exists('t:loclist_cword')<bar>:call search(t:loclist_cword, 'c')<bar>:endif
-command Lpfile :lpfile<bar>:if exists('t:loclist_cword')<bar>:call search(t:loclist_cword, 'c')<bar>:endif
-command Lnfile :lnfile<bar>:if exists('t:loclist_cword')<bar>:call search(t:loclist_cword, 'c')<bar>:endif
+command! LgrepPositioned
+    \ :let _template='lgrep -r -w "<pattern>" ./*' <bar>
+    \ :let _cmd=substitute(_template, '<pattern>', t:Lgrep_pattern, '') <bar>
+    \ :execute _cmd <bar>
+    \ :call search(t:Lgrep_pattern, 'c')
+command! LprevPositioned :lprev<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c')<bar>:endif
+command! LnextPositioned :lnext<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c')<bar>:endif
+command! LpfilePositioned :lpfile<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c')<bar>:endif
+command! LnfilePositioned :lnfile<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c')<bar>:endif
 
-nnoremap <leader>l
-    \ :Lgrep <CR>
-    \ :call search(t:loclist_cword, 'c')<CR><CR>
+vnoremap <leader>l
+    \ :<C-U>let t:Lgrep_pattern=BanPython_GetSelectedText() <bar>
+    \ :LgrepPositioned <CR>
 nnoremap <leader>L
-    \ :unlet t:loclist_cword <bar>
+    \ :unlet t:Lgrep_pattern <bar>
     \ :lclose <CR>
 
-nnoremap [l :Lprev <CR>
-nnoremap ]l :Lnext <CR>
-nnoremap [L :Lnfile<CR>
-nnoremap ]L :Lpfile<CR>
+nnoremap [l :LprevPositioned <CR>
+nnoremap ]l :LnextPositioned <CR>
+nnoremap [L :LnfilePositioned <CR>
+nnoremap ]L :LpfilePositioned <CR>
 
 
 " clipboard
