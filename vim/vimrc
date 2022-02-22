@@ -193,8 +193,8 @@ nnoremap <leader>l] :lnewer <CR>
 
 nnoremap [l :LprevPositioned <CR>
 nnoremap ]l :LnextPositioned <CR>
-nnoremap [L :LnfilePositioned <CR>
-nnoremap ]L :LpfilePositioned <CR>
+nnoremap [L :LpfilePositioned <CR>
+nnoremap ]L :LnfilePositioned <CR>
 
 
 " clipboard
