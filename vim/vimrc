@@ -184,6 +184,8 @@ nnoremap <leader>L
     \ :lclose <CR>
 nnoremap <leader>lt :Lfilter tests<CR>
 nnoremap <leader>lT :Lfilter! tests<CR>
+nnoremap <leader>l[ :lolder <CR>
+nnoremap <leader>l] :lnewer <CR>
 
 nnoremap [l :LprevPositioned <CR>
 nnoremap ]l :LnextPositioned <CR>
