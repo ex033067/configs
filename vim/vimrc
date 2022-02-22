@@ -315,9 +315,9 @@ endfunction |" 2}}}
 
 function! Ban_IsolateLineWithSpacesAround(mode) range
     " {{{2
-    call append(a:lastline, ['----------- focus here ^', ''])
+    call append(a:lastline, ['----------- focus here ↑↑', ''])
     execute a:lastline+1 .'Commentary'
-    call append(a:firstline -1, ['', '----------- focus here v'])
+    call append(a:firstline -1, ['', '----------- focus here ↓↓'])
     execute a:firstline+1 .'Commentary'
     if a:mode == "visual"
         normal gv
@@ -372,6 +372,10 @@ function! Ban_DuplicateAndCommentLine(mode)
     endif
 endfunction |" 2}}}
 
+
+function! Ban_ShowSpecialChars()
+    echo '↑ ↓ ← → '
+endfunction
 
 
 
