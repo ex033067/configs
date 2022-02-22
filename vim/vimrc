@@ -234,8 +234,9 @@ nnoremap <silent> <leader>oe :call Ban_SetDefaultEditOptions()<CR>
 nnoremap <silent> <leader>od :call Ban_SetDefaultDiffOptions()<CR>
 nnoremap <silent> <leader>ocl
     \ :let _grps={
+    \       synIDattr(hlID("customInvisibleCursorLine"), "bg"): 'customDarkCursorLine',
     \       synIDattr(hlID("customDarkCursorLine"), "bg"): 'customLightCursorLine',
-    \       synIDattr(hlID("customLightCursorLine"), "bg"): 'customDarkCursorLine'
+    \       synIDattr(hlID("customLightCursorLine"), "bg"): 'customInvisibleCursorLine'
     \ }<bar>
     \ :let _new_grp=_grps[synIDattr(synIDtrans(hlID("CursorLine")), "bg")]<bar>
     \ :execute 'hi! link CursorLine '._new_grp<bar>
