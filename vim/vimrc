@@ -516,13 +516,15 @@ augroup aug_filetype_python_testing
     " initialize global test variables
     autocmd FileType python let $VIM_TEST_COMMAND =
         \     (exists('$VIM_TEST_COMMAND')) ? $VIM_TEST_COMMAND :
-        \         (executable('pytest')) ? 'pytest' : ''
+        \         (filereadable('Makefile')) ? 'make test' :
+        \             (executable('pytest')) ? 'pytest' : ''
     autocmd FileType python let $VIM_TEST_OPTIONS =
         \ (exists('$VIM_TEST_OPTIONS')) ? $VIM_TEST_OPTIONS : ''
     autocmd FileType python let $VIM_TEST_TARGET =
         \ (exists('$VIM_TEST_TARGET')) ? $VIM_TEST_TARGET : ''
     autocmd FileType python let $VIM_TEST_RUNNER =
-        \ (exists('$VIM_TEST_RUNNER')) ? $VIM_TEST_RUNNER : 'pytest'
+        \     (exists('$VIM_TEST_RUNNER')) ? $VIM_TEST_RUNNER :
+        \         (executable('pytest')) ? 'pytest' : 'unittest'
 
     " ↓ Run tests in tmux next pane
     autocmd FileType python nnoremap <silent> t<CR> 
