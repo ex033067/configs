@@ -170,7 +170,8 @@ nnoremap ]Q :cnfile<CR>
 nnoremap [Q :cpfile<CR>
 
 " custom location list navigation
-command! LgrepPositioned
+command! -nargs=1 LgrepPositioned
+    \ :let t:Lgrep_pattern=<args> <bar>
     \ :let _template='lgrep -r -w "<pattern>" ./*' <bar>
     \ :let _cmd=substitute(_template, '<pattern>', t:Lgrep_pattern, '') <bar>
     \ :execute _cmd <bar>
@@ -182,7 +183,7 @@ command! LnfilePositioned :lnfile<bar>:if exists('t:Lgrep_pattern')<bar>:call se
 
 vnoremap <leader>l
     \ :<C-U>let t:Lgrep_pattern=BanPython_GetSelectedText() <bar>
-    \ :LgrepPositioned <CR>
+    \ :execute 'LgrepPositioned "'. t:Lgrep_pattern .'"'<CR>
 nnoremap <leader>L
     \ :unlet t:Lgrep_pattern <bar>
     \ :lclose <CR>
