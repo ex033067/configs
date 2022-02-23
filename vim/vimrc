@@ -679,11 +679,13 @@ augroup aug_filetype_python_functions
     function! BanPython_GetTestSeparators(command)
         " {{{3
         if exists('$VIM_TEST_RUNNER')
-            if $VIM_TEST_RUNNER =~ 'pytest'
+            if $VIM_TEST_RUNNER == 'pytest'
+                " path/test/file.py::Class::method
                 let path_separator = '/'
                 let expand_string = '%:.'
                 let class_separator = '::'
-            elseif $VIM_TEST_RUNNER =~ 'unittest'
+            elseif $VIM_TEST_RUNNER == 'unittest'
+                " some.test.module.TestClass.test_method
                 let path_separator = '.'
                 let expand_string = '%:.:r'
                 let class_separator = '.'
