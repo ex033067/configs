@@ -521,8 +521,8 @@ augroup aug_filetype_python_testing
         \ (exists('$VIM_TEST_OPTIONS')) ? $VIM_TEST_OPTIONS : ''
     autocmd FileType python let $VIM_TEST_TARGET =
         \ (exists('$VIM_TEST_TARGET')) ? $VIM_TEST_TARGET : ''
-    autocmd FileType python let $VIM_TEST_FILENAME_STYLE =
-        \ (exists('$VIM_TEST_FILENAME_STYLE')) ? $VIM_TEST_FILENAME_STYLE : 'pytest'
+    autocmd FileType python let $VIM_TEST_RUNNER =
+        \ (exists('$VIM_TEST_RUNNER')) ? $VIM_TEST_RUNNER : 'pytest'
 
     " ↓ Run tests in tmux next pane
     autocmd FileType python nnoremap <silent> t<CR> 
@@ -552,8 +552,8 @@ augroup aug_filetype_python_testing
         \ :let $VIM_TEST_COMMAND='<c-r>=$VIM_TEST_COMMAND<cr>'
     autocmd FileType python nnoremap <localleader>tO
         \ :let $VIM_TEST_OPTIONS='<c-r>=$VIM_TEST_OPTIONS<cr>'
-    autocmd FileType python nnoremap <localleader>tS
-        \ :let $VIM_TEST_FILENAME_STYLE='<c-r>=$VIM_TEST_FILENAME_STYLE<cr>'
+    autocmd FileType python nnoremap <localleader>tR
+        \ :let $VIM_TEST_RUNNER='<c-r>=$VIM_TEST_RUNNER<cr>'
 
     " ↓ Make a test name from current line contents
     autocmd FileType python nnoremap <buffer> <localleader>tn
@@ -681,12 +681,12 @@ augroup aug_filetype_python_functions
 
     function! BanPython_GetTestSeparators(command)
         " {{{3
-        if exists('$VIM_TEST_FILENAME_STYLE')
-            if $VIM_TEST_FILENAME_STYLE =~ 'pytest'
+        if exists('$VIM_TEST_RUNNER')
+            if $VIM_TEST_RUNNER =~ 'pytest'
                 let path_separator = '/'
                 let expand_string = '%:.'
                 let class_separator = '::'
-            elseif $VIM_TEST_FILENAME_STYLE =~ 'unittest'
+            elseif $VIM_TEST_RUNNER =~ 'unittest'
                 let path_separator = '.'
                 let expand_string = '%:.:r'
                 let class_separator = '.'
