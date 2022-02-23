@@ -524,12 +524,15 @@ augroup aug_filetype_python_testing
         \ (exists('$VIM_TEST_FILENAME_STYLE')) ? $VIM_TEST_FILENAME_STYLE : 'pytest'
 
     " ↓ Run tests in tmux next pane
-    autocmd FileType python nnoremap <silent> t<CR>
+    autocmd FileType python nnoremap <silent> t<CR> 
         \ :update<bar>
-        \ :call BanPython_WriteTestArgsToEnvFile($VIM_TEST_OPTIONS, $VIM_TEST_TARGET) <bar>
+        \ :let _pre='PYTEST_ADDOPTS=\\"{options} {target}\\"'<bar>
+        \ :let _pre=substitute(_pre, '{options}', $VIM_TEST_OPTIONS, 'ge')<bar>
+        \ :let _pre=substitute(_pre, '{target}', $VIM_TEST_TARGET, 'ge')<bar>
         \ :let _cmd=($VIM_TEST_COMMAND =~ 'make')
-        \   ? '!tmux send-keys -t .+ -l ". .vim_test_env;run-with-time {test};unset ARGS"'
-        \   : '!tmux send-keys -t .+ -l ". .vim_test_env;run-with-time {test} {target};unset ARGS"'<bar>
+        \   ? '!tmux send-keys -t .+ -l "{_pre} run-with-time {test}"'
+        \   : '!tmux send-keys -t .+ -l "{_pre} run-with-time {test}  #{target}"'<bar>
+        \ :let _cmd=substitute(_cmd, '{_pre}', _pre, 'ge')<bar>
         \ :let _cmd=substitute(_cmd, '{test}', $VIM_TEST_COMMAND, 'ge')<bar>
         \ :let _cmd=substitute(_cmd, '{target}', $VIM_TEST_TARGET, 'ge')<bar>
         \ :execute _cmd<bar>
@@ -750,20 +753,6 @@ augroup aug_filetype_python_functions
         let target = expand(expand_arg)
             \ . class_sep . BanPython_GetCurrentPythonFunctionName()
         let $VIM_TEST_TARGET = substitute(target, '/', path_sep, 'g')
-    endfunction |" 3}}}
-
-    function! BanPython_WriteTestArgsToEnvFile(options, test_target)
-        " {{{3
-        if a:options != ''
-            let line='export ARGS="{options} {target}"'
-        else
-            let line='export ARGS={target}'
-        endif
-        let line=substitute(line, '{options}', a:options, 'ge')
-        let line=substitute(line, '{target}', a:test_target, 'ge')
-        call writefile(
-            \ ['set -x', line, 'export PYTEST_ADDOPTS="$ARGS"', 'set +x'],
-            \ './.vim_test_env')
     endfunction |" 3}}}
 
     function! BanPython_BuildTestCommand(command, target)
