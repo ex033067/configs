@@ -527,18 +527,15 @@ augroup aug_filetype_python_testing
     " ↓ Run tests in tmux next pane
     autocmd FileType python nnoremap <silent> t<CR> 
         \:update<bar>
-        \:let _pre='PYTEST_ADDOPTS=\\"{options} {target}\\"'<bar>
-        \:let _pre=substitute(_pre, '{options}', $VIM_TEST_OPTIONS, 'ge')<bar>
-        \:let _pre=substitute(_pre, '{target}', $VIM_TEST_TARGET, 'ge')<bar>
-        \:let _cmd=($VIM_TEST_COMMAND =~ 'make')
-        \  ? '!tmux send-keys -t .+ -l "{_pre} run-with-time {test}"'
-        \  : '!tmux send-keys -t .+ -l "{_pre} run-with-time {test}  #{target}"'<bar>
-        \:let _cmd=substitute(_cmd, '{_pre}', _pre, 'ge')<bar>
-        \:let _cmd=substitute(_cmd, '{test}', $VIM_TEST_COMMAND, 'ge')<bar>
-        \:let _cmd=substitute(_cmd, '{target}', $VIM_TEST_TARGET, 'ge')<bar>
-        \:execute _cmd<bar>
+        \:let _test_cmd=BanPython_BuildCommandForTestRunner($VIM_TEST_RUNNER)<bar>
+        \:let _test_cmd=substitute(_test_cmd, '{command}', $VIM_TEST_COMMAND, 'ge')<bar>
+        \:let _test_cmd=substitute(_test_cmd, '{options}', $VIM_TEST_OPTIONS, 'ge')<bar>
+        \:let _test_cmd=substitute(_test_cmd, '{target}', $VIM_TEST_TARGET, 'ge')<bar>
+        \:let _tmux_cmd='!tmux send-keys -t .+ -l "{_test_cmd}"'<bar>
+        \:let _tmux_cmd=substitute(_tmux_cmd, '{_test_cmd}', _test_cmd, 'ge')<bar>
+        \:execute _tmux_cmd<bar>
         \:execute '!tmux send-keys -t .+ Enter'<CR><bar>
-        \:unlet _cmd<CR>
+        \:unlet _tmux_cmd<CR>
 
     " Mappings to help with tests (this is a big section).
     " All mappings are prefixed with \t.
@@ -792,6 +789,16 @@ augroup aug_filetype_python_functions
         execute 'normal gv"sy'
         return getreg('s')
     endfunction
+
+    function! BanPython_BuildCommandForTestRunner(test_runner)
+        " {{{3
+        if a:test_runner == 'pytest'
+            return 'PYTEST_ADDOPTS=\\"{options} {target}\\" run-with-time {command}'
+        elseif a:test_runner == 'unittest'
+            return 'run-with-time {command} {options} {target}'
+        endif
+    endfunction |" 3}}}
+
 augroup END |" 2}}}
 
 augroup aug_filetype_sh
