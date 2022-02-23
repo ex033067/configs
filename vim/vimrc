@@ -526,19 +526,19 @@ augroup aug_filetype_python_testing
 
     " ↓ Run tests in tmux next pane
     autocmd FileType python nnoremap <silent> t<CR> 
-        \ :update<bar>
-        \ :let _pre='PYTEST_ADDOPTS=\\"{options} {target}\\"'<bar>
-        \ :let _pre=substitute(_pre, '{options}', $VIM_TEST_OPTIONS, 'ge')<bar>
-        \ :let _pre=substitute(_pre, '{target}', $VIM_TEST_TARGET, 'ge')<bar>
-        \ :let _cmd=($VIM_TEST_COMMAND =~ 'make')
-        \   ? '!tmux send-keys -t .+ -l "{_pre} run-with-time {test}"'
-        \   : '!tmux send-keys -t .+ -l "{_pre} run-with-time {test}  #{target}"'<bar>
-        \ :let _cmd=substitute(_cmd, '{_pre}', _pre, 'ge')<bar>
-        \ :let _cmd=substitute(_cmd, '{test}', $VIM_TEST_COMMAND, 'ge')<bar>
-        \ :let _cmd=substitute(_cmd, '{target}', $VIM_TEST_TARGET, 'ge')<bar>
-        \ :execute _cmd<bar>
-        \ :execute '!tmux send-keys -t .+ Enter'<CR><bar>
-        \ :unlet _cmd<CR>
+        \:update<bar>
+        \:let _pre='PYTEST_ADDOPTS=\\"{options} {target}\\"'<bar>
+        \:let _pre=substitute(_pre, '{options}', $VIM_TEST_OPTIONS, 'ge')<bar>
+        \:let _pre=substitute(_pre, '{target}', $VIM_TEST_TARGET, 'ge')<bar>
+        \:let _cmd=($VIM_TEST_COMMAND =~ 'make')
+        \  ? '!tmux send-keys -t .+ -l "{_pre} run-with-time {test}"'
+        \  : '!tmux send-keys -t .+ -l "{_pre} run-with-time {test}  #{target}"'<bar>
+        \:let _cmd=substitute(_cmd, '{_pre}', _pre, 'ge')<bar>
+        \:let _cmd=substitute(_cmd, '{test}', $VIM_TEST_COMMAND, 'ge')<bar>
+        \:let _cmd=substitute(_cmd, '{target}', $VIM_TEST_TARGET, 'ge')<bar>
+        \:execute _cmd<bar>
+        \:execute '!tmux send-keys -t .+ Enter'<CR><bar>
+        \:unlet _cmd<CR>
 
     " Mappings to help with tests (this is a big section).
     " All mappings are prefixed with \t.
