@@ -123,6 +123,8 @@ vnoremap # :<C-u>let _prev_reg=getreg('"')<bar>let _prev_type=getregtype('"')<CR
 
 " ↓ Highlight word under cursor without moving it
 nnoremap <leader>* :set hlsearch<bar>:let @/=expand('<cword>').'\c'<CR>
+" ↓ Highlight selected text without moving the cursor
+vnoremap <leader>* :<C-u>let _prev_reg=getreg('"')<bar>let _prev_type=getregtype('"')<CR>gvy:let _patt=escape(getreg('"'), '/\.*$^~[')<bar>call setreg('"', _prev_reg, _prev_type)<CR>:set hlsearch<bar>call setreg('/', _patt.'\c')<CR>gV
 nnoremap <leader><leader> :setlocal cursorline!<CR>
 nnoremap <silent> <leader>< :setlocal list!<CR>:set list?<CR>
 
