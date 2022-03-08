@@ -116,6 +116,11 @@ nnoremap <BS> :nohlsearch<CR>
 " ↓ Colorize parentheses, brackets, etc.
 nnoremap <leader>( :RainbowToggle<CR>
 nnoremap <leader>) :QuickScopeToggle<CR>
+" ↓ Search selected text forward
+vnoremap * :<C-u>let _prev_reg=getreg('"')<bar>let _prev_type=getregtype('"')<CR>gvy:let _patt=escape(getreg('"'), '/\.*$^~[')<bar>call setreg('"', _prev_reg, _prev_type)<CR>/<C-r>=_patt<CR><CR>gV
+" ↓ Search selected text backwards
+vnoremap # :<C-u>let _prev_reg=getreg('"')<bar>let _prev_type=getregtype('"')<CR>gvy:let _patt=escape(getreg('"'), '/\.*$^~[')<bar>call setreg('"', _prev_reg, _prev_type)<CR>?<C-r>=_patt<CR><CR>gV
+
 " ↓ Highlight word under cursor without moving it
 nnoremap <leader>* :set hlsearch<bar>:let @/=expand('<cword>').'\c'<CR>
 nnoremap <leader><leader> :setlocal cursorline!<CR>
