@@ -521,25 +521,34 @@ augroup aug_filetype_python_testing
     " {{{2
     au!
     " initialize global test variables
-    autocmd FileType python let $VIM_TEST_COMMAND =
+    autocmd FileType python let g:tTEST_CONFIG = (exists('g:tTEST_CONFIG'))
+        \ ? g:tTEST_CONFIG : {}
+    autocmd FileType python let g:tTEST_CONFIG['command'] =
+        \ (has_key(g:tTEST_CONFIG, 'command')) ? g:tTEST_CONFIG['command'] :
         \     (exists('$VIM_TEST_COMMAND')) ? $VIM_TEST_COMMAND :
         \         (filereadable('Makefile')) ? 'make test' :
         \             (executable('pytest')) ? 'pytest' : ''
-    autocmd FileType python let $VIM_TEST_OPTIONS =
+    autocmd FileType python let g:tTEST_CONFIG['options'] =
+        \ (has_key(g:tTEST_CONFIG, 'options')) ? g:tTEST_CONFIG['options'] :
         \ (exists('$VIM_TEST_OPTIONS')) ? $VIM_TEST_OPTIONS : ''
-    autocmd FileType python let $VIM_TEST_TARGET =
-        \ (exists('$VIM_TEST_TARGET')) ? $VIM_TEST_TARGET : ''
-    autocmd FileType python let $VIM_TEST_RUNNER =
+    autocmd FileType python let g:tTEST_CONFIG['runner'] =
+        \ (has_key(g:tTEST_CONFIG, 'runner')) ? g:tTEST_CONFIG['runner'] :
         \     (exists('$VIM_TEST_RUNNER')) ? $VIM_TEST_RUNNER :
         \         (executable('pytest')) ? 'pytest' : 'unittest'
+    autocmd FileType python let g:tTEST_CONFIG['target'] =
+        \ (has_key(g:tTEST_CONFIG, 'target')) ? g:tTEST_CONFIG['target'] : ''
 
     " ↓ Run tests in tmux next pane
     autocmd FileType python nnoremap <silent> t<CR> 
         \:update<bar>
-        \:let _test_cmd=BanPython_BuildCommandForTestRunner($VIM_TEST_RUNNER)<bar>
-        \:let _test_cmd=substitute(_test_cmd, '{command}', $VIM_TEST_COMMAND, 'ge')<bar>
-        \:let _test_cmd=substitute(_test_cmd, '{options}', $VIM_TEST_OPTIONS, 'ge')<bar>
-        \:let _test_cmd=substitute(_test_cmd, '{target}', $VIM_TEST_TARGET, 'ge')<bar>
+        \:let _test_cmd=BanPython_BuildCommandForTestRunner(
+        \   g:tTEST_CONFIG['runner'], g:tTEST_CONFIG['command'])<bar>
+        \:let _test_cmd=substitute(
+        \   _test_cmd, '{command}', g:tTEST_CONFIG['command'], 'ge')<bar>
+        \:let _test_cmd=substitute(
+        \   _test_cmd, '{options}', g:tTEST_CONFIG['options'], 'ge')<bar>
+        \:let _test_cmd=substitute(
+        \   _test_cmd, '{target}', g:tTEST_CONFIG['target'], 'ge')<bar>
         \:let _tmux_cmd='!tmux send-keys -t .+ -l "{_test_cmd}"'<bar>
         \:let _tmux_cmd=substitute(_tmux_cmd, '{_test_cmd}', _test_cmd, 'ge')<bar>
         \:execute _tmux_cmd<bar>
@@ -549,17 +558,14 @@ augroup aug_filetype_python_testing
     " Mappings to help with tests (this is a big section).
     " All mappings are prefixed with \t.
     "
-    " \tC configure the test command (along with its arguments).
-    " Examples below:
-    "   - pytest --pyargs
-    "   - python manage.py test -v 2
-    "   - python -m unittest
+    " \tC configure test configurations.
     autocmd FileType python nnoremap <localleader>tC
-        \ :let $VIM_TEST_COMMAND='<c-r>=$VIM_TEST_COMMAND<cr>'
-    autocmd FileType python nnoremap <localleader>tO
-        \ :let $VIM_TEST_OPTIONS='<c-r>=$VIM_TEST_OPTIONS<cr>'
-    autocmd FileType python nnoremap <localleader>tR
-        \ :let $VIM_TEST_RUNNER='<c-r>=$VIM_TEST_RUNNER<cr>'
+        \ :let _="{'command':'{c}', 'options':'{o}', 'runner':'{r}', 'target':'{t}'}"<bar>
+        \ :let _=substitute(_, '{c}', g:tTEST_CONFIG['command'], 'ge')<bar>
+        \ :let _=substitute(_, '{o}', g:tTEST_CONFIG['options'], 'ge')<bar>
+        \ :let _=substitute(_, '{r}', g:tTEST_CONFIG['runner'], 'ge')<bar>
+        \ :let _=substitute(_, '{t}', g:tTEST_CONFIG['target'], 'ge')<CR>
+        \ :let g:tTEST_CONFIG=<c-r>=_<cr>
 
     " ↓ Make a test name from current line contents
     autocmd FileType python nnoremap <buffer> <localleader>tn
@@ -568,28 +574,28 @@ augroup aug_filetype_python_testing
     " Mark targets
     autocmd FileType python nnoremap <buffer> <localleader>ta
         \ :wall <bar>
-        \ :call BanPython_SetAllSuiteAsTestTarget() <bar>
-        \ :echo 'All suite set as test target.'<CR>
+        \ :let g:tTEST_CONFIG['target'] = BanPython_SetAllSuiteAsTestTarget() <bar>
+        \ :echo 'Test target: All suite'<CR>
     autocmd FileType python nnoremap <buffer> <localleader>tp
         \ :wall <bar>
-        \ :call BanPython_SetCurrentPackageAsTestTarget($VIM_TEST_COMMAND) <bar>
-        \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+        \ :let g:tTEST_CONFIG['target'] = BanPython_SetCurrentPackageAsTestTarget(g:tTEST_CONFIG['command']) <bar>
+        \ :echo 'Test target: package '. g:tTEST_CONFIG['target']<CR>
     autocmd FileType python nnoremap <buffer> <localleader>t%
         \ :wall <bar>
-        \ :call BanPython_SetCurrentModuleAsTestTarget($VIM_TEST_COMMAND) <bar>
-        \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+        \ :let g:tTEST_CONFIG['target'] =  BanPython_SetCurrentModuleAsTestTarget(g:tTEST_CONFIG['command']) <bar>
+        \ :echo 'Test target: module '. g:tTEST_CONFIG['target']<CR>
     autocmd FileType python nnoremap <buffer> <localleader>tc
         \ :wall <bar>
-        \ :call BanPython_SetCurrentClassAsTestTarget($VIM_TEST_COMMAND) <bar>
-        \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+        \ :let g:tTEST_CONFIG['target'] = BanPython_SetCurrentClassAsTestTarget(g:tTEST_CONFIG['command']) <bar>
+        \ :echo 'Test target: class '. g:tTEST_CONFIG['target']<CR>
     autocmd FileType python nnoremap <buffer> <localleader>tm
         \ :wall <bar>
-        \ :call BanPython_SetCurrentMethodAsTestTarget($VIM_TEST_COMMAND) <bar>
-        \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+        \ :let g:tTEST_CONFIG['target'] = BanPython_SetCurrentMethodAsTestTarget(g:tTEST_CONFIG['command']) <bar>
+        \ :echo 'Test target: method '. g:tTEST_CONFIG['target']<CR>
     autocmd FileType python nnoremap <buffer> <localleader>tf
         \ :wall <bar>
-        \ :call BanPython_SetCurrentFunctionAsTestTarget($VIM_TEST_COMMAND) <bar>
-        \ :echo $VIM_TEST_TARGET. ' set as test target.'<CR>
+        \ :let g:tTEST_CONFIG['target'] = BanPython_SetCurrentFunctionAsTestTarget(g:tTEST_CONFIG['command']) <bar>
+        \ :echo 'Test target: function '. g:tTEST_CONFIG['target']<CR>
 
     " ↓ Copy current filename and function/method to register z in pytest format (JOE specific)
     " autocmd FileType python nnoremap <silent> <localleader>tr
@@ -687,20 +693,18 @@ augroup aug_filetype_python_functions
 
     function! BanPython_GetTestSeparators(command)
         " {{{3
-        if exists('$VIM_TEST_RUNNER')
-            if $VIM_TEST_RUNNER == 'pytest'
-                " path/test/file.py::Class::method
-                let path_separator = '/'
-                let expand_string = '%:.'
-                let class_separator = '::'
-            elseif $VIM_TEST_RUNNER == 'unittest'
-                " some.test.module.TestClass.test_method
-                let path_separator = '.'
-                let expand_string = '%:.:r'
-                let class_separator = '.'
-            endif
-            return [path_separator, class_separator, expand_string]
+        if g:tTEST_CONFIG['runner'] == 'pytest'
+            " path/test/file.py::Class::method
+            let path_separator = '/'
+            let expand_string = '%:.'
+            let class_separator = '::'
+        elseif g:tTEST_CONFIG['runner'] == 'unittest'
+            " some.test.module.TestClass.test_method
+            let path_separator = '.'
+            let expand_string = '%:.:r'
+            let class_separator = '.'
         endif
+        return [path_separator, class_separator, expand_string]
 
         if a:command =~ 'unittest'
             let path_separator = '.'
@@ -726,17 +730,17 @@ augroup aug_filetype_python_functions
     endfunction |" 3}}}
 
     function! BanPython_SetAllSuiteAsTestTarget()
-        let $VIM_TEST_TARGET = ''
+        return ''
     endfunction
 
     function! BanPython_SetCurrentPackageAsTestTarget(command)
         let [path_sep, _, _] = BanPython_GetTestSeparators(a:command)
-        let $VIM_TEST_TARGET = substitute(expand('%:.:h'), '/', path_sep, 'g')
+        return substitute(expand('%:.:h'), '/', path_sep, 'g')
     endfunction
 
     function! BanPython_SetCurrentModuleAsTestTarget(command)
         let [path_sep, _, expand_arg] = BanPython_GetTestSeparators(a:command)
-        let $VIM_TEST_TARGET = substitute(expand(expand_arg), '/', path_sep, 'g')
+        return substitute(expand(expand_arg), '/', path_sep, 'g')
     endfunction
 
     function! BanPython_SetCurrentClassAsTestTarget(command)
@@ -744,7 +748,7 @@ augroup aug_filetype_python_functions
         let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
         let target = expand(expand_arg)
             \ . class_sep . BanPython_GetCurrentPythonClassName()
-        let $VIM_TEST_TARGET = substitute(target, '/', path_sep, 'g')
+        return substitute(target, '/', path_sep, 'g')
     endfunction |" 3}}}
 
     function! BanPython_SetCurrentMethodAsTestTarget(command)
@@ -753,7 +757,7 @@ augroup aug_filetype_python_functions
         let target = expand(expand_arg)
             \ . class_sep . BanPython_GetCurrentPythonClassName()
             \ . class_sep . BanPython_GetCurrentPythonMethodName()
-        let $VIM_TEST_TARGET = substitute(target, '/', path_sep, 'g')
+        return substitute(target, '/', path_sep, 'g')
     endfunction |" 3}}}
 
     function! BanPython_SetCurrentFunctionAsTestTarget(command)
@@ -761,7 +765,7 @@ augroup aug_filetype_python_functions
         let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
         let target = expand(expand_arg)
             \ . class_sep . BanPython_GetCurrentPythonFunctionName()
-        let $VIM_TEST_TARGET = substitute(target, '/', path_sep, 'g')
+        return substitute(target, '/', path_sep, 'g')
     endfunction |" 3}}}
 
     function! BanPython_BuildTestCommand(command, target)
