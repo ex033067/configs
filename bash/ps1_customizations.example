@@ -9,7 +9,6 @@
 # http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
 export PS1_COLOR_DEFAULT='\[\e[38;5;250;48;5;25m\]'  # white on blue background
 export PS1_COLOR_GIT='\[\e[38;5;250;48;5;60m\]'  # white on gray background
-export PS1_COLOR_VIRTUALENV='\[\e[38;5;15;48;5;27m\]'  # plain white on light blue background
 export PS1_COLOR_ERROR='\[\e[38;5;15;48;5;1m\]'  # plain white on red
 
 
