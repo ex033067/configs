@@ -433,7 +433,7 @@ function __venv_create()
 		echo 'virtualenv forcibly native' > "${PWD}/${dirname}/.virtualenv_forcibly_native"
 	fi
 	venv info
-	venv shell
+	venv shell $dirname
 }
 
 function __venv_shell()
