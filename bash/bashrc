@@ -363,7 +363,7 @@ function venv()
 	elif [[ "$command" == 'create' ]]; then
 		__venv_create "$@"
 	elif [[ "$command" == 'shell' ]]; then
-		__venv_shell
+		__venv_shell "$@"
 	elif [[ "$command" == 'run' ]]; then
 		__venv_run "$@"
 	else
@@ -438,23 +438,28 @@ function __venv_create()
 
 function __venv_shell()
 {
-	if __venv__is_virtualenv_forcibly_native; then
-		echo 'Launching forcibly native virtualenv shell'
-	elif __venv__is_virtualenv_managed_by_pipenv; then
-		echo 'Launching pipenv shell'
-		pipenv shell
-		return
-	elif __venv__is_virtualenv_managed_by_poetry; then
-		echo 'Launching poetry shell'
-		poetry shell
-		return
-	else
+	local location="$1"
+	if [[ -n "$location" ]]; then
 		echo 'Launching native virtualenv shell'
+	else
+		if __venv__is_virtualenv_forcibly_native; then
+			echo 'Launching forcibly native virtualenv shell'
+		elif __venv__is_virtualenv_managed_by_pipenv; then
+			echo 'Launching pipenv shell'
+			pipenv shell
+			return
+		elif __venv__is_virtualenv_managed_by_poetry; then
+			echo 'Launching poetry shell'
+			poetry shell
+			return
+		else
+			echo 'Launching native virtualenv shell'
+		fi
 	fi
 
 	(
 		local init_commands=
-		init_commands=$(__venv_prepare_environment_for_virtualenv)
+		init_commands=$(__venv_prepare_environment_for_virtualenv $location)
 		retval=$?
 		if [[ $retval -ne 0 ]]; then
 			echo 'No virtualenv found. Shell not launched.'
@@ -590,11 +595,13 @@ function __venv_info()
 
 function __venv_prepare_environment_for_virtualenv()
 {
-	local location=
-	location=$(venv info --path)
-	retval=$?
-	if [[ $retval -ne 0 ]]; then
-		return 1
+	local location="$1"
+	if [[ -z "$location" ]]; then
+		location=$(venv info --path)
+		retval=$?
+		if [[ $retval -ne 0 ]]; then
+			return 1
+		fi
 	fi
 	echo "export VIRTUAL_ENV='${location}';export PATH='${location}/bin:${PATH}'"
 }
