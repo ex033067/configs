@@ -381,10 +381,8 @@ function __venv_help()
 		
 		Usage: ${funcname} <command> [<arg>]
 		Commands:
-		  create [<dirname>] [--force-native]
+		  create <dirname>
 		      Create and activate virtualenv <dirname> (default is "venv") inside current directory.
-		      Optionally you can command venv to ignore a Pipfile or pyproject.toml and just use the native virtualenv.
-		      Example: \$ ${funcname} create .sandbox
 		  run <command>
 		      Run <command> inside the virtualenv. Exit the virtualenv when finished.
 		      Example: \$ ${funcname} run pip install -r requirements.txt
@@ -401,37 +399,9 @@ function __venv_help()
 function __venv_create()
 {
 	local default_dirname=venv
-	local dirname=
-	local force_native_venv=
-
-	while [[ -n "$1" ]]; do
-		if [[ ! "$1" =~ ^- ]]; then
-			# argument does not start with a dash
-			if [[ -n "$dirname" ]]; then
-				echo 'Another dirname? Invalid argument. Aborting.'
-				return 1
-			fi
-			dirname="$1"
-			shift
-			continue
-		fi
-
-		if [[ "$1" = "--force-native" ]]; then
-			force_native_venv=1
-		else
-			echo "Invalid option: ${1}. Aborting."
-			return 1
-		fi
-
-		shift
-	done
-
+	local dirname="$1"
 	dirname=${dirname:-${default_dirname}}
-
 	python -m venv "${PWD}/${dirname}"
-	if [[ -n "$force_native_venv" ]]; then
-		echo 'virtualenv forcibly native' > "${PWD}/${dirname}/.virtualenv_forcibly_native"
-	fi
 	venv info
 	venv shell $dirname
 }
@@ -440,11 +410,20 @@ function __venv_shell()
 {
 	local location="$1"
 	if [[ -n "$location" ]]; then
-		echo 'Launching native virtualenv shell'
+		abspath=$(cd $location;echo $PWD)
+		if [[ "$abspath" = "$(__venv__get_pipenv_virtualenv_location)" ]]; then
+			echo 'Launching pipenv shell'
+			pipenv shell
+			return
+		elif [[ "$abspath" = "$(__venv__get_poetry_virtualenv_location)" ]]; then
+			echo 'Launching poetry shell'
+			poetry shell
+			return
+		else
+			echo 'Launching native virtualenv shell'
+		fi
 	else
-		if __venv__is_virtualenv_forcibly_native; then
-			echo 'Launching forcibly native virtualenv shell'
-		elif __venv__is_virtualenv_managed_by_pipenv; then
+		if __venv__is_virtualenv_managed_by_pipenv; then
 			echo 'Launching pipenv shell'
 			pipenv shell
 			return
@@ -472,9 +451,7 @@ function __venv_shell()
 function __venv_run()
 {
 	local command_to_run="$@"
-	if __venv__is_virtualenv_forcibly_native; then
-		echo 'Running through forcibly native virtualenv'
-	elif __venv__is_virtualenv_managed_by_pipenv; then
+	if __venv__is_virtualenv_managed_by_pipenv; then
 		echo 'Running through pipenv run'
 		pipenv run $command_to_run
 		return
@@ -506,91 +483,89 @@ function __venv__is_virtualenv_managed_by_poetry()
 	poetry env info -q
 }
 
-function __venv__is_virtualenv_forcibly_native()
+function __venv__get_pipenv_virtualenv_location()
 {
-	local path=$(__venv__get_native_virtualenv_location)
-	[[ -f "${path}/.virtualenv_forcibly_native" ]]
-}
-
-function __venv__who_manages_the_virtualenv()
-{
-	if __venv__is_virtualenv_forcibly_native; then
-		echo 'Python native venv (forced)'
-	elif __venv__is_virtualenv_managed_by_pipenv; then
-		echo pipenv
-	elif __venv__is_virtualenv_managed_by_poetry; then
-		echo poetry
-	else
-		echo Python native venv
+	if __venv__is_virtualenv_managed_by_pipenv; then
+		dirname=$(pipenv --venv 2> /dev/null)
+		echo $(cd $dirname;echo $PWD)
 	fi
 }
 
-function __venv__get_native_virtualenv_location()
+function __venv__get_poetry_virtualenv_location()
 {
-	local possible_dirs='venv .venv .virtualenv .sandbox'
-	for dir in ${possible_dirs}; do
-		if [[ -d $dir ]]; then
-			echo $dir
-			return
-		fi
+	if __venv__is_virtualenv_managed_by_poetry; then
+		dirname=$(poetry env info --path)
+		echo $(cd $dirname;echo $PWD)
+	fi
+}
+
+function __venv__get_inline_virtualenvs_locations()
+{
+	local locations=
+	local sep=
+	for dirname in $(find . -name 'pyvenv.cfg' | sed -e 's/\/pyvenv.cfg//'); do
+		abspath=$(cd $dirname;echo $PWD)
+		echo $abspath
 	done
 }
 
-function __make_absolute_path()
+function __venv__get_virtualenvs_locations()
 {
-	local path="$1"
-	if [[ -z "$path" ]]; then
-		return
-	fi
-	if [[ "${path:0:1}" = '/' ]]; then  # Start with a slash?
-		echo $path  # It's already an absolute path.
-		return
-	fi
-	if [[ "${path:0:2}" = './' ]]; then  # Explicitly relative to PWD?
-		path="${path:2}"  # Make it implicitly relative.
-	fi
-	echo "${PWD}/${path}"  # Make the path absolute.
-}
+	local dirname=
+	local tem_virtualenv=
+	local inlines=
+	declare -a locations
 
-function __venv__get_virtualenv_location()
-{
-	local location=
-	if __venv__is_virtualenv_forcibly_native; then
-		location=$(__venv__get_native_virtualenv_location)
-	elif __venv__is_virtualenv_managed_by_pipenv; then
-		location=$(pipenv --venv 2> /dev/null)
-	elif __venv__is_virtualenv_managed_by_poetry; then
-		location=$(poetry env info --path)
-	else
-		location=$(__venv__get_native_virtualenv_location)
+	dirname=$(__venv__get_pipenv_virtualenv_location)
+	if [[ -n "$dirname" ]]; then
+		locations[${#locations[@]}]=$(cd $dirname;echo "pipenv;$PWD")
 	fi
-	location=$(__make_absolute_path $location)
-	if [[ -z "$location" ]]; then
+
+	dirname=$(__venv__get_poetry_virtualenv_location)
+	if [[ -n "$dirname" ]]; then
+		locations[${#locations[@]}]=$(cd $dirname;echo "poetry;$PWD")
+	fi
+
+	inlines=$(__venv__get_inline_virtualenvs_locations)
+	for dirname in $inlines; do
+		if [[ ! "${locations[@]}" =~ "$dirname" ]]; then
+			locations[${#locations[@]}]="native;$dirname"
+		fi
+	done
+
+	if [[ ${#locations[@]} -eq 0 ]]; then
 		return 1
 	fi
-	echo "$location"
+
+	for dirname in ${locations[@]}; do
+		echo $dirname
+	done
 }
 
 function __venv_info()
 {
 	local option="$1"
-	if [[ "$option" == '--path' ]]; then
-		local location=
-		location=$(__venv__get_virtualenv_location)
-		retval=$?
-		if [[ $retval -ne 0 ]]; then
-			return 1
-		fi
-		echo "$location"
-		return
-	fi
+	local locations=$(__venv__get_virtualenvs_locations)
+	local tool=
 
-	local tool=$(__venv__who_manages_the_virtualenv)
-	local location=$(__venv__get_virtualenv_location)
-	cat <<-_ENDOFTEXT_
-		Virtualenv tool: ${tool}
-		Virtualenv path: ${location}
-	_ENDOFTEXT_
+	for line in $locations; do
+		dirname=${line#*;}
+		if [[ "$option" == '--path' ]]; then
+			echo $dirname
+        else
+			tool=${line%;*}
+			cat <<-_ENDOFTEXT_
+				Virtualenv tool: ${tool}
+				Virtualenv path: ${dirname}
+			_ENDOFTEXT_
+		fi
+	done
+
+	if [[ -n "$locations" ]]; then
+		return
+	else
+		return -1
+	fi
 }
 
 function __venv_prepare_environment_for_virtualenv()
