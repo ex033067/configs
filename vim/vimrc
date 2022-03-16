@@ -809,7 +809,7 @@ augroup aug_filetype_python_functions
     function! BanPython_BuildCommandForTestRunner(test_runner, test_command)
         " {{{3
         if a:test_runner == 'pytest'
-            return 'PYTEST_ADDOPTS=\\"{options} {target}\\" run-with-time {command}'
+            return 'PYTEST_ADDOPTS=\\"{options} {target}\\" ARGS=\\"\\$PYTEST_ADDOPTS\\" run-with-time {command}'
         elseif a:test_command =~ 'make '
             return 'ARGS=\\"{options} {target}\\" run-with-time {command}'
         elseif a:test_runner == 'unittest'
