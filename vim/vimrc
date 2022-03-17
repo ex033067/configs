@@ -577,26 +577,10 @@ augroup aug_filetype_python_testing
         \ :wall <bar>
         \ :let g:tTEST_CONFIG['target'] = BanPython_SetAllSuiteAsTestTarget() <bar>
         \ :echo 'Test target: All suite'<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>tp
+    autocmd FileType python nnoremap <buffer> <localleader>tt
         \ :wall <bar>
-        \ :let g:tTEST_CONFIG['target'] = BanPython_SetCurrentPackageAsTestTarget(g:tTEST_CONFIG['command']) <bar>
-        \ :echo 'Test target: package '. g:tTEST_CONFIG['target']<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>t%
-        \ :wall <bar>
-        \ :let g:tTEST_CONFIG['target'] =  BanPython_SetCurrentModuleAsTestTarget(g:tTEST_CONFIG['command']) <bar>
-        \ :echo 'Test target: module '. g:tTEST_CONFIG['target']<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>tc
-        \ :wall <bar>
-        \ :let g:tTEST_CONFIG['target'] = BanPython_SetCurrentClassAsTestTarget(g:tTEST_CONFIG['command']) <bar>
-        \ :echo 'Test target: class '. g:tTEST_CONFIG['target']<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>tm
-        \ :wall <bar>
-        \ :let g:tTEST_CONFIG['target'] = BanPython_SetCurrentMethodAsTestTarget(g:tTEST_CONFIG['command']) <bar>
-        \ :echo 'Test target: method '. g:tTEST_CONFIG['target']<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>tf
-        \ :wall <bar>
-        \ :let g:tTEST_CONFIG['target'] = BanPython_SetCurrentFunctionAsTestTarget(g:tTEST_CONFIG['command']) <bar>
-        \ :echo 'Test target: function '. g:tTEST_CONFIG['target']<CR>
+        \ :let g:tTEST_CONFIG['target'] = BanPython_SetCurrentLineAsTestTarget(g:tTEST_CONFIG['command']) <bar>
+        \ :echo 'Test target: '. g:tTEST_CONFIG['target']<CR>
 
     " ↓ Copy current filename and function/method to register z in pytest format (JOE specific)
     " autocmd FileType python nnoremap <silent> <localleader>tr
@@ -734,39 +718,36 @@ augroup aug_filetype_python_functions
         return ''
     endfunction
 
-    function! BanPython_SetCurrentPackageAsTestTarget(command)
-        let [path_sep, _, _] = BanPython_GetTestSeparators(a:command)
-        return substitute(expand('%:.:h'), '/', path_sep, 'g')
-    endfunction
+    function! BanPython_SetCurrentLineAsTestTarget(command)
+        " {{{3
+        let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
+        let curline = getline('.')
 
-    function! BanPython_SetCurrentModuleAsTestTarget(command)
-        let [path_sep, _, expand_arg] = BanPython_GetTestSeparators(a:command)
+        " set class as target
+        let matches = matchlist(curline, '^class \(\w\+\)')
+        if !empty(matches) && matches[1] != ''
+            let target = expand(expand_arg) . class_sep . matches[1]
+            return substitute(target, '/', path_sep, 'g')
+        endif
+
+        " set method as target
+        let matches = matchlist(curline, '^\s\+def \(\w\+\)')
+        if !empty(matches) && matches[1] != ''
+            let target = expand(expand_arg)
+                \ . class_sep . BanPython_GetCurrentPythonClassName()
+                \ . class_sep . matches[1]
+            return substitute(target, '/', path_sep, 'g')
+        endif
+
+        " set function as target
+        let matches = matchlist(curline, '^def \(\w\+\)')
+        if !empty(matches) && matches[1] != ''
+            let target = expand(expand_arg) . class_sep . matches[1]
+            return substitute(target, '/', path_sep, 'g')
+        endif
+
+        " set module as target
         return substitute(expand(expand_arg), '/', path_sep, 'g')
-    endfunction
-
-    function! BanPython_SetCurrentClassAsTestTarget(command)
-        " {{{3
-        let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
-        let target = expand(expand_arg)
-            \ . class_sep . BanPython_GetCurrentPythonClassName()
-        return substitute(target, '/', path_sep, 'g')
-    endfunction |" 3}}}
-
-    function! BanPython_SetCurrentMethodAsTestTarget(command)
-        " {{{3
-        let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
-        let target = expand(expand_arg)
-            \ . class_sep . BanPython_GetCurrentPythonClassName()
-            \ . class_sep . BanPython_GetCurrentPythonMethodName()
-        return substitute(target, '/', path_sep, 'g')
-    endfunction |" 3}}}
-
-    function! BanPython_SetCurrentFunctionAsTestTarget(command)
-        " {{{3
-        let [path_sep, class_sep, expand_arg] = BanPython_GetTestSeparators(a:command)
-        let target = expand(expand_arg)
-            \ . class_sep . BanPython_GetCurrentPythonFunctionName()
-        return substitute(target, '/', path_sep, 'g')
     endfunction |" 3}}}
 
     function! BanPython_BuildTestCommand(command, target)
