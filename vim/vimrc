@@ -426,11 +426,11 @@ augroup aug_filetype_gitcommit
     " go to next/prev change
     autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> ]c
         \ search('^@@', "zW")
-        \   ? ':call search("^@@", "zW")\|normal zz<CR>'
+        \   ? ':call search("^@@", "zW")<CR>'
         \   : ':echohl WarningMsg\|echo "Last chunck"\|echohl None<CR>'
     autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> [c
         \ search('^@@', "bW")
-        \   ? ':call search("^@@", "bW")\|normal zz<CR>'
+        \   ? ':call search("^@@", "bW")<CR>'
         \ : ':echohl WarningMsg\|echo "First chunck"\|echohl None<CR>'
 augroup END |" 2}}}
 
