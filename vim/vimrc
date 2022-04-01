@@ -418,9 +418,9 @@ augroup aug_filetype_gitcommit
 
     " go to next/prev file in commit
     autocmd FileType gitcommit nnoremap <silent> <buffer> ]]
-        \ :call search('^diff\\|^# On branch', "zW")<CR>ztzv
+        \ :call search('^diff --git\\|^# On branch', "zW")<CR>ztzv
     autocmd FileType gitcommit nnoremap <silent> <buffer> [[
-        \ :call search('^diff\\|^# On branch', "bW")<CR>ztzv
+        \ :call search('^diff --git\\|^# On branch', "bW")<CR>ztzv
 
     " go to next/prev change
     autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> ]c
