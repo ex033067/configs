@@ -114,6 +114,7 @@ nnoremap <leader>4 :TagbarOpen j<CR>
 nnoremap <leader>$ :TagbarToggle<CR>
 nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'
 nnoremap <BS> :nohlsearch<CR>
+nnoremap <leader><BS> :set hls!<CR>
 " ↓ Colorize parentheses, brackets, etc.
 nnoremap <leader>( :RainbowToggle<CR>
 nnoremap <leader>) :QuickScopeToggle<CR>
