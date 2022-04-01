@@ -423,14 +423,10 @@ augroup aug_filetype_gitcommit
         \ :call search('^diff --git\\|^# On branch', "bW")<CR>ztzv
 
     " go to next/prev change
-    autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> ]c
-        \ search('^@@', "zW")
-        \   ? ':call search("^@@", "zW")<CR>'
-        \   : ':echohl WarningMsg\|echo "Last chunck"\|echohl None<CR>'
-    autocmd FileType gitcommit nnoremap <silent> <buffer> <expr> [c
-        \ search('^@@', "bW")
-        \   ? ':call search("^@@", "bW")<CR>'
-        \ : ':echohl WarningMsg\|echo "First chunck"\|echohl None<CR>'
+    autocmd FileType gitcommit nnoremap <silent> <buffer> ]c
+        \ :call search('^@@', "zW")<CR>
+    autocmd FileType gitcommit nnoremap <silent> <buffer> [c
+        \ :call search('^@@', "bW")<CR>
 augroup END |" 2}}}
 
 augroup aug_filetype_html
