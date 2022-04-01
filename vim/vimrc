@@ -424,9 +424,9 @@ augroup aug_filetype_gitcommit
 
     " go to next/prev change
     autocmd FileType gitcommit nnoremap <silent> <buffer> ]c
-        \ :call search('^@@', "zW")<CR>
+        \ :call search('^@@ -\d', "zW")<CR>
     autocmd FileType gitcommit nnoremap <silent> <buffer> [c
-        \ :call search('^@@', "bW")<CR>
+        \ :call search('^@@ -\d', "bW")<CR>
 augroup END |" 2}}}
 
 augroup aug_filetype_html
