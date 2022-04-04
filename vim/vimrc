@@ -563,10 +563,6 @@ augroup aug_filetype_python_testing
         \ :let _=substitute(_, '{t}', g:tTEST_CONFIG['target'], 'ge')<CR>
         \ :let g:tTEST_CONFIG=<c-r>=_<cr>
 
-    " ↓ Make a test name from current line contents
-    autocmd FileType python nnoremap <buffer> <localleader>tn
-        \ :call BanPython_MakeValidPythonTestName() <CR><bar>
-
     " Mark targets
     autocmd FileType python nnoremap <buffer> <localleader>ta
         \ :wall <bar>
@@ -653,22 +649,6 @@ augroup aug_filetype_python_functions
         let function_name = expand('<cword>')
         execute 'normal g`s'
         return l:function_name
-    endfunction |" 3}}}
-
-    function! BanPython_MakeValidPythonTestName()
-        " {{{3
-        " Transform a phrase into a test method name.
-        "
-        " Transform this:
-        "   show user name
-        " Into this:
-        "   def test_show_user_name(self):
-        "
-        let x=getline('.')
-        let x=substitute(x, '\(\w\) ', '\1_', 'ge')
-        let x=substitute(x, '-', '_', 'ge')
-        let x=substitute(x, '\(\S\+\)', 'def test_\1(self):', '')
-        call setline('.', x)
     endfunction |" 3}}}
 
     function! BanPython_GetTestSeparators(command)
