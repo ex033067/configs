@@ -572,18 +572,6 @@ augroup aug_filetype_python_testing
         \ :wall <bar>
         \ :let g:tTEST_CONFIG['target'] = BanPython_SetCurrentLineAsTestTarget(g:tTEST_CONFIG['command']) <bar>
         \ :echo 'Test target: '. g:tTEST_CONFIG['target']<CR>
-
-    " ↓ Copy current filename and function/method to register z in pytest format (JOE specific)
-    " autocmd FileType python nnoremap <silent> <localleader>tr
-    "     \ :let _curpos = getcurpos()<CR>
-    "     \ :call search('def test', 'besc')<CR>
-    "     \ :execute 'normal b"sye'<CR>
-    "     \ :let _curr_method = @s<CR>
-    "     \ :let _target = substitute(expand('%'), '.*joe/tests/', '', '').'::'._curr_method<CR>
-    "     \ :call setpos('.', _curpos)<CR>
-    "     \ :execute '!tmux send-keys -t JOE:src.1 -l "t ' .trim(_target). '"'<CR>
-    "     \ :execute '!tmux send-keys -t JOE:src.1 Enter'<CR><CR>
-    "     \ :unlet _curpos _curr_method _target<CR>
 augroup END |" 2}}}
 
 augroup aug_filetype_python_functions
