@@ -473,12 +473,12 @@ augroup aug_filetype_python_mappings
     " Particular way to "make"
     autocmd FileType python nnoremap <silent> <buffer> <leader>m
         \ :update<CR>
-        \ :call flake8#Flake8()<CR>
+        \:call flake8#Flake8()<CR>
 
     " Mapping to navigate to object definition in split window
     autocmd FileType python nnoremap <buffer> <localleader>D
         \ :split<CR>
-        \ :call jedi#goto()<CR>
+        \:call jedi#goto()<CR>
 
     " transform Python module name into file name
     autocmd FileType python nnoremap <localleader>mf
