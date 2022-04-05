@@ -555,7 +555,7 @@ augroup aug_filetype_python_testing
     " All mappings are prefixed with \t.
     "
     " \tC configure test configurations.
-    autocmd FileType python nnoremap <localleader>tC
+    autocmd FileType python nnoremap <localleader>TC
         \ :let _="{'command':'{c}', 'options':'{o}', 'runner':'{r}', 'target':'{t}'}"<bar>
         \ :let _=substitute(_, '{c}', g:tTEST_CONFIG['command'], 'ge')<bar>
         \ :let _=substitute(_, '{o}', g:tTEST_CONFIG['options'], 'ge')<bar>
@@ -564,11 +564,11 @@ augroup aug_filetype_python_testing
         \ :let g:tTEST_CONFIG=<c-r>=_<cr>
 
     " Mark targets
-    autocmd FileType python nnoremap <buffer> <localleader>ta
+    autocmd FileType python nnoremap <buffer> <localleader>T
         \ :wall <bar>
         \ :let g:tTEST_CONFIG['target'] = BanPython_SetAllSuiteAsTestTarget() <bar>
         \ :echo 'Test target: All suite'<CR>
-    autocmd FileType python nnoremap <buffer> <localleader>tt
+    autocmd FileType python nnoremap <buffer> <localleader>t
         \ :wall <bar>
         \ :let g:tTEST_CONFIG['target'] = BanPython_SetCurrentLineAsTestTarget(g:tTEST_CONFIG['command']) <bar>
         \ :echo 'Test target: '. g:tTEST_CONFIG['target']<CR>
