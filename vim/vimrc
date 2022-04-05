@@ -113,8 +113,8 @@ nnoremap <leader>3 :Buffers<CR>
 nnoremap <leader>4 :TagbarOpen j<CR>
 nnoremap <leader>$ :TagbarToggle<CR>
 nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'
-nnoremap <BS> :nohlsearch<CR>
-nnoremap <leader><BS> :set hls!<CR>
+nnoremap <leader>v :nohlsearch<CR>
+nnoremap <leader>V :set hls!<CR>
 " ↓ Colorize parentheses, brackets, etc.
 nnoremap <leader>( :RainbowToggle<CR>
 nnoremap <leader>) :QuickScopeToggle<CR>
@@ -129,6 +129,12 @@ nnoremap <leader>* :set hlsearch<bar>:let @/=expand('<cword>').'\c'<CR>
 vnoremap <leader>* :<C-u>let _prev_reg=getreg('"')<bar>let _prev_type=getregtype('"')<CR>gvy:let _patt=escape(getreg('"'), '/\.*$^~[')<bar>call setreg('"', _prev_reg, _prev_type)<CR>:set hlsearch<bar>call setreg('/', _patt.'\c')<CR>gV
 nnoremap <leader><leader> :setlocal cursorline!<CR>
 nnoremap <silent> <leader>< :setlocal list!<CR>:set list?<CR>
+
+" modes
+" ↓ enter command mode
+nnoremap <leader>c :
+" ↓ open search line
+nnoremap <leader>s /
 
 " editing
 " ↓ back to normal mode
@@ -229,7 +235,7 @@ nnoremap <leader>ga :Git add %<CR>
 nnoremap <leader>gA :Git reset -- %<CR>
 nnoremap <leader>gc :keepalt Git commit -v <CR>
 nnoremap <leader>gC :keepalt Git commit -v --amend <CR>
-nnoremap <leader>g=
+nnoremap <leader>gd
     \ :keepalt Git diff % <bar>
     \ :wincmd _<bar>
     \ :setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>
