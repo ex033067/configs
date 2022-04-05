@@ -135,10 +135,10 @@ nnoremap <silent> <leader>< :setlocal list!<CR>:set list?<CR>
 nnoremap <leader>c :
 " ↓ open search line
 nnoremap <leader>s /
+" ↓ back to normal mode
+noremap! qq <C-Bslash><C-N>
 
 " editing
-" ↓ back to normal mode
-inoremap KJ <C-Bslash><C-N>
 nnoremap <leader>d :call Ban_DuplicateLine("normal")<CR>
 vnoremap <leader>d :<C-U>call Ban_DuplicateLine("visual")<CR>
 
