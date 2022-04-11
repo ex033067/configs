@@ -127,7 +127,6 @@ vnoremap # :<C-u>let _prev_reg=getreg('"')<bar>let _prev_type=getregtype('"')<CR
 nnoremap <leader>* :set hlsearch<bar>:let @/=expand('<cword>').'\c'<CR>
 " ↓ Highlight selected text without moving the cursor
 vnoremap <leader>* :<C-u>let _prev_reg=getreg('"')<bar>let _prev_type=getregtype('"')<CR>gvy:let _patt=escape(getreg('"'), '/\.*$^~[')<bar>call setreg('"', _prev_reg, _prev_type)<CR>:set hlsearch<bar>call setreg('/', _patt.'\c')<CR>gV
-nnoremap <leader><leader> :setlocal cursorline!<CR>
 nnoremap <silent> <leader>< :setlocal list!<CR>:set list?<CR>
 
 " modes
@@ -158,7 +157,7 @@ nnoremap <C-k> :call Ban_MoveLine("normal", "up")<CR>
 vnoremap <C-k> :<C-U>call Ban_MoveLine("visual", "up")<CR>
 
 " file and buffer
-nnoremap <silent> __ :w<CR>
+nnoremap <silent> <leader><leader> :w<CR>
 " ↓ Format all the source code and move back to original position
 nnoremap <silent> <leader>=
     \ :update<bar>
