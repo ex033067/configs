@@ -540,7 +540,7 @@ augroup aug_filetype_python_testing
         \ (has_key(g:tTEST_CONFIG, 'target')) ? g:tTEST_CONFIG['target'] : ''
 
     " ↓ Run tests in tmux next pane
-    autocmd FileType python nnoremap <silent> t<CR> 
+    autocmd FileType python nnoremap <silent> tt 
         \:update<bar>
         \:let _test_cmd=BanPython_BuildCommandForTestRunner(
         \   g:tTEST_CONFIG['runner'], g:tTEST_CONFIG['command'])<bar>
