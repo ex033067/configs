@@ -972,10 +972,10 @@ endif
 "
 
 
-call Ban_SetDefaultEditOptions('global')
-
 syntax reset
 colorscheme white_on_black
+
+call Ban_SetDefaultEditOptions('global')
 
 let g:loaded_vimrc=1
 
