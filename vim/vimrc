@@ -175,6 +175,7 @@ nnoremap <C-w>tc :tabclose<CR>
 
 " navigation
 nnoremap <Space> <C-F>
+nnoremap <leader><Space> <C-B>
 
 nnoremap ]a :next<CR>
 nnoremap [a :previous<CR>
