@@ -299,7 +299,9 @@ cnoreabbrev lgrepwt\ lgrep -r./*<Left><Left><Left>
 
 function! Ban_SetDefaultEditOptions(scope = 'local')
     let command = (a:scope == 'global') ?  'set' : 'setlocal'
-    execute command . ' wrap wrapscan hlsearch cursorline nocursorcolumn number norelativenumber'
+    execute command . ' wrap wrapscan hlsearch nocursorcolumn'
+    execute command . ' cursorline number norelativenumber'
+    execute command . ' cursorlineopt=both'
 endfunction
 
 function! Ban_SetDefaultDiffOptions()
