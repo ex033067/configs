@@ -148,8 +148,8 @@ vnoremap gC :call Ban_InvertCommentOnRangeOfLines("visual")<CR>
 nnoremap gC :set operatorfunc=Ban_InvertCommentOnRangeOfLines<CR>g@
 nnoremap gCC :call Ban_InvertCommentOnRangeOfLines("normal")<CR>
 
-nnoremap <leader><Space> :call Ban_IsolateLineWithSpacesAround("normal")<CR>
-vnoremap <leader><Space> :call Ban_IsolateLineWithSpacesAround("visual")<CR>
+nnoremap <leader>f :call Ban_IsolateLineWithSpacesAround("normal")<CR>
+vnoremap <leader>f :call Ban_IsolateLineWithSpacesAround("visual")<CR>
 
 nnoremap <C-j> :call Ban_MoveLine("normal", "down")<CR>
 vnoremap <C-j> :<C-U>call Ban_MoveLine("visual", "down")<CR>
