@@ -11,3 +11,4 @@
 [include]
         path = ~/.gitconfig_generic
         path = ~/.gitconfig_platform_specific
+        path = ~/.gitconfig_credentials
