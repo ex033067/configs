@@ -4,10 +4,6 @@
 #  2. To use semicolons in any entry, enclose it in double quotes.
 #
 
-[user]
-    name = 
-    email = 
-
 [include]
         path = ~/.gitconfig_generic
         path = ~/.gitconfig_platform_specific
