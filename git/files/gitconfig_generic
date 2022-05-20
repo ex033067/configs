@@ -38,7 +38,7 @@
         # shortcut to simple but long commands
         l = log -5 --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(auto)%s%n  %C(blue)%ad %ae %h%C(auto)%d'
         s = status -s
-        initt = "!git init; git commit --allow-empty -m 'Create the empty repo'"
+        initt = "!git init; git commit --allow-empty -m 'Create the empty repo' --author='Repo Creator <author@localhost.home>'"
         prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
 
         # move back in commit history
