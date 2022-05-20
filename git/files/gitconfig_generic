@@ -33,6 +33,7 @@
         # retrieve atomic info
         showbranch = symbolic-ref --short HEAD
         showpath = rev-parse --show-toplevel
+        user = "!echo $(git config user.name) \\<$(git config user.email)\\>"
 
         # shortcut to simple but long commands
         l = log -5 --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(auto)%s%n  %C(blue)%ad %ae %h%C(auto)%d'
