@@ -571,7 +571,7 @@ augroup aug_filetype_python_testing
         \ :let g:tTEST_CONFIG=<c-r>=_<cr>
 
     " Mark targets
-    autocmd FileType python nnoremap <buffer> <localleader>T
+    autocmd FileType python nnoremap <buffer> <localleader>TA
         \ :wall <bar>
         \ :let g:tTEST_CONFIG['target'] = BanPython_SetAllSuiteAsTestTarget() <bar>
         \ :echo 'Test target: All suite'<CR>
