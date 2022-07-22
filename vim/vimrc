@@ -158,7 +158,6 @@ nnoremap <C-k> :call Ban_MoveLine("normal", "up")<CR>
 vnoremap <C-k> :<C-U>call Ban_MoveLine("visual", "up")<CR>
 
 " file and buffer
-nnoremap <silent> <leader><leader> :w<CR>
 " ↓ Format all the source code and move back to original position
 nnoremap <silent> <leader>=
     \ :update<bar>
