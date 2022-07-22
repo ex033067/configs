@@ -300,7 +300,7 @@ function! Ban_SetDefaultEditOptions(scope = 'local')
     let command = (a:scope == 'global') ?  'set' : 'setlocal'
     execute command . ' wrap wrapscan hlsearch nocursorcolumn'
     execute command . ' cursorline number norelativenumber'
-    execute command . ' cursorlineopt=both'
+    execute command . ' cursorlineopt=number'
 endfunction
 
 function! Ban_SetDefaultDiffOptions()
