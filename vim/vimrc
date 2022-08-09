@@ -198,8 +198,8 @@ command! LpfilePositioned :lpfile<bar>:if exists('t:Lgrep_pattern')<bar>:call se
 command! LnfilePositioned :lnfile<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c')<bar>:endif
 
 vnoremap <leader>l
-    \ :<C-U>let t:Lgrep_pattern=BanPython_GetSelectedText() <bar>
-    \ :execute 'LgrepPositioned "'. t:Lgrep_pattern .'"'<CR>
+    \ :<C-U>let t:Lgrep_pattern=BanPython_GetSelectedText() <CR>
+    \:LgrepPositioned '=t:Lgrep_pattern'
 nnoremap <leader>L
     \ :unlet t:Lgrep_pattern <bar>
     \ :lclose <CR>
