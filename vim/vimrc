@@ -488,15 +488,15 @@ augroup aug_filetype_python_mappings
         \:call jedi#goto()<CR>
 
     " transform Python module name into file name
-    autocmd FileType python nnoremap <localleader>mf
+    autocmd FileType python nnoremap <buffer> <localleader>mf
         \ :call setreg('"', BanPython_TransformTextIntoFilename(expand('<cWORD>'))) <CR>
-    autocmd FileType python xnoremap <localleader>mf
+    autocmd FileType python xnoremap <buffer> <localleader>mf
         \ :<C-U>call setreg('"', BanPython_TransformTextIntoFilename(BanPython_GetSelectedText())) <CR>
 
     " transform file name into Python module name
-    autocmd FileType python nnoremap <localleader>fm
+    autocmd FileType python nnoremap <buffer> <localleader>fm
         \ :call setreg('"', BanPython_TransformFilenameIntoModulename(expand('%'))) <CR>
-    autocmd FileType python xnoremap <localleader>fm
+    autocmd FileType python xnoremap <buffer> <localleader>fm
         \ :<C-U>call setreg('"', BanPython_TransformFilenameIntoModulename(BanPython_GetSelectedText())) <CR>
 
     " Mappings for classes, functions and docstrings text-objects
@@ -542,7 +542,7 @@ augroup aug_filetype_python_testing
         \ (has_key(g:tTEST_CONFIG, 'target')) ? g:tTEST_CONFIG['target'] : ''
 
     " ↓ Run tests in tmux next pane
-    autocmd FileType python nnoremap <silent> tt 
+    autocmd FileType python nnoremap <silent> <buffer> tt 
         \:update<bar>
         \:let _test_cmd=BanPython_BuildCommandForTestRunner(
         \   g:tTEST_CONFIG['runner'], g:tTEST_CONFIG['command'])<bar>
@@ -562,7 +562,7 @@ augroup aug_filetype_python_testing
     " All mappings are prefixed with \t.
     "
     " \tC configure test configurations.
-    autocmd FileType python nnoremap <localleader>TC
+    autocmd FileType python nnoremap <buffer> <localleader>TC
         \ :let _="{'command':'{c}', 'options':'{o}', 'runner':'{r}', 'target':'{t}'}"<bar>
         \ :let _=substitute(_, '{c}', g:tTEST_CONFIG['command'], 'ge')<bar>
         \ :let _=substitute(_, '{o}', g:tTEST_CONFIG['options'], 'ge')<bar>
