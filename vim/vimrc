@@ -424,15 +424,15 @@ augroup aug_filetype_gitcommit
     autocmd BufRead COMMIT_EDITMSG call execute(['normal gg'])
 
     " go to next/prev file in commit
-    autocmd FileType gitcommit nnoremap <silent> <buffer> ]]
+    autocmd FileType gitcommit nnoremap <buffer> <silent> ]]
         \ :call search('^diff --git\\|^# On branch', "zW")<CR>ztzv
-    autocmd FileType gitcommit nnoremap <silent> <buffer> [[
+    autocmd FileType gitcommit nnoremap <buffer> <silent> [[
         \ :call search('^diff --git\\|^# On branch', "bW")<CR>ztzv
 
     " go to next/prev change
-    autocmd FileType gitcommit nnoremap <silent> <buffer> ]c
+    autocmd FileType gitcommit nnoremap <buffer> <silent> ]c
         \ :call search('^@@ -\d', "zW")<CR>
-    autocmd FileType gitcommit nnoremap <silent> <buffer> [c
+    autocmd FileType gitcommit nnoremap <buffer> <silent> [c
         \ :call search('^@@ -\d', "bW")<CR>
 augroup END |" 2}}}
 
@@ -478,7 +478,7 @@ augroup aug_filetype_python_mappings
     " {{{2
     au!
     " Particular way to "make"
-    autocmd FileType python nnoremap <silent> <buffer> <leader>m
+    autocmd FileType python nnoremap <buffer> <silent> <leader>m
         \ :update<CR>
         \:call flake8#Flake8()<CR>
 
@@ -542,7 +542,7 @@ augroup aug_filetype_python_testing
         \ (has_key(g:tTEST_CONFIG, 'target')) ? g:tTEST_CONFIG['target'] : ''
 
     " ↓ Run tests in tmux next pane
-    autocmd FileType python nnoremap <silent> <buffer> tt 
+    autocmd FileType python nnoremap <buffer> <silent> tt 
         \:update<bar>
         \:let _test_cmd=BanPython_BuildCommandForTestRunner(
         \   g:tTEST_CONFIG['runner'], g:tTEST_CONFIG['command'])<bar>
