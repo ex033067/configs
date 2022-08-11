@@ -242,10 +242,10 @@ nnoremap <leader>gd
 nnoremap <leader>gp gg:Ghdiffsplit <CR>
 nnoremap <leader>gl
     \ :let _tmpfile=tempname()<bar>
-    \ :silent execute '!git l -50 >'._tmpfile<bar>
+    \ :silent execute '!git log --date=format:"\%Y\%m\%d \%H\%M" --format="tformat:\%C(auto)\%h (\%<(8,trunc)\%an \%ad) \%<(70,trunc)\%s" main.. >'._tmpfile<bar>
     \ :silent execute 'keepalt split '._tmpfile<bar>
     \ :wincmd _<bar>
-    \ :setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted <bar>
+    \ :setlocal bufhidden=wipe buftype=nowrite readonly nolist nobuflisted <bar>
     \ :unlet _tmpfile<bar>
     \ :redraw!<CR>
 
