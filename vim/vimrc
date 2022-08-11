@@ -280,9 +280,9 @@ nnoremap <leader>o :setlocal
 " Abbreviations: {{{1
 " ==============================================================================
 
-cnoreabbrev lgrep\ lgrep --exclude-dir=tests -r./*<Left><Left><Left>
-cnoreabbrev lgrepwt\ lgrep -r./*<Left><Left><Left>
-
+cnoreabbrev lgrepp lgrep -r ./*<Left><Left><Left><Left>
+cnoreabbrev test-- --exclude-dir=tests
+cnoreabbrev py++ --include='*.py'
 
 
 
