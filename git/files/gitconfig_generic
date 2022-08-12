@@ -31,7 +31,6 @@
         tags = tag -l -n1 --sort="version:refname"
 
         # retrieve atomic info
-        showbranch = symbolic-ref --short HEAD
         showpath = rev-parse --show-toplevel
         user = "!echo $(git config user.name) \\<$(git config user.email)\\>"
 
