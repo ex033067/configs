@@ -240,14 +240,11 @@ nnoremap <leader>gd
     \ :wincmd _<bar>
     \ :setlocal bufhidden=wipe buftype=nowrite readonly nobuflisted<CR>
 nnoremap <leader>gp gg:Ghdiffsplit <CR>
-nnoremap <leader>gl
-    \ :let _tmpfile=tempname()<bar>
-    \ :silent execute '!git log --date=format:"\%Y\%m\%d \%H\%M" --format="tformat:\%C(auto)\%h (\%<(8,trunc)\%an \%ad) \%<(70,trunc)\%s" main.. >'._tmpfile<bar>
-    \ :silent execute 'keepalt split '._tmpfile<bar>
-    \ :wincmd _<bar>
-    \ :setlocal bufhidden=wipe buftype=nowrite readonly nolist nobuflisted <bar>
-    \ :unlet _tmpfile<bar>
-    \ :redraw!<CR>
+nnoremap <leader>gl :call Ban_GitLog()<CR>
+
+function! Ban_GitLog()
+    terminal ++shell (git branch --list main | grep -q "..main$") && git l --color=always origin/main^.. || git l --color=always origin/master^..
+endfunction
 
 " toggle options
 nnoremap <silent> <leader>oe :call Ban_SetDefaultEditOptions()<CR>
