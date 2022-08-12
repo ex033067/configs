@@ -46,8 +46,8 @@
         backto = reset --mixed
 
         # undo uncommited changes
-        discarduncommited = reset --hard HEAD
-        subtract = reset --
+        discard = restore
+        unstage = restore --staged
 
         # complex commands
         rstash = "! \
