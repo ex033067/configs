@@ -45,7 +45,7 @@
         back1 = reset --mixed HEAD^
         backto = reset --mixed
 
-        # undo uncommited changes
+        # forget uncommited changes
         discard = restore
         unstage = restore --staged
 
