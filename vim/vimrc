@@ -197,12 +197,29 @@ command! LnextPositioned :lnext<bar>:if exists('t:Lgrep_pattern')<bar>:call sear
 command! LpfilePositioned :lpfile<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c')<bar>:endif
 command! LnfilePositioned :lnfile<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c')<bar>:endif
 
-vnoremap <leader>l
+" Prepare grep in command line with select text
+vnoremap <leader>G
     \ :<C-U>let t:Lgrep_pattern=BanPython_GetSelectedText() <CR>
-    \:LgrepPositioned '=t:Lgrep_pattern'
-nnoremap <leader>L
+    \:lgrep -r '=t:Lgrep_pattern' ./*
+vnoremap <leader>Gp
+    \ :<C-U>let t:Lgrep_pattern=BanPython_GetSelectedText() <CR>
+    \:lgrep -r --include='*.py' '=t:Lgrep_pattern' ./*
+vnoremap <leader>Gpt
+    \ :<C-U>let t:Lgrep_pattern=BanPython_GetSelectedText() <CR>
+    \:lgrep -r --include='*.py' --exclude-dir='tests' '=t:Lgrep_pattern' ./*
+vnoremap <leader>Gt
+    \ :<C-U>let t:Lgrep_pattern=BanPython_GetSelectedText() <CR>
+    \:lgrep -r --exclude-dir='tests' '=t:Lgrep_pattern' ./*
+nnoremap <leader>G!
     \ :unlet t:Lgrep_pattern <bar>
     \ :lclose <CR>
+
+" Prepare grep in command line with last select pattern
+nnoremap <leader>G   :lgrep -r '=t:Lgrep_pattern' ./*
+nnoremap <leader>Gp  :lgrep -r --include='*.py' '=t:Lgrep_pattern' ./*
+nnoremap <leader>Gpt :lgrep -r --include='*.py' --exclude-dir='tests' '=t:Lgrep_pattern' ./*
+nnoremap <leader>Gt  :lgrep -r --exclude-dir='tests' '=t:Lgrep_pattern' ./*
+
 nnoremap <leader>lt :Lfilter tests<CR>
 nnoremap <leader>lT :Lfilter! tests<CR>
 nnoremap <leader>l[ :lolder <CR>
