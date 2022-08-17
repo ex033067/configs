@@ -30,7 +30,7 @@ set lazyredraw
 set laststatus=2
 set showtabline=2
 
-set hlsearch
+set nohlsearch
 set shortmess-=S
 set list listchars=tab:››,trail:·,nbsp:·,extends:→,precedes:←
 set cpoptions+=n showbreak=→\ 
@@ -312,7 +312,7 @@ cnoreabbrev py++ --include='*.py'
 
 function! Ban_SetDefaultEditOptions(scope = 'local')
     let command = (a:scope == 'global') ?  'set' : 'setlocal'
-    execute command . ' wrap wrapscan hlsearch nocursorcolumn'
+    execute command . ' wrap wrapscan nohlsearch nocursorcolumn'
     execute command . ' cursorline number norelativenumber'
     execute command . ' cursorlineopt=number'
 endfunction
@@ -325,7 +325,7 @@ function! Ban_SetDefaultDiffOptions()
         \ {idx, winid -> {'winid': winid, 'is_diff': getwinvar(winid, '&diff')}}
     \ )
     let only_diff_windows = filter(copy(are_diff_windows), 'v:val.is_diff == 1')
-    let options = 'wrap wrapscan hlsearch nocursorline nocursorcolumn '
+    let options = 'wrap wrapscan nohlsearch nocursorline nocursorcolumn '
         \ . 'nonumber relativenumber'
     call map(
         \ only_diff_windows,
