@@ -204,10 +204,10 @@ vnoremap <leader>G
 vnoremap <leader>Gp
     \ :<C-U>let t:Lgrep_pattern=BanPython_GetSelectedText() <CR>
     \:lgrep -r --include='*.py' '=t:Lgrep_pattern' ./*
-vnoremap <leader>Gpt
+vnoremap <leader>GP
     \ :<C-U>let t:Lgrep_pattern=BanPython_GetSelectedText() <CR>
     \:lgrep -r --include='*.py' --exclude-dir='tests' '=t:Lgrep_pattern' ./*
-vnoremap <leader>Gt
+vnoremap <leader>GT
     \ :<C-U>let t:Lgrep_pattern=BanPython_GetSelectedText() <CR>
     \:lgrep -r --exclude-dir='tests' '=t:Lgrep_pattern' ./*
 nnoremap <leader>G!
@@ -217,8 +217,8 @@ nnoremap <leader>G!
 " Prepare grep in command line with last select pattern
 nnoremap <leader>G   :lgrep -r '=t:Lgrep_pattern' ./*
 nnoremap <leader>Gp  :lgrep -r --include='*.py' '=t:Lgrep_pattern' ./*
-nnoremap <leader>Gpt :lgrep -r --include='*.py' --exclude-dir='tests' '=t:Lgrep_pattern' ./*
-nnoremap <leader>Gt  :lgrep -r --exclude-dir='tests' '=t:Lgrep_pattern' ./*
+nnoremap <leader>GP  :lgrep -r --include='*.py' --exclude-dir='tests' '=t:Lgrep_pattern' ./*
+nnoremap <leader>GT  :lgrep -r --exclude-dir='tests' '=t:Lgrep_pattern' ./*
 
 nnoremap <leader>lt :Lfilter tests<CR>
 nnoremap <leader>lT :Lfilter! tests<CR>
