@@ -40,6 +40,9 @@ bind j select-pane -D
 # Zoom the other pane
 bind Z select-pane -t :.+ \; resize-pane -Z
 
+# Kill all other panes
+bind O kill-pane -a
+
 # Pane numbers shown in display-panes
 set-option -g display-panes-colour "brightred"
 set-option -g display-panes-active-colour "brightwhite"
