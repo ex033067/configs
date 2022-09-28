@@ -577,7 +577,7 @@ augroup aug_filetype_python_testing
     "
     " \tC configure test configurations.
     autocmd FileType python nnoremap <buffer> <localleader>TC
-        \ :let _="{'command':'{c}', 'options':'{o}', 'runner':'{r}', 'target':'{t}'}"<bar>
+        \ :let _="{'command':'{c}', 'runner':'{r}', 'target':'{t}', 'options':'{o}'}"<bar>
         \ :let _=substitute(_, '{c}', g:tTEST_CONFIG['command'], 'ge')<bar>
         \ :let _=substitute(_, '{o}', g:tTEST_CONFIG['options'], 'ge')<bar>
         \ :let _=substitute(_, '{r}', g:tTEST_CONFIG['runner'], 'ge')<bar>
