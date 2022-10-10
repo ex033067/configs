@@ -192,10 +192,10 @@ command! -nargs=1 LgrepPositioned
     \ :let _cmd=substitute(_template, '<pattern>', t:Lgrep_pattern, '') <bar>
     \ :execute _cmd <bar>
     \ :call search(t:Lgrep_pattern, 'c')
-command! LprevPositioned :lprev<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c')<bar>:endif
-command! LnextPositioned :lnext<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c')<bar>:endif
-command! LpfilePositioned :lpfile<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c')<bar>:endif
-command! LnfilePositioned :lnfile<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c')<bar>:endif
+command! LprevPositioned :lprev<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c', line('.'))<bar>:endif
+command! LnextPositioned :lnext<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c', line('.'))<bar>:endif
+command! LpfilePositioned :lpfile<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c', line('.'))<bar>:endif
+command! LnfilePositioned :lnfile<bar>:if exists('t:Lgrep_pattern')<bar>:call search(t:Lgrep_pattern, 'c', line('.'))<bar>:endif
 
 " Prepare grep in command line with select text
 vnoremap <leader>G
