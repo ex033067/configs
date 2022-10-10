@@ -560,7 +560,11 @@ augroup aug_filetype_python_testing
     " ↓ Run tests in tmux next pane. Create one if necessary.
     autocmd FileType python nnoremap <buffer> <silent> tt 
         \:update<bar>
-        \:call BanPython_RunTestInOtherTmuxPane()<CR>
+        \:call BanPython_RunTestInOtherTmuxPane('next_pane')<CR>
+
+    autocmd FileType python nnoremap <buffer> <silent> tT 
+        \:update<bar>
+        \:call BanPython_RunTestInOtherTmuxPane('new_pane')<CR>
 
     " Mappings to help with tests (this is a big section).
     " All mappings are prefixed with \t.
@@ -772,14 +776,24 @@ augroup aug_filetype_python_functions
         endif
     endfunction |" 3}}}
 
-    function! BanPython_RunTestInOtherTmuxPane()
+    function! BanPython_RunTestInOtherTmuxPane(which_pane)
         let _test_cmd=BanPython_BuildCommandForTestRunner(g:tTEST_CONFIG['runner'], g:tTEST_CONFIG['command'])
         let _test_cmd=substitute(_test_cmd, '{command}', g:tTEST_CONFIG['command'], 'ge')
         let _test_cmd=substitute(_test_cmd, '{options}', g:tTEST_CONFIG['options'], 'ge')
         let _test_cmd=substitute(_test_cmd, '{target}', g:tTEST_CONFIG['target'], 'ge')
 
-        let numpanes = system('tmux list-panes | wc -l | tr -d " "')
-        if numpanes == 1
+        let must_create_pane = 0
+
+        if a:which_pane == 'new_pane'
+            let must_create_pane = 1
+        elseif a:which_pane == 'next_pane'
+            let numpanes = system('tmux list-panes | wc -l | tr -d " "')
+            if numpanes == 1
+                let must_create_pane = 1
+            endif
+        endif
+
+        if must_create_pane
             silent execute '!tmux split-window -l 5 -d'
         endif
 
