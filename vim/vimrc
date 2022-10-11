@@ -497,10 +497,11 @@ augroup aug_filetype_python_mappings
         \ :update<CR>
         \:call flake8#Flake8()<CR>
 
-    " Mapping to navigate to object definition in split window
-    autocmd FileType python nnoremap <buffer> <localleader>D
-        \ :split<CR>
-        \:call jedi#goto()<CR>
+    " Mapping to navigate to object definition
+    autocmd FileType python nnoremap <buffer> gd
+        \ :ALEGoToDefinition<CR>
+    autocmd FileType python nnoremap <buffer> <C-w>d
+        \ :ALEGoToDefinition -split<CR>
 
     " transform Python module name into file name
     autocmd FileType python nnoremap <buffer> <localleader>mf
@@ -871,16 +872,11 @@ Plug 'junegunn/fzf.vim'
 " Up to date syntax files
 Plug 'viniciusban/vim-polyglot'
 
-" Python autocompletion
-" The goto_command is a killer feature.
-Plug 'davidhalter/jedi-vim'
-let g:jedi#popup_on_dot=0
-let g:jedi#show_call_signatures_delay=100
-let g:jedi#goto_command = '<localleader>d'
-let g:jedi#goto_assignments_command = ''
-let g:jedi#goto_stubs_command = ''
-let g:jedi#rename_command = '<localleader>r'
-let g:jedi#usages_command = '<localleader>n'
+" Python LSP
+" https://github.com/python-lsp/python-lsp-server
+Plug 'dense-analysis/ale'
+let g:ale_set_quickfix = 1
+
 
 " My discreet color scheme
 Plug 'viniciusban/vim-white-on-black-colorscheme'
