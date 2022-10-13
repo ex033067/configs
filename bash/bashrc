@@ -73,7 +73,12 @@ function __variables() {
 	[[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
 	export HISTCONTROL=ignoreboth
 	export HISTTIMEFORMAT="%F %T "
-	export EDITOR=$(which vim)
+	if which -s nvim; then
+		export EDITOR=$(which nvim)
+	else
+		export EDITOR=$(which vim)
+	fi
+
 	export VISUAL=$EDITOR
 
 	# Customizations for PS1. See "ps1_customizations.example" file.
