@@ -933,11 +933,6 @@ let g:qs_enable=0
 Plug 'mattn/emmet-vim'
 let g:user_emmet_leader_key = '<C-\>'
 
-" Snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-let g:UltiSnipsSnippetDirectories=[$HOME.'/src/vim-snippets']
-
 " Replace existing text with the contents of a register
 " <register>gr{motion}, {Visual}<register>gr
 " Plug 'inkarkat/vim-ReplaceWithRegister'
