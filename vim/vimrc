@@ -25,6 +25,7 @@ nnoremap : ;
 
 " elements of interface
 set number
+set signcolumn=number
 set scrolloff=0
 set lazyredraw
 set laststatus=2
