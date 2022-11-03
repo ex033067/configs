@@ -260,7 +260,11 @@ nnoremap <leader>gp gg:Ghdiffsplit <CR>
 nnoremap <leader>gl :call Ban_GitLog()<CR>
 
 function! Ban_GitLog()
-    terminal ++shell (git branch --list main | grep -q "..main$") && git l --color=always origin/main^.. || git l --color=always origin/master^..
+    if has('nvim')
+        split +terminal\ (git\ branch\ --list\ main\ |\ grep\ -q\ "..main$")\ &&\ git\ l\ --color=always\ origin/main^..\ ||\ git\ l\ --color=always\ origin/master^..
+    else
+        terminal ++shell (git branch --list main | grep -q "..main$") && git l --color=always origin/main^.. || git l --color=always origin/master^..
+    endif
 endfunction
 
 " toggle options
