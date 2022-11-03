@@ -170,9 +170,8 @@ nnoremap <silent> <leader>m :update<CR>:make %<CR>
 
 " windows and tabs
 nnoremap <leader>w <C-w>
-" ↓ open current buffer in new tab page
-nnoremap <C-w>to :tab split<CR>
-nnoremap <C-w>tc :tabclose<CR>
+" ↓ copy current buffer to new tab page
+nnoremap <C-w>t :tab split<CR>
 
 " navigation
 nnoremap <Space> <C-F>
