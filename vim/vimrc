@@ -301,6 +301,8 @@ nnoremap <leader>o :setlocal
 cnoreabbrev lgrepp lgrep -r ./*<Left><Left><Left><Left>
 cnoreabbrev py++ --include='*.py'
 cnoreabbrev tests-- --exclude-dir='tests'
+
+cnoreabbrev delxy 'x,'ydel
 abbrev :warnsign: ⚠️
 
 
