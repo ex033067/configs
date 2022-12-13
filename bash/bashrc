@@ -31,6 +31,7 @@ function __aliases() {
 
 	# one-letters
 	alias j='jupyter notebook --no-browser --NotebookApp.allow_remote_access=True'
+	alias jd='docker run --rm -p 8888:8888 -v "${PWD}":/home/jovyan/work jupyter/base-notebook:python-3.10'
 
 	# reference: https://www.tecmint.com/clear-ram-memory-cache-buffer-and-swap-space-on-linux/
 	alias reclaim_ram="sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'\""
