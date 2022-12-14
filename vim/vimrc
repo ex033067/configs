@@ -302,7 +302,7 @@ cnoreabbrev lgrepp lgrep -r ./*<Left><Left><Left><Left>
 cnoreabbrev py++ --include='*.py'
 cnoreabbrev tests-- --exclude-dir='tests'
 
-cnoreabbrev delxy 'x,'ydel
+cnoreabbrev xy 'x,'y
 abbrev :warnsign: ⚠️
 
 
