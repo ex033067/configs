@@ -41,7 +41,7 @@ bind j select-pane -D
 bind Z select-pane -t :.+ \; resize-pane -Z
 
 # Kill all other panes
-bind O kill-pane -a
+bind X kill-pane -a
 
 # Pane numbers shown in display-panes
 set-option -g display-panes-colour "brightred"
