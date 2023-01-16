@@ -166,6 +166,8 @@ nnoremap <silent> <leader>m :update<CR>:make %<CR>
 
 " windows and tabs
 nnoremap <leader>w <C-w>
+" ↓ close previous window
+nnoremap <C-w>C :-clo<CR>
 " ↓ copy current buffer to new tab page
 nnoremap <C-w>t :tab split<CR>
 
