@@ -802,10 +802,12 @@ augroup aug_filetype_python_functions
             silent execute '!tmux split-window -l 5 -d'
         endif
 
-        let _cmd='!tmux send-keys -t .+ -l "source {_newenv_cmd}"'
-        let _cmd=substitute(_cmd, '{_newenv_cmd}', $VIM_TEST_NEWENV_COMMAND, 'ge')
-        silent execute _cmd
-        silent execute '!tmux send-keys -t .+ Enter'
+        if $VIM_TEST_NEWENV_COMMAND
+            let _cmd='!tmux send-keys -t .+ -l "source {_newenv_cmd}"'
+            let _cmd=substitute(_cmd, '{_newenv_cmd}', $VIM_TEST_NEWENV_COMMAND, 'ge')
+            silent execute _cmd
+            silent execute '!tmux send-keys -t .+ Enter'
+        endif
 
         let _cmd='!tmux send-keys -t .+ -l "{_test_cmd}"'
         let _cmd=substitute(_cmd, '{_test_cmd}', _test_cmd, 'ge')
