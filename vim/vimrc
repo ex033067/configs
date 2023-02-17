@@ -550,7 +550,7 @@ augroup aug_filetype_python_testing
         \ (has_key(g:tTEST_CONFIG, 'command')) ? g:tTEST_CONFIG['command'] :
         \     (exists('$VIM_TEST_COMMAND')) ? $VIM_TEST_COMMAND :
         \         (filereadable('Makefile')) ? 'make test' :
-        \             (executable('pytest')) ? 'pytest' : ''
+        \             (executable('pytest')) ? 'pytest' : 'python -m unittest'
     autocmd FileType python let g:tTEST_CONFIG['options'] =
         \ (has_key(g:tTEST_CONFIG, 'options')) ? g:tTEST_CONFIG['options'] :
         \ (exists('$VIM_TEST_OPTIONS')) ? $VIM_TEST_OPTIONS : ''
