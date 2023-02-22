@@ -888,6 +888,8 @@ Plug 'dense-analysis/ale'
 let g:ale_set_quickfix = 1
 let g:ale_hover_cursor = 0
 
+Plug 'neovim/nvim-lspconfig'
+
 
 " My discreet color scheme
 Plug 'viniciusban/vim-white-on-black-colorscheme'
