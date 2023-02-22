@@ -780,6 +780,7 @@ augroup aug_filetype_python_functions
     endfunction |" 3}}}
 
     function! BanPython_RunTestInOtherTmuxPane(which_pane)
+        " {{{3
         let _test_cmd=BanPython_BuildCommandForTestRunner(g:tTEST_CONFIG['runner'], g:tTEST_CONFIG['command'])
         let _test_cmd=substitute(_test_cmd, '{command}', g:tTEST_CONFIG['command'], 'ge')
         let _test_cmd=substitute(_test_cmd, '{options}', g:tTEST_CONFIG['options'], 'ge')
