@@ -19,8 +19,6 @@ endif
 
 let mapleader=','
 let maplocalleader='\'
-nnoremap ; :
-nnoremap : ;
 
 
 " elements of interface
