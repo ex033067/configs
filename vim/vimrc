@@ -56,7 +56,10 @@ if !exists('g:loaded_vimrc')
     set foldmethod=indent
 endif
 let g:markdown_folding = 1 | " enable folded headings in markdown files
-set formatoptions+=n | " identify numbered lists when formatting comments
+
+" format lists inside comments
+set formatoptions+=n | " identify lists
+set formatlistpat="^\\s*\\d\\+[:.)]\\s\\\|^\\s*[-*+]\\s" | " recognize both numbered and unnumbered lists
 
 
 " other options
