@@ -59,7 +59,13 @@ let g:markdown_folding = 1 | " enable folded headings in markdown files
 
 " format lists inside comments
 set formatoptions+=n | " identify lists
-set formatlistpat="^\\s*\\d\\+[:.)]\\s\\\|^\\s*[-*+]\\s" | " recognize both numbered and unnumbered lists
+set formatlistpat=
+set formatlistpat+=^\\s*             | " Numbered list: optional leading spaces...
+set formatlistpat+=[0-9]\\+          | "   followed by numbers...
+set formatlistpat+=[:.\\-)]\\s       | "   with delimiters and a final space.
+set formatlistpat+=\\\|              | " or
+set formatlistpat+=^\\s*             | " Unnumbered list: optional leading spaces...
+set formatlistpat+=[-*+]\\s          | "   followed by a dash, an asterisk, or a plus sign and a final space.
 
 
 " other options
