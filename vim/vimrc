@@ -780,12 +780,13 @@ augroup aug_filetype_python_functions
 
     function! BanPython_BuildCommandForTestRunner(test_runner, test_command)
         " {{{3
+        let wrapper = 'TIMEFORMAT=\\%R time -h '
         if a:test_runner == 'pytest'
-            return 'PYTEST_ADDOPTS=\\"{options} {target}\\" ARGS=\\"\\$PYTEST_ADDOPTS\\" run-with-time {command}'
+            return 'PYTEST_ADDOPTS=\\"{options} {target}\\" ' . wrapper . '{command}'
         elseif a:test_command =~ 'make '
-            return 'ARGS=\\"{options} {target}\\" run-with-time {command}'
+            return 'ARGS=\\"{options} {target}\\" ' . wrapper . '{command}'
         elseif a:test_runner == 'unittest'
-            return 'run-with-time {command} {options} {target}'
+            return wrapper . '{command} {options} {target}'
         endif
     endfunction |" 3}}}
 
