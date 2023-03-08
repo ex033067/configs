@@ -284,11 +284,6 @@ function loadenv() {
 ## functions instead of scripts
 ######################################
 
-function youtube-dl-mp3()
-{
-    youtube-dl --extract-audio --audio-format mp3 "$1"
-}
-
 function converte-pdf-to-jpg()
 {
     # This script needs imagemagick: `sudo apt-get install imagemagick`
