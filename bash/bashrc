@@ -111,7 +111,6 @@ function __variables() {
     [[ -z "$PYENV_ROOT" ]] && [[ -d ~/.local/bin/pyenv ]] && export PYENV_ROOT=~/.local/bin/pyenv
     if [[ -n "$PYENV_ROOT" ]]; then
         export PATH="$PYENV_ROOT/bin:$PATH"
-
         if which pyenv > /dev/null
         then
             eval "$(pyenv init --path)"
@@ -384,17 +383,17 @@ function __venv_help()
 		Usage: ${funcname} <command> [<arg>]
 		Commands:
 		  create <dirname>
-			  Create and activate virtualenv <dirname> (default is "venv") inside current directory.
+		    Create and activate virtualenv <dirname> (default is "venv") inside current directory.
 		  run <command>
-			  Run <command> inside the virtualenv. Exit the virtualenv when finished.
-			  Example: \$ ${funcname} run pip install -r requirements.txt
+		    Run <command> inside the virtualenv. Exit the virtualenv when finished.
+		    Example: \$ ${funcname} run pip install -r requirements.txt
 		  shell
-			  Open a sub-shell with the virtualenv activated.
-			  Exit from it with \`$ exit\`.
+		    Open a sub-shell with the virtualenv activated.
+		    Exit from it with \`$ exit\`.
 		  info
-			  Show info about the virtualenv.
+		    Show info about the virtualenv.
 		  info --path
-			  Show only the virtualenv's path.
+		    Show only the virtualenv's path.
 	_ENDOFTEXT_
 }
 
