@@ -280,8 +280,8 @@ nnoremap <silent> <leader>od :call Ban_SetDefaultDiffOptions()<CR>
 " ↓↓ Key is bgcolor. Value is highlight group name.
 nnoremap <silent> <leader>ocl
     \ :let _grps={
-    \       synIDattr(hlID("customDarkCursorLine"), "bg"): 'customLightCursorLine',
-    \       synIDattr(hlID("customLightCursorLine"), "bg"): 'customDarkCursorLine'
+    \       synIDattr(hlID("white_on_black_FadedLine"), "bg"): 'white_on_black_LightLine',
+    \       synIDattr(hlID("white_on_black_LightLine"), "bg"): 'white_on_black_FadedLine'
     \ }<bar>
     \ :let _new_grp=_grps[synIDattr(synIDtrans(hlID("CursorLine")), "bg")]<bar>
     \ :execute 'hi! link CursorLine '._new_grp<bar>
