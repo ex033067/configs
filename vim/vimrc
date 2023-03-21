@@ -495,11 +495,8 @@ augroup aug_filetype_python_settings
     au!
     autocmd FileType python setlocal foldmethod=indent
     autocmd FileType python setlocal equalprg=~/.local/bin/python-style
-
-    autocmd FileType python syn keyword pythonTodo          TODO FIXME NOTE contained
     autocmd FileType python hi! link pythonBuiltin Statement
     autocmd FileType python hi! link pythonDocTest2 Comment
-    autocmd FileType python hi! link pythonDocString customDocumentation
 augroup END |" 2}}}
 
 augroup aug_filetype_python_mappings
