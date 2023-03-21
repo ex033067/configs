@@ -286,6 +286,7 @@ nnoremap <silent> <leader>ocl
     \ :let _new_grp=_grps[synIDattr(synIDtrans(hlID("CursorLine")), "bg")]<bar>
     \ :execute 'hi! link CursorLine '._new_grp<bar>
     \ :unlet _grps _new_grp<bar>
+    \ :setlocal cursorlineopt=both<bar>
     \ :redraw!<CR>
 nnoremap <silent> <leader>on :setlocal number!<CR>
 nnoremap <silent> <leader>op :set paste!<CR>:set paste?<CR>
