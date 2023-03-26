@@ -86,8 +86,14 @@ function __variables() {
     [[ -r ~/.ps1_customizations ]] && source ~/.ps1_customizations
     export PS1_COLOR_RESET="\[\033[m\]"
 
-    export PS0="current time: \D{%F %T}\n"
-    export PS1="${PS1_COLOR_RESET}${PS1_COLOR_ERROR}\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo '     '\${_exit_status}'     ')${PS1_COLOR_RESET}${PS1_COLOR_DEFAULT}\${HOSTNAME_ALIAS:+@\${HOSTNAME_ALIAS} }\D{%a %T} \w\$(__ps1_git ; echo \${PS1_GIT:+' git:'\${PS1_GIT}})\$(__ps1_virtualenv; echo \${PS1_VIRTUAL_ENV:+' ('\${PS1_VIRTUAL_ENV}')'})${PS1_COLOR_RESET}\n\$ "
+    if [[ "$TERM_PROGRAM" = "vscode" ]]; then
+        export PS0=
+        export PS1_COLOR_AMBER='\[\e[38;5;214m\]'
+        export PS1="${PS1_COLOR_RESET}${PS1_COLOR_AMBER}\$ ${PS1_COLOR_RESET}"
+    else
+        export PS0="current time: \D{%F %T}\n"
+        export PS1="${PS1_COLOR_RESET}${PS1_COLOR_ERROR}\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo '     '\${_exit_status}'     ')${PS1_COLOR_RESET}${PS1_COLOR_DEFAULT}\${HOSTNAME_ALIAS:+@\${HOSTNAME_ALIAS} }\D{%a %T} \w\$(__ps1_git ; echo \${PS1_GIT:+' git:'\${PS1_GIT}})\$(__ps1_virtualenv; echo \${PS1_VIRTUAL_ENV:+' ('\${PS1_VIRTUAL_ENV}')'})${PS1_COLOR_RESET}\n\$ "
+    fi
 
     [[ -n "$WSL_DISTRO_NAME" ]] && export DISPLAY=$(grep '^nameserver' /etc/resolv.conf | cut -d ' ' -f2):0.0
     [[ "${OSNAME}" = "Darwin" ]] && export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
