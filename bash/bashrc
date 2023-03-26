@@ -89,7 +89,7 @@ function __variables() {
     if [[ "$TERM_PROGRAM" = "vscode" ]]; then
         export PS0=
         export PS1_COLOR_AMBER='\[\e[38;5;214m\]'
-        export PS1="${PS1_COLOR_RESET}${PS1_COLOR_AMBER}\$ ${PS1_COLOR_RESET}"
+        export PS1="${PS1_COLOR_RESET}${PS1_COLOR_AMBER}\$(__ps1_virtualenv_for_vscode; echo \$PS1_VIRTUAL_ENV)\$ ${PS1_COLOR_RESET}"
     else
         export PS0="current time: \D{%F %T}\n"
         export PS1="${PS1_COLOR_RESET}${PS1_COLOR_ERROR}\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo '     '\${_exit_status}'     ')${PS1_COLOR_RESET}${PS1_COLOR_DEFAULT}\${HOSTNAME_ALIAS:+@\${HOSTNAME_ALIAS} }\D{%a %T} \w\$(__ps1_git ; echo \${PS1_GIT:+' git:'\${PS1_GIT}})\$(__ps1_virtualenv; echo \${PS1_VIRTUAL_ENV:+' ('\${PS1_VIRTUAL_ENV}')'})${PS1_COLOR_RESET}\n\$ "
@@ -161,6 +161,17 @@ function __ps1_virtualenv() {
     fi
 
     PS1_VIRTUAL_ENV="${tool}:$(basename $VIRTUAL_ENV)"
+    return
+}
+
+
+function __ps1_virtualenv_for_vscode() {
+    if [[ -z "$VIRTUAL_ENV" ]]; then
+        PS1_VIRTUAL_ENV=
+        return
+    fi
+
+    PS1_VIRTUAL_ENV="($(basename $VIRTUAL_ENV))"
     return
 }
 
