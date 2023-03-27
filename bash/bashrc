@@ -181,24 +181,16 @@ function __ps1_git() {
     #   - "!" means there are unstaged changes
 
     # The main concern here is performance. So, I return as soon as
-    # possible, cache last execution, avoid calling external processes like
+    # possible, avoid calling external processes like
     # grep, sed, etc. and abuse of bash expressions and logic.
 
     PS1_GIT_STATUS_OUTPUT=$(git status -b --porcelain=2 2>/dev/null)
     if [[ $? -ne 0 ]]; then
         # Not a git repo
-        PS1_GIT=
         return
     fi
 
-    if [[ "${PS1_GIT_STATUS_OUTPUT}" = "${CACHED_PS1_GIT_STATUS_OUTPUT}" ]]; then
-        # Nothing changed since previous prompt. Reuse current $PS1_GIT.
-        return
-    fi
-
-    CACHED_PS1_GIT_STATUS_OUTPUT="${PS1_GIT_STATUS_OUTPUT}"
-
-    local branch staged_indicator unstaged_indicator
+    local branch staged_indicator unstaged_indicator color
     local rectype field1 field2 other_fields
     local branch_header="#"
     local untracked_item="?"
@@ -231,7 +223,11 @@ function __ps1_git() {
         fi
     done < <(echo "${PS1_GIT_STATUS_OUTPUT}")
 
-    PS1_GIT="${branch}${staged_indicator}${unstaged_indicator}"
+    if [[ -n "${staged_indicator}${unstaged_indicator}" ]]; then
+        local color=$PS1_COLOR_GIT
+    fi
+    echo -e "${color}:${branch}${staged_indicator}${unstaged_indicator} "
+    return
 }
 
 
