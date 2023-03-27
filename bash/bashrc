@@ -153,14 +153,14 @@ function __ps1_virtualenv() {
     fi
 
     if [[ -n "$POETRY_ACTIVE" ]]; then
-        tool='poetry'
+        tool='poetry '
     elif [[ -n "$PIPENV_ACTIVE" ]]; then
-        tool='pipenv'
+        tool='pipenv '
     else
-        tool='venv'
+        tool=
     fi
 
-    PS1_VIRTUAL_ENV="${tool}:$(basename $VIRTUAL_ENV)"
+    echo "(${tool}$(basename $VIRTUAL_ENV)) "
     return
 }
 
