@@ -86,7 +86,7 @@ function __variables() {
     # See colorcodes in section "256 (8-bit) Colors" from
     # http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
     export PS1_COLOR_RESET="\033[m"
-    export PS1_COLOR_DEFAULT='\e[38;5;172m'  # amber
+    export PS1_COLOR_DEFAULT='\e[38;5;15;48;5;4m'  # white on blue
     export PS1_COLOR_GIT='\e[38;5;11m'  # yellow
     export PS1_COLOR_ERROR='\e[38;5;15;48;5;1m'  # plain white on red
     # Customizations for PS1. See "ps1_customizations.example" file.
