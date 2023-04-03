@@ -229,7 +229,7 @@ function __ps1_git() {
     if [[ -n "${staged_indicator}${unstaged_indicator}" ]]; then
         local color=$PS1_COLOR_GIT
     fi
-    echo -e "${color}:${branch}${staged_indicator}${unstaged_indicator} "
+    echo -e "${color}${staged_indicator}${unstaged_indicator}${branch} "
     return
 }
 
