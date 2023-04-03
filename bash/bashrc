@@ -95,7 +95,7 @@ function __variables() {
     if [[ "$TERM_PROGRAM" = "vscode" ]]; then
         export PS1="\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]\$(__ps1_virtualenv_for_vscode; echo \$PS1_VIRTUAL_ENV)\$ \[${PS1_COLOR_RESET}\]"
     else
-        export PS1="\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]→ \$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo -e \[\${PS1_COLOR_RESET}\]\${PS1_COLOR_ERROR}\${_exit_status}'  ')\D{%a %T} \[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]\W \$(__ps1_virtualenv)\$(__ps1_git)\$ \[${PS1_COLOR_RESET}\]"
+        export PS1="\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]→ \$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo -e \[\${PS1_COLOR_RESET}\]\${PS1_COLOR_ERROR}\${_exit_status}'  ')\D{%a %e %T} \[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]\W \$(__ps1_virtualenv)\$(__ps1_git)\$ \[${PS1_COLOR_RESET}\]"
     fi
 
     [[ -n "$WSL_DISTRO_NAME" ]] && export DISPLAY=$(grep '^nameserver' /etc/resolv.conf | cut -d ' ' -f2):0.0
