@@ -193,7 +193,7 @@ function __ps1_git() {
         return
     fi
 
-    local branch staged_indicator unstaged_indicator color
+    local branch branch_indicator staged_indicator unstaged_indicator
     local rectype field1 field2 other_fields
     local branch_header="#"
     local untracked_item="?"
@@ -226,10 +226,10 @@ function __ps1_git() {
         fi
     done < <(echo "${PS1_GIT_STATUS_OUTPUT}")
 
-    if [[ -n "${staged_indicator}${unstaged_indicator}" ]]; then
-        local color=$PS1_COLOR_GIT
+    if [[ -z "${staged_indicator}${unstaged_indicator}" ]]; then
+        local branch_indicator=':'
     fi
-    echo "${staged_indicator}${unstaged_indicator}${branch} "
+    echo "${branch_indicator}${staged_indicator}${unstaged_indicator}${branch} "
     return
 }
 
