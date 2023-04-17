@@ -22,8 +22,6 @@ function __aliases() {
 
     alias ack='ack --sort-files --color-filename="bold blue" --color-lineno="blue" --color-match="bold white on_blue" --ignore-dir=is:.venv --ignore-dir=is:venv --ignore-dir=is:env --ignore-dir=is:.vagrant --ignore-file=ext:sqlite3'
     alias djunsafe='export DJANGO_ALLOW_ASYNC_UNSAFE=1'
-    alias gentags='ctags -R --exclude=.git --exclude=__pycache__ --exclude=.pytest_cache --languages=-json --tag-relative=yes -f ./.git/tags .'
-    alias envrc='source .envrc'
     alias grep='grep --color=auto'
 
     alias now='date -u +%y%m%d%H%M'
@@ -31,56 +29,16 @@ function __aliases() {
 
     alias j='jupyter notebook --no-browser --NotebookApp.allow_remote_access=True'
     alias jd='docker run --rm -p 8888:8888 -v "${PWD}":/home/jovyan/work jupyter/base-notebook:python-3.10'
-    alias dkc='docker compose'
-
-    # reference: https://www.tecmint.com/clear-ram-memory-cache-buffer-and-swap-space-on-linux/
-    alias reclaim_ram="sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'\""
-}
-
-
-function __start_wsl_services() {
-    __start_ssh_agent
-}
-
-
-function __start_ssh_agent() {
-    if [[ -n "$TMUX" ]]; then
-        return
-    fi
-
-    if [[ -n "$SSH_AGENT_PID" ]]; then
-        current_agent=$(pgrep -f ssh-agent)
-        if [[ "$current_agent" = "$SSH_AGENT_PID" ]]; then
-            return
-        fi
-    fi
-
-    source_file=/tmp/ssh-agent-source-file
-    if [[ -f "$source_file" ]]; then
-        source $source_file >/dev/null 2>&1
-        current_agent=$(pgrep -f ssh-agent)
-        if [[ "$current_agent" = "$SSH_AGENT_PID" ]]; then
-            return
-        fi
-    fi
-
-    ssh-agent -s >$source_file
-    source $source_file >/dev/null 2>&1
 }
 
 
 function __variables() {
-    [[ -z "${OSNAME}" ]] && export OSNAME="$(uname)"
-    [[ -z "$TMPDIR" ]] && export TMPDIR=/tmp
+    export OSNAME="$(uname)"
     export HISTCONTROL=ignoreboth
     export HISTTIMEFORMAT="%F %T "
-    if which -s nvim; then
-        export EDITOR=$(which nvim)
-    else
-        export EDITOR=$(which vim)
-    fi
-
+    export EDITOR=$(which vim)
     export VISUAL=$EDITOR
+    export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
 
     # Colors
     # See colorcodes in section "256 (8-bit) Colors" from
@@ -91,47 +49,14 @@ function __variables() {
     # Customizations for PS1. See "ps1_customizations.example" file.
     [[ -r ~/.ps1_customizations ]] && source ~/.ps1_customizations
 
-    if [[ "$TERM_PROGRAM" = "vscode" ]]; then
-        export PS1="\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]\$(__ps1_virtualenv_for_vscode; echo \$PS1_VIRTUAL_ENV)\$ \[${PS1_COLOR_RESET}\]"
+    # if [[ "$TERM_PROGRAM" = "vscode" ]]; then
+    if [[ "$TERM_PROGRAM $ORIGINAL_TERM_PROGRAM" =~ "vscode" ]]; then
+        # export PS1="\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]\$(__ps1_virtualenv)\$ \[${PS1_COLOR_RESET}\]"
+        export ORIGINAL_TERM_PROGRAM="$TERM_PROGRAM"
+        export PS1_COLOR_AMBER='\e[38;5;214m'
+        export PS1="\[${PS1_COLOR_AMBER}\]→ \$(__ps1_virtualenv)\W \$\[${PS1_COLOR_RESET}\] "
     else
         export PS1="\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_ERROR}\]\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo ' '\${_exit_status}' ')\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]→ \D{%a %e %T} \W \$(__ps1_virtualenv)\$(__ps1_git)\[${PS1_COLOR_DEFAULT}\]\$\[${PS1_COLOR_RESET}\] "
-    fi
-
-    [[ -n "$WSL_DISTRO_NAME" ]] && export DISPLAY=$(grep '^nameserver' /etc/resolv.conf | cut -d ' ' -f2):0.0
-    [[ "${OSNAME}" = "Darwin" ]] && export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
-
-
-    # PATH
-    if ! which brew > /dev/null; then
-        if [[ -r /usr/local/Homebrew ]]; then
-            eval $(/usr/local/bin/brew shellenv)
-        fi
-    fi
-    PATH="$HOME/.local/bin:$PATH"
-
-    if ! which poetry > /dev/null; then
-        [[ -d ${HOME}/.poetry ]] && export PATH="$HOME/.poetry/bin:$PATH"
-    fi
-    export POETRY_VIRTUALENVS_PATH="./venv"
-
-    # pyenv
-    [[ -z "$PYENV_ROOT" ]] && [[ -d ~/.pyenv ]] && export PYENV_ROOT=~/.pyenv
-    [[ -z "$PYENV_ROOT" ]] && [[ -d ~/.local/bin/pyenv ]] && export PYENV_ROOT=~/.local/bin/pyenv
-    if [[ -n "$PYENV_ROOT" ]]; then
-        export PATH="$PYENV_ROOT/bin:$PATH"
-        if which pyenv > /dev/null
-        then
-            eval "$(pyenv init --path)"
-            eval "$(pyenv init -)"
-            # Custom python versions. See "pyenv_global_command.example" file.
-            [[ -r ~/.pyenv_global_command ]] && source ~/.pyenv_global_command
-        fi
-    fi
-
-    # asdf-vm
-    if [[ -d ~/.asdf ]]; then
-        source $HOME/.asdf/asdf.sh
-        source $HOME/.asdf/completions/asdf.bash
     fi
 }
 
@@ -154,28 +79,10 @@ function __ps1_virtualenv() {
         return
     fi
 
-    if [[ -n "$POETRY_ACTIVE" ]]; then
-        tool='poetry '
-    elif [[ -n "$PIPENV_ACTIVE" ]]; then
-        tool='pipenv '
-    else
-        tool=
-    fi
-
-    echo "(${tool}$(basename $VIRTUAL_ENV)) "
+    echo "($(basename $VIRTUAL_ENV)) "
     return
 }
 
-
-function __ps1_virtualenv_for_vscode() {
-    if [[ -z "$VIRTUAL_ENV" ]]; then
-        PS1_VIRTUAL_ENV=
-        return
-    fi
-
-    PS1_VIRTUAL_ENV="($(basename $VIRTUAL_ENV))"
-    return
-}
 
 function __ps1_git() {
     # Show git branch and indicators about status:
@@ -239,365 +146,7 @@ function __main() {
     __aliases
     __local_customizations
 
-    [[ -n "$WSL_DISTRO_NAME" ]] && __start_wsl_services || true
-    [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-    # [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+    [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion || true
 }
-
-function loadenv() {
-    local verbose=
-    local env_filename=
-    while [[ -n "$1" ]]; do
-        case $1 in
-            -h | --help )
-                cat <<-_ENDOFTEXT_
-				Export .env file to environment, like Docker Compose.
-				Usage: loadenv <file> [-v[v]]
-				  -v: verbose mode
-				  -vv: more verbose
-				_ENDOFTEXT_
-                return
-                ;;
-            -v )
-                verbose=1
-                ;;
-            -vv )
-                verbose=2
-                ;;
-            * )
-                env_filename=$1
-                ;;
-        esac
-        shift
-    done
-
-    if [[ -z "$env_filename" ]]; then
-        env_filename='<empty>'
-        for fname in {.env,.env.dev,.env.override}; do
-            [[ -e "${fname}" ]] && env_filename=${fname}
-        done
-    fi
-
-    if [[ ! -e "${env_filename}" ]]; then
-        echo "${env_filename} does not exist"
-        return 1
-    fi
-
-    [[ -n "${verbose}" ]] && echo "Loading ${env_filename}"
-
-    while IFS== read -r _key _raw_value
-    do
-        _computed_value=$(eval echo "$_raw_value")
-        [[ "${verbose}" = "2" ]] && echo export $_key="$_computed_value"
-        export $_key="$_computed_value"
-    done < <(grep '^[a-zA-Z]' ${env_filename})
-}
-
-
-######################################
-## functions instead of scripts
-######################################
-
-function converte-pdf-to-jpg()
-{
-    # This script needs imagemagick: `sudo apt-get install imagemagick`
-    fname="$1"
-    convert -density 300 -quality 100 "${fname}" "${fname}.jpg"
-}
-
-
-
-# ------------------------------------
-# Utils for logging messages (WIP)
-# ------------------------------------
-
-# TODO document the logging process.
-#+ reference: https://stackoverflow.com/questions/42403558/how-do-i-manage-log-verbosity-inside-a-shell-script
-
-declare -A _log_levels=([NOTSET]=0 [DEBUG]=1 [INFO]=2 [WARNING]=3 [ERROR]=4 [CRITICAL]=5)
-declare -i _log_level=3
-function set_log_level()
-{
-    level="${1:-INFO}"
-    _log_level="${_log_levels[$level]}"
-}
-
-function set_log_destination()
-{
-    # TODO document how to set the log destination
-    _log_destination="$1"
-    if [[ -z "${_log_destination}" ]]; then
-        _log_destination='stdout'
-    fi
-    if [[ ".stdin.stdout.stderr." =~ ".${_log_destination}." ]]; then
-        _log_destination="/dev/${_log_destination}"
-    fi
-}
-
-function log_debug()    { (( _log_level >= ${_log_levels[DEBUG]} ))    && echo "$(date +'%F %T') DEBUG    $*" >>${_log_destination};  }
-function log_info()     { (( _log_level >= ${_log_levels[INFO]} ))     && echo "$(date +'%F %T') INFO     $*" >>${_log_destination};  }
-function log_warning()  { (( _log_level >= ${_log_levels[WARNING]} ))  && echo "$(date +'%F %T') WARNING  $*" >>${_log_destination};  }
-function log_error()    { (( _log_level >= ${_log_levels[ERROR]} ))    && echo "$(date +'%F %T') ERROR    $*" >>${_log_destination};  }
-function log_critical() { (( _log_level >= ${_log_levels[CRITICAL]} )) && echo "$(date +'%F %T') CRITICAL $*" >>${_log_destination};  }
-
-# functions for logging command output
-function log_debug_file()   { (( _log_level >= ${_log_levels[DEBUG]} ))   && [[ -f $1 ]] && echo "=== command output start ===" && cat "$1" && echo "=== command output end ==="; }
-
-# function log()
-# {
-#     local command="$1"
-#     shift
-#     if [[ "$command" == 'start' ]]; then
-#         local filename="$1"
-#         export _LOGGER_FILENAME="$1"
-#     echo "$1" >>$_LOGGER_FILENAME
-# }
-
-# function logger-init()
-# {
-#     export _LOGGER_FILENAME="$1"
-#     > $_LOGGER_FILENAME
-# }
-
-# function logger-show()
-# {
-#     cat $_LOGGER_FILENAME
-# }
-
-# ------------------------------------
-# Manage virtualenvs
-# ------------------------------------
-
-function venv()
-{
-    local command="$1"
-    shift
-    if [[ "$command" == 'help' ]]; then
-        __venv_help venv
-    elif [[ "$command" == 'info' ]]; then
-        __venv_info "$@"
-    elif [[ "$command" == 'create' ]]; then
-        __venv_create "$@"
-    elif [[ "$command" == 'shell' ]]; then
-        __venv_shell "$@"
-    elif [[ "$command" == 'run' ]]; then
-        __venv_run "$@"
-    else
-        echo "Unknown command: ${command:-<empty>}"
-        __venv_help venv
-        return 1
-    fi
-}
-
-function __venv_help()
-{
-    local funcname="$1"
-    cat <<-_ENDOFTEXT_
-		${funcname} manages virtualenv.
-		 
-		Usage: ${funcname} <command> [<arg>]
-		Commands:
-		  create <dirname>
-		    Create and activate virtualenv <dirname> (default is "venv") inside current directory.
-		  run <command>
-		    Run <command> inside the virtualenv. Exit the virtualenv when finished.
-		    Example: \$ ${funcname} run pip install -r requirements.txt
-		  shell
-		    Open a sub-shell with the virtualenv activated.
-		    Exit from it with \`$ exit\`.
-		  info
-		    Show info about the virtualenv.
-		  info --path
-		    Show only the virtualenv's path.
-	_ENDOFTEXT_
-}
-
-function __venv_create()
-{
-    local default_dirname=venv
-    local dirname="$1"
-    dirname=${dirname:-${default_dirname}}
-    python -m venv "${PWD}/${dirname}"
-    venv info
-    venv shell $dirname
-}
-
-function __venv_shell()
-{
-    local location="$1"
-    if [[ -n "$location" ]]; then
-        abspath=$(cd $location;echo $PWD)
-        if [[ "$abspath" = "$(__venv__get_pipenv_virtualenv_location)" ]]; then
-            echo 'Launching pipenv shell'
-            pipenv shell
-            return
-        elif [[ "$abspath" = "$(__venv__get_poetry_virtualenv_location)" ]]; then
-            echo 'Launching poetry shell'
-            poetry shell
-            return
-        else
-            echo 'Launching native virtualenv shell'
-        fi
-    else
-        if __venv__is_virtualenv_managed_by_pipenv; then
-            echo 'Launching pipenv shell'
-            pipenv shell
-            return
-        elif __venv__is_virtualenv_managed_by_poetry; then
-            echo 'Launching poetry shell'
-            poetry shell
-            return
-        else
-            echo 'Launching native virtualenv shell'
-        fi
-    fi
-
-    (
-        local init_commands=
-        init_commands=$(__venv_prepare_environment_for_virtualenv $location)
-        retval=$?
-        if [[ $retval -ne 0 ]]; then
-            echo 'No virtualenv found. Shell not launched.'
-            return 1
-        fi
-        $SHELL --rcfile <(echo ". ${HOME}/.bashrc;${init_commands};echo \"virtualenv at \${VIRTUAL_ENV} (\$(python --version 2>&1))\";echo 'Type \"exit\" or press CTRL-D to exit'")
-    )
-}
-
-function __venv_run()
-{
-    local command_to_run="$@"
-    if __venv__is_virtualenv_managed_by_pipenv; then
-        echo 'Running through pipenv run'
-        pipenv run $command_to_run
-        return
-    elif __venv__is_virtualenv_managed_by_poetry; then
-        echo 'Running through poetry run'
-        poetry run $command_to_run
-        return
-    fi
-
-    (
-        local initial_commands=
-        initial_commands=$(__venv_prepare_environment_for_virtualenv)
-        retval=$?
-        if [[ $retval -ne 0 ]]; then
-            echo 'No virtualenv found. Command aborted.'
-            return 1
-        fi
-        echo "${initial_commands};${command_to_run}" | $SHELL -s
-    )
-}
-
-function __venv__is_virtualenv_managed_by_pipenv()
-{
-    [[ -f Pipfile ]]
-}
-
-function __venv__is_virtualenv_managed_by_poetry()
-{
-    poetry env info -q
-}
-
-function __venv__get_pipenv_virtualenv_location()
-{
-    if __venv__is_virtualenv_managed_by_pipenv; then
-        dirname=$(pipenv --venv 2> /dev/null)
-        echo $(cd $dirname;echo $PWD)
-    fi
-}
-
-function __venv__get_poetry_virtualenv_location()
-{
-    if __venv__is_virtualenv_managed_by_poetry; then
-        dirname=$(poetry env info --path)
-        echo $(cd $dirname;echo $PWD)
-    fi
-}
-
-function __venv__get_inline_virtualenvs_locations()
-{
-    local locations=
-    local sep=
-    for dirname in $(find . -name 'pyvenv.cfg' | sed -e 's/\/pyvenv.cfg//'); do
-        abspath=$(cd $dirname;echo $PWD)
-        echo $abspath
-    done
-}
-
-function __venv__get_virtualenvs_locations()
-{
-    local dirname=
-    local tem_virtualenv=
-    local inlines=
-    declare -a locations
-
-    dirname=$(__venv__get_pipenv_virtualenv_location)
-    if [[ -n "$dirname" ]]; then
-        locations[${#locations[@]}]=$(cd $dirname;echo "pipenv;$PWD")
-    fi
-
-    dirname=$(__venv__get_poetry_virtualenv_location)
-    if [[ -n "$dirname" ]]; then
-        locations[${#locations[@]}]=$(cd $dirname;echo "poetry;$PWD")
-    fi
-
-    inlines=$(__venv__get_inline_virtualenvs_locations)
-    for dirname in $inlines; do
-        if [[ ! "${locations[@]}" =~ "$dirname" ]]; then
-            locations[${#locations[@]}]="native;$dirname"
-        fi
-    done
-
-    if [[ ${#locations[@]} -eq 0 ]]; then
-        return 1
-    fi
-
-    for dirname in ${locations[@]}; do
-        echo $dirname
-    done
-}
-
-function __venv_info()
-{
-    local option="$1"
-    local locations=$(__venv__get_virtualenvs_locations)
-    local tool=
-
-    for line in $locations; do
-        dirname=${line#*;}
-        if [[ "$option" == '--path' ]]; then
-            echo $dirname
-        else
-            tool=${line%;*}
-            cat <<-_ENDOFTEXT_
-				Virtualenv tool: ${tool}
-				Virtualenv path: ${dirname}
-			_ENDOFTEXT_
-        fi
-    done
-
-    if [[ -n "$locations" ]]; then
-        return
-    else
-        return -1
-    fi
-}
-
-function __venv_prepare_environment_for_virtualenv()
-{
-    local location="$1"
-    if [[ -z "$location" ]]; then
-        location=$(venv info --path)
-        retval=$?
-        if [[ $retval -ne 0 ]]; then
-            return 1
-        fi
-    fi
-    echo "export VIRTUAL_ENV='${location}';export PATH='${location}/bin:${PATH}'"
-}
-
-
-# -------------------------------------------------------------------
 
 __main
