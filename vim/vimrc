@@ -70,7 +70,7 @@ set formatlistpat+=[-*+]\\s          | "   followed by a dash, an asterisk, or a
 
 " other options
 set hidden
-set grepprg=grep\ -nI\ --exclude-dir=.git\ --exclude-dir=venv\ --exclude-dir=__pycache__\ --exclude-dir='*.egg-info'\ --exclude-dir=.vagrant\ --exclude-dir=build\ $*\ /dev/null
+set grepprg=grep\ -nI\ --exclude-dir=.git\ --exclude-dir=venv\ --exclude-dir=.venv\ --exclude-dir=__pycache__\ --exclude-dir='*.egg-info'\ --exclude-dir=.vagrant\ --exclude-dir=build\ $*\ /dev/null
 set directory=~/tmp//
 set tags+=.git/tags | " The filename doesn't start with './'. See `:h 'tags'` for details.
 set modeline
@@ -859,15 +859,6 @@ augroup aug_terminal_mode
     au!
     silent! autocmd TerminalWinOpen * setlocal nonumber norelativenumber
 augroup END
-
-
-
-
-
-
-
-
-
 
 " Plugins: {{{1
 " ==============================================================================
