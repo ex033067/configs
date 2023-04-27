@@ -35,8 +35,8 @@
         user = "!echo $(git config user.name) \\<$(git config user.email)\\>"
 
         # shortcut to simple but long commands
-        l = log --date=format:'%Y%m%d %H%M' --format='tformat:%C(auto)%d%h %ad %<(8,trunc)%an %C(auto)%s'
-        le = log --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(auto)%s%n  %C(blue)%ad %ae %h%C(auto)%d'
+        l = log --date=format:'%Y%m%d' --format='tformat:%C(dim default)%h %ad %C(nodim default)%s%C(dim default)%d'
+        le = log --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(default)%s%n  %C(dim default)%h %ad %<(8,trunc)%an%d'
         s = status -s
         initt = "!git init; git commit --allow-empty -m 'Create the empty repo' --author='Repo Creator <author@localhost.home>'"
         prunetags = fetch --prune origin '+refs/tags/*:refs/tags/*'
