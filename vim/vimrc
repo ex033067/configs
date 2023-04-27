@@ -117,9 +117,8 @@ nnoremap <leader>T
 " Show/hide helpers
 nnoremap <leader>1 :NERDTreeToggle<CR>
 nnoremap <leader>! :NERDTreeFind<CR>
-nnoremap <leader>2 :GFiles<CR>
-nnoremap <leader>@ :Files<CR>
-nnoremap <leader>3 :Buffers<CR>
+lua vim.keymap.set('n', '<leader>2', '<cmd>Telescope find_files<CR>')
+lua vim.keymap.set('n', '<leader>3', '<cmd>Telescope buffers<CR>')
 nnoremap <leader>4 :TagbarOpen j<CR>
 nnoremap <leader>$ :TagbarToggle<CR>
 nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'
@@ -884,8 +883,8 @@ let NERDTreeIgnore=['__pycache__[[dir]]']
 let NERDTreeHijackNetrw = 0
 
 " Fuzzy finder
-Plug 'junegunn/fzf', {'dir': '~/.vim/bundle/fzf', 'do': './install --all'}
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'run': 'make' } " dependency
+Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 
 " Up to date syntax files
 Plug 'viniciusban/vim-polyglot'
