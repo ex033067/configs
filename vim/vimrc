@@ -883,7 +883,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'viniciusban/vim-polyglot'
 
 " Python LSP
-" Install with `$ pipx install pyright`
+" https://github.com/python-lsp/python-lsp-server
 Plug 'dense-analysis/ale'
 let g:ale_set_quickfix = 1
 let g:ale_hover_cursor = 0
