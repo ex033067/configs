@@ -8,3 +8,4 @@ ln -sf $PWD/vimrc ~/.vimrc
 rm -rf ~/.vim
 mkdir ~/.vim
 ln -sf $PWD/ftplugin ~/.vim/ftplugin
+ln -sf $PWD/luascripts ~/.vim/luascripts

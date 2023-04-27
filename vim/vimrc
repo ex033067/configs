@@ -508,12 +508,6 @@ augroup aug_filetype_python_mappings
         \ :update<CR>
         \:call flake8#Flake8()<CR>
 
-    " Mapping to navigate to object definition
-    autocmd FileType python nnoremap <buffer> gd
-        \ :ALEGoToDefinition<CR>
-    autocmd FileType python nnoremap <buffer> <C-w>d
-        \ :ALEGoToDefinition -split<CR>
-
     " transform Python module name into file name
     autocmd FileType python nnoremap <buffer> <localleader>mf
         \ :call setreg('"', BanPython_TransformTextIntoFilename(expand('<cWORD>'))) <CR>
@@ -898,9 +892,8 @@ Plug 'viniciusban/vim-polyglot'
 
 " Python LSP
 " https://github.com/python-lsp/python-lsp-server
-Plug 'dense-analysis/ale'
-let g:ale_set_quickfix = 1
-let g:ale_hover_cursor = 0
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 
 Plug 'neovim/nvim-lspconfig'
 
@@ -1009,6 +1002,11 @@ endif
 
 call plug#end()
 
+" For lsp plugins
+" lua require("mason").setup()
+" " List of available language servers:
+" " https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
+source ~/.vim/luascripts/lsp_config.lua
 
 " For 'norcalli/nvim-colorizer.lua' plugin
 if has('nvim')
