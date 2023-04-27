@@ -12,7 +12,7 @@ bind C-a send-prefix
 set-option -g mode-keys vi
 
 # bigger history for each window
-set-option -g history-limit 100000
+set-option -g history-limit 1000000
 
 # how about resizing panes with mouse?
 set-option -g mouse on
