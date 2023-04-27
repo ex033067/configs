@@ -870,6 +870,20 @@ call plug#begin('~/.vim/bundle')
 
 " Must Have Plugins: {{{2
 
+" -----------------------------------
+" New plugins for neovim
+
+if has('nvim')
+    " lua functions that many plugins use
+    Plug 'nvim-lua/plenary.nvim'
+
+    " git signs plugin
+    Plug 'lewis6991/gitsigns.nvim'
+    lua require('gitsigns').setup({signs={ add={text='+'}, change={text='!'} }})
+endif
+
+" -----------------------------------
+
 " File system explorer
 Plug 'scrooloose/nerdtree'
 let NERDTreeIgnore=['__pycache__[[dir]]']
