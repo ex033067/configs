@@ -4,6 +4,7 @@
 # This file is distributed under GPL-V3.
 
 # <C-a> is the prefix key.
+unbind C-b
 set-option -g prefix C-a
 bind C-a send-prefix
 
