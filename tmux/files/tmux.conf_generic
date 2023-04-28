@@ -57,4 +57,4 @@ set-option -g display-panes-active-colour "brightwhite"
 run-shell 'tmux bind-key P copy-mode \\\; send -X search-backward "→ "'
 
 # Wait for window name before creating a new one
-bind C command-prompt "new-window -n '%%'"
+bind C command-prompt "new-window -c '#{pane_current_path}' -n '%%'"
