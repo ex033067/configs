@@ -75,7 +75,15 @@ function __ps1_virtualenv() {
         return
     fi
 
-    echo "($(basename $VIRTUAL_ENV)) "
+    local python_version=$(basename $(command ls -d ${VIRTUAL_ENV}/lib/py*))
+    local python_venv_tool
+    if [[ -n "$PIPENV_ACTIVE" ]]; then
+        python_venv_tool=' pipenv'
+    elif [[ -n "$POETRY_ACTIVE" ]]; then
+        python_venv_tool=' poetry'
+    fi
+
+    echo "(${python_version}${python_venv_tool}) "
     return
 }
 
