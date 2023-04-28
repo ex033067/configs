@@ -36,7 +36,7 @@ function __variables() {
     export OSNAME="$(uname)"
     export HISTCONTROL=ignoreboth
     export HISTTIMEFORMAT="%F %T "
-    export EDITOR=$(which vim)
+    export EDITOR=$(which nvim || which vim)
     export VISUAL=$EDITOR
     export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
 
