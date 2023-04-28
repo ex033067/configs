@@ -1,0 +1,23 @@
+{
+    "terminal.integrated.defaultProfile.osx": "bash",
+    "terminal.integrated.env.osx": {},
+    "terminal.integrated.env.windows": {},
+    "editor.lineNumbers": "on",
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "editor.autoClosingQuotes": "never",
+    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingDelete": "never",
+    "editor.autoClosingOvertype": "never",
+    "editor.fontFamily": "'IBM Plex Mono', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 15,
+    "terminal.integrated.fontSize": 15,
+    "editor.occurrencesHighlight": false,
+    "editor.renderLineHighlight": "all",
+    "workbench.colorCustomizations": {
+        "terminal.background":"#0e0202",
+        "terminalCursor.foreground": "#ffa653ee"
+    },
+    "window.zoomLevel": 1
+}
