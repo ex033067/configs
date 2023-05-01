@@ -83,7 +83,7 @@ function __ps1_virtualenv() {
         python_venv_tool=' poetry'
     fi
 
-    echo "(${python_version}${python_venv_tool}) "
+    echo "- ${python_version}${python_venv_tool} "
     return
 }
 
@@ -136,10 +136,7 @@ function __ps1_git() {
         fi
     done < <(echo "${PS1_GIT_STATUS_OUTPUT}")
 
-    if [[ -z "${staged_indicator}${unstaged_indicator}" ]]; then
-        local branch_indicator=':'
-    fi
-    echo "${branch_indicator}${staged_indicator}${unstaged_indicator}${branch} "
+    echo "- git ${staged_indicator}${unstaged_indicator}${branch} "
     return
 }
 
