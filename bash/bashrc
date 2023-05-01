@@ -122,16 +122,16 @@ function __ps1_git() {
         fi
 
         if [[ "${untracked_item}${unmerged_item}" =~ "${rectype}" ]]; then
-            local unstaged_indicator="!"
+            local unstaged_indicator="⚠️ "
             continue
         fi
 
         if [[ "${changed_item}${renamed_item}" =~ "${rectype}" ]]; then
             if [[ "${field1:0:1}" != "." ]]; then
-                local staged_indicator="+"
+                local staged_indicator="💬"
             fi
             if [[ "${field1:1:1}" != "." ]]; then
-                local unstaged_indicator="!"
+                local unstaged_indicator="⚠️ "
             fi
             continue
         fi
