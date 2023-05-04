@@ -23,7 +23,7 @@ let maplocalleader='\'
 
 " elements of interface
 set number
-set signcolumn=number
+set signcolumn=auto
 set scrolloff=0
 set lazyredraw
 set laststatus=2
