@@ -872,7 +872,7 @@ if has('nvim')
 
     " git signs plugin
     Plug 'lewis6991/gitsigns.nvim'
-    lua require('gitsigns').setup({signs={ add={text='+'}, change={text='!'} }})
+    lua require('gitsigns').setup({signs={ add={text='+'}, change={text='!'}, untracked={text='?'} }})
 endif
 
 " -----------------------------------
