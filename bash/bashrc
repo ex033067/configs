@@ -149,6 +149,7 @@ function __main() {
     __local_customizations
 
     [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion || true
+    [ -f ~/.git-completion.bash ] && . ~/.git-completion.bash || true
 }
 
 __main
