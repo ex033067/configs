@@ -148,7 +148,7 @@ function __main() {
     __aliases
     __local_customizations
 
-    [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion || true
+    [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
     [ -f ~/.git-completion.bash ] && . ~/.git-completion.bash || true
 }
 
