@@ -48,7 +48,8 @@ function __variables() {
     export PS1_COLOR_WHITE_ON_RED='\e[38;5;15;48;5;1m'
     export PS1_COLOR_AMBER='\e[38;5;215m'
     export PS1_COLOR_CYAN='\e[38;5;6m'
-    export PS1_COLOR_DEFAULT=$PS1_COLOR_AMBER
+    # export PS1_COLOR_DEFAULT=$PS1_COLOR_AMBER
+    export PS1_COLOR_DEFAULT=$PS1_COLOR_WHITE_ON_BLUE
     export PS1_COLOR_ERROR=$PS1_COLOR_WHITE_ON_RED
     # Customizations for PS1. See "ps1_customizations.example" file.
     [[ -r ~/.ps1_customizations ]] && source ~/.ps1_customizations
