@@ -38,23 +38,23 @@ function __aliases() {
 
 
 function __variables() {
-    export OSNAME="$(uname)"
-    export HISTCONTROL=ignoreboth
-    export HISTTIMEFORMAT="%F %T "
-    export EDITOR=$(which nvim || which vim)
-    export VISUAL=$EDITOR
+    OSNAME="$(uname)"
+    HISTCONTROL=ignoreboth
+    HISTTIMEFORMAT="%F %T "
+    EDITOR=$(which nvim || which vim)
+    VISUAL=$EDITOR
     export LC_CTYPE=en_US.UTF-8 # Default UTF-8 makes python crash
 
     # Colors
     # See colorcodes in section "256 (8-bit) Colors" from
     # http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
-    export PS1_COLOR_RESET="\033[m"
-    export PS1_COLOR_WHITE_ON_BLUE='\e[38;5;15;48;5;4m'
-    export PS1_COLOR_WHITE_ON_RED='\e[38;5;15;48;5;1m'
-    export PS1_COLOR_AMBER='\e[38;5;215m'
-    export PS1_COLOR_PINK='\e[38;5;13m'
-    export PS1_COLOR_CYAN='\e[38;5;6m'
-    export PS1_COLOR_YELLOW='\e[38;5;214m'
+    PS1_COLOR_RESET="\033[m"
+    PS1_COLOR_WHITE_ON_BLUE='\e[38;5;15;48;5;4m'
+    PS1_COLOR_WHITE_ON_RED='\e[38;5;15;48;5;1m'
+    PS1_COLOR_AMBER='\e[38;5;215m'
+    PS1_COLOR_PINK='\e[38;5;13m'
+    PS1_COLOR_CYAN='\e[38;5;6m'
+    PS1_COLOR_YELLOW='\e[38;5;214m'
     # Customizations for PS1. See "ps1_customizations.example" file.
     [[ -r ~/.ps1_customizations ]] && source ~/.ps1_customizations
 
@@ -62,13 +62,13 @@ function __variables() {
         export UNDER_VSCODE=1
     fi
     if [[ "$UNDER_VSCODE" == "1" ]]; then
-        export PS1_COLOR_DEFAULT=$PS1_COLOR_YELLOW
-        export PS1_COLOR_ERROR=$PS1_COLOR_WHITE_ON_RED
+        PS1_COLOR_DEFAULT=$PS1_COLOR_YELLOW
+        PS1_COLOR_ERROR=$PS1_COLOR_WHITE_ON_RED
         PS1="\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_ERROR}\]\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo ' '\${_exit_status}' ')\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]→ \D{%a %e %T} \$(__ps1_virtualenv)\[${PS1_COLOR_DEFAULT}\]\$(__ps1_tmux)\$\[${PS1_COLOR_RESET}\] "
     else
-        export PS1_COLOR_DEFAULT=$PS1_COLOR_WHITE_ON_BLUE
-        export PS1_COLOR_ERROR=$PS1_COLOR_WHITE_ON_RED
-        export PROMPT_DIRTRIM=2
+        PS1_COLOR_DEFAULT=$PS1_COLOR_WHITE_ON_BLUE
+        PS1_COLOR_ERROR=$PS1_COLOR_WHITE_ON_RED
+        PROMPT_DIRTRIM=2
         PS1="\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_ERROR}\]\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo ' '\${_exit_status}' ')\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]→ \D{%a %e %T} \w \$(__ps1_virtualenv)\$(__ps1_git)\[${PS1_COLOR_DEFAULT}\]\$\[${PS1_COLOR_RESET}\] "
     fi
 }
