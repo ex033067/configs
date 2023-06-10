@@ -29,6 +29,11 @@ function __aliases() {
 
     alias j='jupyter notebook --no-browser --NotebookApp.allow_remote_access=True'
     alias jd='docker run --rm -p 8888:8888 -v "${PWD}":/home/jovyan/work jupyter/base-notebook:python-3.10'
+
+    alias dk='docker'
+    alias dkcp='docker compose'
+    alias dkct='docker container'
+    alias dki='docker image'
 }
 
 
