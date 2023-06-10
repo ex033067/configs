@@ -1,3 +1,19 @@
+__avoid_path_pile_up () {
+    # Path pile ups when a login shell is invoked from an active shell.
+    # Example: when you call tmux from the command line.
+    #
+    # So, what exactly is a "path pile up"? 
+    # It is what happens when you already have PATH set and scripts responsible
+    # to set the PATH are called again. They are usually .bash_profile 
+    # or .profile 
+    if [[ -z "$ORIGINAL_PATH" ]]; then
+        export ORIGINAL_PATH="$PATH"
+    fi
+    PATH="$ORIGINAL_PATH"
+}
+
+__avoid_path_pile_up
+
 eval "$(/opt/homebrew/bin/brew shellenv)"
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
