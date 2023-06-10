@@ -36,6 +36,7 @@
 
         # shortcut to simple but long commands
         l = log --date=short --format='tformat:%s %C(dim default)%ar (%ad) by %<(6,trunc)%an %h%C(dim default)%d'
+        lr = log --reverse --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(dim default)%ad %C(nodim default)%s %C(dim default)by %<(6,trunc)%an %h%C(dim default)%d'
         le = log --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(default)%s%n  %C(dim default)%h %ad %<(8,trunc)%an%d'
         s = status -s
         initt = "!git init; git commit --allow-empty -m 'Create the empty repo' --author='Repo Creator <author@localhost.home>'"
