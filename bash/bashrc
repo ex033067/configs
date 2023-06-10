@@ -47,15 +47,25 @@ function __variables() {
     export PS1_COLOR_WHITE_ON_BLUE='\e[38;5;15;48;5;4m'
     export PS1_COLOR_WHITE_ON_RED='\e[38;5;15;48;5;1m'
     export PS1_COLOR_AMBER='\e[38;5;215m'
+    export PS1_COLOR_PINK='\e[38;5;13m'
     export PS1_COLOR_CYAN='\e[38;5;6m'
-    # export PS1_COLOR_DEFAULT=$PS1_COLOR_AMBER
-    export PS1_COLOR_DEFAULT=$PS1_COLOR_WHITE_ON_BLUE
-    export PS1_COLOR_ERROR=$PS1_COLOR_WHITE_ON_RED
+    export PS1_COLOR_YELLOW='\e[38;5;214m'
     # Customizations for PS1. See "ps1_customizations.example" file.
     [[ -r ~/.ps1_customizations ]] && source ~/.ps1_customizations
 
-    export PROMPT_DIRTRIM=2
-    PS1="\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_ERROR}\]\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo ' '\${_exit_status}' ')\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]→ \D{%a %e %T} \w \$(__ps1_virtualenv)\$(__ps1_git)\[${PS1_COLOR_DEFAULT}\]\$\[${PS1_COLOR_RESET}\] "
+    if [[ "$TERM_PROGRAM" = vscode ]]; then
+        export UNDER_VSCODE=1
+    fi
+    if [[ "$UNDER_VSCODE" == "1" ]]; then
+        export PS1_COLOR_DEFAULT=$PS1_COLOR_YELLOW
+        export PS1_COLOR_ERROR=$PS1_COLOR_WHITE_ON_RED
+        PS1="\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_ERROR}\]\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo ' '\${_exit_status}' ')\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]→ \D{%a %e %T} \$(__ps1_virtualenv)\[${PS1_COLOR_DEFAULT}\]\$(__ps1_tmux)\$\[${PS1_COLOR_RESET}\] "
+    else
+        export PS1_COLOR_DEFAULT=$PS1_COLOR_WHITE_ON_BLUE
+        export PS1_COLOR_ERROR=$PS1_COLOR_WHITE_ON_RED
+        export PROMPT_DIRTRIM=2
+        PS1="\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_ERROR}\]\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo ' '\${_exit_status}' ')\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]→ \D{%a %e %T} \w \$(__ps1_virtualenv)\$(__ps1_git)\[${PS1_COLOR_DEFAULT}\]\$\[${PS1_COLOR_RESET}\] "
+    fi
 }
 
 
@@ -139,6 +149,14 @@ function __ps1_git() {
     done < <(echo "${PS1_GIT_STATUS_OUTPUT}")
 
     echo "- git ${staged_indicator}${unstaged_indicator}${branch} "
+    return
+}
+
+
+function __ps1_tmux() {
+    if [[ "$TERM_PROGRAM" = tmux ]]; then
+        echo "(tmux) "
+    fi
     return
 }
 
