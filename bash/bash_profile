@@ -1,0 +1,8 @@
+eval "$(/opt/homebrew/bin/brew shellenv)"
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+# Created by `pipx` on 2023-04-13 22:48:39
+#export PATH="$PATH:/Users/viniciusban/.local/bin"
+export PATH="/Users/viniciusban/.local/bin:$PATH"
+
+. ~/.bashrc

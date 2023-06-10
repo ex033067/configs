@@ -11,6 +11,7 @@ if [ ! -L ${filename} -a -f ${filename} ]; then
 fi
 
 ln -sf ${PWD}/bashrc ${filename}
+ln -sf ${PWD}/bash_profile ~/.bash_profile
 
 cp -n ${PWD}/ps1_customizations.example ~/.ps1_customizations
 cp -n ${PWD}/pyenv_global_command.example ~/.pyenv_global_command
