@@ -12,8 +12,8 @@ function __aliases() {
     alias .2='cd ../..'
     alias .3='cd ../../..'
 
-    cdp() { cd ~/src/Personal/$@ ; }
-    cdl() { cd ~/src/Learn/$@ ; }
+    alias cdp='cd ~/src/Personal'
+    alias cdc1='cd ~/src/Work/CorrelationOne'
 
     alias l='ls -lhgo'
     alias ll='ls -lh'
