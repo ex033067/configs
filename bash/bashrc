@@ -55,6 +55,7 @@ function __variables() {
     PS1_COLOR_PINK='\e[38;5;13m'
     PS1_COLOR_CYAN='\e[38;5;6m'
     PS1_COLOR_YELLOW='\e[38;5;214m'
+    PS1_COLOR_WHITE='\e[38;5;15m'
     # Customizations for PS1. See "ps1_customizations.example" file.
     [[ -r ~/.ps1_customizations ]] && source ~/.ps1_customizations
 
@@ -62,7 +63,7 @@ function __variables() {
         export UNDER_VSCODE=1
     fi
     if [[ "$UNDER_VSCODE" == "1" ]]; then
-        PS1_COLOR_DEFAULT=$PS1_COLOR_YELLOW
+        PS1_COLOR_DEFAULT=$PS1_COLOR_WHITE
         PS1_COLOR_ERROR=$PS1_COLOR_WHITE_ON_RED
         PS1="\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_ERROR}\]\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo ' '\${_exit_status}' ')\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]→ \D{%a %e %T} \$(__ps1_virtualenv)\[${PS1_COLOR_DEFAULT}\]\$(__ps1_tmux)\$\[${PS1_COLOR_RESET}\] "
     else
