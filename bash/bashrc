@@ -66,6 +66,7 @@ function __variables() {
         PS1_COLOR_DEFAULT=$PS1_COLOR_WHITE
         PS1_COLOR_ERROR=$PS1_COLOR_WHITE_ON_RED
         PS1="\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_ERROR}\]\$(_exit_status=\$? ; [ \$_exit_status -ne 0 ] && echo ' '\${_exit_status}' ')\[${PS1_COLOR_RESET}\]\[${PS1_COLOR_DEFAULT}\]→ \D{%a %e %T} \$(__ps1_virtualenv)\[${PS1_COLOR_DEFAULT}\]\$(__ps1_tmux)\n\$\[${PS1_COLOR_RESET}\] "
+        echo "pwd:$PWD"
     else
         PS1_COLOR_DEFAULT=$PS1_COLOR_WHITE_ON_BLUE
         PS1_COLOR_ERROR=$PS1_COLOR_WHITE_ON_RED
