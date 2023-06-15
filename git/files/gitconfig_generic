@@ -129,7 +129,7 @@
 
 [core]
         autocrlf = input
-        editor = $EDITOR
+        editor = nvim
         excludesfile=~/.gitignore_global
 [http]
         sslVerify = false
