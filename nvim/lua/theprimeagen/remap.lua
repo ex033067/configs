@@ -44,6 +44,8 @@ vim.keymap.set("n", "<leader>1", ":NERDTreeToggle<CR>") -- Show/Hide file naviga
 vim.keymap.set("n", "<leader>FF", ":NERDTreeFind %<CR>")  -- Show file navigator with current file highlighted
 
 local telescope_builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>fb', telescope_builtin.buffers, {})  -- Telescope fuzzy find window for open buffers
+vim.keymap.set('n', '<leader>FB', ":lua require('telescope.builtin').live_grep({ grep_open_files = true })<CR>", {})  -- Telescope live grep in open buffers
 vim.keymap.set('n', '<leader>ff', telescope_builtin.find_files, {})  -- Telescope fuzzy find window
 vim.keymap.set('n', '<leader>fg', telescope_builtin.git_files, {})  -- Telescope fuzzy find window for files in git repository
 
