@@ -1,6 +1,8 @@
 vim.opt.termguicolors = true
 vim.cmd.colorscheme("black_on_white")
 
+vim.opt.guicursor = ''
+
 vim.opt.nu = true
 
 vim.opt.tabstop = 4
