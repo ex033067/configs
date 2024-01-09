@@ -73,6 +73,7 @@ pipx install docformatter
 
 brew install wget tree git
 brew install ag ack
+brew install difftastic
 brew install tmux
 brew install macvim
 brew install ctags
