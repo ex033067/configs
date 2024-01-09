@@ -34,6 +34,11 @@
         showpath = rev-parse --show-toplevel
         user = "!echo $(git config user.name) \\<$(git config user.email)\\>"
 
+        # contextual diff using difftastic
+        difft = !GIT_EXTERNAL_DIFF=difft git diff
+        showt = !GIT_EXTERNAL_DIFF=difft git show --ext-diff
+        logt = !GIT_EXTERNAL_DIFF=difft git log --ext-diff
+
         # shortcut to simple but long commands
         l = log --date=short --format='tformat:%s %C(dim default)%ar (%ad) by %<(6,trunc)%an %h%C(dim default)%d'
         lr = log --reverse --date=format:'%Y-%m-%d %H:%M' --format='tformat:%C(dim default)%ad %C(nodim default)%s %C(dim default)by %<(6,trunc)%an %h%C(dim default)%d'
