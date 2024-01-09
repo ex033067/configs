@@ -71,8 +71,8 @@ pipx install docformatter
 # Other tools
 # =================
 
-brew install wget tree git
-brew install ag ack
+brew install git tree wget
+brew install ack ripgrep the_silver_searcher
 brew install difftastic
 brew install tmux
 brew install macvim
