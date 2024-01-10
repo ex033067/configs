@@ -27,9 +27,6 @@ vim.keymap.set("v", "<leader>f", ":<C-u>'<insert<CR><CR>----------- ↓↓ START
 vim.keymap.set("n", "<C-w>t", ":tab split<CR>")  -- Open current buffer in new tab page
 vim.keymap.set("n", "<C-w>C", ":-close<CR>")  -- Close previous window
 
--- LSP
-vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)  -- Go to symbol definition
-vim.keymap.set("n", "gD", ":split<CR>:lua vim.lsp.buf.definition()<CR>", opts)  -- Go to symbol definition in split screen
 vim.keymap.set("n", "gr", ":silent lgrep -rI <cword> ./ <CR>:lopen<CR>")  -- Show references to symbol in locallist
 vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
 vim.keymap.set("n", "<leader>LA", function() vim.lsp.buf.code_action() end, opts)  -- Choose action on code
@@ -56,3 +53,9 @@ vim.keymap.set("n", "<leader>gc", ":Git commit -v<CR>")  -- Git diff on current 
 vim.keymap.set("n", "<leader>gd", ":keepalt Git diff %<CR>")  -- Git diff on current buffer
 vim.keymap.set("n", "<leader>gD", vim.cmd.Gdiffsplit)  -- Git diff on current buffer to patch changes with `do` and `dp`
 vim.keymap.set("n", "<leader>gs", vim.cmd.Git);  -- Show git status window
+
+-- ---------------------------------------------------
+-- Navigation
+-- ---------------------------------------------------
+vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)  -- Go to symbol definition
+vim.keymap.set("n", "gD", ":split<CR>:lua vim.lsp.buf.definition()<CR>", opts)  -- Go to symbol definition in split screen
