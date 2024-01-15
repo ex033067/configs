@@ -62,3 +62,8 @@ vim.keymap.set("n", "<leader>gs", vim.cmd.Git);  -- Show git status window
 -- ---------------------------------------------------
 vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)  -- Go to symbol definition
 vim.keymap.set("n", "gD", ":split<CR>:lua vim.lsp.buf.definition()<CR>", opts)  -- Go to symbol definition in split screen
+
+vim.keymap.set("n", "]l", ":lnext<CR>")
+vim.keymap.set("n", "[l", ":lprev<CR>")
+vim.keymap.set("n", "]L", ":lnfile<CR>")
+vim.keymap.set("n", "[L", ":lpfile<CR>")
