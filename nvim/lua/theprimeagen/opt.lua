@@ -1,5 +1,6 @@
 vim.opt.termguicolors = true
-vim.cmd.colorscheme("black_on_white")
+vim.opt.background = "light"
+vim.cmd.colorscheme("simple")
 
 vim.opt.guicursor = ''
 
