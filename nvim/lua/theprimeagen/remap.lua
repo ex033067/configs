@@ -40,6 +40,7 @@ vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
 vim.keymap.set("n", "<leader>1", ":NERDTreeToggle<CR>") -- Show/Hide file navigator
 vim.keymap.set("n", "<leader>FF", ":NERDTreeFind<CR>")  -- Show file navigator with current file highlighted
+vim.keymap.set("n", "<leader>4", ":TagbarOpen j<CR>") -- Open Tagbar
 
 local telescope_builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>fb', telescope_builtin.buffers, {})  -- Telescope fuzzy find window for open buffers
