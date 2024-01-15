@@ -56,6 +56,12 @@
         unstage = restore --staged
 
         # complex commands
+        branchh = "! \
+            for branch in $(git branch | cut -c 3-); do \
+				data=$(git log --format='(%ar by %<(10,trunc)%an)' -1 $branch); \
+                echo $branch $data ; \
+            done"
+
         rstash = "! \
             _help () { \
                 echo 'Like git stash, but saves on a remote called \"rstash\".'; \
