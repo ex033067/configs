@@ -13,3 +13,5 @@ vim.opt.smartindent = true
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
+vim.opt.timeoutlen = 400

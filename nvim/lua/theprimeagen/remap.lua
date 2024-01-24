@@ -54,6 +54,7 @@ vim.keymap.set("n", "<leader>Dt", ":lua if vim.diagnostic.is_disabled() then vim
 vim.keymap.set("n", "<leader>ga", vim.cmd.Gwrite)  -- Git add current buffer
 vim.keymap.set("n", "<leader>gc", ":Git commit -v<CR>")  -- Git diff on current buffer
 vim.keymap.set("n", "<leader>gd", ":keepalt Git diff %<CR>")  -- Git diff on current buffer
+vim.keymap.set("n", "<leader>gd_", ":keepalt Git diff %<CR>:resize<CR>")  -- Git diff on current buffer in full screen
 vim.keymap.set("n", "<leader>gD", vim.cmd.Gdiffsplit)  -- Git diff on current buffer to patch changes with `do` and `dp`
 vim.keymap.set("n", "<leader>gs", vim.cmd.Git);  -- Show git status window
 
