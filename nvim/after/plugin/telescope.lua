@@ -5,7 +5,7 @@ require('telescope').setup {
     }
   },
   pickers = {
-    buffers = {
+    live_grep = {
       mappings = {
         i = {
           ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
@@ -19,7 +19,7 @@ require('telescope').setup {
         },
       },
     },
-    live_grep = {
+    buffers = {
       mappings = {
         i = {
           ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
