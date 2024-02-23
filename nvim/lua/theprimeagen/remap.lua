@@ -27,8 +27,8 @@ vim.keymap.set("v", "<leader>f", ":<C-u>'<insert<CR><CR>----------- ↓↓ START
 vim.keymap.set("n", "<C-w>t", ":tab split<CR>")  -- Open current buffer in new tab page
 vim.keymap.set("n", "<C-w>C", ":-close<CR>")  -- Close previous window
 
-vim.keymap.set("n", ",gr", ":silent lgrep -rI <cword> ./ <CR>:lopen<CR>")  -- Show references to symbol in location list
-vim.keymap.set("n", ",gR", ":silent lgrep -rI '\b<cword>\b' ./ <CR>:lopen<CR>")  -- Show references to symbol in location list
+-- LSP
+vim.keymap.set("n", "gr", ":silent lgrep -rI <cword> ./ <CR>:lopen<CR>")  -- Show references to symbol in location list
 vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
 vim.keymap.set("n", "<leader>LA", function() vim.lsp.buf.code_action() end, opts)  -- Choose action on code
 vim.keymap.set("n", "<leader>LR", function() vim.lsp.buf.rename() end, opts)  -- Rename symbol
