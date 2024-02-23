@@ -32,6 +32,9 @@ return require('packer').startup(function(use)
   -- add, change, remove delimiters
   use('machakann/vim-sandwich')
 
+  -- navigate classes
+  use('majutsushi/tagbar')
+
   -- -----------------------------------------------------------
   -- LSP installation
   -- -----------------------------------------------------------
