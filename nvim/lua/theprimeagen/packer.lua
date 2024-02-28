@@ -19,7 +19,7 @@ return require('packer').startup(function(use)
   -- colorscheme
   -- use({ 'rose-pine/neovim', as = 'rose-pine' })
   use 'ex033067/vim-white-on-black-colorscheme'
-  use 'ex033067/vim-black-on-white-colorscheme'
+  use 'ex033067/vim-simple-colorscheme'
 
   use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
 
