@@ -15,3 +15,11 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.opt.timeoutlen = 400
+
+-- Diagnostics appearance
+vim.diagnostic.config({virtual_text = false})  -- no inline diagnostic messages
+vim.api.nvim_create_autocmd('DiagnosticChanged', {
+  callback = function()
+	vim.diagnostic.setqflist({open = false})  -- show diagnostic in quickfix list
+  end,
+})
