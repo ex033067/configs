@@ -23,9 +23,22 @@ require('mason-lspconfig').setup({
   ensure_installed = {'tsserver', 'rust_analyzer', 'lua_ls', 'pylsp'},
   handlers = {
     lsp_zero.default_setup,
+
     lua_ls = function()
       local lua_opts = lsp_zero.nvim_lua_ls()
       require('lspconfig').lua_ls.setup(lua_opts)
+    end,
+
+    pylsp = function()
+      local opts = {
+        plugins = {
+          pycodestyle = {
+            maxLineLength = 88
+            -- ignore = {'W391'},
+          },
+        }
+      }
+      require('lspconfig').pylsp.setup({settings = {pylsp = opts}})
     end,
   }
 })
