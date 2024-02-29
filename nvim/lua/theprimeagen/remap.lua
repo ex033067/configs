@@ -48,8 +48,7 @@ vim.keymap.set('n', '<leader>FB', ":lua require('telescope.builtin').live_grep({
 vim.keymap.set('n', '<leader>ff', telescope_builtin.find_files, {})  -- Telescope fuzzy find window
 vim.keymap.set('n', '<leader>fg', telescope_builtin.git_files, {})  -- Telescope fuzzy find window for files in git repository
 
-vim.keymap.set("n", "<leader>Dl", ":lua =vim.diagnostic.disable()<CR>:lua =vim.diagnostic.setloclist()<CR>")  -- Show lsp diagnostics in location list, instead of in-line messages
-vim.keymap.set("n", "<leader>Dt", ":lua if vim.diagnostic.is_disabled() then vim.diagnostic.enable() else vim.diagnostic.disable() end<CR>")  -- Toggle diagnostics
+vim.keymap.set("n", "<leader>Dl", ":lua =vim.diagnostic.setloclist()<CR>")  -- Show lsp diagnostics in location list
 
 vim.keymap.set("n", "<leader>ga", vim.cmd.Gwrite)  -- Git add current buffer
 vim.keymap.set("n", "<leader>gc", ":Git commit -v<CR>")  -- Git diff on current buffer
