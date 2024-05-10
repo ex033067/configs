@@ -14,6 +14,7 @@ function __aliases() {
 
     alias cdp='cd ~/src/Personal'
     alias cdc1='cd ~/src/Work/CorrelationOne'
+    alias cdj='cd ~/OneDrive/knowledge-base/30-39_Knowledge_Base/'
 
     alias l='ls -lhgo'
     alias ll='ls -lh'
