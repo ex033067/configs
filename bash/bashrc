@@ -173,6 +173,7 @@ function __main() {
 
     [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
     [ -f ~/.git-completion.bash ] && . ~/.git-completion.bash || true
+    source ~/.orbstack/shell/init.bash 2>/dev/null || :
 }
 
 __main
