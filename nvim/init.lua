@@ -1,3 +1,3 @@
 if not (vim.g.vscode) then
-	require("theprimeagen")
+	require("minimal_config")
 end
