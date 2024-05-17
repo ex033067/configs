@@ -28,7 +28,10 @@ vim.keymap.set("v", "<C-j>", ":'<,'>m '>+1<CR>gv")  -- Move selected lines down
 vim.keymap.set("v", "<C-k>", ":'<,'>m '<-2<CR>gv")  -- Move selected lines up
 
 vim.keymap.set("n", "<leader>d", ":copy .<CR>")  -- Duplicate current line
-vim.keymap.set("v", "<leader>d", ":'<,'>copy '><CR>'>")  -- Duplicate selected lines
+vim.keymap.set("v", "<leader>d", ":'<,'>copy '><CR>'>j")  -- Duplicate selected lines
+
+vim.keymap.set("n", "<leader>D", ":copy .<CR>:.-1Commentary<CR>")  -- Comment and duplicate current line
+vim.keymap.set("v", "<leader>D", ":'<,'>copy '><CR>:'<,'>:Commentary<CR>'>j")  -- Comment and duplicate selected lines
 
 vim.keymap.set("v", "<leader>f", ":<C-u>'<insert<CR><CR>----------- ↓↓ START FOCUS HERE ↓↓<CR>.<CR>:'>append<CR>----------- ↑↑ END FOCUS HERE ↑↑<CR><CR>.<CR>'<")  -- Focus on selected lines
 
