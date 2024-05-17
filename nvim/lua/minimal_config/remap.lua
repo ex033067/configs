@@ -1,10 +1,21 @@
 vim.g.mapleader = ","
 vim.g.maplocalleader = '\\'
 
+
+-- ---------------------------------------------------
+-- Appearance
+-- ---------------------------------------------------
+
 vim.keymap.set("n", "<leader>h", vim.cmd.noh)  -- Un-highlight search results
-vim.keymap.set("n", "<leader>H", ":set invhls<CR>")  -- Un-highlight search results
-vim.keymap.set("n", "<leader>y", "\"+y")  -- Copy to system clipboard
-vim.keymap.set("v", "<leader>y", "\"+y")  -- Copy to system clipboard
+vim.keymap.set("n", "<leader>H", ":set invhls<CR>")  -- Toggle search results highlighting
+
+
+-- ---------------------------------------------------
+-- Clipboard
+-- ---------------------------------------------------
+
+vim.keymap.set("n", "<leader>y", "\"+y")  -- Copy to system clipboard (accept motion)
+vim.keymap.set("v", "<leader>y", "\"+y")  -- Copy selected text to system clipboard
 
 
 -- ---------------------------------------------------
