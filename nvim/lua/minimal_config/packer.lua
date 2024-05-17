@@ -1,5 +1,3 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
-
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
@@ -9,18 +7,17 @@ return require('packer').startup(function(use)
 
   -- file manager
   use 'preservim/nerdtree'
+
   -- fuzzy finder
   use {
 	  'nvim-telescope/telescope.nvim', tag = '0.1.4',
-	  -- or                            , branch = '0.1.x',
 	  requires = { {'nvim-lua/plenary.nvim'} }
   }
 
   -- colorscheme
-  -- use({ 'rose-pine/neovim', as = 'rose-pine' })
-  use 'ex033067/vim-white-on-black-colorscheme'
   use 'ex033067/vim-simple-colorscheme'
 
+  -- syntax highlighting
   use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
 
   -- git integration
@@ -42,7 +39,6 @@ return require('packer').startup(function(use)
 	  'VonHeikemen/lsp-zero.nvim',
 	  branch = 'v3.x',
 	  requires = {
-		  --- Uncomment these if you want to manage LSP servers from neovim
 		  {'williamboman/mason.nvim'},
 		  {'williamboman/mason-lspconfig.nvim'},
 		  -- LSP Support
