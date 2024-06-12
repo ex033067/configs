@@ -18,3 +18,8 @@ vim.opt.smartcase = true
 vim.opt.formatoptions = vim.opt.formatoptions + 'n' -- identify lists
 
 vim.diagnostic.config({virtual_text = false})  -- no inline diagnostic messages
+
+vim.api.nvim_create_autocmd("CursorHold", {
+  pattern = "*.py",
+  command = "checktime",
+}) -- Update file changed outside vim
