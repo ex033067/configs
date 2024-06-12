@@ -15,5 +15,6 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- vim.opt.timeoutlen = 400
+vim.opt.formatoptions = vim.opt.formatoptions + 'n' -- identify lists
 
 vim.diagnostic.config({virtual_text = false})  -- no inline diagnostic messages
