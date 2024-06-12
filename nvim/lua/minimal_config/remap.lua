@@ -52,6 +52,8 @@ vim.keymap.set("n", "gr", ":silent lgrep -rIw <cword> ./ <CR>:lopen<CR>")  -- Sh
 vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end)  -- Go to symbol definition
 vim.keymap.set("n", "gD", ":split<CR>:lua vim.lsp.buf.definition()<CR>")  -- Go to symbol definition in split screen
 
+vim.keymap.set("n", "[?", ":echo getline(search('\\(def\\|class\\) ', 'bnz'))<CR>") -- Show current python function or class
+
 
 -- ---------------------------------------------------
 -- Buffers, windows, and tabpages
