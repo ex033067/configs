@@ -117,8 +117,10 @@ nnoremap <leader>T
 " Show/hide helpers
 nnoremap <leader>1 :NERDTreeToggle<CR>
 nnoremap <leader>! :NERDTreeFind<CR>
-lua vim.keymap.set('n', '<leader>2', '<cmd>Telescope find_files<CR>')
-lua vim.keymap.set('n', '<leader>3', '<cmd>Telescope buffers<CR>')
+if has('nvim')
+	lua vim.keymap.set('n', '<leader>2', '<cmd>Telescope find_files<CR>')
+	lua vim.keymap.set('n', '<leader>3', '<cmd>Telescope buffers<CR>')
+endif
 nnoremap <leader>4 :TagbarOpen j<CR>
 nnoremap <leader>$ :TagbarToggle<CR>
 nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'
@@ -1003,11 +1005,13 @@ endif
 
 call plug#end()
 
-" For lsp plugins
-" lua require("mason").setup()
-" " List of available language servers:
-" " https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
-source ~/.vim/luascripts/lsp_config.lua
+if has('nvim')
+    " For lsp plugins
+    lua require("mason").setup()
+    " List of available language servers:
+    " https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
+    source ~/.vim/luascripts/lsp_config.lua
+endif
 
 " For 'norcalli/nvim-colorizer.lua' plugin
 if has('nvim')
