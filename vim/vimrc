@@ -903,6 +903,7 @@ Plug 'neovim/nvim-lspconfig'
 
 " My discreet color scheme
 Plug 'viniciusban/vim-white-on-black-colorscheme'
+Plug 'ex033067/vim-simple-colorscheme'
 
 
 
@@ -1033,7 +1034,7 @@ endif
 
 
 syntax reset
-colorscheme white_on_black
+colorscheme simple
 
 call Ban_SetDefaultEditOptions('global')
 
