@@ -59,7 +59,7 @@ vim.keymap.set("n", "[?", ":echo getline(search('\\(def\\|class\\) ', 'bnz'))<CR
 -- Buffers, windows, and tabpages
 -- ---------------------------------------------------
 
-vim.keymap.set("n", "<C-w>t", ":tab split<CR>")  -- Open current buffer in new tab page
+vim.keymap.set("n", "<C-w>TT", ":tab split<CR>")  -- Open copy of current buffer in new tab page
 vim.keymap.set("n", "<C-w>CC", ":-close<CR>")  -- Close previous window
 
 vim.keymap.set("n", "<leader>1", ":NERDTreeToggle<CR>") -- Show/Hide file navigator
