@@ -64,7 +64,7 @@ vim.keymap.set("n", "<C-w>CC", ":-close<CR>")  -- Close previous window
 
 vim.keymap.set("n", "<leader>1", ":NERDTreeToggle<CR>") -- Show/Hide file navigator
 vim.keymap.set("n", "<leader>FF", ":NERDTreeFind<CR>")  -- Show file navigator with current file highlighted
-vim.keymap.set("n", "<leader>4", ":TagbarOpen j<CR>") -- Open Tagbar
+vim.keymap.set("n", "<leader>4", ":TagbarToggle<CR>") -- Toggle Tagbar window
 
 
 -- ---------------------------------------------------
