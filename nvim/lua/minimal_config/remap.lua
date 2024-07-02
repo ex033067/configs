@@ -23,7 +23,6 @@ vim.keymap.set("v", "<leader>y", "\"+y")  -- Copy selected text to system clipbo
 -- ---------------------------------------------------
 
 vim.keymap.set({"v","i"}, "qq", "<C-Bslash><C-n>")  -- Back to normal mode from insert or visual modes
-vim.keymap.set("i", "fj", "<C-Bslash><C-n>")  -- Back to normal mode from insert mode
 
 vim.keymap.set("v", "<C-j>", ":'<,'>m '>+1<CR>gv")  -- Move selected lines down
 vim.keymap.set("v", "<C-k>", ":'<,'>m '<-2<CR>gv")  -- Move selected lines up
