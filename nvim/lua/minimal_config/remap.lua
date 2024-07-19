@@ -8,6 +8,7 @@ vim.g.maplocalleader = '\\'
 
 vim.keymap.set("n", "<leader>h", vim.cmd.noh)  -- Un-highlight search results
 vim.keymap.set("n", "<leader>H", ":set invhls<CR>")  -- Toggle search results highlighting
+vim.keymap.set("n", "<leader>w", ":set invwrap<CR>")  -- Toggle word wrap
 
 
 -- ---------------------------------------------------
