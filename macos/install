@@ -3,7 +3,7 @@
 # Configure and install basic softwares in macOS through command line.
 # ------------------------------------------------------------------------------
 
-PYTHON_VERSION=3.8
+## PYTHON_VERSION=3.8
 
 
 # =====================
@@ -38,33 +38,33 @@ brew doctor
 # ===========================
 
 
-# Pyenv
-# -----
+## # Pyenv
+## # -----
+## 
+## brew install openssl readline sqlite3 xz zlib
+## brew install pyenv
+## eval "$(pyenv init --path)"
+## hash -r
+## 
+## git clone https://github.com/momo-lab/xxenv-latest.git "$(pyenv root)"/plugins/xxenv-latest
+## pyenv latest install ${PYTHON_VERSION}
+## pyenv latest global
+## 
+## git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
 
-brew install openssl readline sqlite3 xz zlib
-brew install pyenv
-eval "$(pyenv init --path)"
-hash -r
 
-git clone https://github.com/momo-lab/xxenv-latest.git "$(pyenv root)"/plugins/xxenv-latest
-pyenv latest install ${PYTHON_VERSION}
-pyenv latest global
-
-git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
-
-
-# pipx
-# ----
-
-brew install pipx
-pipx ensurepath
-
-# Other Python related
-# --------------------
-
-pipx install black
-pipx install isort
-pipx install docformatter
+## # pipx
+## # ----
+## 
+## # brew install pipx
+## # pipx ensurepath
+## 
+## # Other Python related
+## # --------------------
+## 
+## pipx install black
+## pipx install isort
+## pipx install docformatter
 
 
 # =================
