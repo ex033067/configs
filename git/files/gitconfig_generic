@@ -54,6 +54,7 @@
         # forget uncommited changes
         discard = checkout
         unstage = reset
+		subtract = reset
 
         # complex commands
         branchh = "! \
