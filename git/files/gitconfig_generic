@@ -52,8 +52,8 @@
         backto = reset --mixed
 
         # forget uncommited changes
-        discard = restore
-        unstage = restore --staged
+        discard = checkout
+        unstage = reset
 
         # complex commands
         branchh = "! \
