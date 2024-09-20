@@ -19,6 +19,7 @@ brew install --cask whatsapp
 brew install --cask vlc
 
 brew install --cask clocker  # show timezones
+brew install --cask michaelvillar-timer
 brew install --cask rectangle  # window manager
 brew install --cask maccy  # clipboard
 brew install --cask the-unarchiver
